@@ -1,38 +1,96 @@
-import Link from "next/link";
+import Image from "next/image";
 
-const navLinkClass =
-  "font-label-caps text-label-caps text-on-surface/80 transition-colors hover:text-primary";
+const valorantTeams = ["Violet", "Ultraviolet", "Orchid", "Amethyst"];
+const leagueTeams = ["Baron", "Elder"];
 
-export function Header() {
+export default function Header() {
   return (
-    <header className="fixed top-0 right-0 left-0 z-[100] border-b border-white/5 bg-background/70 backdrop-blur-lg">
-      <div className="container mx-auto flex items-center justify-between px-grid-margin py-4">
-        <Link
-          href="/#hero-section"
-          className="font-label-caps text-label-caps text-primary tracking-[0.2em]"
-        >
-          VIOLET OP
-        </Link>
-        <nav
-          className="hidden items-center gap-8 md:flex"
-          aria-label="Primary"
-        >
-          <Link href="/#hero-section" className={navLinkClass}>
-            About
-          </Link>
-          <Link
-            href="/#valorant-section"
-            className={`${navLinkClass} hover:text-tertiary`}
+    <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:px-grid-margin">
+      <a className="flex items-center gap-3" href="#hero-section">
+        <Image
+          alt="NYU Violet OP logo"
+          className="h-10 w-10 rounded-full border border-primary/30 object-cover"
+          height={40}
+          priority
+          src="/images/logo.avif"
+          width={40}
+        />
+        <span className="font-headline-md text-headline-md font-bold text-on-surface">
+          Violet OP
+        </span>
+      </a>
+
+      <nav className="hidden h-full items-center gap-8 md:flex">
+        <div className="mega-menu-trigger relative flex h-full items-center">
+          <a
+            className="flex items-center gap-1 font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
+            href="#valorant-section"
           >
-            Valorant
-          </Link>
-          <Link href="/#lol-section" className={navLinkClass}>
-            League
-          </Link>
-          <Link href="/#join-section" className={navLinkClass}>
-            Join
-          </Link>
-        </nav>
+            Teams <span aria-hidden="true">⌄</span>
+          </a>
+
+          <div className="mega-menu absolute left-1/2 top-full pt-4 -translate-x-1/2">
+            <div className="glass-panel flex w-[500px] gap-12 rounded-xl bg-surface-container-lowest/90 p-8 shadow-2xl">
+              <div className="flex-1">
+                <h4 className="mb-4 border-b border-tertiary/20 pb-2 font-label-caps text-label-caps text-tertiary">
+                  Valorant
+                </h4>
+                <ul className="space-y-3">
+                  {valorantTeams.map((team) => (
+                    <li key={team}>
+                      <a
+                        className="font-body-md text-on-surface/70 transition-colors hover:text-tertiary"
+                        href="#valorant-section"
+                      >
+                        {team}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="flex-1">
+                <h4 className="mb-4 border-b border-primary/20 pb-2 font-label-caps text-label-caps text-primary">
+                  League of Legends
+                </h4>
+                <ul className="space-y-3">
+                  {leagueTeams.map((team) => (
+                    <li key={team}>
+                      <a
+                        className="font-body-md text-on-surface/70 transition-colors hover:text-primary"
+                        href="#lol-section"
+                      >
+                        {team}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a
+          className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
+          href="#cta-section"
+        >
+          About Us
+        </a>
+        <a
+          className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
+          href="#cta-section"
+        >
+          Events
+        </a>
+      </nav>
+
+      <div className="flex items-center gap-3 md:gap-6">
+        <a
+          className="op-clip bg-primary-container px-5 py-2 font-label-caps text-label-caps text-white transition-all hover:brightness-110 active:scale-95 md:px-6"
+          href="#cta-section"
+        >
+          Join Us
+        </a>
       </div>
     </header>
   );

@@ -3,393 +3,399 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
-import { Footer } from "./components/Footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
-gsap.registerPlugin(ScrollTrigger);
+const clamp = (value: number, min = 0, max = 1) =>
+  Math.min(Math.max(value, min), max);
 
-/** Local assets in `public/images/` */
-const HERO_IMG = "/images/voppurple.avif";
-const VAL_BG = "/images/jettfull.webp";
-const VAL_LOGO = "/images/valologo.webp";
-const VAL_AGENT = "/images/jettfull.webp";
-const LOL_BG = "/images/ekko.png";
-const LOL_LOGO = "/images/lollogo.png";
-const LOL_CHAMP = "/images/ekko.png";
+const smoothstep = (value: number) => {
+  const progress = clamp(value);
 
-const VAL_ROSTER_THUMBS = [
-  "/images/vopwhite.avif",
-  "/images/voppurple.avif",
-  "/images/vopblack.png",
-  "/images/groupphoto.avif",
-] as const;
+  return progress * progress * (3 - 2 * progress);
+};
 
-const LOL_ROSTER_THUMBS = ["/images/lollogo.png", "/images/groupphoto.avif"] as const;
+const scrollRange = (scrollPos: number, vh: number, start: number, end: number) =>
+  smoothstep((scrollPos - vh * start) / (vh * (end - start)));
 
-function IconTrendingFlat({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="m22 12-4-4v3H6v2h12v3z" />
-    </svg>
-  );
-}
+const valorantTeams = [
+  { name: "VOP White", tier: "Varsity", image: "/images/vopwhite.avif" },
+  { name: "VOP Purple", tier: "Junior Varsity", image: "/images/voppurple.avif" },
+  { name: "VOP Black", tier: "Academy", image: "/images/vopblack.png" },
+  { name: "VOP Gamechangers", tier: "Marginalized", image: "/images/vopblack.png" },
+];
+
+const leagueTeams = [
+  { name: "Baron", tier: "Varsity" },
+  { name: "Elder", tier: "Development" },
+];
 
 export default function Home() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLElement | null>(null);
+  const heroTextRef = useRef<HTMLDivElement | null>(null);
+  const heroLogoRef = useRef<HTMLDivElement | null>(null);
+  const valAssetsRef = useRef<HTMLDivElement | null>(null);
+  const valContentRef = useRef<HTMLDivElement | null>(null);
+  const lolAssetsRef = useRef<HTMLDivElement | null>(null);
+  const lolContentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const scrollEl = scrollRef.current;
-    if (!scrollEl) return;
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) {
+      return;
+    }
 
-    const hero = document.getElementById("hero-section");
-    const val = document.getElementById("valorant-section");
-    const lol = document.getElementById("lol-section");
-    if (!hero || !val || !lol) return;
+    let removeScrollListeners = () => {};
 
-    const lenis = new Lenis({
-      wrapper: scrollEl,
-      content: scrollEl,
-      // Wheel often targets the fixed header; listen on window so trackpad scroll still drives Lenis
-      eventsTarget: window,
-      lerp: 0.08,
-      smoothWheel: true,
-      syncTouch: true,
-      wheelMultiplier: 0.85,
-    });
+    const ctx = gsap.context(() => {
+      gsap.set(heroTextRef.current, { autoAlpha: 1, x: 0 });
+      gsap.set(heroLogoRef.current, { autoAlpha: 1, scale: 1, x: 0 });
+      gsap.set([valAssetsRef.current, valContentRef.current], { autoAlpha: 0 });
+      gsap.set(valAssetsRef.current, { x: -120 });
+      gsap.set(valContentRef.current, { x: 120 });
+      gsap.set(lolContentRef.current, { autoAlpha: 0, x: -120 });
+      gsap.set(lolAssetsRef.current, { autoAlpha: 0, x: 120 });
 
-    lenis.on("scroll", ScrollTrigger.update);
+      const animateScrollState = () => {
+        const scrollPos = scrollContainer.scrollTop;
+        const vh = window.innerHeight;
+        const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
+        const valorantEnter = scrollRange(scrollPos, vh, 0.45, 0.95);
+        const valorantExit = scrollRange(scrollPos, vh, 1.25, 1.75);
+        const valorantProgress = clamp(valorantEnter - valorantExit);
+        const leagueEnter = scrollRange(scrollPos, vh, 1.45, 1.95);
+        const leagueExit = scrollRange(scrollPos, vh, 2.35, 2.85);
+        const leagueProgress = clamp(leagueEnter - leagueExit);
 
-    const tickerFn = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(tickerFn);
-    gsap.ticker.lagSmoothing(0);
+        gsap.set(heroTextRef.current, {
+          autoAlpha: 1 - heroExit,
+          x: -120 * heroExit,
+        });
 
-    ScrollTrigger.scrollerProxy(scrollEl, {
-      scrollTop(value) {
-        if (arguments.length && typeof value === "number") {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-      },
-      getBoundingClientRect() {
-        return scrollEl.getBoundingClientRect();
-      },
-    });
+        gsap.set(heroLogoRef.current, {
+          autoAlpha: 1 - heroExit,
+          scale: 1 - 0.12 * heroExit,
+          x: 120 * heroExit,
+        });
 
-    const applySectionStates = () => {
-      const scrollPos = lenis.scroll;
-      const vh = window.innerHeight;
+        gsap.set(valAssetsRef.current, {
+          autoAlpha: valorantProgress,
+          x: -120 * (1 - valorantProgress),
+        });
+        gsap.set(valContentRef.current, {
+          autoAlpha: valorantProgress,
+          x: 120 * (1 - valorantProgress),
+        });
 
-      if (scrollPos > vh * 0.2) {
-        hero.classList.remove("hero-active");
-        hero.classList.add("hero-exit");
-      } else {
-        hero.classList.add("hero-active");
-        hero.classList.remove("hero-exit");
-      }
+        gsap.set(lolContentRef.current, {
+          autoAlpha: leagueProgress,
+          x: -120 * (1 - leagueProgress),
+        });
+        gsap.set(lolAssetsRef.current, {
+          autoAlpha: leagueProgress,
+          x: 120 * (1 - leagueProgress),
+        });
+      };
 
-      if (scrollPos > vh * 0.5 && scrollPos < vh * 1.5) {
-        val.classList.add("val-active");
-        val.classList.remove("val-hidden");
-      } else {
-        val.classList.remove("val-active");
-        val.classList.add("val-hidden");
-      }
+      animateScrollState();
+      scrollContainer.addEventListener("scroll", animateScrollState, { passive: true });
+      window.addEventListener("resize", animateScrollState);
 
-      if (scrollPos > vh * 1.5 && scrollPos < vh * 2.5) {
-        lol.classList.add("lol-active");
-        lol.classList.remove("lol-hidden");
-      } else {
-        lol.classList.remove("lol-active");
-        lol.classList.add("lol-hidden");
-      }
-    };
-
-    applySectionStates();
-
-    const trigger = ScrollTrigger.create({
-      trigger: scrollEl,
-      scroller: scrollEl,
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: applySectionStates,
-    });
-
-    const onResize = () => {
-      lenis.resize();
-      ScrollTrigger.refresh();
-    };
-    window.addEventListener("resize", onResize);
-    requestAnimationFrame(() => {
-      lenis.resize();
-      ScrollTrigger.refresh();
+      removeScrollListeners = () => {
+        scrollContainer.removeEventListener("scroll", animateScrollState);
+        window.removeEventListener("resize", animateScrollState);
+      };
     });
 
     return () => {
-      window.removeEventListener("resize", onResize);
-      gsap.ticker.remove(tickerFn);
-      gsap.ticker.lagSmoothing(500, 33);
-      trigger.kill();
-      lenis.destroy();
+      removeScrollListeners();
+      ctx.revert();
     };
   }, []);
 
   return (
-    <main className="scroll-container" id="main-scroll" ref={scrollRef}>
-      <section
-        className="scroll-section hero-active flex items-center justify-center bg-surface-container-lowest"
-        id="hero-section"
+    <>
+      <Header />
+      <main
+        className="scroll-container bg-background text-on-background selection:bg-primary selection:text-on-primary"
+        id="main-scroll"
+        ref={scrollRef}
       >
-        <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-primary-container/10 via-transparent to-background" />
-        <div className="relative z-20 container mx-auto grid grid-cols-1 items-center gap-gutter px-grid-margin lg:grid-cols-12">
-          <div className="relative lg:col-span-12">
-            <div className="animate-on-scroll hero-text relative z-30 pointer-events-none">
-              <span className="font-label-caps text-label-caps mb-4 block tracking-[0.4em] text-primary">
-                NEW YORK UNIVERSITY ESPORTS
-              </span>
-              <h1 className="big-headline font-display-xl drop-shadow-2xl uppercase italic text-white">
-                VIOLET
-                <br />
-                <span className="text-primary not-italic">OPERATOR</span>
-              </h1>
+        <section
+          className="scroll-section flex items-center justify-center bg-surface-container-lowest"
+          id="hero-section"
+        >
+          <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary-container/10 via-transparent to-background" />
+          <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
+            <div className="relative lg:col-span-12">
+              <div className="relative z-30 pointer-events-none" ref={heroTextRef}>
+                <span className="mb-4 block font-label-caps text-label-caps uppercase text-primary">
+                  New York University Esports
+                </span>
+                <h1 className="hero-title font-display-xl uppercase italic text-white drop-shadow-2xl">
+                  Violet
+                  <br />
+                  <span className="text-primary not-italic">OP</span>
+                </h1>
+              </div>
+
+              <div
+                className="absolute left-1/2 top-1/2 z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 lg:left-2/3 lg:opacity-100"
+                ref={heroLogoRef}
+              >
+                <Image
+                  alt="NYU Violet OP identity"
+                  className="w-full scale-105 drop-shadow-[0_0_80px_rgba(134,3,226,0.5)]"
+                  height={720}
+                  priority
+                  src="/images/logo.avif"
+                  width={720}
+                />
+              </div>
+
+              <div className="relative z-40 mt-12 flex gap-4">
+                <a
+                  className="op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+                  href="#cta-section"
+                >
+                  About Us
+                </a>
+              </div>
             </div>
-            <div className="animate-on-scroll hero-logo absolute top-1/2 left-1/2 z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-40 lg:left-2/3 lg:opacity-100">
+          </div>
+        </section>
+
+        <section
+          className="scroll-section flex items-center justify-center bg-[#0f1923]"
+          id="valorant-section"
+        >
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#010a13] via-[#010a13]/70 to-transparent" />
+            <Image
+              alt="Violet OP Valorant group"
+              className="object-cover opacity-25"
+              fill
+              sizes="100vw"
+              src="/images/valologo.webp"
+            />
+          </div>
+
+          <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
+            <div
+              className="relative flex flex-col items-center justify-center"
+              ref={valAssetsRef}
+            >
               <Image
-                alt="NYU Violet OP Identity"
-                className="w-full scale-110 drop-shadow-[0_0_80px_rgba(134,3,226,0.5)]"
-                src={HERO_IMG}
-                width={900}
-                height={900}
-                sizes="(min-width: 1024px) 42rem, 100vw"
+                alt="Valorant logo"
+                className="relative z-20 mb-8 w-44 md:w-64"
+                height={180}
+                src="/images/valologo.webp"
+                width={360}
+              />
+              <Image
+                alt="Jett Valorant agent"
+                className="relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_30px_rgba(0,219,233,0.3)] md:max-h-[70vh]"
+                height={780}
+                src="/images/waylay.webp"
+                width={520}
               />
             </div>
-            <div className="relative z-40 mt-12 flex gap-4">
-              <button
-                type="button"
-                className="op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+
+            <div
+              className="glass-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
+              ref={valContentRef}
+            >
+              <div className="mb-6 flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-tertiary" />
+                <span className="font-label-caps text-label-caps uppercase text-tertiary">
+                  Squadron Deployment: active
+                </span>
+              </div>
+              <h2 className="mb-8 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
+                Tactical <span className="text-tertiary">Rosters</span>
+              </h2>
+
+              <div className="mb-8 grid grid-cols-2 gap-4">
+                {valorantTeams.map((team) => (
+                  <article
+                    className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
+                    key={team.name}
+                  >
+                    <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
+                      <Image
+                        alt={`${team.name} team`}
+                        className="object-cover object-top opacity-80"
+                        fill
+                        sizes="(min-width: 1024px) 240px, 50vw"
+                        src={team.image}
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-headline-md text-lg text-on-surface">
+                        {team.name}
+                      </span>
+                      <span className="font-label-caps text-[10px] uppercase text-tertiary">
+                        {team.tier}
+                      </span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <a
+                className="flex items-center gap-2 font-label-caps text-label-caps text-tertiary transition-transform hover:translate-x-2"
+                href="#cta-section"
               >
-                About Us
-              </button>
+                View Roster <span aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
-        </div>
-        <div className="absolute -top-20 -right-20 h-80 w-80 rounded-full bg-primary/20 blur-[100px]" />
-      </section>
+        </section>
 
-      <section
-        className="scroll-section val-hidden flex items-center justify-center bg-[#0f1923]"
-        id="valorant-section"
-      >
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0f1923] via-[#0f1923]/80 to-transparent" />
-          <Image
-            alt="Valorant Tactical"
-            className="h-full w-full object-cover opacity-30"
-            src={VAL_BG}
-            fill
-            sizes="100vw"
-          />
-        </div>
-        <div className="relative z-20 container mx-auto grid grid-cols-1 items-center gap-12 px-grid-margin lg:grid-cols-2">
-          <div className="val-assets animate-on-scroll relative flex flex-col items-center justify-center">
+        <section
+          className="scroll-section flex items-center justify-center bg-[#010a13]"
+          id="lol-section"
+        >
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-10 bg-gradient-to-l from-[#010a13] via-[#010a13]/70 to-transparent" />
             <Image
-              alt="Valorant Logo"
-              className="relative z-20 mb-8 w-64"
-              src={VAL_LOGO}
-              width={256}
-              height={120}
-            />
-            <Image
-              alt="Jett Agent"
-              className="relative z-10 max-h-[70vh] object-contain drop-shadow-[0_0_30px_rgba(0,219,233,0.3)]"
-              src={VAL_AGENT}
-              width={500}
-              height={900}
-              sizes="(min-width: 1024px) 40vw, 90vw"
+              alt="League of Legends atmospheric backdrop"
+              className="object-cover opacity-20"
+              fill
+              sizes="100vw"
+              src="/images/lollogo.avif"
             />
           </div>
-          <div className="val-content animate-on-scroll glass-panel op-clip border-l-4 border-l-tertiary p-stack-xl">
-            <div className="mb-6 flex items-center gap-2">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-tertiary" />
-              <span className="font-label-caps text-label-caps uppercase text-tertiary">
-                Squadron Deployment: active
-              </span>
-            </div>
-            <h2 className="font-headline-lg text-headline-lg mb-8 uppercase tracking-tight">
-              Tactical <span className="text-tertiary">Rosters</span>
-            </h2>
-            <div className="mb-8 grid grid-cols-2 gap-4">
-              {(
-                [
-                  ["Violet", "Varsity"],
-                  ["Ultraviolet", "Junior Varsity"],
-                  ["Orchid", "Academy"],
-                  ["Amethyst", "Gamechangers"],
-                ] as const
-              ).map(([name, tier], index) => (
-                <div
-                  key={name}
-                  className="flex flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
-                >
-                  <Image
-                    src={VAL_ROSTER_THUMBS[index]}
-                    className="h-32 w-full rounded object-cover object-top opacity-80"
-                    alt={`${name} team`}
-                    width={320}
-                    height={128}
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-headline-md text-lg text-on-surface">
-                      {name}
-                    </span>
-                    <span className="font-label-caps text-[10px] tracking-wider text-tertiary uppercase">
-                      {tier}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <button
-              type="button"
-              className="font-label-caps text-label-caps flex items-center gap-2 text-tertiary transition-transform hover:translate-x-2"
+
+          <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
+            <div
+              className="glass-panel op-clip order-2 flex flex-col items-end border-r-4 border-r-primary p-6 text-right md:p-stack-xl lg:order-1"
+              ref={lolContentRef}
             >
-              VIEW ROSTER{" "}
-              <IconTrendingFlat className="h-5 w-5 shrink-0" />
-            </button>
-          </div>
-        </div>
-      </section>
+              <div className="mb-6 flex items-center gap-2">
+                <span className="font-label-caps text-label-caps uppercase text-primary">
+                  Squadron Deployment: active
+                </span>
+                <span className="h-2 w-2 rounded-full bg-primary" />
+              </div>
+              <h2 className="mb-8 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
+                Ascending the <span className="text-primary">Rift</span>
+              </h2>
 
-      <section
-        className="scroll-section lol-hidden flex items-center justify-center bg-[#010a13]"
-        id="lol-section"
-      >
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 z-10 bg-gradient-to-l from-[#010a13] via-[#010a13]/70 to-transparent" />
-          <Image
-            alt="League Rift"
-            className="h-full w-full object-cover opacity-30"
-            src={LOL_BG}
-            fill
-            sizes="100vw"
-          />
-        </div>
-        <div className="relative z-20 container mx-auto grid grid-cols-1 items-center gap-12 px-grid-margin lg:grid-cols-2">
-          <div className="lol-content animate-on-scroll glass-panel order-2 flex flex-col items-end self-center text-right op-clip border-r-4 border-r-primary p-stack-xl lg:order-1">
-            <div className="mb-6 flex items-center gap-2">
-              <span className="font-label-caps text-label-caps uppercase text-primary">
-                Squadron Deployment: active
-              </span>
-              <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+              <div className="mb-8 grid w-full grid-cols-2 gap-4">
+                {leagueTeams.map((team) => (
+                  <article
+                    className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 text-left transition-colors hover:bg-white/10"
+                    key={team.name}
+                  >
+                    <div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded bg-primary/10">
+                      <Image
+                        alt={`${team.name} crest`}
+                        className="object-contain p-5 opacity-60"
+                        fill
+                        sizes="(min-width: 1024px) 240px, 50vw"
+                        src="/images/vopwhite.avif"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-headline-md text-lg text-on-surface">
+                        {team.name}
+                      </span>
+                      <span className="font-label-caps text-[10px] uppercase text-primary">
+                        {team.tier}
+                      </span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <a
+                className="flex items-center gap-2 self-end font-label-caps text-label-caps text-primary transition-transform hover:-translate-x-2"
+                href="#cta-section"
+              >
+                <span aria-hidden="true">←</span> View Roster
+              </a>
             </div>
-            <h2 className="font-headline-lg text-headline-lg mb-8 uppercase tracking-tight">
-              Ascending the <span className="text-primary">Rift</span>
-            </h2>
-            <div className="mb-8 grid w-full grid-cols-2 gap-4">
-              {(
-                [
-                  ["Baron", "Varsity"],
-                  ["Elder", "Development"],
-                ] as const
-              ).map(([name, tier], index) => (
-                <div
-                  key={name}
-                  className="flex flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 text-left transition-colors hover:bg-white/10"
-                >
-                  <div className="flex h-32 w-full items-center justify-center overflow-hidden rounded bg-primary/10">
-                    <Image
-                      src={LOL_ROSTER_THUMBS[index]}
-                      className="w-3/4 object-contain opacity-50"
-                      alt={`${name} team`}
-                      width={200}
-                      height={128}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-headline-md text-lg text-on-surface">
-                      {name}
-                    </span>
-                    <span className="font-label-caps text-[10px] tracking-wider text-primary uppercase">
-                      {tier}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <button
-              type="button"
-              className="font-label-caps text-label-caps flex items-center gap-2 self-end text-primary transition-transform hover:-translate-x-2"
+
+            <div
+              className="order-1 flex flex-col items-center justify-center lg:order-2"
+              ref={lolAssetsRef}
             >
-              <IconTrendingFlat className="h-5 w-5 shrink-0 rotate-180" />{" "}
-              VIEW ROSTER
-            </button>
+              <Image
+                alt="League of Legends logo"
+                className="relative z-20 mb-8 w-56 md:w-80"
+                height={240}
+                src="/images/lollogo.avif"
+                width={480}
+              />
+              <Image
+                alt="Ekko League of Legends champion"
+                className="relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_40px_rgba(224,182,255,0.4)] md:max-h-[70vh]"
+                height={760}
+                src="/images/ahri.avif"
+                width={520}
+              />
+            </div>
           </div>
-          <div className="lol-assets animate-on-scroll relative order-1 flex flex-col items-center justify-center lg:order-2">
-            <Image
-              alt="LoL Logo"
-              className="relative z-20 mb-8 w-80"
-              src={LOL_LOGO}
-              width={320}
-              height={160}
-            />
-            <Image
-              alt="League champion"
-              className="relative z-10 max-h-[70vh] object-contain drop-shadow-[0_0_40px_rgba(224,182,255,0.4)]"
-              src={LOL_CHAMP}
-              width={500}
-              height={900}
-              sizes="(min-width: 1024px) 40vw, 90vw"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section
-        className="scroll-section relative flex flex-col items-center justify-center bg-surface px-grid-margin text-center"
-        id="join-section"
-      >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary-container/20 via-transparent to-transparent" />
-        <div className="z-10 max-w-4xl space-y-stack-md">
-          <span className="font-label-caps text-label-caps text-on-primary-container">
-            JOIN THE LEGACY
-          </span>
-          <h2 className="font-display-xl uppercase md:text-display-xl text-headline-lg">
-            Are you <span className="text-primary">Overpowered?</span>
-          </h2>
-          <p className="font-body-lg text-body-lg text-on-surface-variant mx-auto max-w-2xl">
-            Whether you&apos;re a high-ELO competitor, a broadcast specialist, or
-            a community builder, there&apos;s a place for you in the Violet OP
-            ecosystem.
-          </p>
-          <div className="flex flex-col items-center justify-center gap-gutter pt-stack-md md:flex-row">
-            <div className="glass-panel op-clip group w-full cursor-pointer p-8 transition-all hover:neon-glow-purple md:w-80">
-              <h3 className="font-headline-md text-headline-md mb-2 text-primary">
-                Players
-              </h3>
-              <p className="font-body-md text-body-md mb-4 text-on-surface/70">
-                Trial for our premiere rosters.
-              </p>
-              <span className="font-label-caps text-label-caps border-b border-primary pb-1">
-                APPLY NOW
-              </span>
-            </div>
-            <div className="glass-panel op-clip group w-full cursor-pointer p-8 transition-all hover:neon-glow-purple md:w-80">
-              <h3 className="font-headline-md text-headline-md mb-2 text-tertiary">
-                Staff
-              </h3>
-              <p className="font-body-md text-body-md mb-4 text-on-surface/70">
-                Coaching &amp; Management.
-              </p>
-              <span className="font-label-caps text-label-caps border-b border-tertiary pb-1">
-                JOIN CREW
-              </span>
+        <section
+          className="scroll-section relative flex flex-col items-center justify-center bg-surface px-4 text-center md:px-grid-margin"
+          id="cta-section"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary-container/20 via-transparent to-transparent" />
+          <div className="z-10 max-w-4xl space-y-stack-md pb-28 md:pb-12">
+            <span className="font-label-caps text-label-caps uppercase text-on-primary-container">
+              Join the legacy
+            </span>
+            <h2 className="font-display-xl text-4xl font-extrabold uppercase text-white md:text-display-xl">
+              Are you <span className="text-primary">Overpowered?</span>
+            </h2>
+            <p className="mx-auto max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
+              Whether you&apos;re a high-ELO competitor, a broadcast specialist, or a
+              community builder, there&apos;s a place for you in the Violet OP
+              ecosystem.
+            </p>
+
+            <div className="flex flex-col items-center justify-center gap-gutter pt-stack-md md:flex-row">
+              <a
+                className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
+                href="https://discord.gg/MAmXcrkADb"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <h3 className="mb-2 font-headline-md text-headline-md text-primary">
+                  Players
+                </h3>
+                <p className="mb-4 font-body-md text-body-md text-on-surface/70">
+                  Trial for our premiere rosters.
+                </p>
+                <span className="border-b border-primary pb-1 font-label-caps text-label-caps">
+                  Apply Now
+                </span>
+              </a>
+
+              <a
+                className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
+                href="https://discord.gg/MAmXcrkADb"
+                rel="noreferrer"
+                target="_blank"
+              >
+                <h3 className="mb-2 font-headline-md text-headline-md text-tertiary">
+                  Staff
+                </h3>
+                <p className="mb-4 font-body-md text-body-md text-on-surface/70">
+                  Coaching and management.
+                </p>
+                <span className="border-b border-tertiary pb-1 font-label-caps text-label-caps">
+                  Join Crew
+                </span>
+              </a>
             </div>
           </div>
-        </div>
-        <Footer />
-      </section>
-    </main>
+          <Footer />
+        </section>
+      </main>
+    </>
   );
 }
