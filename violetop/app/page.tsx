@@ -186,7 +186,7 @@ export default function Home() {
             >
               <Image
                 alt="Waylay Valorant agent"
-                className="relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_30px_rgba(0,219,233,0.3)] md:max-h-[70vh]"
+                className="relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_30px_rgba(134,3,226,0.3)] md:max-h-[70vh]"
                 height={1100}
                 src="/images/waylay.webp"
                 width={700}
