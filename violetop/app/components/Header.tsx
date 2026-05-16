@@ -26,7 +26,10 @@ export default function Header() {
             className="flex items-center gap-1 font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
             href="#valorant-section"
           >
-            Teams <span aria-hidden="true">⌄</span>
+            Teams{" "}
+            <span aria-hidden="true" className="inline-block -translate-y-1">
+              ⌄
+            </span>
           </a>
 
           <div className="mega-menu absolute left-1/2 top-full pt-4 -translate-x-1/2">

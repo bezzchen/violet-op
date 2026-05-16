@@ -122,7 +122,7 @@ export default function Home() {
         ref={scrollRef}
       >
         <section
-          className="scroll-section flex items-center justify-center bg-surface-container-lowest"
+          className="scroll-section flex items-center justify-center bg-background"
           id="hero-section"
         >
           <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary-container/10 via-transparent to-background" />
@@ -137,10 +137,18 @@ export default function Home() {
                   <br />
                   <span className="text-primary not-italic">OP</span>
                 </h1>
+                <div className="relative z-40 mt-12 flex gap-4">
+                  <a
+                    className="pointer-events-auto op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+                    href="#cta-section"
+                  >
+                    About Us
+                  </a>
+                </div>
               </div>
 
               <div
-                className="absolute left-1/2 top-1/2 z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 lg:left-2/3 lg:opacity-100"
+                className="absolute left-1/2 top-1/2 z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 lg:left-[75%] lg:opacity-100"
                 ref={heroLogoRef}
               >
                 <Image
@@ -152,25 +160,16 @@ export default function Home() {
                   width={720}
                 />
               </div>
-
-              <div className="relative z-40 mt-12 flex gap-4">
-                <a
-                  className="op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
-                  href="#cta-section"
-                >
-                  About Us
-                </a>
-              </div>
             </div>
           </div>
         </section>
 
         <section
-          className="scroll-section flex items-center justify-center bg-[#0f1923]"
+          className="scroll-section flex items-center justify-center bg-background"
           id="valorant-section"
         >
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#010a13] via-[#010a13]/70 to-transparent" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/70 to-transparent" />
             <Image
               alt="Violet OP Valorant group"
               className="object-cover opacity-25"
@@ -186,18 +185,11 @@ export default function Home() {
               ref={valAssetsRef}
             >
               <Image
-                alt="Valorant logo"
-                className="relative z-20 mb-8 w-44 md:w-64"
-                height={180}
-                src="/images/valologo.webp"
-                width={360}
-              />
-              <Image
-                alt="Jett Valorant agent"
-                className="relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_30px_rgba(0,219,233,0.3)] md:max-h-[70vh]"
-                height={780}
+                alt="Waylay Valorant agent"
+                className="relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_30px_rgba(0,219,233,0.3)] md:max-h-[70vh]"
+                height={1100}
                 src="/images/waylay.webp"
-                width={520}
+                width={700}
               />
             </div>
 
@@ -224,7 +216,7 @@ export default function Home() {
                     <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
                       <Image
                         alt={`${team.name} team`}
-                        className="object-cover object-top opacity-80"
+                        className="object-contain object-center opacity-80"
                         fill
                         sizes="(min-width: 1024px) 240px, 50vw"
                         src={team.image}
@@ -253,11 +245,11 @@ export default function Home() {
         </section>
 
         <section
-          className="scroll-section flex items-center justify-center bg-[#010a13]"
+          className="scroll-section flex items-center justify-center bg-background"
           id="lol-section"
         >
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 z-10 bg-gradient-to-l from-[#010a13] via-[#010a13]/70 to-transparent" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-l from-background via-background/70 to-transparent" />
             <Image
               alt="League of Legends atmospheric backdrop"
               className="object-cover opacity-20"
@@ -285,27 +277,27 @@ export default function Home() {
               <div className="mb-8 grid w-full grid-cols-2 gap-4">
                 {leagueTeams.map((team) => (
                   <article
-                    className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 text-left transition-colors hover:bg-white/10"
-                    key={team.name}
+                  className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
+                  key={team.name}
                   >
-                    <div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded bg-primary/10">
-                      <Image
-                        alt={`${team.name} crest`}
-                        className="object-contain p-5 opacity-60"
-                        fill
-                        sizes="(min-width: 1024px) 240px, 50vw"
-                        src="/images/vopwhite.avif"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-headline-md text-lg text-on-surface">
-                        {team.name}
-                      </span>
-                      <span className="font-label-caps text-[10px] uppercase text-primary">
-                        {team.tier}
-                      </span>
-                    </div>
-                  </article>
+                  <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
+                    <Image
+                      alt={`${team.name} team`}
+                      className="object-contain object-center opacity-80"
+                      fill
+                      sizes="(min-width: 1024px) 240px, 50vw"
+                      src="/images/vopwhite.avif"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-headline-md text-lg text-on-surface">
+                      {team.name}
+                    </span>
+                    <span className="font-label-caps text-[10px] uppercase text-tertiary">
+                      {team.tier}
+                    </span>
+                  </div>
+                </article>
                 ))}
               </div>
 
@@ -322,25 +314,18 @@ export default function Home() {
               ref={lolAssetsRef}
             >
               <Image
-                alt="League of Legends logo"
-                className="relative z-20 mb-8 w-56 md:w-80"
-                height={240}
-                src="/images/lollogo.avif"
-                width={480}
-              />
-              <Image
-                alt="Ekko League of Legends champion"
+                alt="Ahri League of Legends champion"
                 className="relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_40px_rgba(224,182,255,0.4)] md:max-h-[70vh]"
-                height={760}
+                height={1100}
                 src="/images/ahri.avif"
-                width={520}
+                width={700}
               />
             </div>
           </div>
         </section>
 
         <section
-          className="scroll-section relative flex flex-col items-center justify-center bg-surface px-4 text-center md:px-grid-margin"
+          className="scroll-section relative flex flex-col items-center justify-center bg-background px-4 text-center md:px-grid-margin"
           id="cta-section"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary-container/20 via-transparent to-transparent" />
