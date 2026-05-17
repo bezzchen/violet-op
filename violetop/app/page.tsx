@@ -342,7 +342,7 @@ export default function Home() {
           className="scroll-section z-10 flex flex-col items-center justify-center bg-transparent px-4 text-center md:px-grid-margin"
           id="cta-section"
         >
-          <div className="relative z-10 max-w-4xl space-y-stack-md pb-28 md:pb-12">
+          <div className="relative z-10 max-w-4xl space-y-stack-md md:pb-12">
             <span className="font-label-caps text-label-caps uppercase text-on-primary-container">
               Join the legacy
             </span>
