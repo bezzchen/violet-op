@@ -27,7 +27,7 @@ const valorantTeams = [
 
 const leagueTeams = [
   { name: "Red", tier: "Varsity", image: "/images/red.avif"},
-  { name: "Blue", tier: "Development", image: "/images/blue.avif" },
+  { name: "Blue", tier: "Academy", image: "/images/blue.avif" },
 ];
 
 export default function Home() {
