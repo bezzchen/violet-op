@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PrismCanvas from "./components/PrismCanvas";
 
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(Math.max(value, min), max);
@@ -45,6 +46,7 @@ export default function Home() {
       return;
     }
 
+    let animationFrame = 0;
     let removeScrollListeners = () => {};
 
     const ctx = gsap.context(() => {
@@ -97,13 +99,27 @@ export default function Home() {
         });
       };
 
+      const scheduleScrollState = () => {
+        if (animationFrame) {
+          return;
+        }
+
+        animationFrame = window.requestAnimationFrame(() => {
+          animationFrame = 0;
+          animateScrollState();
+        });
+      };
+
       animateScrollState();
-      scrollContainer.addEventListener("scroll", animateScrollState, { passive: true });
-      window.addEventListener("resize", animateScrollState);
+      scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
+      window.addEventListener("resize", scheduleScrollState);
 
       removeScrollListeners = () => {
-        scrollContainer.removeEventListener("scroll", animateScrollState);
-        window.removeEventListener("resize", animateScrollState);
+        scrollContainer.removeEventListener("scroll", scheduleScrollState);
+        window.removeEventListener("resize", scheduleScrollState);
+        if (animationFrame) {
+          window.cancelAnimationFrame(animationFrame);
+        }
       };
     });
 
@@ -115,17 +131,17 @@ export default function Home() {
 
   return (
     <>
+      <PrismCanvas scrollContainerRef={scrollRef} />
       <Header />
       <main
-        className="scroll-container bg-background text-on-background selection:bg-primary selection:text-on-primary"
+        className="scroll-container relative z-10 bg-transparent text-on-background selection:bg-primary selection:text-on-primary"
         id="main-scroll"
         ref={scrollRef}
       >
         <section
-          className="scroll-section flex items-center justify-center bg-background"
+          className="scroll-section z-10 flex items-center justify-center bg-transparent"
           id="hero-section"
         >
-          <div className="absolute inset-0 z-10 bg-gradient-to-b from-primary-container/10 via-transparent to-background" />
           <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
             <div className="relative lg:col-span-12">
               <div className="relative z-30 pointer-events-none" ref={heroTextRef}>
@@ -165,11 +181,10 @@ export default function Home() {
         </section>
 
         <section
-          className="scroll-section flex items-center justify-center bg-background"
+          className="scroll-section z-10 flex items-center justify-center bg-transparent"
           id="valorant-section"
         >
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 z-10 bg-gradient-to-r from-background via-background/70 to-transparent" />
             <Image
               alt="Violet OP Valorant group"
               className="object-cover opacity-25"
@@ -245,11 +260,10 @@ export default function Home() {
         </section>
 
         <section
-          className="scroll-section flex items-center justify-center bg-background"
+          className="scroll-section z-10 flex items-center justify-center bg-transparent"
           id="lol-section"
         >
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 z-10 bg-gradient-to-l from-background via-background/70 to-transparent" />
             <Image
               alt="League of Legends atmospheric backdrop"
               className="object-cover opacity-20"
@@ -325,11 +339,10 @@ export default function Home() {
         </section>
 
         <section
-          className="scroll-section relative flex flex-col items-center justify-center bg-background px-4 text-center md:px-grid-margin"
+          className="scroll-section z-10 flex flex-col items-center justify-center bg-transparent px-4 text-center md:px-grid-margin"
           id="cta-section"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary-container/20 via-transparent to-transparent" />
-          <div className="z-10 max-w-4xl space-y-stack-md pb-28 md:pb-12">
+          <div className="relative z-10 max-w-4xl space-y-stack-md pb-28 md:pb-12">
             <span className="font-label-caps text-label-caps uppercase text-on-primary-container">
               Join the legacy
             </span>
