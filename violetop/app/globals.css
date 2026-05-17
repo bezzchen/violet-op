@@ -78,6 +78,7 @@
 }
 
 :root {
+  --app-height: 100dvh;
   background: #111317;
   color: #e2e2e7;
 }
@@ -126,8 +127,10 @@ a {
 
 .scroll-container {
   height: 100vh;
+  height: var(--app-height);
   overflow-y: auto;
   perspective: 1000px;
+  overscroll-behavior-y: contain;
 }
 
 .prism-canvas-background {
@@ -148,8 +151,13 @@ a {
 
 .scroll-section {
   min-height: 100vh;
+  min-height: var(--app-height);
   position: relative;
   overflow: hidden;
+}
+
+.site-footer {
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
 }
 
 .scroll-container::-webkit-scrollbar {
@@ -201,8 +209,14 @@ a {
 
 @media (max-width: 767px) {
   .scroll-section {
-    min-height: 100svh;
+    min-height: var(--app-height);
     padding-top: 5rem;
     padding-bottom: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .site-footer {
+    padding-bottom: 1.5rem;
   }
 }

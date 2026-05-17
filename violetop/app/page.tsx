@@ -19,6 +19,9 @@ const smoothstep = (value: number) => {
 const scrollRange = (scrollPos: number, vh: number, start: number, end: number) =>
   smoothstep((scrollPos - vh * start) / (vh * (end - start)));
 
+const sectionEnterProgress = (scrollPos: number, vh: number, offsetTop: number) =>
+  smoothstep((scrollPos - (offsetTop - vh * 0.75)) / (vh * 0.6));
+
 const valorantTeams = [
   { name: "VOP White", tier: "Varsity", image: "/images/vopwhite.avif" },
   { name: "VOP Purple", tier: "Junior Varsity", image: "/images/voppurple.avif" },
@@ -49,6 +52,15 @@ export default function Home() {
     let animationFrame = 0;
     let removeScrollListeners = () => {};
 
+    const updateViewportHeight = () => {
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+
+      document.documentElement.style.setProperty(
+        "--app-height",
+        `${viewportHeight}px`,
+      );
+    };
+
     const ctx = gsap.context(() => {
       gsap.set(heroTextRef.current, { autoAlpha: 1, x: 0 });
       gsap.set(heroLogoRef.current, { autoAlpha: 1, scale: 1, x: 0 });
@@ -60,13 +72,19 @@ export default function Home() {
 
       const animateScrollState = () => {
         const scrollPos = scrollContainer.scrollTop;
-        const vh = window.innerHeight;
+        const vh = scrollContainer.clientHeight;
+        const valorantOffset =
+          document.getElementById("valorant-section")?.offsetTop ?? vh;
+        const leagueOffset =
+          document.getElementById("lol-section")?.offsetTop ?? vh * 2;
+        const ctaOffset =
+          document.getElementById("cta-section")?.offsetTop ?? vh * 3;
         const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
-        const valorantEnter = scrollRange(scrollPos, vh, 0.45, 0.95);
-        const valorantExit = scrollRange(scrollPos, vh, 1.25, 1.75);
+        const valorantEnter = sectionEnterProgress(scrollPos, vh, valorantOffset);
+        const valorantExit = sectionEnterProgress(scrollPos, vh, leagueOffset);
         const valorantProgress = clamp(valorantEnter - valorantExit);
-        const leagueEnter = scrollRange(scrollPos, vh, 1.45, 1.95);
-        const leagueExit = scrollRange(scrollPos, vh, 2.35, 2.85);
+        const leagueEnter = sectionEnterProgress(scrollPos, vh, leagueOffset);
+        const leagueExit = sectionEnterProgress(scrollPos, vh, ctaOffset);
         const leagueProgress = clamp(leagueEnter - leagueExit);
 
         gsap.set(heroTextRef.current, {
@@ -110,13 +128,23 @@ export default function Home() {
         });
       };
 
+      const handleViewportChange = () => {
+        updateViewportHeight();
+        scheduleScrollState();
+      };
+
+      updateViewportHeight();
       animateScrollState();
       scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
-      window.addEventListener("resize", scheduleScrollState);
+      window.addEventListener("resize", handleViewportChange);
+      window.visualViewport?.addEventListener("resize", handleViewportChange);
+      window.visualViewport?.addEventListener("scroll", handleViewportChange);
 
       removeScrollListeners = () => {
         scrollContainer.removeEventListener("scroll", scheduleScrollState);
-        window.removeEventListener("resize", scheduleScrollState);
+        window.removeEventListener("resize", handleViewportChange);
+        window.visualViewport?.removeEventListener("resize", handleViewportChange);
+        window.visualViewport?.removeEventListener("scroll", handleViewportChange);
         if (animationFrame) {
           window.cancelAnimationFrame(animationFrame);
         }

@@ -249,8 +249,9 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
 
     const resize = () => {
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
-      const width = Math.max(1, Math.floor(window.innerWidth * pixelRatio));
-      const height = Math.max(1, Math.floor(window.innerHeight * pixelRatio));
+      const viewport = window.visualViewport;
+      const width = Math.max(1, Math.floor((viewport?.width ?? window.innerWidth) * pixelRatio));
+      const height = Math.max(1, Math.floor((viewport?.height ?? window.innerHeight) * pixelRatio));
 
       if (canvas.width !== width || canvas.height !== height) {
         canvas.width = width;
@@ -281,10 +282,12 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
 
     scrollContainer.addEventListener("scroll", updateScrollProgress, { passive: true });
     window.addEventListener("resize", resize);
+    window.visualViewport?.addEventListener("resize", resize);
 
     return () => {
       scrollContainer.removeEventListener("scroll", updateScrollProgress);
       window.removeEventListener("resize", resize);
+      window.visualViewport?.removeEventListener("resize", resize);
       window.cancelAnimationFrame(animationFrame);
       gl.deleteBuffer(positionBuffer);
       gl.deleteProgram(program);
