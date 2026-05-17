@@ -140,7 +140,7 @@ export default function Home() {
                 <div className="relative z-40 mt-12 flex gap-4">
                   <a
                     className="pointer-events-auto op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
-                    href="#cta-section"
+                    href=""
                   >
                     About Us
                   </a>
@@ -148,7 +148,7 @@ export default function Home() {
               </div>
 
               <div
-                className="absolute left-1/2 top-1/2 z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 lg:left-[75%] lg:opacity-100"
+                className="absolute left-1/2 top-[55%] z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 lg:left-[75%] lg:opacity-100"
                 ref={heroLogoRef}
               >
                 <Image
@@ -236,7 +236,7 @@ export default function Home() {
 
               <a
                 className="flex items-center gap-2 font-label-caps text-label-caps text-tertiary transition-transform hover:translate-x-2"
-                href="#cta-section"
+                href=""
               >
                 View Roster <span aria-hidden="true">→</span>
               </a>
@@ -303,7 +303,7 @@ export default function Home() {
 
               <a
                 className="flex items-center gap-2 self-end font-label-caps text-label-caps text-primary transition-transform hover:-translate-x-2"
-                href="#cta-section"
+                href=""
               >
                 <span aria-hidden="true">←</span> View Roster
               </a>
@@ -345,15 +345,15 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center gap-gutter pt-stack-md md:flex-row">
               <a
                 className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
-                href="https://discord.gg/MAmXcrkADb"
+                href=""
                 rel="noreferrer"
                 target="_blank"
               >
-                <h3 className="mb-2 font-headline-md text-headline-md text-primary">
+                <h3 className="mb-2 font-bold font-headline-md text-headline-md text-primary">
                   Players
                 </h3>
                 <p className="mb-4 font-body-md text-body-md text-on-surface/70">
-                  Trial for our premiere rosters.
+                  Try out for our teams.
                 </p>
                 <span className="border-b border-primary pb-1 font-label-caps text-label-caps">
                   Apply Now
@@ -362,11 +362,11 @@ export default function Home() {
 
               <a
                 className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
-                href="https://discord.gg/MAmXcrkADb"
+                href=""
                 rel="noreferrer"
                 target="_blank"
               >
-                <h3 className="mb-2 font-headline-md text-headline-md text-tertiary">
+                <h3 className="mb-2 font-bold font-headline-md text-headline-md text-tertiary">
                   Staff
                 </h3>
                 <p className="mb-4 font-body-md text-body-md text-on-surface/70">

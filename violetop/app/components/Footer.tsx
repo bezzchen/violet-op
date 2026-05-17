@@ -55,7 +55,7 @@ export default function Footer() {
   return (
     <footer className="absolute bottom-0 left-0 flex w-full flex-col items-center justify-between gap-gutter border-t border-outline-variant bg-surface-container-lowest px-4 py-stack-md md:flex-row md:px-grid-margin">
       <div className="flex flex-col items-center gap-2 md:items-start">
-        <span className="font-headline-md text-headline-md font-extrabold text-primary">
+        <span className="text-white font-headline-md text-headline-md font-extrabold text-primary">
           Violet OP
         </span>
         <p className="font-label-caps text-label-caps text-on-surface-variant">
@@ -64,7 +64,7 @@ export default function Footer() {
       </div>
 
       <div className="flex flex-col items-center gap-3 md:items-end">
-        <span className="font-label-caps text-label-caps uppercase text-tertiary">
+        <span className="text-white font-label-caps text-label-caps uppercase text-tertiary">
           Follow Us
         </span>
         <div className="flex gap-4">

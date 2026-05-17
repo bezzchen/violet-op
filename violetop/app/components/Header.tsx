@@ -1,12 +1,12 @@
 import Image from "next/image";
 
-const valorantTeams = ["Violet", "Ultraviolet", "Orchid", "Amethyst"];
+const valorantTeams = ["White", "Purple", "Black", "Gamechangers"];
 const leagueTeams = ["Baron", "Elder"];
 
 export default function Header() {
   return (
     <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:px-grid-margin">
-      <a className="flex items-center gap-3" href="#hero-section">
+      <a className="flex items-center gap-3" href="">
         <Image
           alt="NYU Violet OP logo"
           className="h-10 w-10 rounded-full border border-primary/30 object-cover"
@@ -24,7 +24,7 @@ export default function Header() {
         <div className="mega-menu-trigger relative flex h-full items-center">
           <a
             className="flex items-center gap-1 font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
-            href="#valorant-section"
+            href=""
           >
             Teams{" "}
             <span aria-hidden="true" className="inline-block -translate-y-1">
@@ -43,7 +43,7 @@ export default function Header() {
                     <li key={team}>
                       <a
                         className="font-body-md text-on-surface/70 transition-colors hover:text-tertiary"
-                        href="#valorant-section"
+                        href=""
                       >
                         {team}
                       </a>
@@ -61,7 +61,7 @@ export default function Header() {
                     <li key={team}>
                       <a
                         className="font-body-md text-on-surface/70 transition-colors hover:text-primary"
-                        href="#lol-section"
+                        href=""
                       >
                         {team}
                       </a>
@@ -75,13 +75,13 @@ export default function Header() {
 
         <a
           className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
-          href="#cta-section"
+          href=""
         >
           About Us
         </a>
         <a
           className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
-          href="#cta-section"
+          href=""
         >
           Events
         </a>
@@ -89,8 +89,8 @@ export default function Header() {
 
       <div className="flex items-center gap-3 md:gap-6">
         <a
-          className="op-clip bg-primary-container px-5 py-2 font-label-caps text-label-caps text-white transition-all hover:brightness-110 active:scale-95 md:px-6"
-          href="#cta-section"
+          className="op-clip bg-primary-container px-5 py-2 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 md:px-6"
+          href=""
         >
           Join Us
         </a>
