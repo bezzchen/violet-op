@@ -22,12 +22,12 @@ const valorantTeams = [
   { name: "VOP White", tier: "Varsity", image: "/images/vopwhite.avif" },
   { name: "VOP Purple", tier: "Junior Varsity", image: "/images/voppurple.avif" },
   { name: "VOP Black", tier: "Academy", image: "/images/vopblack.png" },
-  { name: "VOP Gamechangers", tier: "Marginalized", image: "/images/vopblack.png" },
+  { name: "VOP Gamechangers", tier: "Marginalized", image: "/images/lavender.avif" },
 ];
 
 const leagueTeams = [
-  { name: "Baron", tier: "Varsity" },
-  { name: "Elder", tier: "Development" },
+  { name: "Red", tier: "Varsity", image: "/images/red.avif"},
+  { name: "Blue", tier: "Development", image: "/images/blue.avif" },
 ];
 
 export default function Home() {
@@ -286,7 +286,7 @@ export default function Home() {
                       className="object-contain object-center opacity-80"
                       fill
                       sizes="(min-width: 1024px) 240px, 50vw"
-                      src="/images/vopwhite.avif"
+                      src={team.image}
                     />
                   </div>
                   <div className="flex flex-col">
