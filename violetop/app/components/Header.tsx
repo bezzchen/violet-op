@@ -1,12 +1,19 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 const valorantTeams = ["White", "Purple", "Black", "Gamechangers"];
 const leagueTeams = ["Baron", "Elder"];
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
-    <header className="fixed left-0 top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:px-grid-margin">
-      <a className="flex items-center gap-3" href="">
+    <header className="fixed left-0 top-0 z-50 grid w-full grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:flex md:justify-between md:px-grid-margin">
+      <a className="flex min-w-0 items-center gap-3" href="" onClick={closeMenu}>
         <Image
           alt="NYU Violet OP logo"
           className="h-10 w-10 rounded-full border border-primary/30 object-cover"
@@ -15,7 +22,7 @@ export default function Header() {
           src="/images/logo.avif"
           width={40}
         />
-        <span className="font-headline-md text-headline-md font-bold text-on-surface">
+        <span className="hidden font-headline-md text-headline-md font-bold text-on-surface md:inline">
           Violet OP
         </span>
       </a>
@@ -87,13 +94,107 @@ export default function Header() {
         </a>
       </nav>
 
-      <div className="flex items-center gap-3 md:gap-6">
-        <a
-          className="op-clip bg-primary-container px-5 py-2 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 md:px-6"
-          href=""
-        >
-          Join Us
-        </a>
+      <a
+        className="op-clip justify-self-center bg-primary-container px-5 py-2 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 md:justify-self-auto md:px-6"
+        href=""
+        onClick={closeMenu}
+      >
+        Join Us
+      </a>
+
+      <button
+        aria-controls="mobile-menu"
+        aria-expanded={isMenuOpen}
+        aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+        className="glass-panel op-clip flex h-10 w-10 items-center justify-center justify-self-end border border-outline-variant text-on-surface transition-all hover:border-primary hover:text-primary md:hidden"
+        onClick={() => setIsMenuOpen((open) => !open)}
+        type="button"
+      >
+        <span className="relative h-4 w-5" aria-hidden="true">
+          <span
+            className={`absolute left-0 top-0 h-0.5 w-5 bg-current transition-transform ${
+              isMenuOpen ? "translate-y-[7px] rotate-45" : ""
+            }`}
+          />
+          <span
+            className={`absolute left-0 top-[7px] h-0.5 w-5 bg-current transition-opacity ${
+              isMenuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`absolute bottom-0 left-0 h-0.5 w-5 bg-current transition-transform ${
+              isMenuOpen ? "-translate-y-[7px] -rotate-45" : ""
+            }`}
+          />
+        </span>
+      </button>
+
+      <div
+        className={`absolute left-4 right-4 top-[calc(100%+0.75rem)] z-50 overflow-hidden rounded border border-outline-variant bg-surface-container-lowest p-4 shadow-2xl transition-all md:hidden ${
+          isMenuOpen
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-2 opacity-0"
+        }`}
+        id="mobile-menu"
+      >
+        <nav className="grid gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <h4 className="mb-3 border-b border-tertiary/20 pb-2 font-label-caps text-label-caps text-tertiary">
+                Valorant
+              </h4>
+              <ul className="space-y-2">
+                {valorantTeams.map((team) => (
+                  <li key={team}>
+                    <a
+                      className="font-body-md text-sm text-on-surface/75 transition-colors hover:text-tertiary"
+                      href=""
+                      onClick={closeMenu}
+                    >
+                      {team}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="mb-3 border-b border-primary/20 pb-2 font-label-caps text-label-caps text-primary">
+                League
+              </h4>
+              <ul className="space-y-2">
+                {leagueTeams.map((team) => (
+                  <li key={team}>
+                    <a
+                      className="font-body-md text-sm text-on-surface/75 transition-colors hover:text-primary"
+                      href=""
+                      onClick={closeMenu}
+                    >
+                      {team}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid gap-2 border-t border-outline-variant pt-3">
+            <a
+              className="font-label-caps text-label-caps text-on-surface/75 transition-colors hover:text-on-surface"
+              href=""
+              onClick={closeMenu}
+            >
+              About Us
+            </a>
+            <a
+              className="font-label-caps text-label-caps text-on-surface/75 transition-colors hover:text-on-surface"
+              href=""
+              onClick={closeMenu}
+            >
+              Events
+            </a>
+          </div>
+        </nav>
       </div>
     </header>
   );

@@ -172,7 +172,10 @@ export default function Home() {
         >
           <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
             <div className="relative lg:col-span-12">
-              <div className="relative z-30 pointer-events-none" ref={heroTextRef}>
+              <div
+                className="relative z-30 -mt-32 pointer-events-none md:mt-0"
+                ref={heroTextRef}
+              >
                 <span className="mb-4 block font-label-caps text-label-caps uppercase text-primary">
                   New York University Esports
                 </span>
@@ -192,7 +195,7 @@ export default function Home() {
               </div>
 
               <div
-                className="absolute left-1/2 top-[55%] z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 lg:left-[75%] lg:opacity-100"
+                className="absolute left-1/2 top-[80%] z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 md:top-[55%] lg:left-[75%] lg:opacity-100"
                 ref={heroLogoRef}
               >
                 <Image
