@@ -157,7 +157,7 @@ a {
 }
 
 .site-footer {
-  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
 }
 
 .scroll-container::-webkit-scrollbar {
@@ -212,6 +212,16 @@ a {
     min-height: var(--app-height);
     padding-top: 5rem;
     padding-bottom: 2rem;
+  }
+
+  #cta-section {
+    justify-content: space-between;
+    padding-bottom: 0;
+  }
+
+  #cta-section > div:first-child {
+    margin-bottom: auto;
+    margin-top: auto;
   }
 }
 

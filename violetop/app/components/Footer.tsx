@@ -53,7 +53,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="site-footer relative z-20 mt-stack-xl flex w-[calc(100%+2rem)] flex-col items-center justify-between gap-gutter border-t border-outline-variant bg-surface-container-lowest px-4 py-stack-md md:absolute md:bottom-0 md:left-0 md:mt-0 md:w-full md:flex-row md:px-grid-margin">
+    <footer className="site-footer relative z-20 mt-stack-md flex w-[calc(100%+2rem)] flex-col items-center justify-between gap-gutter border-t border-outline-variant bg-surface-container-lowest px-4 py-4 md:absolute md:bottom-0 md:left-0 md:mt-0 md:w-full md:flex-row md:px-grid-margin md:py-stack-md">
       <div className="flex flex-col items-center gap-2 md:items-start">
         <span className="text-white font-headline-md text-headline-md font-extrabold text-primary">
           Violet OP
