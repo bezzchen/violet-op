@@ -1,10 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-
-const valorantTeams = ["White", "Purple", "Black", "Gamechangers"];
-const leagueTeams = ["Baron", "Elder"];
+import { leagueTeams, mainNav, valorantTeams } from "../data/siteContent";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,31 +12,31 @@ export default function Header() {
 
   return (
     <header className="fixed left-0 top-0 z-50 grid w-full grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:flex md:justify-between md:px-grid-margin">
-      <a className="flex min-w-0 items-center gap-3" href="" onClick={closeMenu}>
+      <Link className="flex min-w-0 items-center gap-3" href="/" onClick={closeMenu}>
         <Image
           alt="NYU Violet OP logo"
           className="h-10 w-10 rounded-full border border-primary/30 object-cover"
           height={40}
-          priority
+          loading="eager"
           src="/images/logo.avif"
           width={40}
         />
         <span className="hidden font-headline-md text-headline-md font-bold text-on-surface md:inline">
           Violet OP
         </span>
-      </a>
+      </Link>
 
       <nav className="hidden h-full items-center gap-8 md:flex">
         <div className="mega-menu-trigger relative flex h-full items-center">
-          <a
+          <Link
             className="flex items-center gap-1 font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
-            href=""
+            href="/#valorant-section"
           >
             Teams{" "}
             <span aria-hidden="true" className="inline-block -translate-y-1">
               ⌄
             </span>
-          </a>
+          </Link>
 
           <div className="mega-menu absolute left-1/2 top-full pt-4 -translate-x-1/2">
             <div className="glass-panel flex w-[500px] gap-12 rounded-xl bg-surface-container-lowest/90 p-8 shadow-2xl">
@@ -47,13 +46,13 @@ export default function Header() {
                 </h4>
                 <ul className="space-y-3">
                   {valorantTeams.map((team) => (
-                    <li key={team}>
-                      <a
+                    <li key={team.name}>
+                      <Link
                         className="font-body-md text-on-surface/70 transition-colors hover:text-tertiary"
-                        href=""
+                        href={team.href}
                       >
-                        {team}
-                      </a>
+                        {team.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -65,13 +64,13 @@ export default function Header() {
                 </h4>
                 <ul className="space-y-3">
                   {leagueTeams.map((team) => (
-                    <li key={team}>
-                      <a
+                    <li key={team.name}>
+                      <Link
                         className="font-body-md text-on-surface/70 transition-colors hover:text-primary"
-                        href=""
+                        href={team.href}
                       >
-                        {team}
-                      </a>
+                        {team.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -80,27 +79,24 @@ export default function Header() {
           </div>
         </div>
 
-        <a
-          className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
-          href=""
-        >
-          About Us
-        </a>
-        <a
-          className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
-          href=""
-        >
-          Events
-        </a>
+        {mainNav.slice(1, 3).map((item) => (
+          <Link
+            className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
+            href={item.href}
+            key={item.href}
+          >
+            {item.label}
+          </Link>
+        ))}
       </nav>
 
-      <a
+      <Link
         className="op-clip justify-self-center bg-primary-container px-5 py-2 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 md:justify-self-auto md:px-6"
-        href=""
+        href="/join-us"
         onClick={closeMenu}
       >
         Join Us
-      </a>
+      </Link>
 
       <button
         aria-controls="mobile-menu"
@@ -145,14 +141,14 @@ export default function Header() {
               </h4>
               <ul className="space-y-2">
                 {valorantTeams.map((team) => (
-                  <li key={team}>
-                    <a
+                  <li key={team.name}>
+                    <Link
                       className="font-body-md text-sm text-on-surface/75 transition-colors hover:text-tertiary"
-                      href=""
+                      href={team.href}
                       onClick={closeMenu}
                     >
-                      {team}
-                    </a>
+                      {team.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -164,14 +160,14 @@ export default function Header() {
               </h4>
               <ul className="space-y-2">
                 {leagueTeams.map((team) => (
-                  <li key={team}>
-                    <a
+                  <li key={team.name}>
+                    <Link
                       className="font-body-md text-sm text-on-surface/75 transition-colors hover:text-primary"
-                      href=""
+                      href={team.href}
                       onClick={closeMenu}
                     >
-                      {team}
-                    </a>
+                      {team.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -179,20 +175,16 @@ export default function Header() {
           </div>
 
           <div className="grid gap-2 border-t border-outline-variant pt-3">
-            <a
-              className="font-label-caps text-label-caps text-on-surface/75 transition-colors hover:text-on-surface"
-              href=""
-              onClick={closeMenu}
-            >
-              About Us
-            </a>
-            <a
-              className="font-label-caps text-label-caps text-on-surface/75 transition-colors hover:text-on-surface"
-              href=""
-              onClick={closeMenu}
-            >
-              Events
-            </a>
+            {mainNav.slice(1, 3).map((item) => (
+              <Link
+                className="font-label-caps text-label-caps text-on-surface/75 transition-colors hover:text-on-surface"
+                href={item.href}
+                key={item.href}
+                onClick={closeMenu}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </nav>
       </div>

@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    qualities: [45, 60, 65, 70, 75, 78, 85],
     remotePatterns: [
       {
         protocol: "https",
@@ -11,6 +12,16 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "lh3.google.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "media.valorant-api.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "wiki.leagueoflegends.com",
         pathname: "/**",
       },
     ],

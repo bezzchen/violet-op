@@ -1,11 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import PrismCanvas from "./components/PrismCanvas";
+import {
+  homeContent,
+  joinContent,
+  leagueTeams,
+  valorantTeams,
+} from "./data/siteContent";
+import useLenisScroll from "./hooks/useLenisScroll";
+
+const PrismCanvas = dynamic(() => import("./components/PrismCanvas"), {
+  ssr: false,
+});
 
 const clamp = (value: number, min = 0, max = 1) =>
   Math.min(Math.max(value, min), max);
@@ -22,26 +34,17 @@ const scrollRange = (scrollPos: number, vh: number, start: number, end: number) 
 const sectionEnterProgress = (scrollPos: number, vh: number, offsetTop: number) =>
   smoothstep((scrollPos - (offsetTop - vh * 0.75)) / (vh * 0.6));
 
-const valorantTeams = [
-  { name: "VOP White", tier: "Varsity", image: "/images/vopwhite.avif" },
-  { name: "VOP Purple", tier: "Junior Varsity", image: "/images/voppurple.avif" },
-  { name: "VOP Black", tier: "Academy", image: "/images/vopblack.png" },
-  { name: "VOP Gamechangers", tier: "Marginalized", image: "/images/lavender.avif" },
-];
-
-const leagueTeams = [
-  { name: "Red", tier: "Varsity", image: "/images/red.avif"},
-  { name: "Blue", tier: "Academy", image: "/images/blue.avif" },
-];
-
 export default function Home() {
   const scrollRef = useRef<HTMLElement | null>(null);
   const heroTextRef = useRef<HTMLDivElement | null>(null);
   const heroLogoRef = useRef<HTMLDivElement | null>(null);
+  const heroCtaRef = useRef<HTMLDivElement | null>(null);
   const valAssetsRef = useRef<HTMLDivElement | null>(null);
   const valContentRef = useRef<HTMLDivElement | null>(null);
   const lolAssetsRef = useRef<HTMLDivElement | null>(null);
   const lolContentRef = useRef<HTMLDivElement | null>(null);
+
+  useLenisScroll(scrollRef);
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -51,6 +54,10 @@ export default function Home() {
 
     let animationFrame = 0;
     let removeScrollListeners = () => {};
+    let valorantOffset = scrollContainer.clientHeight;
+    let leagueOffset = scrollContainer.clientHeight * 2;
+    let ctaOffset = scrollContainer.clientHeight * 3;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const updateViewportHeight = () => {
       const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
@@ -61,8 +68,26 @@ export default function Home() {
       );
     };
 
+    if (reducedMotionQuery.matches) {
+      const handleViewportChange = () => {
+        updateViewportHeight();
+      };
+
+      updateViewportHeight();
+      window.addEventListener("resize", handleViewportChange);
+      window.visualViewport?.addEventListener("resize", handleViewportChange);
+      window.visualViewport?.addEventListener("scroll", handleViewportChange);
+
+      return () => {
+        window.removeEventListener("resize", handleViewportChange);
+        window.visualViewport?.removeEventListener("resize", handleViewportChange);
+        window.visualViewport?.removeEventListener("scroll", handleViewportChange);
+      };
+    }
+
     const ctx = gsap.context(() => {
       gsap.set(heroTextRef.current, { autoAlpha: 1, x: 0 });
+      gsap.set(heroCtaRef.current, { autoAlpha: 1, x: 0 });
       gsap.set(heroLogoRef.current, { autoAlpha: 1, scale: 1, x: 0 });
       gsap.set([valAssetsRef.current, valContentRef.current], { autoAlpha: 0 });
       gsap.set(valAssetsRef.current, { x: -120 });
@@ -70,15 +95,20 @@ export default function Home() {
       gsap.set(lolContentRef.current, { autoAlpha: 0, x: -120 });
       gsap.set(lolAssetsRef.current, { autoAlpha: 0, x: 120 });
 
+      const refreshSectionOffsets = () => {
+        const vh = scrollContainer.clientHeight;
+
+        valorantOffset =
+          document.getElementById("valorant-section")?.offsetTop ?? vh;
+        leagueOffset =
+          document.getElementById("lol-section")?.offsetTop ?? vh * 2;
+        ctaOffset =
+          document.getElementById("cta-section")?.offsetTop ?? vh * 3;
+      };
+
       const animateScrollState = () => {
         const scrollPos = scrollContainer.scrollTop;
         const vh = scrollContainer.clientHeight;
-        const valorantOffset =
-          document.getElementById("valorant-section")?.offsetTop ?? vh;
-        const leagueOffset =
-          document.getElementById("lol-section")?.offsetTop ?? vh * 2;
-        const ctaOffset =
-          document.getElementById("cta-section")?.offsetTop ?? vh * 3;
         const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
         const valorantEnter = sectionEnterProgress(scrollPos, vh, valorantOffset);
         const valorantExit = sectionEnterProgress(scrollPos, vh, leagueOffset);
@@ -88,6 +118,11 @@ export default function Home() {
         const leagueProgress = clamp(leagueEnter - leagueExit);
 
         gsap.set(heroTextRef.current, {
+          autoAlpha: 1 - heroExit,
+          x: -120 * heroExit,
+        });
+
+        gsap.set(heroCtaRef.current, {
           autoAlpha: 1 - heroExit,
           x: -120 * heroExit,
         });
@@ -130,10 +165,12 @@ export default function Home() {
 
       const handleViewportChange = () => {
         updateViewportHeight();
+        refreshSectionOffsets();
         scheduleScrollState();
       };
 
       updateViewportHeight();
+      refreshSectionOffsets();
       animateScrollState();
       scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
       window.addEventListener("resize", handleViewportChange);
@@ -173,41 +210,58 @@ export default function Home() {
           <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
             <div className="relative lg:col-span-12">
               <div
-                className="relative z-30 -mt-32 pointer-events-none md:mt-0"
+                className="relative z-30 -mt-50 pointer-events-none md:mt-0"
                 ref={heroTextRef}
               >
                 <span className="mb-4 block font-label-caps text-label-caps uppercase text-primary">
-                  New York University Esports
+                  {homeContent.eyebrow}
                 </span>
                 <h1 className="hero-title font-display-xl uppercase italic text-white drop-shadow-2xl">
                   Violet
                   <br />
                   <span className="text-primary not-italic">OP</span>
                 </h1>
-                <div className="relative z-40 mt-12 flex gap-4">
-                  <a
+                <p className="mt-6 max-w-xl font-body-lg text-body-lg text-on-surface-variant drop-shadow-2xl">
+                  {homeContent.body}
+                </p>
+                <div className="relative z-40 mt-12 hidden gap-4 md:flex">
+                  <Link
                     className="pointer-events-auto op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
-                    href=""
+                    href="/about-us"
                   >
                     About Us
-                  </a>
+                  </Link>
                 </div>
               </div>
 
               <div
-                className="absolute left-1/2 top-[80%] z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 md:top-[55%] lg:left-[75%] lg:opacity-100"
+                className="absolute left-1/2 top-[210%] z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 md:top-[55%] lg:left-[75%] lg:opacity-100"
                 ref={heroLogoRef}
               >
                 <Image
                   alt="NYU Violet OP identity"
-                  className="w-full scale-105 drop-shadow-[0_0_80px_rgba(134,3,226,0.5)]"
+                  className="mt-48 w-full scale-105 drop-shadow-[0_0_90px_rgba(204,72,255,0.72)] md:mt-0"
                   height={720}
-                  priority
+                  preload
+                  quality={85}
+                  sizes="(min-width: 1024px) 42vw, (min-width: 768px) 70vw, 92vw"
                   src="/images/logo.avif"
                   width={720}
                 />
               </div>
             </div>
+          </div>
+
+          <div
+            className="fixed bottom-40 left-4 z-40 flex md:hidden"
+            ref={heroCtaRef}
+          >
+            <Link
+              className="op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+              href="/about-us"
+            >
+              About Us
+            </Link>
           </div>
         </section>
 
@@ -220,6 +274,7 @@ export default function Home() {
               alt="Violet OP Valorant group"
               className="object-cover opacity-25"
               fill
+              quality={45}
               sizes="100vw"
               src="/images/valologo.webp"
             />
@@ -232,31 +287,34 @@ export default function Home() {
             >
               <Image
                 alt="Waylay Valorant agent"
-                className="relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_30px_rgba(134,3,226,0.3)] md:max-h-[70vh]"
+                className="relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_38px_rgba(204,72,255,0.48)] md:max-h-[70vh]"
                 height={1100}
+                quality={70}
+                sizes="(min-width: 1024px) 34vw, (min-width: 768px) 55vw, 82vw"
                 src="/images/waylay.webp"
                 width={700}
               />
             </div>
 
             <div
-              className="glass-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
+              className="glass-panel section-text-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
               ref={valContentRef}
             >
               <div className="mb-6 flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full bg-tertiary" />
                 <span className="font-label-caps text-label-caps uppercase text-tertiary">
-                  Squadron Deployment: active
+                  Meet the Teams
                 </span>
               </div>
               <h2 className="mb-8 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
-                Tactical <span className="text-tertiary">Rosters</span>
+                VALORANT <span className="text-tertiary">Rosters</span>
               </h2>
 
               <div className="mb-8 grid grid-cols-2 gap-4">
                 {valorantTeams.map((team) => (
-                  <article
+                  <Link
                     className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
+                    href={team.href}
                     key={team.name}
                   >
                     <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
@@ -264,6 +322,7 @@ export default function Home() {
                         alt={`${team.name} team`}
                         className="object-contain object-center opacity-80"
                         fill
+                        quality={60}
                         sizes="(min-width: 1024px) 240px, 50vw"
                         src={team.image}
                       />
@@ -276,16 +335,16 @@ export default function Home() {
                         {team.tier}
                       </span>
                     </div>
-                  </article>
+                  </Link>
                 ))}
               </div>
 
-              <a
+              <Link
                 className="flex items-center gap-2 font-label-caps text-label-caps text-tertiary transition-transform hover:translate-x-2"
-                href=""
+                href="/join-us"
               >
-                View Roster <span aria-hidden="true">→</span>
-              </a>
+                Join Us <span aria-hidden="true">→</span>
+              </Link>
             </div>
           </div>
         </section>
@@ -299,6 +358,7 @@ export default function Home() {
               alt="League of Legends atmospheric backdrop"
               className="object-cover opacity-20"
               fill
+              quality={45}
               sizes="100vw"
               src="/images/lollogo.avif"
             />
@@ -306,52 +366,54 @@ export default function Home() {
 
           <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
             <div
-              className="glass-panel op-clip order-2 flex flex-col items-end border-r-4 border-r-primary p-6 text-right md:p-stack-xl lg:order-1"
+              className="glass-panel section-text-panel op-clip order-2 flex flex-col items-end border-r-4 border-r-primary p-6 text-right md:p-stack-xl lg:order-1"
               ref={lolContentRef}
             >
               <div className="mb-6 flex items-center gap-2">
                 <span className="font-label-caps text-label-caps uppercase text-primary">
-                  Squadron Deployment: active
+                  Meet the Teams
                 </span>
                 <span className="h-2 w-2 rounded-full bg-primary" />
               </div>
               <h2 className="mb-8 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
-                Ascending the <span className="text-primary">Rift</span>
+                League <span className="text-primary">Rosters</span>
               </h2>
 
               <div className="mb-8 grid w-full grid-cols-2 gap-4">
                 {leagueTeams.map((team) => (
-                  <article
-                  className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
-                  key={team.name}
+                  <Link
+                    className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
+                    href={team.href}
+                    key={team.name}
                   >
-                  <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
-                    <Image
-                      alt={`${team.name} team`}
-                      className="object-contain object-center opacity-80"
-                      fill
-                      sizes="(min-width: 1024px) 240px, 50vw"
-                      src={team.image}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-headline-md text-lg text-on-surface">
-                      {team.name}
-                    </span>
-                    <span className="font-label-caps text-[10px] uppercase text-tertiary">
-                      {team.tier}
-                    </span>
-                  </div>
-                </article>
+                    <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
+                      <Image
+                        alt={`${team.name} team`}
+                        className="object-contain object-center opacity-80"
+                        fill
+                        quality={60}
+                        sizes="(min-width: 1024px) 240px, 50vw"
+                        src={team.image}
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-headline-md text-lg text-on-surface">
+                        {team.name}
+                      </span>
+                      <span className="font-label-caps text-[10px] uppercase text-tertiary">
+                        {team.tier}
+                      </span>
+                    </div>
+                  </Link>
                 ))}
               </div>
 
-              <a
+              <Link
                 className="flex items-center gap-2 self-end font-label-caps text-label-caps text-primary transition-transform hover:-translate-x-2"
-                href=""
+                href="/join-us"
               >
-                <span aria-hidden="true">←</span> View Roster
-              </a>
+                <span aria-hidden="true">←</span> Join Us
+              </Link>
             </div>
 
             <div
@@ -360,8 +422,10 @@ export default function Home() {
             >
               <Image
                 alt="Ahri League of Legends champion"
-                className="relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_40px_rgba(224,182,255,0.4)] md:max-h-[70vh]"
+                className="relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_48px_rgba(240,120,255,0.58)] md:max-h-[70vh]"
                 height={1100}
+                quality={70}
+                sizes="(min-width: 1024px) 34vw, (min-width: 768px) 55vw, 82vw"
                 src="/images/ahri.avif"
                 width={700}
               />
@@ -375,51 +439,45 @@ export default function Home() {
         >
           <div className="relative z-10 max-w-4xl space-y-stack-md md:pb-12">
             <span className="font-label-caps text-label-caps uppercase text-on-primary-container">
-              Join the legacy
+              {joinContent.title}
             </span>
             <h2 className="font-display-xl text-4xl font-extrabold uppercase text-white md:text-display-xl">
-              Are you <span className="text-primary">Overpowered?</span>
+              Join <span className="text-primary">Us</span>
             </h2>
             <p className="mx-auto max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
-              Whether you&apos;re a high-ELO competitor, a broadcast specialist, or a
-              community builder, there&apos;s a place for you in the Violet OP
-              ecosystem.
+              {homeContent.join}
             </p>
 
             <div className="flex flex-col items-center justify-center gap-gutter pt-stack-md md:flex-row">
-              <a
+              <Link
                 className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
-                href=""
-                rel="noreferrer"
-                target="_blank"
+                href="/join-us"
               >
                 <h3 className="mb-2 font-bold font-headline-md text-headline-md text-primary">
-                  Players
+                  Choose Your Path
                 </h3>
                 <p className="mb-4 font-body-md text-body-md text-on-surface/70">
-                  Try out for our teams.
+                  {joinContent.intro}
                 </p>
                 <span className="border-b border-primary pb-1 font-label-caps text-label-caps">
-                  Apply Now
+                  Join Us
                 </span>
-              </a>
+              </Link>
 
-              <a
+              <Link
                 className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
-                href=""
-                rel="noreferrer"
-                target="_blank"
+                href="/join-us"
               >
                 <h3 className="mb-2 font-bold font-headline-md text-headline-md text-tertiary">
-                  Staff
+                  Not a Player?
                 </h3>
                 <p className="mb-4 font-body-md text-body-md text-on-surface/70">
-                  Coaching and management.
+                  {joinContent.staffIntro}
                 </p>
                 <span className="border-b border-tertiary pb-1 font-label-caps text-label-caps">
-                  Join Crew
+                  Join the Staff
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
           <Footer />

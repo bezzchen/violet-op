@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { siteMeta } from "./data/siteContent";
 
 export const metadata: Metadata = {
-  title: "Violet OP | NYU Esports",
-  description:
-    "NYU Violet OP esports teams, rosters, events, and community opportunities.",
+  title: siteMeta.title,
+  description: siteMeta.description,
 };
 
 export default function RootLayout({

@@ -1,53 +1,53 @@
 @import "tailwindcss";
 
 @theme {
-  --color-on-primary-container: #c985ff;
-  --color-on-tertiary-container: #e7caff;
+  --color-on-primary-container: #f4d4ff;
+  --color-on-tertiary-container: #ffd6ff;
   --color-error: #ffb4ab;
-  --color-tertiary-fixed: #f2daff;
-  --color-inverse-on-surface: #2e3034;
-  --color-surface-variant: #333539;
-  --color-surface-container-lowest: #0c0e12;
-  --color-outline-variant: #4c4451;
-  --color-inverse-primary: #803db5;
-  --color-surface: #111317;
-  --color-on-secondary-fixed-variant: #6900b3;
-  --color-tertiary-container: #57068c;
-  --color-on-background: #e2e2e7;
+  --color-tertiary-fixed: #ffe2ff;
+  --color-inverse-on-surface: #321044;
+  --color-surface-variant: #4c1b63;
+  --color-surface-container-lowest: #100017;
+  --color-outline-variant: #7f4f98;
+  --color-inverse-primary: #a100ff;
+  --color-surface: #190521;
+  --color-on-secondary-fixed-variant: #8b00ef;
+  --color-tertiary-container: #9d00ff;
+  --color-on-background: #f6eaff;
   --color-on-error: #690005;
-  --color-outline: #988d9d;
+  --color-outline: #c996df;
   --color-on-error-container: #ffdad6;
-  --color-surface-container-highest: #333539;
-  --color-surface-container-high: #282a2e;
-  --color-on-primary-fixed: #2e004e;
-  --color-on-tertiary: #490080;
-  --color-on-primary: #4c007c;
-  --color-background: #111317;
-  --color-secondary-fixed: #f0dbff;
-  --color-on-surface-variant: #cfc2d3;
-  --color-primary-container: #57068c;
-  --color-secondary-fixed-dim: #ddb7ff;
-  --color-primary-fixed: #f2daff;
-  --color-on-primary-fixed-variant: #66209b;
-  --color-primary: #e0b6ff;
-  --color-surface-tint: #e0b6ff;
-  --color-on-secondary: #490080;
-  --color-tertiary: #ddb7ff;
-  --color-surface-dim: #111317;
-  --color-secondary-container: #8603e2;
+  --color-surface-container-highest: #4d1a67;
+  --color-surface-container-high: #3b1150;
+  --color-on-primary-fixed: #35004d;
+  --color-on-tertiary: #3d0055;
+  --color-on-primary: #31004a;
+  --color-background: #170020;
+  --color-secondary-fixed: #f8d6ff;
+  --color-on-surface-variant: #e8ccf3;
+  --color-primary-container: #9500ff;
+  --color-secondary-fixed-dim: #ebadff;
+  --color-primary-fixed: #f9dcff;
+  --color-on-primary-fixed-variant: #8300d4;
+  --color-primary: #f0b8ff;
+  --color-surface-tint: #e06bff;
+  --color-on-secondary: #3a0055;
+  --color-tertiary: #ff9cff;
+  --color-surface-dim: #120019;
+  --color-secondary-container: #c000ff;
   --color-error-container: #93000a;
-  --color-surface-container: #1e2023;
-  --color-secondary: #ddb7ff;
-  --color-tertiary-fixed-dim: #c985ff;
-  --color-surface-container-low: #1a1c1f;
-  --color-surface-bright: #37393d;
-  --color-on-tertiary-fixed-variant: #66209b;
-  --color-primary-fixed-dim: #e0b6ff;
-  --color-on-secondary-fixed: #2c0050;
-  --color-on-surface: #e2e2e7;
-  --color-on-secondary-container: #e7caff;
-  --color-on-tertiary-fixed: #2e004e;
-  --color-inverse-surface: #e2e2e7;
+  --color-surface-container: #270837;
+  --color-secondary: #e086ff;
+  --color-tertiary-fixed-dim: #f0a5ff;
+  --color-surface-container-low: #21042e;
+  --color-surface-bright: #562070;
+  --color-on-tertiary-fixed-variant: #8500c4;
+  --color-primary-fixed-dim: #eda5ff;
+  --color-on-secondary-fixed: #29003f;
+  --color-on-surface: #fff5ff;
+  --color-on-secondary-container: #ffe2ff;
+  --color-on-tertiary-fixed: #320044;
+  --color-inverse-surface: #f9eaff;
 
   --spacing-grid-margin: 2rem;
   --spacing-gutter: 1.5rem;
@@ -79,8 +79,8 @@
 
 :root {
   --app-height: 100dvh;
-  background: #111317;
-  color: #e2e2e7;
+  background: #170020;
+  color: #f6eaff;
 }
 
 * {
@@ -88,15 +88,15 @@
 }
 
 html {
-  background: #111317;
+  background: #170020;
   color-scheme: dark;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  background: #111317;
-  color: #e2e2e7;
+  background: #170020;
+  color: #f6eaff;
   font-family: "Hanken Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
 }
@@ -107,10 +107,107 @@ a {
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(179, 58, 255, 0.12);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(236, 181, 255, 0.2);
+}
+
+.section-text-panel {
+  background: rgba(16, 0, 23, 0.5);
+}
+
+.event-row-panel {
+  background: rgba(10, 0, 18, 0.82);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.team-reveal {
+  animation: team-reveal 0.7s ease forwards;
+  animation-delay: var(--team-delay, 0ms);
+  opacity: 0;
+  transform: translateY(42px);
+}
+
+.team-corner-line {
+  border-left: 1px solid rgba(240, 184, 255, 0.3);
+  border-top: 1px solid rgba(240, 184, 255, 0.3);
+  height: 8rem;
+  position: absolute;
+  width: 8rem;
+}
+
+.team-feature-stage {
+  isolation: isolate;
+}
+
+.team-stage-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 3rem 3rem;
+  inset: 0;
+  opacity: 0.12;
+  position: absolute;
+  z-index: 0;
+}
+
+.team-stage-slash {
+  box-shadow: 0 0 22px rgba(240, 184, 255, 0.45);
+  height: 2px;
+  left: -20%;
+  opacity: 0.65;
+  position: absolute;
+  top: 34%;
+  transform: rotate(-14deg);
+  width: 140%;
+  z-index: 1;
+}
+
+.team-stage-frame {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  clip-path: polygon(0 0, 86% 0, 100% 18%, 100% 100%, 14% 100%, 0 82%);
+  inset: 1.25rem;
+  position: absolute;
+  z-index: 2;
+}
+
+.team-feature-image {
+  animation: team-float 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 42px rgba(209, 76, 255, 0.36));
+  object-position: center bottom;
+  padding: 1.5rem;
+  z-index: 10;
+}
+
+.team-info-card,
+.team-roster-card {
+  background: rgba(10, 0, 18, 0.72);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.team-info-card::before,
+.team-roster-card::before {
+  background: linear-gradient(90deg, rgba(240, 184, 255, 0.7), transparent);
+  content: "";
+  height: 1px;
+  left: 0;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.team-info-card:hover,
+.team-roster-card:hover {
+  border-color: rgba(240, 184, 255, 0.36);
+  transform: translateY(-4px);
+}
+
+.team-roster-card {
+  min-height: 12rem;
 }
 
 .op-clip {
@@ -118,11 +215,11 @@ a {
 }
 
 .neon-glow-purple {
-  box-shadow: 0 0 20px -5px #8603e2;
+  box-shadow: 0 0 28px -4px #d14cff;
 }
 
 .hover\:neon-glow-purple:hover {
-  box-shadow: 0 0 20px -5px #8603e2;
+  box-shadow: 0 0 28px -4px #d14cff;
 }
 
 .scroll-container {
@@ -133,13 +230,20 @@ a {
   overscroll-behavior-y: contain;
 }
 
+.page-scroll-container {
+  min-height: 100vh;
+  height: var(--app-height);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+}
+
 .prism-canvas-background {
   position: fixed;
   inset: 0;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #030006;
+  background: #08000f;
   contain: paint;
 }
 
@@ -164,12 +268,25 @@ a {
   width: 4px;
 }
 
+.page-scroll-container::-webkit-scrollbar {
+  width: 4px;
+}
+
 .scroll-container::-webkit-scrollbar-track {
-  background: #111317;
+  background: #170020;
+}
+
+.page-scroll-container::-webkit-scrollbar-track {
+  background: #170020;
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: #57068c;
+  background: #b300ff;
+  border-radius: 10px;
+}
+
+.page-scroll-container::-webkit-scrollbar-thumb {
+  background: #b300ff;
   border-radius: 10px;
 }
 
@@ -193,6 +310,24 @@ a {
   font-size: 4rem;
   line-height: 0.9;
   font-weight: 900;
+}
+
+@keyframes team-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes team-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
 }
 
 @media (min-width: 768px) {
@@ -227,6 +362,20 @@ a {
   #cta-section > div:first-child {
     margin-bottom: auto;
     margin-top: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-reveal,
+  .team-feature-image {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .team-info-card,
+  .team-roster-card {
+    transition: none;
   }
 }
 

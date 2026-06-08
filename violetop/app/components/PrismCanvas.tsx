@@ -6,6 +6,19 @@ type PrismCanvasProps = {
   scrollContainerRef: RefObject<HTMLElement | null>;
 };
 
+type NetworkInformationLike = {
+  effectiveType?: string;
+  saveData?: boolean;
+};
+
+type NavigatorWithPerformanceHints = Navigator & {
+  connection?: NetworkInformationLike;
+  deviceMemory?: number;
+};
+
+const DEFAULT_FRAME_MS = 1000 / 30;
+const LOW_POWER_FRAME_MS = 1000 / 24;
+
 const vertexShaderSource = `
 attribute vec2 a_position;
 
@@ -64,16 +77,16 @@ float sheet(vec2 p, float offset, float width, float softness) {
 }
 
 vec3 palette(float t) {
-  vec3 ink = vec3(0.015, 0.002, 0.024);
-  vec3 deep = vec3(0.105, 0.012, 0.18);
-  vec3 violet = vec3(0.33, 0.02, 0.55);
-  vec3 electric = vec3(0.72, 0.24, 1.0);
-  vec3 pearl = vec3(0.96, 0.86, 1.0);
+  vec3 ink = vec3(0.015, 0.0, 0.035);
+  vec3 deep = vec3(0.095, 0.01, 0.20);
+  vec3 violet = vec3(0.34, 0.025, 0.62);
+  vec3 electric = vec3(0.58, 0.08, 0.84);
+  vec3 ultraviolet = vec3(0.70, 0.14, 0.92);
 
   vec3 color = mix(ink, deep, smoothstep(0.0, 0.34, t));
   color = mix(color, violet, smoothstep(0.22, 0.72, t));
   color = mix(color, electric, smoothstep(0.52, 0.96, t));
-  color = mix(color, pearl, smoothstep(0.9, 1.0, t) * 0.7);
+  color = mix(color, ultraviolet, smoothstep(0.9, 1.0, t) * 0.48);
 
   return color;
 }
@@ -115,19 +128,20 @@ void main() {
   float smoke = fbm(warped * 1.35 + vec2(scroll * 1.2, time));
   float depth = smoothstep(0.12, 1.18, radius);
 
-  vec3 color = palette(leftShade * 0.48 + rightGlow * 0.42 + luminous * 0.4);
-  color *= 0.34 + rightGlow * 0.92;
-  color += vec3(0.25, 0.02, 0.42) * smoke * (0.2 + rightGlow * 0.44);
-  color += vec3(0.96, 0.72, 1.0) * caustic * (0.05 + luminous * 0.2);
-  color += vec3(0.66, 0.15, 1.0) * luminous * (0.22 + rightGlow * 0.45);
-  color *= 1.0 - depth * 0.3;
+  vec3 color = palette(leftShade * 0.42 + rightGlow * 0.34 + luminous * 0.32);
+  color *= 0.38 + rightGlow * 0.76;
+  color += vec3(0.24, 0.015, 0.48) * smoke * (0.2 + rightGlow * 0.36);
+  color += vec3(0.58, 0.08, 0.76) * caustic * (0.045 + luminous * 0.16);
+  color += vec3(0.66, 0.10, 0.86) * luminous * (0.22 + rightGlow * 0.38);
+  color *= 0.92 - depth * 0.2;
   color *= 0.74 + shadowCut;
 
   float leftVignette = smoothstep(-1.25, 0.35, p.x);
-  color *= 0.52 + leftVignette * 0.68;
+  color *= 0.56 + leftVignette * 0.58;
 
   float grain = hash(gl_FragCoord.xy + u_time) - 0.5;
-  color += grain * 0.018;
+  color += grain * 0.012;
+  color = clamp(color, vec3(0.0), vec3(0.72, 0.16, 0.9));
 
   gl_FragColor = vec4(color, 1.0);
 }
@@ -231,9 +245,44 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
       gl.STATIC_DRAW,
     );
 
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarsePointerQuery = window.matchMedia("(pointer: coarse)");
+    const navigatorHints = navigator as NavigatorWithPerformanceHints;
+    const connection = navigatorHints.connection;
     let animationFrame = 0;
+    let staticFrame = 0;
+    let lastRenderTime = 0;
     let scrollProgress = 0;
     let targetScrollProgress = 0;
+    let isDocumentVisible = document.visibilityState === "visible";
+
+    const isLowPowerContext = () => {
+      const effectiveType = connection?.effectiveType ?? "";
+      const hasLowMemory =
+        typeof navigatorHints.deviceMemory === "number" &&
+        navigatorHints.deviceMemory <= 4;
+
+      return (
+        coarsePointerQuery.matches ||
+        hasLowMemory ||
+        effectiveType === "slow-2g" ||
+        effectiveType === "2g"
+      );
+    };
+
+    const shouldUseStaticCanvas = () =>
+      reducedMotionQuery.matches || Boolean(connection?.saveData);
+
+    const getFrameInterval = () =>
+      isLowPowerContext() ? LOW_POWER_FRAME_MS : DEFAULT_FRAME_MS;
+
+    const getPixelRatio = () => {
+      if (shouldUseStaticCanvas()) {
+        return 0.75;
+      }
+
+      return Math.min(window.devicePixelRatio || 1, isLowPowerContext() ? 1 : 1.25);
+    };
 
     const updateScrollProgress = () => {
       const maxScroll = Math.max(
@@ -248,7 +297,7 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
     };
 
     const resize = () => {
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+      const pixelRatio = getPixelRatio();
       const viewport = window.visualViewport;
       const width = Math.max(1, Math.floor((viewport?.width ?? window.innerWidth) * pixelRatio));
       const height = Math.max(1, Math.floor((viewport?.height ?? window.innerHeight) * pixelRatio));
@@ -261,8 +310,12 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
       gl.viewport(0, 0, width, height);
     };
 
-    const render = (time: number) => {
-      scrollProgress += (targetScrollProgress - scrollProgress) * 0.085;
+    const drawFrame = (time: number, interpolateScroll = true) => {
+      if (interpolateScroll) {
+        scrollProgress += (targetScrollProgress - scrollProgress) * 0.085;
+      } else {
+        scrollProgress = targetScrollProgress;
+      }
 
       gl.useProgram(program);
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -272,23 +325,135 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
       gl.uniform1f(timeLocation, time * 0.001);
       gl.uniform1f(scrollLocation, scrollProgress);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
+    };
+
+    const startRenderLoop = () => {
+      if (animationFrame || !isDocumentVisible || shouldUseStaticCanvas()) {
+        return;
+      }
 
       animationFrame = window.requestAnimationFrame(render);
     };
 
+    const stopRenderLoop = () => {
+      if (!animationFrame) {
+        return;
+      }
+
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+    };
+
+    const scheduleStaticRender = () => {
+      if (staticFrame || !isDocumentVisible) {
+        return;
+      }
+
+      staticFrame = window.requestAnimationFrame((time) => {
+        staticFrame = 0;
+        drawFrame(time, false);
+      });
+    };
+
+    const render = (time: number) => {
+      animationFrame = 0;
+
+      if (!isDocumentVisible || shouldUseStaticCanvas()) {
+        return;
+      }
+
+      const frameInterval = getFrameInterval();
+
+      if (time - lastRenderTime >= frameInterval) {
+        lastRenderTime = time - ((time - lastRenderTime) % frameInterval);
+        drawFrame(time);
+      }
+
+      startRenderLoop();
+    };
+
+    const handleScroll = () => {
+      updateScrollProgress();
+
+      if (shouldUseStaticCanvas()) {
+        scheduleStaticRender();
+      }
+    };
+
+    const handleResize = () => {
+      resize();
+      updateScrollProgress();
+
+      if (shouldUseStaticCanvas()) {
+        scheduleStaticRender();
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      isDocumentVisible = document.visibilityState === "visible";
+
+      if (!isDocumentVisible) {
+        stopRenderLoop();
+
+        if (staticFrame) {
+          window.cancelAnimationFrame(staticFrame);
+          staticFrame = 0;
+        }
+
+        return;
+      }
+
+      resize();
+      updateScrollProgress();
+
+      if (shouldUseStaticCanvas()) {
+        scheduleStaticRender();
+      } else {
+        startRenderLoop();
+      }
+    };
+
+    const handleMotionPreferenceChange = () => {
+      resize();
+      updateScrollProgress();
+
+      if (shouldUseStaticCanvas()) {
+        stopRenderLoop();
+        scheduleStaticRender();
+      } else {
+        startRenderLoop();
+      }
+    };
+
     resize();
     updateScrollProgress();
-    animationFrame = window.requestAnimationFrame(render);
 
-    scrollContainer.addEventListener("scroll", updateScrollProgress, { passive: true });
-    window.addEventListener("resize", resize);
-    window.visualViewport?.addEventListener("resize", resize);
+    if (shouldUseStaticCanvas()) {
+      scheduleStaticRender();
+    } else {
+      startRenderLoop();
+    }
+
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+    window.visualViewport?.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
+    coarsePointerQuery.addEventListener("change", handleMotionPreferenceChange);
 
     return () => {
-      scrollContainer.removeEventListener("scroll", updateScrollProgress);
-      window.removeEventListener("resize", resize);
-      window.visualViewport?.removeEventListener("resize", resize);
-      window.cancelAnimationFrame(animationFrame);
+      scrollContainer.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.visualViewport?.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      reducedMotionQuery.removeEventListener("change", handleMotionPreferenceChange);
+      coarsePointerQuery.removeEventListener("change", handleMotionPreferenceChange);
+      stopRenderLoop();
+
+      if (staticFrame) {
+        window.cancelAnimationFrame(staticFrame);
+      }
+
       gl.deleteBuffer(positionBuffer);
       gl.deleteProgram(program);
     };

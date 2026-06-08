@@ -51,9 +51,17 @@ const socialLinks = [
   },
 ];
 
-export default function Footer() {
+type FooterProps = {
+  pinned?: boolean;
+};
+
+export default function Footer({ pinned = true }: FooterProps) {
+  const layoutClasses = pinned
+    ? "w-[calc(100%+2rem)] md:absolute md:bottom-0 md:left-0 md:mt-0 md:w-full"
+    : "w-full md:mt-stack-xl";
+
   return (
-    <footer className="site-footer relative z-20 mt-stack-md flex w-[calc(100%+2rem)] flex-col items-center justify-between gap-gutter border-t border-outline-variant bg-surface-container-lowest px-4 py-4 md:absolute md:bottom-0 md:left-0 md:mt-0 md:w-full md:flex-row md:px-grid-margin md:py-stack-md">
+    <footer className={`site-footer relative z-20 mt-stack-md flex flex-col items-center justify-between gap-gutter border-t border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:flex-row md:px-grid-margin md:py-stack-md ${layoutClasses}`}>
       <div className="flex flex-col items-center gap-2 md:items-start">
         <span className="text-white font-headline-md text-headline-md font-extrabold text-primary">
           Violet OP
