@@ -350,7 +350,7 @@ a {
   }
 
   #hero-section {
-    min-height: calc(var(--app-height) * 0.78);
+    min-height: var(--app-height);
   }
 
   #cta-section {

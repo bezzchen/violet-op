@@ -208,9 +208,9 @@ export default function Home() {
           id="hero-section"
         >
           <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
-            <div className="relative lg:col-span-12">
+            <div className="relative flex min-h-[calc(var(--app-height)-6rem)] flex-col justify-start pt-12 md:min-h-0 md:justify-center md:pt-0 lg:col-span-12">
               <div
-                className="relative z-30 -mt-50 pointer-events-none md:mt-0"
+                className="pointer-events-none relative z-30 max-w-[22rem] md:max-w-none"
                 ref={heroTextRef}
               >
                 <span className="mb-4 block font-label-caps text-label-caps uppercase text-primary">
@@ -235,12 +235,12 @@ export default function Home() {
               </div>
 
               <div
-                className="absolute left-1/2 top-[210%] z-20 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 opacity-50 md:top-[55%] lg:left-[75%] lg:opacity-100"
+                className="pointer-events-none absolute left-1/2 top-[70%] z-20 w-[min(88vw,24rem)] -translate-x-1/2 -translate-y-1/2 opacity-55 md:top-[55%] md:w-full md:max-w-2xl lg:left-[75%] lg:opacity-100"
                 ref={heroLogoRef}
               >
                 <Image
                   alt="NYU Violet OP identity"
-                  className="mt-48 w-full scale-105 drop-shadow-[0_0_90px_rgba(204,72,255,0.72)] md:mt-0"
+                  className="w-full scale-95 drop-shadow-[0_0_90px_rgba(204,72,255,0.72)] md:scale-105"
                   height={720}
                   preload
                   quality={85}
