@@ -132,73 +132,89 @@ export default async function TeamPage({
     <PageShell>
       <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-24 px-4 pb-20 pt-28 md:px-grid-margin md:pb-28">
         <section
-          className="team-reveal relative grid min-h-[calc(var(--app-height)-7rem)] items-center gap-12 overflow-hidden lg:grid-cols-[1.05fr_0.95fr]"
+          className="team-reveal team-hero-section relative min-h-[calc(var(--app-height)-7rem)] overflow-hidden border border-white/10"
           style={revealStyle(0)}
         >
+          <div className="pointer-events-none absolute inset-0 z-0">
+            <Image
+              alt=""
+              className="team-hero-game-backdrop object-contain"
+              fill
+              quality={45}
+              sizes="100vw"
+              src={team.gameLogo}
+            />
+          </div>
+          <span aria-hidden="true" className={`team-hero-wash ${accent.line}`} />
           <span aria-hidden="true" className="team-corner-line left-0 top-8" />
           <span aria-hidden="true" className="team-corner-line bottom-8 right-0 rotate-180" />
 
-          <div className="relative z-10">
-            <div className="mb-10 flex flex-wrap items-center gap-5">
-              <div className="relative h-12 w-36">
-                <Image
-                  alt={`${team.gameLabel} logo`}
-                  className="object-contain object-left"
-                  fill
-                  sizes="144px"
-                  src={team.gameLogo}
-                />
-              </div>
-              <div className="h-12 w-px bg-white/15" />
-              <div>
-                <span className="block font-label-caps text-label-caps uppercase text-on-surface-variant/70">
+          <div className="relative z-10 grid min-h-[calc(var(--app-height)-7rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:p-12">
+            <div className={`team-hero-copy glass-panel section-text-panel op-clip border-l-4 ${accent.borderSide} p-6 md:p-stack-xl`}>
+              <div className="mb-6 flex items-center gap-2">
+                <span className={`h-2 w-2 rounded-full ${accent.line}`} />
+                <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
                   {team.gameLabel}
                 </span>
-                <span className={`block font-label-caps text-label-caps uppercase ${accent.text}`}>
-                  {team.feature.label}: {team.feature.name}
+              </div>
+
+              <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
+                {team.label}
+              </span>
+              <h1 className="mt-5 max-w-4xl font-display-xl text-5xl font-extrabold uppercase text-white md:text-display-xl">
+                {team.name}
+              </h1>
+              <p className="mt-6 max-w-2xl font-headline-md text-2xl font-bold uppercase text-on-surface">
+                {team.feature.summary}
+              </p>
+
+              <div className="mt-8 grid max-w-3xl gap-5 font-body-lg text-body-lg text-on-surface-variant">
+                {team.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <span className="rounded border border-white/10 bg-white/5 px-4 py-2 font-label-caps text-label-caps uppercase text-on-surface-variant">
+                  {team.feature.label}
+                </span>
+                <span className={`rounded border px-4 py-2 font-label-caps text-label-caps uppercase ${accent.border} ${accent.text}`}>
+                  {team.feature.name}
                 </span>
               </div>
             </div>
 
-            <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-              {team.label}
-            </span>
-            <h1 className="mt-5 max-w-4xl font-display-xl text-5xl font-extrabold uppercase text-white md:text-display-xl">
-              {team.name}
-            </h1>
-            <p className="mt-6 max-w-2xl font-headline-md text-2xl font-bold uppercase text-on-surface">
-              {team.feature.summary}
-            </p>
-
-            <div className="mt-10 grid max-w-3xl gap-5 font-body-lg text-body-lg text-on-surface-variant">
-              {team.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
-          </div>
-
-          <div
-            className={`team-feature-stage relative min-h-[32rem] overflow-hidden rounded border ${accent.border} ${accent.soft} shadow-2xl ${accent.glow} md:min-h-[42rem]`}
-          >
-            <span aria-hidden="true" className="team-stage-grid" />
-            <span aria-hidden="true" className={`team-stage-slash ${accent.line}`} />
-            <span aria-hidden="true" className="team-stage-frame" />
-            <Image
-              alt={`${team.feature.name} ${team.gameLabel} feature`}
-              className="team-feature-image object-contain"
-              fill
-              preload
-              quality={78}
-              sizes="(min-width: 1024px) 44vw, 92vw"
-              src={team.feature.image}
-            />
-            <div className="absolute bottom-5 left-5 right-5 z-20 rounded border border-white/10 bg-surface-container-lowest/80 p-4 backdrop-blur-xl">
-              <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-                {team.feature.label}
-              </span>
-              <strong className="mt-1 block font-headline-lg text-3xl uppercase text-white">
-                {team.feature.name}
-              </strong>
+            <div className="team-hero-art relative min-h-[32rem] md:min-h-[42rem]">
+              <span aria-hidden="true" className="team-stage-grid" />
+              <span aria-hidden="true" className={`team-stage-slash ${accent.line}`} />
+              <span aria-hidden="true" className="team-stage-frame" />
+              <div className="team-hero-team-mark glass-panel">
+                <Image
+                  alt={`${team.name} logo`}
+                  className="object-contain object-center"
+                  fill
+                  quality={60}
+                  sizes="(min-width: 1024px) 260px, 48vw"
+                  src={team.image}
+                />
+              </div>
+              <Image
+                alt={`${team.feature.name} ${team.gameLabel} feature`}
+                className="team-hero-feature object-contain"
+                fill
+                preload
+                quality={78}
+                sizes="(min-width: 1024px) 46vw, 92vw"
+                src={team.feature.image}
+              />
+              <div className="team-hero-feature-label absolute bottom-5 right-5 z-30 rounded border border-white/10 bg-surface-container-lowest/80 p-4 text-right backdrop-blur-xl">
+                <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
+                  {team.feature.label}
+                </span>
+                <strong className="mt-1 block font-headline-lg text-3xl uppercase text-white">
+                  {team.feature.name}
+                </strong>
+              </div>
             </div>
           </div>
         </section>

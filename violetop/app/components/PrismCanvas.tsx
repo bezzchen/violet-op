@@ -14,10 +14,12 @@ type NetworkInformationLike = {
 type NavigatorWithPerformanceHints = Navigator & {
   connection?: NetworkInformationLike;
   deviceMemory?: number;
+  hardwareConcurrency?: number;
 };
 
-const DEFAULT_FRAME_MS = 1000 / 30;
-const LOW_POWER_FRAME_MS = 1000 / 24;
+const HIGH_FRAME_MS = 1000 / 60;
+const BALANCED_FRAME_MS = 1000 / 45;
+const LOW_POWER_FRAME_MS = 1000 / 30;
 
 const vertexShaderSource = `
 attribute vec2 a_position;
@@ -246,42 +248,82 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
     );
 
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const coarsePointerQuery = window.matchMedia("(pointer: coarse)");
     const navigatorHints = navigator as NavigatorWithPerformanceHints;
     const connection = navigatorHints.connection;
     let animationFrame = 0;
     let staticFrame = 0;
     let lastRenderTime = 0;
+    let lastDrawTime = 0;
+    let slowFrameCount = 0;
+    let stableFrameCount = 0;
     let scrollProgress = 0;
     let targetScrollProgress = 0;
     let isDocumentVisible = document.visibilityState === "visible";
 
     const isLowPowerContext = () => {
       const effectiveType = connection?.effectiveType ?? "";
-      const hasLowMemory =
+      const hasVeryLowMemory =
         typeof navigatorHints.deviceMemory === "number" &&
-        navigatorHints.deviceMemory <= 4;
+        navigatorHints.deviceMemory <= 2;
+      const hasLowCoreCount =
+        typeof navigatorHints.hardwareConcurrency === "number" &&
+        navigatorHints.hardwareConcurrency <= 4;
 
       return (
-        coarsePointerQuery.matches ||
-        hasLowMemory ||
+        hasVeryLowMemory ||
+        hasLowCoreCount ||
         effectiveType === "slow-2g" ||
         effectiveType === "2g"
       );
     };
 
+    const isBalancedContext = () => {
+      const effectiveType = connection?.effectiveType ?? "";
+      const hasLimitedMemory =
+        typeof navigatorHints.deviceMemory === "number" &&
+        navigatorHints.deviceMemory <= 4;
+      const hasModerateCoreCount =
+        typeof navigatorHints.hardwareConcurrency === "number" &&
+        navigatorHints.hardwareConcurrency <= 6;
+
+      return hasLimitedMemory || hasModerateCoreCount || effectiveType === "3g";
+    };
+
     const shouldUseStaticCanvas = () =>
       reducedMotionQuery.matches || Boolean(connection?.saveData);
 
-    const getFrameInterval = () =>
-      isLowPowerContext() ? LOW_POWER_FRAME_MS : DEFAULT_FRAME_MS;
+    const getInitialFrameInterval = () => {
+      if (isLowPowerContext()) {
+        return LOW_POWER_FRAME_MS;
+      }
+
+      if (isBalancedContext()) {
+        return BALANCED_FRAME_MS;
+      }
+
+      return HIGH_FRAME_MS;
+    };
+
+    let frameInterval = getInitialFrameInterval();
+    const fastestAllowedFrameInterval = isLowPowerContext()
+      ? BALANCED_FRAME_MS
+      : HIGH_FRAME_MS;
+
+    const getFrameInterval = () => frameInterval;
 
     const getPixelRatio = () => {
       if (shouldUseStaticCanvas()) {
         return 0.75;
       }
 
-      return Math.min(window.devicePixelRatio || 1, isLowPowerContext() ? 1 : 1.25);
+      const pixelRatioCap =
+        frameInterval <= HIGH_FRAME_MS
+          ? 1.2
+          : frameInterval <= BALANCED_FRAME_MS
+            ? 1
+            : 0.85;
+
+      return Math.min(window.devicePixelRatio || 1, pixelRatioCap);
     };
 
     const updateScrollProgress = () => {
@@ -308,6 +350,69 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
       }
 
       gl.viewport(0, 0, width, height);
+    };
+
+    const resetFrameSampler = () => {
+      lastRenderTime = 0;
+      lastDrawTime = 0;
+      slowFrameCount = 0;
+      stableFrameCount = 0;
+    };
+
+    const setFrameInterval = (nextFrameInterval: number) => {
+      if (frameInterval === nextFrameInterval) {
+        return;
+      }
+
+      frameInterval = nextFrameInterval;
+      resetFrameSampler();
+      resize();
+    };
+
+    const getSlowerFrameInterval = () => {
+      if (frameInterval <= HIGH_FRAME_MS) {
+        return BALANCED_FRAME_MS;
+      }
+
+      return LOW_POWER_FRAME_MS;
+    };
+
+    const getFasterFrameInterval = () => {
+      if (frameInterval >= LOW_POWER_FRAME_MS) {
+        return BALANCED_FRAME_MS;
+      }
+
+      return HIGH_FRAME_MS;
+    };
+
+    const tuneFrameInterval = (time: number) => {
+      if (!lastDrawTime) {
+        lastDrawTime = time;
+        return;
+      }
+
+      const frameDelta = time - lastDrawTime;
+      lastDrawTime = time;
+
+      if (frameDelta > frameInterval * 1.55) {
+        slowFrameCount += 1;
+        stableFrameCount = 0;
+      } else {
+        stableFrameCount += 1;
+        slowFrameCount = Math.max(0, slowFrameCount - 1);
+      }
+
+      if (slowFrameCount >= 8 && frameInterval < LOW_POWER_FRAME_MS) {
+        setFrameInterval(getSlowerFrameInterval());
+        return;
+      }
+
+      if (
+        stableFrameCount >= 240 &&
+        frameInterval > fastestAllowedFrameInterval
+      ) {
+        setFrameInterval(getFasterFrameInterval());
+      }
     };
 
     const drawFrame = (time: number, interpolateScroll = true) => {
@@ -364,9 +469,10 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
 
       const frameInterval = getFrameInterval();
 
-      if (time - lastRenderTime >= frameInterval) {
+      if (time - lastRenderTime >= frameInterval - 1) {
         lastRenderTime = time - ((time - lastRenderTime) % frameInterval);
         drawFrame(time);
+        tuneFrameInterval(time);
       }
 
       startRenderLoop();
@@ -414,6 +520,8 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
     };
 
     const handleMotionPreferenceChange = () => {
+      frameInterval = getInitialFrameInterval();
+      resetFrameSampler();
       resize();
       updateScrollProgress();
 
@@ -439,7 +547,6 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
     window.visualViewport?.addEventListener("resize", handleResize);
     document.addEventListener("visibilitychange", handleVisibilityChange);
     reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
-    coarsePointerQuery.addEventListener("change", handleMotionPreferenceChange);
 
     return () => {
       scrollContainer.removeEventListener("scroll", handleScroll);
@@ -447,7 +554,6 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
       window.visualViewport?.removeEventListener("resize", handleResize);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       reducedMotionQuery.removeEventListener("change", handleMotionPreferenceChange);
-      coarsePointerQuery.removeEventListener("change", handleMotionPreferenceChange);
       stopRenderLoop();
 
       if (staticFrame) {
