@@ -149,9 +149,9 @@ a {
     rgba(16, 0, 23, 0.5);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  max-width: 44.8rem;
+  max-width: 35.84rem;
   position: relative;
-  width: min(44.8rem, calc(100vw - 2rem));
+  width: min(35.84rem, calc(100vw - 2rem));
   z-index: 40;
 }
 
@@ -211,6 +211,7 @@ a {
   filter: drop-shadow(0 0 46px rgba(209, 76, 255, 0.38));
   object-position: center top;
   padding: 0;
+  translate: -5% 0;
   z-index: 20;
 }
 

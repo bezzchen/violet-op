@@ -155,7 +155,7 @@ export default async function TeamPage({
             />
           </div>
 
-          <div className="relative z-10 grid min-h-[calc(var(--app-height)-5rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[minmax(24rem,0.72fr)_1fr] lg:p-12 xl:grid-cols-[minmax(30.4rem,0.76fr)_1fr]">
+          <div className="relative z-10 grid min-h-[calc(var(--app-height)-5rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[minmax(19.2rem,0.58fr)_1fr] lg:p-12 xl:grid-cols-[minmax(24.32rem,0.61fr)_1fr]">
             <div className="team-hero-copy op-clip p-6 md:p-stack-xl" data-team-hero-copy>
               <div className="mb-6 flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${accent.line}`} />
