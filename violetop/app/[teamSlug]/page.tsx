@@ -50,6 +50,14 @@ const defaultStaffNeeds = [
 const revealStyle = (index: number) =>
   ({ "--team-delay": `${index * 90}ms` }) as CSSProperties;
 
+const getTeamTitleParts = (name: string) => {
+  if (!name.startsWith("VOP ")) {
+    return { prefix: "", rest: name };
+  }
+
+  return { prefix: "VOP", rest: name.slice(4) };
+};
+
 const normalizeRoster = (team: TeamPageData) => {
   const minimumSlots = team.game === "valorant" ? 5 : 5;
   const roster = team.roster.map((member) =>
@@ -128,6 +136,7 @@ export default async function TeamPage({
   const accent = accentClasses[team.accent as keyof typeof accentClasses];
   const supportRoles = team.staff.length > 0 ? team.staff : defaultStaffNeeds;
   const rosterSlots = normalizeRoster(team);
+  const titleParts = getTeamTitleParts(team.name);
 
   return (
     <PageShell>
@@ -148,7 +157,7 @@ export default async function TeamPage({
             />
           </div>
 
-          <div className="relative z-10 grid min-h-[calc(var(--app-height)-7rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[0.78fr_1.22fr] lg:p-12">
+          <div className="relative z-10 grid min-h-[calc(var(--app-height)-7rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[0.72fr_1.28fr] lg:p-12">
             <div className="team-hero-copy op-clip p-6 md:p-stack-xl" data-team-hero-copy>
               <div className="mb-6 flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${accent.line}`} />
@@ -160,22 +169,20 @@ export default async function TeamPage({
               <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
                 {team.label}
               </span>
-              <h1 className="mt-5 max-w-5xl break-words font-display-xl text-[4.5rem] font-extrabold uppercase leading-[0.88] text-white md:text-[5.75rem] lg:text-[6.5rem]">
-                {team.name}
+              <h1 className="team-hero-title mt-6 font-display-xl font-extrabold uppercase text-white">
+                {titleParts.prefix ? (
+                  <>
+                    <span className="team-hero-title-vop">{titleParts.prefix}</span>
+                    <span className="team-hero-title-rest">{titleParts.rest}</span>
+                  </>
+                ) : (
+                  <span className="team-hero-title-rest">{titleParts.rest}</span>
+                )}
               </h1>
-              <p className="mt-7 max-w-2xl font-headline-md text-3xl font-bold uppercase text-on-surface">
-                {team.feature.summary}
-              </p>
-
-              <div className="mt-8 grid max-w-3xl gap-5 font-body-lg text-body-lg text-on-surface-variant">
-                {team.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
             </div>
 
             <div
-              className="team-hero-art relative min-h-[34rem] md:min-h-[48rem] lg:min-h-[50rem]"
+              className="team-hero-art relative min-h-[40rem] md:min-h-[56rem] lg:min-h-[60rem]"
               data-team-hero-media
             >
               <div className="team-hero-team-mark">
@@ -201,7 +208,27 @@ export default async function TeamPage({
           </div>
         </TeamHeroMotion>
 
-        <section className="team-reveal grid gap-8 lg:grid-cols-[0.75fr_1.25fr]" style={revealStyle(1)}>
+        <section className="team-reveal grid gap-8 lg:grid-cols-[0.68fr_1.32fr]" style={revealStyle(1)}>
+          <SectionHeading
+            accent={accent}
+            eyebrow={`${team.feature.label}: ${team.feature.name}`}
+            title="Overview"
+          />
+
+          <div className="team-overview-copy op-clip p-6 md:p-stack-xl">
+            <p className="max-w-4xl font-headline-md text-3xl font-bold uppercase text-on-surface md:text-[2.75rem] md:leading-[1.02]">
+              {team.feature.summary}
+            </p>
+
+            <div className="mt-8 grid max-w-4xl gap-5 font-body-lg text-body-lg text-on-surface-variant">
+              {team.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="team-reveal grid gap-8 lg:grid-cols-[0.75fr_1.25fr]" style={revealStyle(2)}>
           <SectionHeading accent={accent} eyebrow="Program Brief" title="Identity" />
 
           <div className="grid gap-4 md:grid-cols-3">
@@ -209,7 +236,7 @@ export default async function TeamPage({
               <article
                 className="team-reveal glass-panel team-info-card rounded border border-white/10 p-5"
                 key={item}
-                style={revealStyle(index + 2)}
+                style={revealStyle(index + 3)}
               >
                 <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
                   {`0${index + 1}`}
@@ -222,7 +249,7 @@ export default async function TeamPage({
           </div>
         </section>
 
-        <section className="team-reveal grid gap-8" style={revealStyle(2)}>
+        <section className="team-reveal grid gap-8" style={revealStyle(3)}>
           <SectionHeading accent={accent} eyebrow="Lineup" title="Roster" />
 
           <div className="grid gap-4 md:grid-cols-5">
@@ -230,7 +257,7 @@ export default async function TeamPage({
               <article
                 className="team-reveal team-roster-card glass-panel rounded border border-white/10 p-5"
                 key={`${member.slot}-${member.name}`}
-                style={revealStyle(index + 3)}
+                style={revealStyle(index + 4)}
               >
                 <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
                   {member.slot}
@@ -246,7 +273,7 @@ export default async function TeamPage({
           </div>
         </section>
 
-        <section className="team-reveal grid gap-8 lg:grid-cols-[1.1fr_0.9fr]" style={revealStyle(3)}>
+        <section className="team-reveal grid gap-8 lg:grid-cols-[1.1fr_0.9fr]" style={revealStyle(4)}>
           <div>
             <SectionHeading accent={accent} eyebrow="Support System" title="Staff" />
             <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -254,7 +281,7 @@ export default async function TeamPage({
                 <article
                   className="team-reveal glass-panel team-info-card rounded border border-white/10 p-5"
                   key={staff.role}
-                  style={revealStyle(index + 4)}
+                  style={revealStyle(index + 5)}
                 >
                   <h3 className={`font-headline-md text-xl font-bold uppercase ${accent.text}`}>
                     {staff.role}

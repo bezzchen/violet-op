@@ -144,9 +144,51 @@ a {
 }
 
 .team-hero-copy {
-  background: rgba(16, 0, 23, 0.5);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(209, 76, 255, 0.26), transparent 13rem),
+    rgba(16, 0, 23, 0.5);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+  max-width: 43rem;
+  position: relative;
+  z-index: 40;
+}
+
+.team-hero-title {
+  line-height: 0.78;
+  overflow-wrap: anywhere;
+  text-shadow: 0 0 34px rgba(209, 76, 255, 0.36);
+}
+
+.team-hero-title-vop,
+.team-hero-title-rest {
+  display: block;
+}
+
+.team-hero-title-vop {
+  color: #d14cff;
+  font-size: 5.6rem;
+  font-style: italic;
+  line-height: 0.74;
+  text-shadow:
+    0 0 22px rgba(209, 76, 255, 0.72),
+    0 0 62px rgba(209, 76, 255, 0.42);
+  transform: skewX(-7deg) translateX(-0.04em);
+}
+
+.team-hero-title-rest {
+  font-size: 3.2rem;
+  line-height: 0.88;
+  margin-top: 0.55rem;
+}
+
+.team-overview-copy {
+  background:
+    radial-gradient(circle at 88% 0%, rgba(209, 76, 255, 0.18), transparent 16rem),
+    rgba(10, 0, 18, 0.76);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  min-height: 20rem;
 }
 
 .team-hero-art {
@@ -314,11 +356,37 @@ a {
   .hero-title {
     font-size: 6rem;
   }
+
+  .team-hero-title-vop {
+    font-size: 7.3rem;
+  }
+
+  .team-hero-title-rest {
+    font-size: 4.7rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .hero-title {
     font-size: 10rem;
+  }
+
+  .team-hero-title-vop {
+    font-size: 8.8rem;
+  }
+
+  .team-hero-title-rest {
+    font-size: 5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .team-hero-title-vop {
+    font-size: 9.6rem;
+  }
+
+  .team-hero-title-rest {
+    font-size: 5.4rem;
   }
 }
 
