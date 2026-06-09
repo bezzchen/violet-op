@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageShell from "../components/PageShell";
+import TeamHeroMotion from "../components/TeamHeroMotion";
 import { siteMeta, teamPages } from "../data/siteContent";
 
 type TeamRouteParams = {
@@ -131,26 +132,24 @@ export default async function TeamPage({
   return (
     <PageShell>
       <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-24 px-4 pb-20 pt-28 md:px-grid-margin md:pb-28">
-        <section
-          className="team-reveal team-hero-section relative min-h-[calc(var(--app-height)-7rem)] overflow-hidden border border-white/10"
+        <TeamHeroMotion
+          className="team-reveal team-hero-section relative min-h-[calc(var(--app-height)-7rem)] overflow-hidden"
           style={revealStyle(0)}
         >
           <div className="pointer-events-none absolute inset-0 z-0">
             <Image
               alt=""
               className="team-hero-game-backdrop object-contain"
+              data-team-hero-backdrop
               fill
               quality={45}
               sizes="100vw"
               src={team.gameLogo}
             />
           </div>
-          <span aria-hidden="true" className={`team-hero-wash ${accent.line}`} />
-          <span aria-hidden="true" className="team-corner-line left-0 top-8" />
-          <span aria-hidden="true" className="team-corner-line bottom-8 right-0 rotate-180" />
 
-          <div className="relative z-10 grid min-h-[calc(var(--app-height)-7rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[0.9fr_1.1fr] lg:p-12">
-            <div className={`team-hero-copy glass-panel section-text-panel op-clip border-l-4 ${accent.borderSide} p-6 md:p-stack-xl`}>
+          <div className="relative z-10 grid min-h-[calc(var(--app-height)-7rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[0.78fr_1.22fr] lg:p-12">
+            <div className="team-hero-copy op-clip p-6 md:p-stack-xl" data-team-hero-copy>
               <div className="mb-6 flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${accent.line}`} />
                 <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
@@ -161,10 +160,10 @@ export default async function TeamPage({
               <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
                 {team.label}
               </span>
-              <h1 className="mt-5 max-w-4xl font-display-xl text-5xl font-extrabold uppercase text-white md:text-display-xl">
+              <h1 className="mt-5 max-w-5xl break-words font-display-xl text-[4.5rem] font-extrabold uppercase leading-[0.88] text-white md:text-[5.75rem] lg:text-[6.5rem]">
                 {team.name}
               </h1>
-              <p className="mt-6 max-w-2xl font-headline-md text-2xl font-bold uppercase text-on-surface">
+              <p className="mt-7 max-w-2xl font-headline-md text-3xl font-bold uppercase text-on-surface">
                 {team.feature.summary}
               </p>
 
@@ -173,22 +172,13 @@ export default async function TeamPage({
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
-
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <span className="rounded border border-white/10 bg-white/5 px-4 py-2 font-label-caps text-label-caps uppercase text-on-surface-variant">
-                  {team.feature.label}
-                </span>
-                <span className={`rounded border px-4 py-2 font-label-caps text-label-caps uppercase ${accent.border} ${accent.text}`}>
-                  {team.feature.name}
-                </span>
-              </div>
             </div>
 
-            <div className="team-hero-art relative min-h-[32rem] md:min-h-[42rem]">
-              <span aria-hidden="true" className="team-stage-grid" />
-              <span aria-hidden="true" className={`team-stage-slash ${accent.line}`} />
-              <span aria-hidden="true" className="team-stage-frame" />
-              <div className="team-hero-team-mark glass-panel">
+            <div
+              className="team-hero-art relative min-h-[34rem] md:min-h-[48rem] lg:min-h-[50rem]"
+              data-team-hero-media
+            >
+              <div className="team-hero-team-mark">
                 <Image
                   alt={`${team.name} logo`}
                   className="object-contain object-center"
@@ -207,17 +197,9 @@ export default async function TeamPage({
                 sizes="(min-width: 1024px) 46vw, 92vw"
                 src={team.feature.image}
               />
-              <div className="team-hero-feature-label absolute bottom-5 right-5 z-30 rounded border border-white/10 bg-surface-container-lowest/80 p-4 text-right backdrop-blur-xl">
-                <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-                  {team.feature.label}
-                </span>
-                <strong className="mt-1 block font-headline-lg text-3xl uppercase text-white">
-                  {team.feature.name}
-                </strong>
-              </div>
             </div>
           </div>
-        </section>
+        </TeamHeroMotion>
 
         <section className="team-reveal grid gap-8 lg:grid-cols-[0.75fr_1.25fr]" style={revealStyle(1)}>
           <SectionHeading accent={accent} eyebrow="Program Brief" title="Identity" />

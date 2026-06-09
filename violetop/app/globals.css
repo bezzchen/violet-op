@@ -129,15 +129,6 @@ a {
   transform: translateY(42px);
 }
 
-.team-corner-line {
-  border-left: 1px solid rgba(240, 184, 255, 0.3);
-  border-top: 1px solid rgba(240, 184, 255, 0.3);
-  height: 8rem;
-  position: absolute;
-  width: 8rem;
-  z-index: 5;
-}
-
 .team-hero-section {
   background:
     radial-gradient(circle at 78% 16%, rgba(209, 76, 255, 0.28), transparent 32rem),
@@ -146,103 +137,38 @@ a {
 }
 
 .team-hero-game-backdrop {
-  animation: team-backdrop-drift 12s ease-in-out infinite;
   filter: saturate(1.2) drop-shadow(0 0 58px rgba(209, 76, 255, 0.3));
   object-position: center;
-  opacity: 0.08;
-  transform: rotate(-6deg) scale(1.18);
-}
-
-.team-hero-wash {
-  filter: blur(18px);
-  height: 145%;
-  opacity: 0.16;
-  position: absolute;
-  right: 9%;
-  top: -20%;
-  transform: skewX(-16deg);
-  width: 24%;
-  z-index: 1;
+  opacity: 0.1;
+  transform: scale(1.12);
 }
 
 .team-hero-copy {
-  animation: team-copy-in 0.85s ease both;
-  animation-delay: 0.12s;
+  background: rgba(16, 0, 23, 0.5);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .team-hero-art {
-  animation: team-art-in 0.9s ease both;
-  animation-delay: 0.2s;
   isolation: isolate;
 }
 
 .team-hero-team-mark {
-  animation: team-badge-in 0.9s ease both;
-  animation-delay: 0.48s;
-  background: rgba(10, 0, 18, 0.72);
-  height: 8.75rem;
+  background: rgba(10, 0, 18, 0.58);
+  height: 10rem;
   overflow: hidden;
   position: absolute;
-  right: 4%;
-  top: 8%;
-  width: min(48vw, 17rem);
+  right: 0;
+  top: 6%;
+  width: min(50vw, 19rem);
   z-index: 30;
 }
 
 .team-hero-feature {
-  animation: team-hero-float 6.5s ease-in-out infinite;
   filter: drop-shadow(0 0 46px rgba(209, 76, 255, 0.38));
   object-position: center bottom;
-  padding: 1.25rem;
+  padding: 0;
   z-index: 20;
-}
-
-.team-hero-feature-label {
-  animation: team-badge-in 0.8s ease both;
-  animation-delay: 0.62s;
-}
-
-.team-feature-stage {
-  isolation: isolate;
-}
-
-.team-stage-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 3rem 3rem;
-  inset: 0;
-  opacity: 0.12;
-  position: absolute;
-  z-index: 0;
-}
-
-.team-stage-slash {
-  box-shadow: 0 0 22px rgba(240, 184, 255, 0.45);
-  height: 2px;
-  left: -20%;
-  opacity: 0.65;
-  position: absolute;
-  top: 34%;
-  transform: rotate(-14deg);
-  width: 140%;
-  z-index: 1;
-}
-
-.team-stage-frame {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  clip-path: polygon(0 0, 86% 0, 100% 18%, 100% 100%, 14% 100%, 0 82%);
-  inset: 1.25rem;
-  position: absolute;
-  z-index: 2;
-}
-
-.team-feature-image {
-  animation: team-float 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 42px rgba(209, 76, 255, 0.36));
-  object-position: center bottom;
-  padding: 1.5rem;
-  z-index: 10;
 }
 
 .team-info-card,
@@ -384,75 +310,6 @@ a {
   }
 }
 
-@keyframes team-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-14px);
-  }
-}
-
-@keyframes team-copy-in {
-  from {
-    opacity: 0;
-    transform: translateX(-72px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes team-art-in {
-  from {
-    opacity: 0;
-    transform: translateX(82px) scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
-
-@keyframes team-badge-in {
-  from {
-    opacity: 0;
-    transform: translateY(26px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes team-hero-float {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-
-  50% {
-    transform: translate3d(0, -16px, 0) rotate(0.8deg);
-  }
-}
-
-@keyframes team-backdrop-drift {
-  0%,
-  100% {
-    transform: rotate(-6deg) scale(1.18) translate3d(0, 0, 0);
-  }
-
-  50% {
-    transform: rotate(-4deg) scale(1.23) translate3d(1.5rem, -1rem, 0);
-  }
-}
-
 @media (min-width: 768px) {
   .hero-title {
     font-size: 6rem;
@@ -490,13 +347,10 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .team-reveal,
-  .team-feature-image,
   .team-hero-copy,
   .team-hero-art,
   .team-hero-team-mark,
-  .team-hero-feature,
-  .team-hero-feature-label,
-  .team-hero-game-backdrop {
+  .team-hero-feature {
     animation: none;
     opacity: 1;
     transform: none;
