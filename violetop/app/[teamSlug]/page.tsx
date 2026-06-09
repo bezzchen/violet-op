@@ -140,9 +140,9 @@ export default async function TeamPage({
 
   return (
     <PageShell>
-      <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-24 px-4 pb-20 pt-28 md:px-grid-margin md:pb-28">
+      <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-24 px-4 pb-20 pt-20 md:px-grid-margin md:pb-28 md:pt-24">
         <TeamHeroMotion
-          className="team-reveal team-hero-section relative min-h-[calc(var(--app-height)-7rem)] overflow-hidden"
+          className="team-reveal team-hero-section relative min-h-[calc(var(--app-height)-5rem)] overflow-hidden"
           style={revealStyle(0)}
         >
           <div className="pointer-events-none absolute inset-0 z-0">
@@ -157,7 +157,7 @@ export default async function TeamPage({
             />
           </div>
 
-          <div className="relative z-10 grid min-h-[calc(var(--app-height)-7rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[0.72fr_1.28fr] lg:p-12">
+          <div className="relative z-10 grid min-h-[calc(var(--app-height)-5rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[minmax(30rem,0.9fr)_1fr] lg:p-12 xl:grid-cols-[minmax(38rem,0.95fr)_1fr]">
             <div className="team-hero-copy op-clip p-6 md:p-stack-xl" data-team-hero-copy>
               <div className="mb-6 flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${accent.line}`} />

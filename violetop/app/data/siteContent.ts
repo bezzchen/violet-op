@@ -250,7 +250,7 @@ export const teamPages = [
         detail: "Providing data-driven insights and VOD reviews to stay ahead of the meta",
       },
     ],
-    roster: ["TBD"],
+    roster: ["Brandon", "Jake", "Justin", "Fallen", "Alpha"],
   },
   {
     slug: "vop-purple",
@@ -287,7 +287,7 @@ export const teamPages = [
         detail: "Providing data-driven insights and VOD reviews to stay ahead of the meta",
       },
     ],
-    roster: ["Katelyn Nguyen", "TBD", "Nahian Sowalehin", "Evan Lee (IGL)", "Primary Smokes"],
+    roster: ["Katelyn Nguyen", "Nahian Sowalehin", "Evan Lee (IGL)", "TBA", "TBA"],
   },
   {
     slug: "vop-black",
@@ -316,7 +316,15 @@ export const teamPages = [
     proof:
       "Entry into VOP Black is strictly through a formal tryout process. If you want to have fun, join a community, and represent the Black jersey:",
     staff: [],
-    roster: ["TBD"],
+    roster: [
+      "Ella",
+      "George",
+      "Artus",
+      "Augus",
+      "Choman",
+      "Rick (Purple Tryout)",
+      "Kuan (Purple Tryout)",
+    ],
   },
   {
     slug: "gamechangers",
