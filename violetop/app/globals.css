@@ -149,9 +149,9 @@ a {
     rgba(16, 0, 23, 0.5);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  max-width: 56rem;
+  max-width: 44.8rem;
   position: relative;
-  width: min(56rem, calc(100vw - 2rem));
+  width: min(44.8rem, calc(100vw - 2rem));
   z-index: 40;
 }
 

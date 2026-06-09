@@ -34,16 +34,16 @@ const accentClasses = {
 
 const defaultStaffNeeds = [
   {
-    role: "NEEDED: Head Coach",
-    detail: "Owns weekly practice structure, team standards, and match preparation.",
+    role: "TBA",
+    detail: "Head Coach",
   },
   {
-    role: "NEEDED: Analyst",
-    detail: "Tracks VOD notes, scouting, draft prep, and player development goals.",
+    role: "TBA",
+    detail: "Analyst",
   },
   {
-    role: "NEEDED: Team Manager",
-    detail: "Keeps schedules, events, and player communication organized.",
+    role: "TBA",
+    detail: "Team Manager",
   },
 ];
 
@@ -60,9 +60,7 @@ const getTeamTitleParts = (name: string) => {
 
 const normalizeRoster = (team: TeamPageData) => {
   const minimumSlots = team.game === "valorant" ? 5 : 5;
-  const roster = team.roster.map((member) =>
-    member === "TBD" || member === "TBA" ? "TBA" : member,
-  );
+  const roster = team.roster.map((member) => (member.trim() ? member : "TBA"));
 
   return Array.from({ length: Math.max(minimumSlots, roster.length) }, (_, index) => ({
     name: roster[index] ?? "TBA",
@@ -157,7 +155,7 @@ export default async function TeamPage({
             />
           </div>
 
-          <div className="relative z-10 grid min-h-[calc(var(--app-height)-5rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[minmax(30rem,0.9fr)_1fr] lg:p-12 xl:grid-cols-[minmax(38rem,0.95fr)_1fr]">
+          <div className="relative z-10 grid min-h-[calc(var(--app-height)-5rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[minmax(24rem,0.72fr)_1fr] lg:p-12 xl:grid-cols-[minmax(30.4rem,0.76fr)_1fr]">
             <div className="team-hero-copy op-clip p-6 md:p-stack-xl" data-team-hero-copy>
               <div className="mb-6 flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${accent.line}`} />
@@ -280,7 +278,7 @@ export default async function TeamPage({
               {supportRoles.map((staff, index) => (
                 <article
                   className="team-reveal glass-panel team-info-card rounded border border-white/10 p-5"
-                  key={staff.role}
+                  key={`${staff.role}-${staff.detail}`}
                   style={revealStyle(index + 5)}
                 >
                   <h3 className={`font-headline-md text-xl font-bold uppercase ${accent.text}`}>

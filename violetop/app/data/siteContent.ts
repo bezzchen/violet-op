@@ -242,12 +242,12 @@ export const teamPages = [
       "Entry into VOP White is strictly through a formal tryout process. If you have the rank, the experience, and the drive to represent the White jersey:",
     staff: [
       {
-        role: "NEEDED*** Head Coach",
-        detail: "Leading strategy and individual player development",
+        role: "TBA",
+        detail: "Head Coach",
       },
       {
-        role: "NEEDED*** Assistant Coach and Analyst",
-        detail: "Providing data-driven insights and VOD reviews to stay ahead of the meta",
+        role: "TBA",
+        detail: "Assistant Coach and Analyst",
       },
     ],
     roster: ["Brandon", "Jake", "Justin", "Fallen", "Alpha"],
@@ -283,8 +283,8 @@ export const teamPages = [
     staff: [
       { role: "Wayne Yee", detail: "Head Coach" },
       {
-        role: "NEEDED*** Assistant Coach and Analyst",
-        detail: "Providing data-driven insights and VOD reviews to stay ahead of the meta",
+        role: "TBA",
+        detail: "Assistant Coach and Analyst",
       },
     ],
     roster: ["Katelyn Nguyen", "Nahian Sowalehin", "Evan Lee (IGL)", "TBA", "TBA"],
@@ -353,7 +353,7 @@ export const teamPages = [
     proof:
       "Entry into VOP Game Changers is strictly through a formal tryout process. If you are ready to prove your skills and grow within a dedicated community:",
     staff: [],
-    roster: ["TBD"],
+    roster: ["TBA"],
   },
   {
     slug: "league1",
@@ -382,7 +382,7 @@ export const teamPages = [
     proof:
       "Entry into VOP League 1 is community-oriented. If you want to improve, queue with a squad, and represent the Red side of VOP:",
     staff: [],
-    roster: ["TBD"],
+    roster: ["TBA"],
   },
   {
     slug: "league2",
@@ -411,6 +411,6 @@ export const teamPages = [
     proof:
       "Entry into VOP League 2 is community-oriented. If you want to improve, queue with a squad, and represent the Blue side of VOP:",
     staff: [],
-    roster: ["TBD"],
+    roster: ["TBA"],
   },
 ];
