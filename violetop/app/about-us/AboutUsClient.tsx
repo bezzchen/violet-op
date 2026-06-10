@@ -96,12 +96,14 @@ function PeopleSection({
   indexOffset = 0,
   people,
   registerCard,
+  subtitle,
 }: {
   eyebrow: string;
   heading: string;
   indexOffset?: number;
   people: Person[];
   registerCard: (index: number, node: HTMLElement | null) => void;
+  subtitle?: string;
 }) {
   return (
     <section className="grid gap-8">
@@ -112,6 +114,11 @@ function PeopleSection({
         <h2 className="mt-3 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
           {heading}
         </h2>
+        {subtitle ? (
+          <p className="mt-3 font-label-caps text-label-caps uppercase text-primary">
+            {subtitle}
+          </p>
+        ) : null}
       </div>
 
       <div className="grid gap-y-8 md:grid-cols-12 md:gap-x-6 md:gap-y-12">
@@ -137,8 +144,12 @@ export default function AboutUsClient() {
   const aboutImageRef = useRef<HTMLDivElement | null>(null);
   const cardsSectionRef = useRef<HTMLElement | null>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
-  const managementPeople = aboutContent.management;
-  const staffPeople = aboutContent.staff;
+  const aboutSections = aboutContent.sections;
+  const sectionOffsets = aboutSections.map((_, sectionIndex) =>
+    aboutSections
+      .slice(0, sectionIndex)
+      .reduce((total, section) => total + section.people.length, 0),
+  );
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -302,19 +313,17 @@ export default function AboutUsClient() {
         </div>
 
         <section className="grid gap-8" ref={cardsSectionRef}>
-          <PeopleSection
-            eyebrow="Management"
-            heading="Management Team"
-            people={managementPeople}
-            registerCard={registerCard}
-          />
-          <PeopleSection
-            eyebrow="Staff"
-            heading="Staff"
-            indexOffset={managementPeople.length}
-            people={staffPeople}
-            registerCard={registerCard}
-          />
+          {aboutSections.map((section, index) => (
+            <PeopleSection
+              eyebrow={section.eyebrow}
+              heading={section.heading}
+              indexOffset={sectionOffsets[index]}
+              key={section.heading}
+              people={section.people}
+              registerCard={registerCard}
+              subtitle={section.subtitle}
+            />
+          ))}
         </section>
       </section>
     </PageShell>

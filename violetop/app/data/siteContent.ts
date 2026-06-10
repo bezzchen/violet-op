@@ -85,22 +85,113 @@ export const aboutContent = {
     "As a team, we're all about building a strong community, whether that's through competition, content, or just connecting people who love gaming.",
     "VOP is a space where players and fans alike can get involved, support each other, and be part of something bigger.",
   ],
-  management: [
-    { name: "Katelyn Nguyen", role: "President", image: "/images/katelyn.avif" },
-    { name: "Jessica Wang", role: "Valorant Esports Leader", image: "/images/jessica.avif" },
-    { name: "Kuan Lin", role: "Event Coordination", image: "/images/kuan.avif" },
-    { name: "Jenny Guo", role: "Design" },
-    { name: "Artus Yeh", role: "Marketing & Content", image: "/images/artus.avif" },
-    { name: "Augus Li", role: "Outreach Leader", image: "/images/augus.avif" },
-    { name: "George Zhou", role: "Budgeting" },
-    { name: "Ella Kaplan", role: "General Manager", image: "/images/ella.avif" },
-    { name: "Logan Tsai", role: "Secretary", image: "/images/logan.avif" },
-    { name: "Eric Qi", role: "Financial Planning", image: "/images/eric.avif" },
-  ],
-  staff: [
-    { name: "Emily Chen", role: "Partnerships", image: "/images/emily.avif" },
-    { name: "Alston Li", role: "Website Designer", image: "/images/alston.avif" },
-    { name: "Charice Huang", role: "Event Designer" },
+  sections: [
+    {
+      eyebrow: "VOP E-Board",
+      heading: "Executive Leadership",
+      people: [
+        { name: "Katelyn Nguyen", role: "President", image: "/images/katelyn.avif" },
+        { name: "Logan Tsai", role: "General Manager", image: "/images/logan.avif" },
+        { name: "Eric Qi", role: "Secretary", image: "/images/eric.avif" },
+        { name: "Augus Li", role: "Human Resources", image: "/images/augus.avif" },
+      ],
+    },
+    {
+      eyebrow: "VOP E-Board",
+      heading: "Competitive Department",
+      subtitle: "Reports to General Manager",
+      people: [
+        {
+          name: "Jessica Wang",
+          role: "Valorant Esports Leader / GC Team Manager",
+          image: "/images/jessica.avif",
+        },
+        {
+          name: "Katelyn Nguyen",
+          role: "Team Manager - Purple, Black",
+          image: "/images/katelyn.avif",
+        },
+        {
+          name: "Logan Tsai",
+          role: "Team Manager - White / Coach & Analyst / Scouting Lead",
+          image: "/images/logan.avif",
+        },
+        {
+          name: "Emily Chen",
+          role: "League of Legends Esports Leader",
+          image: "/images/emily.avif",
+        },
+        { name: "TBA", role: "League Team Managers" },
+        { name: "TBA", role: "League Coaches/Analysts" },
+        { name: "TBA", role: "League Player Recruitment/Scouting Lead" },
+      ],
+    },
+    {
+      eyebrow: "VOP E-Board",
+      heading: "Events Department",
+      subtitle: "Reports to the President",
+      people: [
+        { name: "Charice Huang", role: "Head of Event Coordination" },
+        { name: "Kuan Lin", role: "Event Designer/Helper", image: "/images/kuan.avif" },
+        {
+          name: "Katelyn Nguyen",
+          role: "Tournament Operations Lead",
+          image: "/images/katelyn.avif",
+        },
+        { name: "Logan Tsai", role: "Tournament Operations Lead", image: "/images/logan.avif" },
+        { name: "TBA", role: "Broadcast/Production Lead" },
+      ],
+    },
+    {
+      eyebrow: "VOP E-Board",
+      heading: "Creative Department",
+      subtitle: "Reports to the President & General Manager",
+      people: [
+        { name: "Jenny Guo", role: "Head of Design / Graphic Designer" },
+        { name: "Emily Chen", role: "Website Leader", image: "/images/emily.avif" },
+        { name: "Barry", role: "Website Leader" },
+        {
+          name: "Artus Yeh",
+          role: "Content Lead / Graphic Designer / Video Editor",
+          image: "/images/artus.avif",
+        },
+        { name: "TBA", role: "Stream Content Creators" },
+      ],
+    },
+    {
+      eyebrow: "VOP E-Board",
+      heading: "Marketing & Growth",
+      subtitle: "Reports to the President",
+      people: [
+        {
+          name: "Artus Yeh",
+          role: "Head of Marketing / Social Media Manager / Content Strategist",
+          image: "/images/artus.avif",
+        },
+        {
+          name: "Katelyn Nguyen",
+          role: "Social Media Manager / Community Discord Manager",
+          image: "/images/katelyn.avif",
+        },
+        { name: "Logan Tsai", role: "Social Media Manager", image: "/images/logan.avif" },
+        { name: "Eric Qi", role: "Social Media Manager", image: "/images/eric.avif" },
+        { name: "Nahian Sowalehin", role: "Head of Communications, Operations & Outreach" },
+        { name: "Alston Li", role: "Campus Outreach Team/Partnership", image: "/images/alston.avif" },
+      ],
+    },
+    {
+      eyebrow: "VOP E-Board",
+      heading: "Finance",
+      subtitle: "Reports to the President",
+      people: [
+        {
+          name: "Ella Kaplan",
+          role: "Head of Financial Planning and Budgeting",
+          image: "/images/ella.avif",
+        },
+        { name: "George Zhou", role: "Fundraising Lead" },
+      ],
+    },
   ],
 };
 
