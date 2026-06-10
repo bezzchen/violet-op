@@ -216,7 +216,8 @@ a {
 }
 
 .team-info-card,
-.team-roster-card {
+.team-roster-card,
+.clip-card {
   background: rgba(10, 0, 18, 0.72);
   overflow: hidden;
   position: relative;
@@ -224,7 +225,8 @@ a {
 }
 
 .team-info-card::before,
-.team-roster-card::before {
+.team-roster-card::before,
+.clip-card::before {
   background: linear-gradient(90deg, rgba(240, 184, 255, 0.7), transparent);
   content: "";
   height: 1px;
@@ -233,12 +235,31 @@ a {
   position: absolute;
   top: 0;
   width: 100%;
+  z-index: 1;
 }
 
 .team-info-card:hover,
-.team-roster-card:hover {
+.team-roster-card:hover,
+.clip-card:hover {
   border-color: rgba(240, 184, 255, 0.36);
   transform: translateY(-4px);
+}
+
+.highlight-feature-glow {
+  position: relative;
+}
+
+.highlight-feature-glow::before {
+  background: radial-gradient(circle at 72% 22%, rgba(209, 76, 255, 0.32), transparent 62%);
+  content: "";
+  filter: blur(38px);
+  /* Vertical halo stays generous; horizontal reach is kept under the page's
+     minimum side padding so the full-width frame can't spill past the viewport
+     and trigger a horizontal scrollbar. */
+  inset: -2.25rem -0.75rem;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
 }
 
 .team-roster-card {
@@ -428,7 +449,8 @@ a {
   }
 
   .team-info-card,
-  .team-roster-card {
+  .team-roster-card,
+  .clip-card {
     transition: none;
   }
 }

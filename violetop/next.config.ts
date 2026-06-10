@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         hostname: "wiki.leagueoflegends.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/vi/**",
+      },
     ],
   },
 };
