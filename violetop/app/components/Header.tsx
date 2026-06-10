@@ -79,7 +79,7 @@ export default function Header() {
           </div>
         </div>
 
-        {mainNav.slice(1, 3).map((item) => (
+        {mainNav.slice(1, 4).map((item) => (
           <Link
             className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
             href={item.href}
@@ -175,7 +175,7 @@ export default function Header() {
           </div>
 
           <div className="grid gap-2 border-t border-outline-variant pt-3">
-            {mainNav.slice(1, 3).map((item) => (
+            {mainNav.slice(1, 4).map((item) => (
               <Link
                 className="font-label-caps text-label-caps text-on-surface/75 transition-colors hover:text-on-surface"
                 href={item.href}

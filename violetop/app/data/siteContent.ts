@@ -8,6 +8,7 @@ export const mainNav = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about-us" },
   { label: "Events", href: "/events" },
+  { label: "Highlights", href: "/highlights" },
   { label: "Join Us", href: "/join-us" },
 ];
 
@@ -186,6 +187,33 @@ export const eventsContent = {
       title: "Community Game Night",
       time: "7:00 PM - 9:00 PM",
       category: "Gaming",
+    },
+  ],
+};
+
+export const highlightsContent = {
+  title: "Highlights",
+  subtitle: "Valorant Clips",
+  intro:
+    "A quick reel of Violet OP Valorant moments, from clean picks to round-closing plays.",
+  clips: [
+    {
+      id: "BUTEgoy3bXo",
+      label: "Clip 01",
+      title: "Valorant Highlight 01",
+      url: "https://www.youtube.com/watch?v=BUTEgoy3bXo",
+    },
+    {
+      id: "cWTQb-wiOSI",
+      label: "Clip 02",
+      title: "Valorant Highlight 02",
+      url: "https://www.youtube.com/watch?v=cWTQb-wiOSI",
+    },
+    {
+      id: "Rx-xkubvrjs",
+      label: "Clip 03",
+      title: "Valorant Highlight 03",
+      url: "https://www.youtube.com/watch?v=Rx-xkubvrjs",
     },
   ],
 };
