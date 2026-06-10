@@ -100,43 +100,45 @@ const laneRoles = ["Top", "Jungle", "Middle", "Bottom", "Support"] as const;
 
 type LaneRole = (typeof laneRoles)[number];
 
-// Inline SVGs keep these icons weightless (no extra requests) and crisp at any
-// size; they inherit the team accent colour via currentColor.
+// Recreations of the official League position icons: grass blades (Jungle), a
+// framed square with a corner marker + centre pip (Top/Bottom), a slashed
+// diamond (Middle) and a winged figure (Support). Inline SVG keeps them
+// request-free and crisp at any size, inheriting the team accent via
+// currentColor.
 const lanePaths: Record<LaneRole, ReactNode> = {
   Top: (
     <>
-      <path d="M6 13.5l6-6 6 6" />
-      <path d="M12 7.5V18" />
+      <path d="M19 5 H8.5 L3 3 L5 8.5 V19 H19 Z M8 8 H16 V16 H8 Z" fillRule="evenodd" />
+      <path d="M10.5 10.5 H13.5 V13.5 H10.5 Z" />
     </>
   ),
   Jungle: (
+    <path d="M12 21 Q10.4 12 12 4 Q13.6 12 12 21 Z M12 21 Q8.6 13.5 8 6.5 Q11 14 12 21 Z M12 21 Q15.4 13.5 16 6.5 Q13 14 12 21 Z M12 21 Q6.3 16 4.6 9.5 Q9.5 16.5 12 21 Z M12 21 Q17.7 16 19.4 9.5 Q14.5 16.5 12 21 Z" />
+  ),
+  Middle: (
     <>
-      <path d="M12 4l6 11H6z" />
-      <path d="M12 15v4.5" />
+      <path d="M12 2.5 L21.5 12 L12 21.5 L2.5 12 Z M12 8 L16 12 L12 16 L8 12 Z" fillRule="evenodd" />
+      <path d="M9 15 L15 9 L16.4 10.4 L10.4 16.4 Z" />
     </>
   ),
-  Middle: <path d="M12 3.5l8.5 8.5-8.5 8.5L3.5 12z" />,
   Bottom: (
     <>
-      <path d="M6 10.5l6 6 6-6" />
-      <path d="M12 6V16.5" />
+      <path d="M5 19 H15.5 L21 21 L19 15.5 V5 H5 Z M8 8 H16 V16 H8 Z" fillRule="evenodd" />
+      <path d="M10.5 10.5 H13.5 V13.5 H10.5 Z" />
     </>
   ),
-  Support: <path d="M12 4l6 2.4v5c0 3.8-2.6 6.6-6 7.6-3.4-1-6-3.8-6-7.6v-5z" />,
+  Support: (
+    <>
+      <circle cx="12" cy="4" r="1.8" />
+      <path d="M12 8 L3.5 5 L5 9.2 L9.5 10.3 Z M12 8 L20.5 5 L19 9.2 L14.5 10.3 Z" />
+      <path d="M11 8.5 L11 11.8 L8 13 L11 13.4 L11.5 21 L12.5 21 L13 13.4 L16 13 L13 11.8 L13 8.5 Z" />
+    </>
+  ),
 };
 
 function LaneIcon({ className, role }: { className?: string; role: LaneRole }) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.75}
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className={className} fill="currentColor" viewBox="0 0 24 24">
       {lanePaths[role]}
     </svg>
   );
