@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -68,6 +68,80 @@ const normalizeRoster = (team: TeamPageData) => {
   }));
 };
 
+const VALORANT_TIERSET = "03621f52-342b-cf4e-4f86-9350a49c6d04";
+
+const rankEmblemUrl = (tier: number) =>
+  `https://media.valorant-api.com/competitivetiers/${VALORANT_TIERSET}/${tier}/largeicon.png`;
+
+// Derive a rank emblem straight from the free-text "Rank:" requirement so the
+// badge always matches the copy: "Immortal 1 or higher" -> Immortal emblem with
+// a "+", "Open rank" -> Unranked. Unspecified ranks (e.g. "TBA") get no emblem.
+const getRankBadge = (requirements: readonly string[]) => {
+  const rankLine = requirements.find((item) => /^\s*rank:/i.test(item));
+
+  if (!rankLine) {
+    return null;
+  }
+
+  const value = rankLine.replace(/^\s*rank:\s*/i, "");
+
+  if (/immortal/i.test(value)) {
+    return { alt: "Valorant Immortal rank emblem", plus: true, src: rankEmblemUrl(24) };
+  }
+
+  if (/open\s*rank|unranked/i.test(value)) {
+    return { alt: "Valorant Unranked emblem", plus: false, src: rankEmblemUrl(0) };
+  }
+
+  return null;
+};
+
+const laneRoles = ["Top", "Jungle", "Middle", "Bottom", "Support"] as const;
+
+type LaneRole = (typeof laneRoles)[number];
+
+// Inline SVGs keep these icons weightless (no extra requests) and crisp at any
+// size; they inherit the team accent colour via currentColor.
+const lanePaths: Record<LaneRole, ReactNode> = {
+  Top: (
+    <>
+      <path d="M6 13.5l6-6 6 6" />
+      <path d="M12 7.5V18" />
+    </>
+  ),
+  Jungle: (
+    <>
+      <path d="M12 4l6 11H6z" />
+      <path d="M12 15v4.5" />
+    </>
+  ),
+  Middle: <path d="M12 3.5l8.5 8.5-8.5 8.5L3.5 12z" />,
+  Bottom: (
+    <>
+      <path d="M6 10.5l6 6 6-6" />
+      <path d="M12 6V16.5" />
+    </>
+  ),
+  Support: <path d="M12 4l6 2.4v5c0 3.8-2.6 6.6-6 7.6-3.4-1-6-3.8-6-7.6v-5z" />,
+};
+
+function LaneIcon({ className, role }: { className?: string; role: LaneRole }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.75}
+      viewBox="0 0 24 24"
+    >
+      {lanePaths[role]}
+    </svg>
+  );
+}
+
 function SectionHeading({
   accent,
   eyebrow,
@@ -134,6 +208,8 @@ export default async function TeamPage({
   const accent = accentClasses[team.accent as keyof typeof accentClasses];
   const supportRoles = team.staff.length > 0 ? team.staff : defaultStaffNeeds;
   const rosterSlots = normalizeRoster(team);
+  const rankBadge = team.game === "valorant" ? getRankBadge(team.requirements) : null;
+  const isLeague = team.game === "league";
   const titleParts = getTeamTitleParts(team.name);
   const restWords = titleParts.rest.trim().split(/\s+/);
   const titleRestClass = [
@@ -247,6 +323,25 @@ export default async function TeamPage({
                 <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
                   {`0${index + 1}`}
                 </span>
+                {rankBadge && /^\s*rank:/i.test(item) ? (
+                  <div className="mt-4 flex items-center gap-2">
+                    <Image
+                      alt={rankBadge.alt}
+                      className="h-16 w-16 object-contain drop-shadow-[0_0_14px_rgba(209,76,255,0.5)]"
+                      height={64}
+                      quality={85}
+                      src={rankBadge.src}
+                      width={64}
+                    />
+                    {rankBadge.plus ? (
+                      <span
+                        className={`font-display-xl text-5xl font-extrabold leading-none ${accent.text}`}
+                      >
+                        +
+                      </span>
+                    ) : null}
+                  </div>
+                ) : null}
                 <p className="mt-4 font-headline-md text-xl font-bold uppercase text-white">
                   {item}
                 </p>
@@ -259,23 +354,30 @@ export default async function TeamPage({
           <SectionHeading accent={accent} eyebrow="Lineup" title="Roster" />
 
           <div className="grid gap-4 md:grid-cols-5">
-            {rosterSlots.map((member, index) => (
-              <article
-                className="team-reveal team-roster-card glass-panel rounded border border-white/10 p-5"
-                key={`${member.slot}-${member.name}`}
-                style={revealStyle(index + 4)}
-              >
-                <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-                  {member.slot}
-                </span>
-                <h3 className="mt-8 font-headline-md text-2xl font-bold uppercase text-white">
-                  {member.name}
-                </h3>
-                <p className="mt-2 font-label-caps text-label-caps uppercase text-on-surface-variant/60">
-                  Role TBA
-                </p>
-              </article>
-            ))}
+            {rosterSlots.map((member, index) => {
+              const role = isLeague ? laneRoles[index % laneRoles.length] : null;
+
+              return (
+                <article
+                  className="team-reveal team-roster-card glass-panel rounded border border-white/10 p-5"
+                  key={`${member.slot}-${member.name}`}
+                  style={revealStyle(index + 4)}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
+                      {member.slot}
+                    </span>
+                    {role ? <LaneIcon className={`h-7 w-7 ${accent.text}`} role={role} /> : null}
+                  </div>
+                  <h3 className="mt-8 font-headline-md text-2xl font-bold uppercase text-white">
+                    {member.name}
+                  </h3>
+                  <p className="mt-2 font-label-caps text-label-caps uppercase text-on-surface-variant/60">
+                    {role ?? "Role TBA"}
+                  </p>
+                </article>
+              );
+            })}
           </div>
         </section>
 
