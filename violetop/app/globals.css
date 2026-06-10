@@ -183,6 +183,23 @@ a {
   margin-top: 0.55rem;
 }
 
+/* Multi-word titles (e.g. "Game Changers") must be allowed to wrap onto two
+   lines so they are not clipped by the nowrap applied to single-word titles at
+   >=768px. They break only between words, never mid-word. */
+.team-hero-title-rest.is-multiword {
+  overflow-wrap: normal;
+  white-space: normal;
+}
+
+/* Long titles ("Game Changers") would otherwise overflow the fixed-width copy
+   panel at the largest title sizes, so cap their size from the tablet breakpoint
+   up where the longest word stops fitting. */
+@media (min-width: 768px) {
+  .team-hero-title-rest.is-long {
+    font-size: 4rem;
+  }
+}
+
 .team-overview-copy {
   background:
     radial-gradient(circle at 88% 0%, rgba(209, 76, 255, 0.18), transparent 16rem),

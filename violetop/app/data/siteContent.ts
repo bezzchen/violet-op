@@ -38,7 +38,7 @@ export const valorantTeams = [
       "VOP Black is the primary entry point into our competitive ecosystem. This roster focuses on identifying raw talent and integrating players into a professional team structure.",
   },
   {
-    name: "VOP Gamechangers",
+    name: "VOP Game Changers",
     href: "/gamechangers",
     tier: "The Heart",
     image: "/images/lavender.avif",
@@ -217,7 +217,7 @@ export const joinContent = {
       ],
     },
     {
-      name: "VOP Gamechangers",
+      name: "VOP Game Changers",
       details: [
         "Commitment: Medium/Flexible",
         "Access: Only those with marginalized genders",
@@ -447,7 +447,7 @@ export const teamPages = [
   },
   {
     slug: "gamechangers",
-    name: "VOP Gamechangers",
+    name: "VOP Game Changers",
     label: "The Heart",
     image: "/images/lavender.avif",
     accent: "primary",

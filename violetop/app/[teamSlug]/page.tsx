@@ -135,12 +135,20 @@ export default async function TeamPage({
   const supportRoles = team.staff.length > 0 ? team.staff : defaultStaffNeeds;
   const rosterSlots = normalizeRoster(team);
   const titleParts = getTeamTitleParts(team.name);
+  const restWords = titleParts.rest.trim().split(/\s+/);
+  const titleRestClass = [
+    "team-hero-title-rest",
+    restWords.length > 1 && "is-multiword",
+    restWords.some((word) => word.length >= 8) && "is-long",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <PageShell>
-      <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-24 px-4 pb-20 pt-20 md:px-grid-margin md:pb-28 md:pt-24">
+      <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-12 px-4 pb-20 pt-20 md:gap-24 md:px-grid-margin md:pb-28 md:pt-24">
         <TeamHeroMotion
-          className="team-reveal team-hero-section relative min-h-[calc(var(--app-height)-5rem)] overflow-hidden"
+          className="team-reveal team-hero-section relative md:min-h-[calc(var(--app-height)-5rem)] overflow-hidden"
           style={revealStyle(0)}
         >
           <div className="pointer-events-none absolute inset-0 z-0">
@@ -155,7 +163,7 @@ export default async function TeamPage({
             />
           </div>
 
-          <div className="relative z-10 grid min-h-[calc(var(--app-height)-5rem)] items-center gap-10 p-5 md:p-8 lg:grid-cols-[minmax(19.2rem,0.58fr)_1fr] lg:p-12 xl:grid-cols-[minmax(24.32rem,0.61fr)_1fr]">
+          <div className="relative z-10 grid items-center gap-8 p-5 md:min-h-[calc(var(--app-height)-5rem)] md:gap-10 md:p-8 lg:grid-cols-[minmax(19.2rem,0.58fr)_1fr] lg:p-12 xl:grid-cols-[minmax(24.32rem,0.61fr)_1fr]">
             <div className="team-hero-copy op-clip p-6 md:p-stack-xl" data-team-hero-copy>
               <div className="mb-6 flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${accent.line}`} />
@@ -171,16 +179,16 @@ export default async function TeamPage({
                 {titleParts.prefix ? (
                   <>
                     <span className="team-hero-title-vop">{titleParts.prefix}</span>
-                    <span className="team-hero-title-rest">{titleParts.rest}</span>
+                    <span className={titleRestClass}>{titleParts.rest}</span>
                   </>
                 ) : (
-                  <span className="team-hero-title-rest">{titleParts.rest}</span>
+                  <span className={titleRestClass}>{titleParts.rest}</span>
                 )}
               </h1>
             </div>
 
             <div
-              className="team-hero-art relative min-h-[40rem] md:min-h-[56rem] lg:min-h-[60rem]"
+              className="team-hero-art relative min-h-[22rem] md:min-h-[56rem] lg:min-h-[60rem]"
               data-team-hero-media
             >
               <div className="team-hero-team-mark">
