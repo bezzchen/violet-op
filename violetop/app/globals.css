@@ -122,6 +122,50 @@ a {
   border-color: rgba(255, 255, 255, 0.12);
 }
 
+/* Scroll-triggered fade/slide-up; an IntersectionObserver toggles is-visible.
+   Used on a wrapper so card hover transforms stay independent. */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.join-hero {
+  min-height: 24rem;
+}
+
+.join-hero-veil {
+  background:
+    linear-gradient(100deg, #160020 6%, rgba(22, 0, 32, 0.9) 27%, rgba(22, 0, 32, 0.42) 50%, rgba(22, 0, 32, 0.12) 76%, rgba(22, 0, 32, 0.5) 100%),
+    linear-gradient(0deg, #160020 1%, transparent 60%);
+}
+
+.join-cta {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(209, 76, 255, 0.28), transparent 62%),
+    rgba(16, 0, 23, 0.6);
+}
+
+@media (min-width: 768px) {
+  .join-hero {
+    min-height: 32rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .team-reveal {
   animation: team-reveal 0.7s ease forwards;
   animation-delay: var(--team-delay, 0ms);
