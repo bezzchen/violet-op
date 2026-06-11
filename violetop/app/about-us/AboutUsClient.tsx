@@ -1,8 +1,8 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
 import PageShell from "../components/PageShell";
 import { aboutContent } from "../data/siteContent";
 
@@ -17,36 +17,23 @@ const rowPositions = [
   ["md:col-start-2", "md:col-start-6", "md:col-start-10"],
 ];
 
-const clamp = (value: number, min = 0, max = 1) =>
-  Math.min(Math.max(value, min), max);
-
-const smoothstep = (value: number) => {
-  const progress = clamp(value);
-
-  return progress * progress * (3 - 2 * progress);
-};
-
-const scrollRange = (scrollPos: number, vh: number, start: number, end: number) =>
-  smoothstep((scrollPos - vh * start) / (vh * (end - start)));
+const revealDelay = (index: number) =>
+  ({ "--reveal-delay": `${index * 90}ms` }) as CSSProperties;
 
 function PersonCard({
+  columnIndex,
   gridPosition,
-  index,
   image,
   name,
-  registerCard,
   role,
 }: Person & {
+  columnIndex: number;
   gridPosition: string;
-  index: number;
-  registerCard: (index: number, node: HTMLElement | null) => void;
 }) {
   return (
     <article
-      className={`glass-panel about-person-card col-span-12 flex min-h-80 flex-col justify-between rounded border border-white/10 bg-surface-container-lowest/75 p-5 shadow-2xl md:col-span-3 md:min-h-96 md:p-6 ${gridPosition}`}
-      ref={(node) => {
-        registerCard(index, node);
-      }}
+      className={`reveal-up glass-panel col-span-12 flex min-h-80 flex-col justify-between rounded border border-white/10 bg-surface-container-lowest/75 p-5 shadow-2xl md:col-span-3 md:min-h-96 md:p-6 ${gridPosition}`}
+      style={revealDelay(columnIndex)}
     >
       {image ? (
         <div className="relative mb-6 h-56 w-full overflow-hidden rounded bg-surface-container md:h-64">
@@ -93,21 +80,17 @@ function chunkPeople(people: Person[]) {
 function PeopleSection({
   eyebrow,
   heading,
-  indexOffset = 0,
   people,
-  registerCard,
   subtitle,
 }: {
   eyebrow: string;
   heading: string;
-  indexOffset?: number;
   people: Person[];
-  registerCard: (index: number, node: HTMLElement | null) => void;
   subtitle?: string;
 }) {
   return (
     <section className="grid gap-8">
-      <div className="about-people-heading">
+      <div className="reveal-up">
         <span className="font-label-caps text-label-caps uppercase text-tertiary">
           {eyebrow}
         </span>
@@ -125,10 +108,9 @@ function PeopleSection({
         {chunkPeople(people).map((row, rowIndex) =>
           row.map((person, columnIndex) => (
             <PersonCard
+              columnIndex={columnIndex}
               gridPosition={rowPositions[rowIndex % rowPositions.length][columnIndex]}
-              index={indexOffset + rowIndex * 3 + columnIndex}
               key={`${person.name}-${person.role}`}
-              registerCard={registerCard}
               {...person}
             />
           )),
@@ -140,149 +122,39 @@ function PeopleSection({
 
 export default function AboutUsClient() {
   const scrollRef = useRef<HTMLElement | null>(null);
-  const aboutTextRef = useRef<HTMLDivElement | null>(null);
-  const aboutImageRef = useRef<HTMLDivElement | null>(null);
-  const cardsSectionRef = useRef<HTMLElement | null>(null);
-  const cardRefs = useRef<(HTMLElement | null)[]>([]);
-  const aboutSections = aboutContent.sections;
-  const sectionOffsets = aboutSections.map((_, sectionIndex) =>
-    aboutSections
-      .slice(0, sectionIndex)
-      .reduce((total, section) => total + section.people.length, 0),
-  );
 
   useEffect(() => {
-    const scrollContainer = scrollRef.current;
+    const elements = Array.from(
+      document.querySelectorAll<HTMLElement>(".reveal-up"),
+    );
 
-    if (!scrollContainer) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      elements.forEach((element) => element.classList.add("is-visible"));
       return;
     }
 
-    let animationFrame = 0;
-    let removeScrollListeners = () => {};
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    if (reducedMotionQuery.matches) {
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      gsap.set(aboutTextRef.current, { autoAlpha: 1, x: 0 });
-      gsap.set(aboutImageRef.current, { autoAlpha: 1, scale: 1, x: 0 });
-      gsap.set(".about-people-heading", { autoAlpha: 0, y: 36 });
-      gsap.set(cardRefs.current, { autoAlpha: 0, scale: 0.96, x: 0, y: 72 });
-
-      let headingNodes: HTMLElement[] = [];
-      let headingOffsets: number[] = [];
-      let cardOffsets: number[] = [];
-
-      const refreshMeasurements = () => {
-        headingNodes = gsap.utils.toArray<HTMLElement>(".about-people-heading");
-        headingOffsets = headingNodes.map((heading) => heading.offsetTop);
-        cardOffsets = cardRefs.current.map((card) => card?.offsetTop ?? 0);
-      };
-
-      const animateScrollState = () => {
-        const scrollPos = scrollContainer.scrollTop;
-        const vh = scrollContainer.clientHeight;
-        const heroExit = scrollRange(scrollPos, vh, 0.04, 0.48);
-
-        gsap.set(aboutTextRef.current, {
-          autoAlpha: 1 - heroExit,
-          x: -120 * heroExit,
-        });
-
-        gsap.set(aboutImageRef.current, {
-          autoAlpha: 1 - heroExit,
-          scale: 1 - 0.08 * heroExit,
-          x: 120 * heroExit,
-        });
-
-        headingNodes.forEach((heading, index) => {
-          const headingProgress = smoothstep(
-            (scrollPos - (headingOffsets[index] - vh * 0.86)) / (vh * 0.38),
-          );
-
-          gsap.set(heading, {
-            autoAlpha: headingProgress,
-            y: 36 * (1 - headingProgress),
-          });
-        });
-
-        cardRefs.current.forEach((card, index) => {
-          if (!card) {
-            return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
           }
-
-          const cardOffset = cardOffsets[index] ?? card.offsetTop;
-          const rowDelay = Math.floor(index / 3) * 16;
-          const columnDelay = (index % 3) * 28;
-          const progress = smoothstep(
-            (scrollPos - (cardOffset - vh * 0.84 + rowDelay + columnDelay)) /
-              (vh * 0.4),
-          );
-
-          gsap.set(card, {
-            autoAlpha: progress,
-            scale: 0.96 + 0.04 * progress,
-            x: 0,
-            y: 72 * (1 - progress),
-          });
         });
-      };
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
+    );
 
-      const scheduleScrollState = () => {
-        if (animationFrame) {
-          return;
-        }
+    elements.forEach((element) => observer.observe(element));
 
-        animationFrame = window.requestAnimationFrame(() => {
-          animationFrame = 0;
-          animateScrollState();
-        });
-      };
-
-      const handleResize = () => {
-        refreshMeasurements();
-        scheduleScrollState();
-      };
-
-      refreshMeasurements();
-      animateScrollState();
-      scrollContainer.addEventListener("scroll", scheduleScrollState, {
-        passive: true,
-      });
-      window.addEventListener("resize", handleResize);
-      window.visualViewport?.addEventListener("resize", handleResize);
-
-      removeScrollListeners = () => {
-        scrollContainer.removeEventListener("scroll", scheduleScrollState);
-        window.removeEventListener("resize", handleResize);
-        window.visualViewport?.removeEventListener("resize", handleResize);
-        if (animationFrame) {
-          window.cancelAnimationFrame(animationFrame);
-        }
-      };
-    });
-
-    return () => {
-      removeScrollListeners();
-      ctx.revert();
-    };
+    return () => observer.disconnect();
   }, []);
-
-  const registerCard = (index: number, node: HTMLElement | null) => {
-    cardRefs.current[index] = node;
-  };
 
   return (
     <PageShell scrollContainerRef={scrollRef}>
       <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-16 px-4 pb-12 pt-28 md:px-grid-margin">
-        <div className="grid min-h-[calc(var(--app-height)-7rem)] items-center gap-8 lg:grid-cols-[1fr_0.9fr]">
-          <div
-            className="glass-panel section-text-panel op-clip border-l-4 border-l-primary p-6 md:p-stack-xl"
-            ref={aboutTextRef}
-          >
+        <div className="grid items-center gap-8 md:min-h-[calc(var(--app-height)-7rem)] lg:grid-cols-[1fr_0.9fr]">
+          <div className="reveal-up glass-panel section-text-panel op-clip border-l-4 border-l-primary p-6 md:p-stack-xl">
             <span className="font-label-caps text-label-caps uppercase text-primary">
               About Us
             </span>
@@ -297,8 +169,8 @@ export default function AboutUsClient() {
           </div>
 
           <div
-            className="relative min-h-80 overflow-hidden rounded border border-white/10 bg-surface-container-lowest shadow-2xl md:min-h-[32rem]"
-            ref={aboutImageRef}
+            className="reveal-up relative min-h-80 overflow-hidden rounded border border-white/10 bg-surface-container-lowest shadow-2xl md:min-h-[32rem]"
+            style={revealDelay(1)}
           >
             <Image
               alt="Violet OP group"
@@ -312,15 +184,13 @@ export default function AboutUsClient() {
           </div>
         </div>
 
-        <section className="grid gap-8" ref={cardsSectionRef}>
-          {aboutSections.map((section, index) => (
+        <section className="grid gap-8">
+          {aboutContent.sections.map((section) => (
             <PeopleSection
               eyebrow={section.eyebrow}
               heading={section.heading}
-              indexOffset={sectionOffsets[index]}
               key={section.heading}
               people={section.people}
-              registerCard={registerCard}
               subtitle={section.subtitle}
             />
           ))}
