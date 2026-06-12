@@ -16,7 +16,7 @@ export const valorantTeams = [
   {
     name: "VOP White",
     href: "/vop-white",
-    tier: "The Elite",
+    tier: "Varsity",
     image: "/images/vopwhite.avif",
     summary:
       "VOP White is the pinnacle of our competitive pipeline. This is an elite environment reserved for players who possess the mechanical skill, game sense, and dedication required to compete at the highest level.",
@@ -24,7 +24,7 @@ export const valorantTeams = [
   {
     name: "VOP Purple",
     href: "/vop-purple",
-    tier: "The Competitive",
+    tier: "Junior Varsity",
     image: "/images/voppurple.avif",
     summary:
       "VOP Purple serves as a core competitive pillar of our program, bridging the gap between talent and high-level collegiate execution.",
@@ -32,7 +32,7 @@ export const valorantTeams = [
   {
     name: "VOP Black",
     href: "/vop-black",
-    tier: "The Foundation",
+    tier: "Academy",
     image: "/images/vopblack.png",
     summary:
       "VOP Black is the primary entry point into our competitive ecosystem. This roster focuses on identifying raw talent and integrating players into a professional team structure.",
@@ -40,7 +40,7 @@ export const valorantTeams = [
   {
     name: "VOP Game Changers",
     href: "/gamechangers",
-    tier: "The Heart",
+    tier: "Marginalized",
     image: "/images/lavender.avif",
     summary:
       "VOP Game Changers is our dedicated space for players of marginalized genders (women, non-binary, and genderqueer competitors).",
@@ -51,7 +51,7 @@ export const leagueTeams = [
   {
     name: "VOP League 1",
     href: "/league1",
-    tier: "The Foundation",
+    tier: "Varsity",
     image: "/images/red.avif",
     summary:
       "League 1 is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
@@ -59,7 +59,7 @@ export const leagueTeams = [
   {
     name: "VOP League 2",
     href: "/league2",
-    tier: "The Foundation",
+    tier: "Development",
     image: "/images/blue.avif",
     summary:
       "League 2 is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
