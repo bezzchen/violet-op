@@ -334,7 +334,7 @@ export const teamPages = [
   {
     slug: "vop-white",
     name: "VOP White",
-    label: "The Elite",
+    label: "Varsity",
     image: "/images/vopwhite.avif",
     accent: "tertiary",
     game: "valorant",
@@ -374,7 +374,7 @@ export const teamPages = [
   {
     slug: "vop-purple",
     name: "VOP Purple",
-    label: "The Competitive",
+    label: "Junior Varsity",
     image: "/images/voppurple.avif",
     accent: "primary",
     game: "valorant",
@@ -411,7 +411,7 @@ export const teamPages = [
   {
     slug: "vop-black",
     name: "VOP Black",
-    label: "The Foundation",
+    label: "Academy",
     image: "/images/vopblack.png",
     accent: "tertiary",
     game: "valorant",
@@ -448,7 +448,7 @@ export const teamPages = [
   {
     slug: "gamechangers",
     name: "VOP Game Changers",
-    label: "The Heart",
+    label: "Marginalized",
     image: "/images/lavender.avif",
     accent: "primary",
     game: "valorant",
@@ -477,7 +477,7 @@ export const teamPages = [
   {
     slug: "league1",
     name: "VOP League 1",
-    label: "The Foundation",
+    label: "Varsity",
     image: "/images/red.avif",
     accent: "tertiary",
     game: "league",
@@ -506,7 +506,7 @@ export const teamPages = [
   {
     slug: "league2",
     name: "VOP League 2",
-    label: "The Foundation",
+    label: "Development",
     image: "/images/blue.avif",
     accent: "primary",
     game: "league",
