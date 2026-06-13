@@ -69,28 +69,63 @@ const normalizeRoster = (team: TeamPageData) => {
 };
 
 const VALORANT_TIERSET = "03621f52-342b-cf4e-4f86-9350a49c6d04";
+const LEAGUE_UNRANKED_IMAGE = "/images/Season_2023_-_Unranked.webp";
 
 const rankEmblemUrl = (tier: number) =>
   `https://media.valorant-api.com/competitivetiers/${VALORANT_TIERSET}/${tier}/largeicon.png`;
 
-// Derive a rank emblem straight from the free-text "Rank:" requirement so the
-// badge always matches the copy: "Immortal 1 or higher" -> Immortal emblem with
-// a "+", "Open rank" -> Unranked. Unspecified ranks (e.g. "TBA") get no emblem.
-const getRankBadge = (requirements: readonly string[]) => {
-  const rankLine = requirements.find((item) => /^\s*rank:/i.test(item));
+type RequirementBadge = {
+  alt: string;
+  plus: boolean;
+  src: string;
+};
 
-  if (!rankLine) {
+const splitRequirement = (item: string) => {
+  const match = item.match(/^\s*([^:]+):\s*(.*)$/);
+
+  if (!match) {
+    return { detail: item, title: "Info" };
+  }
+
+  return {
+    detail: match[2].trim() || "TBA",
+    title: match[1].trim(),
+  };
+};
+
+const isRankRequirement = (item: string) => /^\s*rank:/i.test(item);
+
+// Derive a rank emblem straight from the free-text "Rank:" requirement so the
+// badge always matches the copy while allowing each game to use its own open
+// rank art.
+const getRequirementBadge = (
+  team: TeamPageData,
+  item: string,
+): RequirementBadge | null => {
+  if (!isRankRequirement(item)) {
     return null;
   }
 
-  const value = rankLine.replace(/^\s*rank:\s*/i, "");
+  const { detail } = splitRequirement(item);
 
-  if (/immortal/i.test(value)) {
+  if (team.game === "league" && /open\s*rank|unranked/i.test(detail)) {
+    return {
+      alt: "League of Legends Unranked emblem",
+      plus: false,
+      src: LEAGUE_UNRANKED_IMAGE,
+    };
+  }
+
+  if (team.game !== "valorant") {
+    return null;
+  }
+
+  if (/immortal/i.test(detail)) {
     return { alt: "Valorant Immortal rank emblem", plus: true, src: rankEmblemUrl(24) };
   }
 
-  if (/open\s*rank|unranked/i.test(value)) {
-    return { alt: "Valorant Unranked emblem", plus: false, src: rankEmblemUrl(0) };
+  if (/open\s*rank|unranked/i.test(detail)) {
+    return { alt: "Valorant Open rank emblem", plus: false, src: rankEmblemUrl(0) };
   }
 
   return null;
@@ -215,7 +250,6 @@ export default async function TeamPage({
   const accent = accentClasses[team.accent as keyof typeof accentClasses];
   const supportRoles = team.staff.length > 0 ? team.staff : defaultStaffNeeds;
   const rosterSlots = normalizeRoster(team);
-  const rankBadge = team.game === "valorant" ? getRankBadge(team.requirements) : null;
   const isLeague = team.game === "league";
   const titleParts = getTeamTitleParts(team.name);
   const restWords = titleParts.rest.trim().split(/\s+/);
@@ -321,39 +355,55 @@ export default async function TeamPage({
           <SectionHeading accent={accent} eyebrow="Program Brief" title="Identity" />
 
           <div className="grid gap-4 md:grid-cols-3">
-            {team.requirements.map((item, index) => (
-              <article
-                className="team-reveal glass-panel team-info-card rounded border border-white/10 p-5"
-                key={item}
-                style={revealStyle(index + 3)}
-              >
-                <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-                  {`0${index + 1}`}
-                </span>
-                {rankBadge && /^\s*rank:/i.test(item) ? (
-                  <div className="mt-4 flex items-center gap-2">
-                    <Image
-                      alt={rankBadge.alt}
-                      className="h-16 w-16 object-contain drop-shadow-[0_0_14px_rgba(209,76,255,0.5)]"
-                      height={64}
-                      quality={85}
-                      src={rankBadge.src}
-                      width={64}
-                    />
-                    {rankBadge.plus ? (
-                      <span
-                        className={`font-display-xl text-5xl font-extrabold leading-none ${accent.text}`}
-                      >
-                        +
-                      </span>
-                    ) : null}
+            {team.requirements.map((item, index) => {
+              const requirement = splitRequirement(item);
+              const requirementBadge = getRequirementBadge(team, item);
+
+              return (
+                <article
+                  className="team-reveal glass-panel team-info-card rounded border border-white/10 p-5"
+                  key={item}
+                  style={revealStyle(index + 3)}
+                >
+                  <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
+                      {`0${index + 1}:`}
+                    </span>
+                    <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
+                      {requirement.title}
+                    </span>
                   </div>
-                ) : null}
-                <p className="mt-4 font-headline-md text-xl font-bold uppercase text-white">
-                  {item}
-                </p>
-              </article>
-            ))}
+
+                  {requirementBadge ? (
+                    <div className="mt-6 flex items-center gap-2">
+                      <Image
+                        alt={requirementBadge.alt}
+                        className="h-20 w-20 object-contain drop-shadow-[0_0_18px_rgba(209,76,255,0.55)]"
+                        height={80}
+                        quality={85}
+                        src={requirementBadge.src}
+                        width={80}
+                      />
+                      {requirementBadge.plus ? (
+                        <span
+                          className={`font-display-xl text-5xl font-extrabold leading-none ${accent.text}`}
+                        >
+                          +
+                        </span>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  <p
+                    className={`font-headline-md text-xl font-bold uppercase text-white ${
+                      requirementBadge ? "mt-6" : "mt-10"
+                    }`}
+                  >
+                    {requirement.detail}
+                  </p>
+                </article>
+              );
+            })}
           </div>
         </section>
 

@@ -341,8 +341,8 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "Featured Agent",
-      name: "Vyse",
+      label: "ボップ・",
+      name: "ホワイト",
       image: valorantAgentPortraits.vyse,
       summary: "Sentinel pressure and disciplined late-round control.",
     },
@@ -381,13 +381,13 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "Featured Agent",
-      name: "Reyna",
+      label: "ボップ・",
+      name: "パープル",
       image: valorantAgentPortraits.reyna,
       summary: "Explosive confidence, entry pressure, and clutch focus.",
     },
     requirements: [
-      "Rank: TBA",
+      "Rank: Open rank",
       "Commitment: Structured weekly practice",
       "Access: Competitive tryouts",
     ],
@@ -406,7 +406,7 @@ export const teamPages = [
         detail: "Assistant Coach and Analyst",
       },
     ],
-    roster: ["Katelyn Nguyen", "Nahian Sowalehin", "Evan Lee (IGL)", "TBA", "TBA"],
+    roster: ["Evan Lee", "Katelyn Nguyen", "Nahian Sowalehin", "TBA", "TBA"],
   },
   {
     slug: "vop-black",
@@ -418,8 +418,8 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "Featured Agent",
-      name: "Omen",
+      label: "ボップ・",
+      name: "ブラック",
       image: valorantAgentPortraits.omen,
       summary: "Shadow control, patient defaults, and team-first utility.",
     },
@@ -455,14 +455,14 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "Featured Agent",
-      name: "Clove",
+      label: "ボップ・",
+      name: "ゲームチェンジャー",
       image: valorantAgentPortraits.clove,
       summary: "Resilient controller play and fearless second-chance energy.",
     },
     requirements: [
+      "Rank: Open rank",
       "Eligibility: Marginalized genders",
-      "Rank: TBA",
       "Access: Dedicated tryout process",
     ],
     paragraphs: [
@@ -484,8 +484,8 @@ export const teamPages = [
     gameLabel: "League of Legends",
     gameLogo: gameLogos.league,
     feature: {
-      label: "Featured Camp",
-      name: "Raptor",
+      label: "ボップ・",
+      name: "猛禽類",
       image: leagueCreatureRenders.raptor,
       summary: "Fast clears, early momentum, and sharp map tempo.",
     },
@@ -513,8 +513,8 @@ export const teamPages = [
     gameLabel: "League of Legends",
     gameLogo: gameLogos.league,
     feature: {
-      label: "Featured Camp",
-      name: "Krug",
+      label: "ボップ・",
+      name: "クリュッグ",
       image: leagueCreatureRenders.krug,
       summary: "Durable fundamentals, lane patience, and steady objective setup.",
     },
