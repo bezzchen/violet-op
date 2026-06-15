@@ -39,16 +39,10 @@ export default function EventsPage() {
             <h1 className="mt-4 font-display-xl text-4xl font-extrabold uppercase text-white md:text-display-xl">
               {eventsContent.title}
             </h1>
-            <p className="mt-8 font-headline-md text-headline-md font-bold uppercase text-primary">
-              {eventsContent.subtitle}
-            </p>
           </div>
         </div>
 
         <section className="grid gap-6">
-          <h2 className="font-display-xl text-4xl font-extrabold uppercase text-white md:text-[3.25rem]">
-            {eventsContent.subtitle}
-          </h2>
           <div className="grid gap-4">
             {eventsContent.events.map((event) => (
               <article

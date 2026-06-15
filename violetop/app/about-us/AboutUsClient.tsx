@@ -82,12 +82,10 @@ function PeopleSection({
   eyebrow,
   heading,
   people,
-  subtitle,
 }: {
   eyebrow: string;
   heading: string;
   people: Person[];
-  subtitle?: string;
 }) {
   return (
     <section className="grid gap-8">
@@ -98,11 +96,6 @@ function PeopleSection({
         <h2 className="mt-3 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
           {heading}
         </h2>
-        {subtitle ? (
-          <p className="mt-3 font-label-caps text-label-caps uppercase text-primary">
-            {subtitle}
-          </p>
-        ) : null}
       </div>
 
       <div className="grid gap-y-8 md:gap-y-12">
@@ -197,7 +190,6 @@ export default function AboutUsClient() {
               heading={section.heading}
               key={section.heading}
               people={section.people}
-              subtitle={section.subtitle}
             />
           ))}
         </section>

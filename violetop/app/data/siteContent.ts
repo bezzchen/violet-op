@@ -99,7 +99,6 @@ export const aboutContent = {
     {
       eyebrow: "VOP E-Board",
       heading: "Competitive Department",
-      subtitle: "Reports to General Manager",
       people: [
         {
           name: "Jessica Wang",
@@ -129,7 +128,6 @@ export const aboutContent = {
     {
       eyebrow: "VOP E-Board",
       heading: "Events Department",
-      subtitle: "Reports to the President",
       people: [
         { name: "Charice Huang", role: "Head of Event Coordination" },
         { name: "Kuan Lin", role: "Event Designer/Helper", image: "/images/kuan.avif" },
@@ -145,7 +143,6 @@ export const aboutContent = {
     {
       eyebrow: "VOP E-Board",
       heading: "Creative Department",
-      subtitle: "Reports to the President & General Manager",
       people: [
         { name: "Emily Chen", role: "Website Leader", image: "/images/emily.avif" },
         { name: "Barry", role: "Website Leader" },
@@ -160,7 +157,6 @@ export const aboutContent = {
     {
       eyebrow: "VOP E-Board",
       heading: "Marketing & Growth",
-      subtitle: "Reports to the President",
       people: [
         {
           name: "Artus Yeh",
@@ -181,7 +177,6 @@ export const aboutContent = {
     {
       eyebrow: "VOP E-Board",
       heading: "Finance",
-      subtitle: "Reports to the President",
       people: [
         {
           name: "Ella Kaplan",
@@ -268,7 +263,6 @@ export const joinContent = {
 
 export const eventsContent = {
   title: "What's Happening",
-  subtitle: "Community Events",
   events: [
     {
       month: "APR",
