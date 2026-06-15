@@ -448,32 +448,36 @@ export default function Home() {
               {homeContent.join}
             </p>
 
-            <div className="flex flex-col items-center justify-center gap-gutter pt-stack-md md:flex-row">
+            <div className="grid w-full grid-cols-1 items-stretch gap-gutter pt-stack-md md:grid-cols-2">
               <Link
-                className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
+                className="glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
                 href="/join-us"
               >
-                <h3 className="mb-2 font-bold font-headline-md text-headline-md text-primary">
-                  Choose Your Path
-                </h3>
-                <p className="mb-4 font-body-md text-body-md text-on-surface/70">
-                  {joinContent.intro}
-                </p>
+                <div>
+                  <h3 className="mb-2 font-bold font-headline-md text-headline-md text-primary">
+                    Choose Your Path
+                  </h3>
+                  <p className="mb-4 font-body-md text-body-md text-on-surface/70">
+                    {joinContent.intro}
+                  </p>
+                </div>
                 <span className="border-b border-primary pb-1 font-label-caps text-label-caps">
                   Join Us
                 </span>
               </Link>
 
               <Link
-                className="glass-panel op-clip w-full p-8 transition-all hover:neon-glow-purple md:w-80"
+                className="glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
                 href="/join-us"
               >
-                <h3 className="mb-2 font-bold font-headline-md text-headline-md text-tertiary">
-                  Not a Player?
-                </h3>
-                <p className="mb-4 font-body-md text-body-md text-on-surface/70">
-                  {joinContent.staffIntro}
-                </p>
+                <div>
+                  <h3 className="mb-2 font-bold font-headline-md text-headline-md text-tertiary">
+                    Not a Player?
+                  </h3>
+                  <p className="mb-4 font-body-md text-body-md text-on-surface/70">
+                    {joinContent.staffIntro}
+                  </p>
+                </div>
                 <span className="border-b border-tertiary pb-1 font-label-caps text-label-caps">
                   Join the Staff
                 </span>
