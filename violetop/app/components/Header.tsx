@@ -5,6 +5,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { leagueTeams, mainNav, valorantTeams } from "../data/siteContent";
 
+const visibleHeaderNav = mainNav
+  .slice(1, 4)
+  .filter((item) => item.href !== "/events");
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -79,7 +83,7 @@ export default function Header() {
           </div>
         </div>
 
-        {mainNav.slice(1, 4).map((item) => (
+        {visibleHeaderNav.map((item) => (
           <Link
             className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
             href={item.href}
@@ -175,7 +179,7 @@ export default function Header() {
           </div>
 
           <div className="grid gap-2 border-t border-outline-variant pt-3">
-            {mainNav.slice(1, 4).map((item) => (
+            {visibleHeaderNav.map((item) => (
               <Link
                 className="font-label-caps text-label-caps text-on-surface/75 transition-colors hover:text-on-surface"
                 href={item.href}
