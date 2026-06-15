@@ -40,7 +40,7 @@ function PersonCard({
         <div className="relative mb-6 h-56 w-full overflow-hidden rounded bg-surface-container md:h-64">
           <Image
             alt={name}
-            className="object-cover"
+            className="object-cover object-top"
             fill
             quality={65}
             sizes="(min-width: 1280px) 22vw, (min-width: 768px) 28vw, 100vw"
