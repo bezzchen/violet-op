@@ -20,7 +20,7 @@ export default function HighlightsPage() {
     <PageShell>
       <div className="relative flex min-h-[var(--app-height)] w-full flex-col gap-12 pb-12 pt-28 md:gap-16">
         <header
-          className="team-reveal mx-auto w-full max-w-[1600px] px-4 md:px-8"
+          className="wide-page-shell team-reveal mx-auto w-full max-w-[1600px] px-4 md:px-8"
           style={revealStyle(0)}
         >
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
@@ -43,7 +43,7 @@ export default function HighlightsPage() {
 
         <FeaturedPlayer clip={featuredClip} revealDelay={90} />
 
-        <section className="mx-auto grid w-full max-w-7xl gap-6 px-4 md:px-grid-margin">
+        <section className="wide-page-shell mx-auto grid w-full max-w-7xl gap-6 px-4 md:px-grid-margin">
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <span className="font-label-caps text-label-caps uppercase text-tertiary">

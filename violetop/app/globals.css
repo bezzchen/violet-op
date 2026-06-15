@@ -106,6 +106,16 @@ a {
   letter-spacing: 0;
 }
 
+.home-section-shell {
+  max-width: 80rem;
+  width: 100%;
+}
+
+.home-cta-shell {
+  max-width: 56rem;
+  width: 100%;
+}
+
 .glass-panel {
   background: rgba(179, 58, 255, 0.12);
   backdrop-filter: blur(20px);
@@ -472,6 +482,384 @@ a {
 
   .team-hero-title-rest {
     font-size: 5.4rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .site-header {
+    padding: 1.125rem 3rem;
+  }
+
+  .site-header-logo {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .site-header-brand {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+
+  .site-header-nav {
+    gap: 3rem;
+  }
+
+  .site-header-link,
+  .site-header-join,
+  .site-header-mega-title {
+    font-size: 0.9375rem;
+    line-height: 1.25rem;
+  }
+
+  .site-header-join {
+    padding: 0.75rem 2rem;
+  }
+
+  .site-header-mega-panel {
+    gap: 3.5rem;
+    padding: 2.25rem;
+    width: 36rem;
+  }
+
+  .site-header-mega-link {
+    font-size: 1.0625rem;
+    line-height: 1.65rem;
+  }
+
+  .wide-page-shell,
+  .home-section-shell {
+    max-width: 96rem;
+  }
+
+  .home-cta-shell {
+    max-width: 64rem;
+  }
+
+  .home-hero-logo {
+    max-width: 48rem;
+  }
+
+  .home-hero-copy {
+    font-size: 1.25rem;
+    line-height: 2rem;
+    max-width: 42rem;
+  }
+
+  .home-feature-character {
+    max-height: 74vh;
+    width: min(36vw, 48rem);
+  }
+
+  .home-roster-card {
+    min-height: 14rem;
+    padding: 1rem;
+  }
+
+  .home-roster-card-media {
+    height: 8rem;
+  }
+
+  .home-cta-card {
+    min-height: 22rem;
+    padding: 2.25rem;
+  }
+
+  .hero-title {
+    font-size: 11.5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .site-header {
+    padding: 1.375rem 4rem;
+  }
+
+  .site-header-logo {
+    height: 3.5rem;
+    width: 3.5rem;
+  }
+
+  .site-header-brand {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+
+  .site-header-nav {
+    gap: 3.75rem;
+  }
+
+  .site-header-link,
+  .site-header-join,
+  .site-header-mega-title {
+    font-size: 1.0625rem;
+    line-height: 1.4rem;
+  }
+
+  .site-header-join {
+    padding: 0.875rem 2.4rem;
+  }
+
+  .site-header-mega-panel {
+    gap: 4rem;
+    padding: 2.75rem;
+    width: 42rem;
+  }
+
+  .site-header-mega-link {
+    font-size: 1.15rem;
+    line-height: 1.8rem;
+  }
+
+  .wide-page-shell {
+    max-width: 100rem;
+  }
+
+  .home-section-shell {
+    gap: 4rem;
+    max-width: 112rem;
+  }
+
+  .home-cta-shell {
+    max-width: 76rem;
+  }
+
+  .home-hero-logo {
+    max-width: 58rem;
+  }
+
+  .home-hero-copy {
+    font-size: 1.375rem;
+    line-height: 2.15rem;
+    max-width: 46rem;
+  }
+
+  .home-feature-character {
+    max-height: 76vh;
+    width: min(34vw, 58rem);
+  }
+
+  .home-roster-panel {
+    padding: 5rem;
+  }
+
+  .home-roster-card {
+    min-height: 16rem;
+    padding: 1.25rem;
+  }
+
+  .home-roster-card-media {
+    height: 9rem;
+  }
+
+  .home-cta-card {
+    min-height: 25rem;
+    padding: 3rem;
+  }
+
+  .hero-title {
+    font-size: 13.5rem;
+  }
+
+  .team-hero-copy {
+    max-width: 42rem;
+    width: min(42rem, calc(100vw - 4rem));
+  }
+
+  .team-hero-title-vop {
+    font-size: 10.8rem;
+  }
+
+  .team-hero-title-rest {
+    font-size: 6.1rem;
+  }
+
+  .team-hero-title-rest.is-long {
+    font-size: 4.8rem;
+  }
+
+  .team-hero-team-mark {
+    height: 12rem;
+    width: min(35vw, 24rem);
+  }
+
+  .team-roster-card {
+    min-height: 14rem;
+  }
+}
+
+@media (min-width: 2560px) {
+  .site-header {
+    padding: 1.65rem 6rem;
+  }
+
+  .site-header-logo {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  .site-header-brand {
+    font-size: 2.25rem;
+    line-height: 2.75rem;
+  }
+
+  .site-header-nav {
+    gap: 4.75rem;
+  }
+
+  .site-header-link,
+  .site-header-join,
+  .site-header-mega-title {
+    font-size: 1.1875rem;
+    line-height: 1.5rem;
+  }
+
+  .site-header-join {
+    padding: 1rem 2.75rem;
+  }
+
+  .site-header-mega-panel {
+    gap: 4.75rem;
+    padding: 3.25rem;
+    width: 48rem;
+  }
+
+  .site-header-mega-link {
+    font-size: 1.25rem;
+    line-height: 1.95rem;
+  }
+
+  .wide-page-shell {
+    max-width: 118rem;
+  }
+
+  .home-section-shell {
+    gap: 5.5rem;
+    max-width: 136rem;
+  }
+
+  .home-cta-shell {
+    max-width: 88rem;
+  }
+
+  .home-hero-logo {
+    max-width: 70rem;
+  }
+
+  .home-hero-copy {
+    font-size: 1.5rem;
+    line-height: 2.35rem;
+    max-width: 52rem;
+  }
+
+  .home-feature-character {
+    max-height: 78vh;
+    width: min(32vw, 68rem);
+  }
+
+  .home-roster-card {
+    min-height: 18rem;
+    padding: 1.5rem;
+  }
+
+  .home-roster-card-media {
+    height: 10.5rem;
+  }
+
+  .home-cta-card {
+    min-height: 28rem;
+    padding: 3.5rem;
+  }
+
+  .hero-title {
+    font-size: 16rem;
+  }
+}
+
+@media (min-width: 3200px) {
+  .site-header {
+    padding: 2rem 8rem;
+  }
+
+  .site-header-logo {
+    height: 4.5rem;
+    width: 4.5rem;
+  }
+
+  .site-header-brand {
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+
+  .site-header-nav {
+    gap: 5.75rem;
+  }
+
+  .site-header-link,
+  .site-header-join,
+  .site-header-mega-title {
+    font-size: 1.3125rem;
+    line-height: 1.7rem;
+  }
+
+  .site-header-join {
+    padding: 1.15rem 3.25rem;
+  }
+
+  .site-header-mega-panel {
+    gap: 5.5rem;
+    padding: 3.75rem;
+    width: 56rem;
+  }
+
+  .site-header-mega-link {
+    font-size: 1.375rem;
+    line-height: 2.1rem;
+  }
+
+  .wide-page-shell {
+    max-width: 136rem;
+  }
+
+  .home-section-shell {
+    gap: 6.5rem;
+    max-width: 160rem;
+  }
+
+  .home-cta-shell {
+    max-width: 100rem;
+  }
+
+  .home-hero-logo {
+    max-width: 82rem;
+  }
+
+  .home-hero-copy {
+    font-size: 1.625rem;
+    line-height: 2.55rem;
+    max-width: 58rem;
+  }
+
+  .home-feature-character {
+    max-height: 80vh;
+    width: min(30vw, 78rem);
+  }
+
+  .home-roster-card {
+    min-height: 20rem;
+    padding: 1.75rem;
+  }
+
+  .home-roster-card-media {
+    height: 12rem;
+  }
+
+  .home-cta-card {
+    min-height: 31rem;
+    padding: 4rem;
+  }
+
+  .hero-title {
+    font-size: 18rem;
   }
 }
 

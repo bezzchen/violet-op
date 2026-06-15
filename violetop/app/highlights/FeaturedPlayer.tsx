@@ -217,7 +217,7 @@ export default function FeaturedPlayer({
   const revealStyle = { "--team-delay": `${revealDelay}ms` } as CSSProperties;
 
   return (
-    <section className="mx-auto w-full max-w-[1600px] px-4 md:px-8">
+    <section className="wide-page-shell mx-auto w-full max-w-[1600px] px-4 md:px-8">
       <div className="highlight-feature-glow team-reveal" style={revealStyle}>
         <div className="featured-player relative aspect-video w-full overflow-hidden rounded-xl border border-primary/30 bg-black shadow-[0_0_90px_-18px_rgba(209,76,255,0.6)]">
           <div className="absolute inset-0 h-full w-full" ref={containerRef} />

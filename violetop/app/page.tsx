@@ -207,7 +207,7 @@ export default function Home() {
           className="scroll-section z-10 flex items-center justify-center bg-transparent"
           id="hero-section"
         >
-          <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
+          <div className="home-section-shell relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
             <div className="relative flex min-h-[calc(var(--app-height)-6rem)] flex-col justify-start pt-12 md:min-h-0 md:justify-center md:pt-0 lg:col-span-12">
               <div
                 className="pointer-events-none relative z-30 max-w-[22rem] md:max-w-none"
@@ -221,7 +221,7 @@ export default function Home() {
                   <br />
                   <span className="text-primary not-italic">OP</span>
                 </h1>
-                <p className="mt-6 max-w-xl font-body-lg text-body-lg text-on-surface-variant drop-shadow-2xl">
+                <p className="home-hero-copy mt-6 max-w-xl font-body-lg text-body-lg text-on-surface-variant drop-shadow-2xl">
                   {homeContent.body}
                 </p>
                 <div className="relative z-40 mt-12 hidden gap-4 md:flex">
@@ -235,7 +235,7 @@ export default function Home() {
               </div>
 
               <div
-                className="pointer-events-none absolute left-1/2 top-[70%] z-20 w-[min(88vw,24rem)] -translate-x-1/2 -translate-y-1/2 opacity-55 md:top-[55%] md:w-full md:max-w-2xl lg:left-[75%] lg:opacity-100"
+                className="home-hero-logo pointer-events-none absolute left-1/2 top-[70%] z-20 w-[min(88vw,24rem)] -translate-x-1/2 -translate-y-1/2 opacity-55 md:top-[55%] md:w-full md:max-w-2xl lg:left-[75%] lg:opacity-100"
                 ref={heroLogoRef}
               >
                 <Image
@@ -280,14 +280,14 @@ export default function Home() {
             />
           </div>
 
-          <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
+          <div className="home-section-shell relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
             <div
               className="relative flex flex-col items-center justify-center"
               ref={valAssetsRef}
             >
               <Image
                 alt="Waylay Valorant agent"
-                className="relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_38px_rgba(204,72,255,0.48)] md:max-h-[70vh]"
+                className="home-feature-character relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_38px_rgba(204,72,255,0.48)] md:max-h-[70vh]"
                 height={1100}
                 quality={70}
                 sizes="(min-width: 1024px) 34vw, (min-width: 768px) 55vw, 82vw"
@@ -297,7 +297,7 @@ export default function Home() {
             </div>
 
             <div
-              className="glass-panel section-text-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
+              className="home-roster-panel glass-panel section-text-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
               ref={valContentRef}
             >
               <div className="mb-6 flex items-center gap-2">
@@ -313,11 +313,11 @@ export default function Home() {
               <div className="mb-8 grid grid-cols-2 gap-4">
                 {valorantTeams.map((team) => (
                   <Link
-                    className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
+                    className="home-roster-card flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
                     href={team.href}
                     key={team.name}
                   >
-                    <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
+                    <div className="home-roster-card-media relative h-28 w-full overflow-hidden rounded bg-surface-container">
                       <Image
                         alt={`${team.name} team`}
                         className="object-contain object-center opacity-80"
@@ -364,9 +364,9 @@ export default function Home() {
             />
           </div>
 
-          <div className="container relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
+          <div className="home-section-shell relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
             <div
-              className="glass-panel section-text-panel op-clip order-2 flex flex-col items-end border-r-4 border-r-primary p-6 text-right md:p-stack-xl lg:order-1"
+              className="home-roster-panel glass-panel section-text-panel op-clip order-2 flex flex-col items-end border-r-4 border-r-primary p-6 text-right md:p-stack-xl lg:order-1"
               ref={lolContentRef}
             >
               <div className="mb-6 flex items-center gap-2">
@@ -382,11 +382,11 @@ export default function Home() {
               <div className="mb-8 grid w-full grid-cols-2 gap-4">
                 {leagueTeams.map((team) => (
                   <Link
-                    className="flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
+                    className="home-roster-card flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
                     href={team.href}
                     key={team.name}
                   >
-                    <div className="relative h-28 w-full overflow-hidden rounded bg-surface-container">
+                    <div className="home-roster-card-media relative h-28 w-full overflow-hidden rounded bg-surface-container">
                       <Image
                         alt={`${team.name} team`}
                         className="object-contain object-center opacity-80"
@@ -422,7 +422,7 @@ export default function Home() {
             >
               <Image
                 alt="Ahri League of Legends champion"
-                className="relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_48px_rgba(240,120,255,0.58)] md:max-h-[70vh]"
+                className="home-feature-character relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_48px_rgba(240,120,255,0.58)] md:max-h-[70vh]"
                 height={1100}
                 quality={70}
                 sizes="(min-width: 1024px) 34vw, (min-width: 768px) 55vw, 82vw"
@@ -437,7 +437,7 @@ export default function Home() {
           className="scroll-section z-10 flex flex-col items-center justify-center bg-transparent px-4 text-center md:px-grid-margin"
           id="cta-section"
         >
-          <div className="relative z-10 max-w-4xl space-y-stack-md md:pb-12">
+          <div className="home-cta-shell relative z-10 max-w-4xl space-y-stack-md md:pb-12">
             <span className="font-label-caps text-label-caps uppercase text-on-primary-container">
               {joinContent.title}
             </span>
@@ -450,7 +450,7 @@ export default function Home() {
 
             <div className="grid w-full grid-cols-1 items-stretch gap-gutter pt-stack-md md:grid-cols-2">
               <Link
-                className="glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
+                className="home-cta-card glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
                 href="/join-us"
               >
                 <div>
@@ -467,7 +467,7 @@ export default function Home() {
               </Link>
 
               <Link
-                className="glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
+                className="home-cta-card glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
                 href="/join-us"
               >
                 <div>

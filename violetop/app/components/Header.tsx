@@ -15,25 +15,25 @@ export default function Header() {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="fixed left-0 top-0 z-50 grid w-full grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:flex md:justify-between md:px-grid-margin">
+    <header className="site-header fixed left-0 top-0 z-50 grid w-full grid-cols-[1fr_auto_1fr] items-center border-b border-white/10 bg-surface/55 px-4 py-4 backdrop-blur-xl md:flex md:justify-between md:px-grid-margin">
       <Link className="flex min-w-0 items-center gap-3" href="/" onClick={closeMenu}>
         <Image
           alt="NYU Violet OP logo"
-          className="h-10 w-10 rounded-full border border-primary/30 object-cover"
+          className="site-header-logo h-10 w-10 rounded-full border border-primary/30 object-cover"
           height={40}
           loading="eager"
           src="/images/logo.avif"
           width={40}
         />
-        <span className="hidden font-headline-md text-headline-md font-bold text-on-surface md:inline">
+        <span className="site-header-brand hidden font-headline-md text-headline-md font-bold text-on-surface md:inline">
           Violet OP
         </span>
       </Link>
 
-      <nav className="hidden h-full items-center gap-8 md:flex">
+      <nav className="site-header-nav hidden h-full items-center gap-8 md:flex">
         <div className="mega-menu-trigger relative flex h-full items-center">
           <Link
-            className="flex items-center gap-1 font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
+            className="site-header-link flex items-center gap-1 font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
             href="/#valorant-section"
           >
             Teams{" "}
@@ -43,16 +43,16 @@ export default function Header() {
           </Link>
 
           <div className="mega-menu absolute left-1/2 top-full pt-4 -translate-x-1/2">
-            <div className="glass-panel flex w-[500px] gap-12 rounded-xl bg-surface-container-lowest/90 p-8 shadow-2xl">
+            <div className="site-header-mega-panel glass-panel flex w-[500px] gap-12 rounded-xl bg-surface-container-lowest/90 p-8 shadow-2xl">
               <div className="flex-1">
-                <h4 className="mb-4 border-b border-tertiary/20 pb-2 font-label-caps text-label-caps text-tertiary">
+                <h4 className="site-header-mega-title mb-4 border-b border-tertiary/20 pb-2 font-label-caps text-label-caps text-tertiary">
                   Valorant
                 </h4>
                 <ul className="space-y-3">
                   {valorantTeams.map((team) => (
                     <li key={team.name}>
                       <Link
-                        className="font-body-md text-on-surface/70 transition-colors hover:text-tertiary"
+                        className="site-header-mega-link font-body-md text-on-surface/70 transition-colors hover:text-tertiary"
                         href={team.href}
                       >
                         {team.name}
@@ -63,14 +63,14 @@ export default function Header() {
               </div>
 
               <div className="flex-1">
-                <h4 className="mb-4 border-b border-primary/20 pb-2 font-label-caps text-label-caps text-primary">
+                <h4 className="site-header-mega-title mb-4 border-b border-primary/20 pb-2 font-label-caps text-label-caps text-primary">
                   League of Legends
                 </h4>
                 <ul className="space-y-3">
                   {leagueTeams.map((team) => (
                     <li key={team.name}>
                       <Link
-                        className="font-body-md text-on-surface/70 transition-colors hover:text-primary"
+                        className="site-header-mega-link font-body-md text-on-surface/70 transition-colors hover:text-primary"
                         href={team.href}
                       >
                         {team.name}
@@ -85,7 +85,7 @@ export default function Header() {
 
         {visibleHeaderNav.map((item) => (
           <Link
-            className="font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
+            className="site-header-link font-label-caps text-label-caps text-on-surface/70 transition-colors hover:text-on-surface"
             href={item.href}
             key={item.href}
           >
@@ -95,7 +95,7 @@ export default function Header() {
       </nav>
 
       <Link
-        className="op-clip justify-self-center bg-primary-container px-5 py-2 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 md:justify-self-auto md:px-6"
+        className="site-header-join op-clip justify-self-center bg-primary-container px-5 py-2 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 md:justify-self-auto md:px-6"
         href="/join-us"
         onClick={closeMenu}
       >

@@ -263,7 +263,7 @@ export default async function TeamPage({
 
   return (
     <PageShell>
-      <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-12 px-4 pb-20 pt-20 md:gap-24 md:px-grid-margin md:pb-28 md:pt-24">
+      <section className="wide-page-shell relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-12 px-4 pb-20 pt-20 md:gap-24 md:px-grid-margin md:pb-28 md:pt-24">
         <TeamHeroMotion
           className="team-reveal team-hero-section relative overflow-hidden"
           style={revealStyle(0)}

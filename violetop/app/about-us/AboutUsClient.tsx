@@ -151,7 +151,7 @@ export default function AboutUsClient() {
 
   return (
     <PageShell scrollContainerRef={scrollRef}>
-      <section className="relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-16 px-4 pb-12 pt-28 md:px-grid-margin">
+      <section className="wide-page-shell relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-16 px-4 pb-12 pt-28 md:px-grid-margin">
         <div className="grid items-center gap-8 md:min-h-[calc(var(--app-height)-7rem)] lg:grid-cols-[1fr_0.9fr]">
           <div className="reveal-up glass-panel section-text-panel op-clip border-l-4 border-l-primary p-6 md:p-stack-xl">
             <span className="font-label-caps text-label-caps uppercase text-primary">

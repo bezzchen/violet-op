@@ -85,7 +85,7 @@ export default function JoinUsClient() {
 
   return (
     <PageShell scrollContainerRef={scrollRef}>
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 pb-16 pt-24 md:gap-24 md:px-grid-margin md:pb-24 md:pt-28">
+      <div className="wide-page-shell relative mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 pb-16 pt-24 md:gap-24 md:px-grid-margin md:pb-24 md:pt-28">
         <header className="reveal-up join-hero relative flex items-end overflow-hidden rounded-2xl border border-white/10">
           <div className="absolute inset-0">
             <Image
