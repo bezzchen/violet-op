@@ -12,28 +12,29 @@ type Person = {
   role: string;
 };
 
-const rowPositions = [
-  ["md:col-start-1", "md:col-start-5", "md:col-start-9"],
-  ["md:col-start-2", "md:col-start-6", "md:col-start-10"],
-];
+const centeredRowPositions: Record<number, string[]> = {
+  1: ["md:col-start-3"],
+  2: ["md:col-start-2", "md:col-start-4"],
+  3: ["md:col-start-1", "md:col-start-3", "md:col-start-5"],
+};
 
 const revealDelay = (index: number) =>
   ({ "--reveal-delay": `${index * 90}ms` }) as CSSProperties;
 
 function PersonCard({
-  columnIndex,
+  animationIndex,
   gridPosition,
   image,
   name,
   role,
 }: Person & {
-  columnIndex: number;
+  animationIndex: number;
   gridPosition: string;
 }) {
   return (
     <article
-      className={`reveal-up glass-panel col-span-12 flex min-h-80 flex-col justify-between rounded border border-white/10 bg-surface-container-lowest/75 p-5 shadow-2xl md:col-span-3 md:min-h-96 md:p-6 ${gridPosition}`}
-      style={revealDelay(columnIndex)}
+      className={`reveal-up glass-panel flex min-h-80 flex-col justify-between rounded border border-white/10 bg-surface-container-lowest/75 p-5 shadow-2xl md:col-span-2 md:min-h-96 md:p-6 ${gridPosition}`}
+      style={revealDelay(animationIndex)}
     >
       {image ? (
         <div className="relative mb-6 h-56 w-full overflow-hidden rounded bg-surface-container md:h-64">
@@ -104,17 +105,22 @@ function PeopleSection({
         ) : null}
       </div>
 
-      <div className="grid gap-y-8 md:grid-cols-12 md:gap-x-6 md:gap-y-12">
-        {chunkPeople(people).map((row, rowIndex) =>
-          row.map((person, columnIndex) => (
-            <PersonCard
-              columnIndex={columnIndex}
-              gridPosition={rowPositions[rowIndex % rowPositions.length][columnIndex]}
-              key={`${person.name}-${person.role}`}
-              {...person}
-            />
-          )),
-        )}
+      <div className="grid gap-y-8 md:gap-y-12">
+        {chunkPeople(people).map((row, rowIndex) => (
+          <div
+            className="grid gap-y-8 md:grid-cols-6 md:gap-x-6"
+            key={row.map((person) => `${person.name}-${person.role}`).join("-")}
+          >
+            {row.map((person, columnIndex) => (
+              <PersonCard
+                animationIndex={rowIndex * 3 + columnIndex}
+                gridPosition={centeredRowPositions[row.length][columnIndex]}
+                key={`${person.name}-${person.role}`}
+                {...person}
+              />
+            ))}
+          </div>
+        ))}
       </div>
     </section>
   );

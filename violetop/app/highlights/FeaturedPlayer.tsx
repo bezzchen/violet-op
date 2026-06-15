@@ -7,7 +7,6 @@ import Link from "next/link";
 
 type Clip = {
   id: string;
-  label: string;
   title: string;
   url: string;
 };
@@ -257,7 +256,7 @@ export default function FeaturedPlayer({
         <div className="mt-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <span className="font-label-caps text-label-caps uppercase text-primary">
-              Featured · {clip.label}
+              Featured
             </span>
             <h2 className="mt-2 font-headline-md text-2xl font-bold uppercase text-white md:text-3xl">
               {clip.title}

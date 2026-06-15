@@ -8,6 +8,7 @@ import PageShell from "../components/PageShell";
 import { allTeams, joinContent } from "../data/siteContent";
 
 const teamByName = new Map(allTeams.map((team) => [team.name, team]));
+const isExternalHref = (href: string) => /^https?:\/\//i.test(href);
 
 // Match a staff-role string (e.g. "Head Coach for White") back to its team so
 // the card can show that team's crest.
@@ -181,14 +182,24 @@ export default function JoinUsClient() {
                       </p>
                     )}
 
-                    {team ? (
+                    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3">
                       <Link
-                        className="mt-auto font-label-caps text-label-caps uppercase text-tertiary transition-colors hover:text-white"
-                        href={team.href}
+                        className="op-clip bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary shadow-lg shadow-primary/20 transition-all hover:neon-glow-purple"
+                        href={path.joinHref}
+                        rel={isExternalHref(path.joinHref) ? "noreferrer" : undefined}
+                        target={isExternalHref(path.joinHref) ? "_blank" : undefined}
                       >
-                        View Team →
+                        Join →
                       </Link>
-                    ) : null}
+                      {team ? (
+                        <Link
+                          className="font-label-caps text-label-caps uppercase text-tertiary transition-colors hover:text-white"
+                          href={team.href}
+                        >
+                          View Team →
+                        </Link>
+                      ) : null}
+                    </div>
                   </article>
                 </div>
               );

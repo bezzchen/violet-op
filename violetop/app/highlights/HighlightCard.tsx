@@ -7,7 +7,6 @@ import Link from "next/link";
 
 type Clip = {
   id: string;
-  label: string;
   title: string;
   url: string;
 };
@@ -85,10 +84,7 @@ export default function HighlightCard({
       </div>
       <div className="flex items-center justify-between gap-4 border-t border-white/10 p-5">
         <div>
-          <span className="font-label-caps text-label-caps uppercase text-primary">
-            {clip.label}
-          </span>
-          <h3 className="mt-2 font-headline-md text-xl font-bold uppercase text-white">
+          <h3 className="font-headline-md text-xl font-bold uppercase text-white">
             {clip.title}
           </h3>
         </div>

@@ -147,12 +147,11 @@ export const aboutContent = {
       heading: "Creative Department",
       subtitle: "Reports to the President & General Manager",
       people: [
-        { name: "Jenny Guo", role: "Head of Design / Graphic Designer" },
         { name: "Emily Chen", role: "Website Leader", image: "/images/emily.avif" },
         { name: "Barry", role: "Website Leader" },
         {
           name: "Artus Yeh",
-          role: "Content Lead / Graphic Designer / Video Editor",
+          role: "Head of Design / Content Lead / Graphic Designer / Video Editor",
           image: "/images/artus.avif",
         },
         { name: "TBA", role: "Stream Content Creators" },
@@ -202,6 +201,8 @@ export const joinContent = {
   paths: [
     {
       name: "VOP White",
+      joinHref:
+        "https://docs.google.com/forms/d/e/1FAIpQLSfxOvKoNBvC_Bh1Ht5soFYQyKqrFLppxMQhMm2M1ax0ahgULQ/viewform?usp=preview",
       details: [
         "Requirements: Immo 1 or higher",
         "Commitment: High (Daily Scrims, VOD Reviews, LAN Travel)",
@@ -210,6 +211,7 @@ export const joinContent = {
     },
     {
       name: "VOP Black",
+      joinHref: "/join-us",
       details: [
         "Requirements: Open Rank",
         "Commitment: Low/Flexible",
@@ -218,13 +220,23 @@ export const joinContent = {
     },
     {
       name: "VOP Game Changers",
+      joinHref:
+        "https://docs.google.com/forms/d/e/1FAIpQLSetRnvnSZzmbQn0PNmpSCIx5mGNCO3_-PJuxlrRoYH4vUEynA/viewform",
       details: [
         "Commitment: Medium/Flexible",
         "Access: Only those with marginalized genders",
       ],
     },
-    { name: "VOP League 1", details: [] },
-    { name: "VOP League 2", details: [] },
+    {
+      name: "VOP League 1",
+      joinHref: "https://forms.gle/M25gKjpttLMLzDSc7",
+      details: [],
+    },
+    {
+      name: "VOP League 2",
+      joinHref: "https://forms.gle/M25gKjpttLMLzDSc7",
+      details: [],
+    },
   ],
   staffIntro:
     "Behind every great team is an amazing support system. We are always looking for passionate NYU students to help build the VOP legacy behind the scenes.",
@@ -290,19 +302,16 @@ export const highlightsContent = {
   clips: [
     {
       id: "BUTEgoy3bXo",
-      label: "Clip 01",
       title: "Valorant Highlight 01",
       url: "https://www.youtube.com/watch?v=BUTEgoy3bXo",
     },
     {
       id: "cWTQb-wiOSI",
-      label: "Clip 02",
       title: "Valorant Highlight 02",
       url: "https://www.youtube.com/watch?v=cWTQb-wiOSI",
     },
     {
       id: "Rx-xkubvrjs",
-      label: "Clip 03",
       title: "Valorant Highlight 03",
       url: "https://www.youtube.com/watch?v=Rx-xkubvrjs",
     },
@@ -341,7 +350,7 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ・",
+      label: "ボップ",
       name: "ホワイト",
       image: valorantAgentPortraits.vyse,
       summary: "Sentinel pressure and disciplined late-round control.",
@@ -381,7 +390,7 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ・",
+      label: "ボップ",
       name: "パープル",
       image: valorantAgentPortraits.reyna,
       summary: "Explosive confidence, entry pressure, and clutch focus.",
@@ -418,7 +427,7 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ・",
+      label: "ボップ",
       name: "ブラック",
       image: valorantAgentPortraits.omen,
       summary: "Shadow control, patient defaults, and team-first utility.",
@@ -455,7 +464,7 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ・",
+      label: "ボップ",
       name: "ゲームチェンジャー",
       image: valorantAgentPortraits.clove,
       summary: "Resilient controller play and fearless second-chance energy.",
@@ -484,7 +493,7 @@ export const teamPages = [
     gameLabel: "League of Legends",
     gameLogo: gameLogos.league,
     feature: {
-      label: "ボップ・",
+      label: "ボップ",
       name: "猛禽類",
       image: leagueCreatureRenders.raptor,
       summary: "Fast clears, early momentum, and sharp map tempo.",
@@ -513,7 +522,7 @@ export const teamPages = [
     gameLabel: "League of Legends",
     gameLogo: gameLogos.league,
     feature: {
-      label: "ボップ・",
+      label: "ボップ",
       name: "クリュッグ",
       image: leagueCreatureRenders.krug,
       summary: "Durable fundamentals, lane patience, and steady objective setup.",
