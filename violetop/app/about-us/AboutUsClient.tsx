@@ -37,7 +37,7 @@ function PersonCard({
       style={revealDelay(animationIndex)}
     >
       {image ? (
-        <div className="relative mb-6 h-56 w-full overflow-hidden rounded bg-surface-container md:h-64">
+        <div className="relative mb-6 aspect-[3/4] w-full overflow-hidden rounded bg-surface-container">
           <Image
             alt={name}
             className="object-cover object-top"
@@ -48,7 +48,7 @@ function PersonCard({
           />
         </div>
       ) : (
-        <div className="mb-6 flex h-56 w-full items-center justify-center rounded bg-primary-container font-display-xl text-5xl font-extrabold text-white md:h-64">
+        <div className="mb-6 flex aspect-[3/4] w-full items-center justify-center rounded bg-primary-container font-display-xl text-5xl font-extrabold text-white">
           {name
             .split(" ")
             .map((part) => part[0])
