@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import {
@@ -14,6 +13,10 @@ import {
   valorantTeams,
 } from "./data/siteContent";
 import useLenisScroll from "./hooks/useLenisScroll";
+import {
+  captureInlineStyles,
+  setScrollMotion,
+} from "./utils/scrollMotion";
 
 const PrismCanvas = dynamic(() => import("./components/PrismCanvas"), {
   ssr: false,
@@ -85,112 +88,119 @@ export default function Home() {
       };
     }
 
-    const ctx = gsap.context(() => {
-      gsap.set(heroTextRef.current, { autoAlpha: 1, x: 0 });
-      gsap.set(heroCtaRef.current, { autoAlpha: 1, x: 0 });
-      gsap.set(heroLogoRef.current, { autoAlpha: 1, scale: 1, x: 0 });
-      gsap.set([valAssetsRef.current, valContentRef.current], { autoAlpha: 0 });
-      gsap.set(valAssetsRef.current, { x: -120 });
-      gsap.set(valContentRef.current, { x: 120 });
-      gsap.set(lolContentRef.current, { autoAlpha: 0, x: -120 });
-      gsap.set(lolAssetsRef.current, { autoAlpha: 0, x: 120 });
+    const restoreInlineStyles = captureInlineStyles([
+      heroTextRef.current,
+      heroCtaRef.current,
+      heroLogoRef.current,
+      valAssetsRef.current,
+      valContentRef.current,
+      lolContentRef.current,
+      lolAssetsRef.current,
+    ]);
 
-      const refreshSectionOffsets = () => {
-        const vh = scrollContainer.clientHeight;
+    setScrollMotion(heroTextRef.current, { opacity: 1 });
+    setScrollMotion(heroCtaRef.current, { opacity: 1 });
+    setScrollMotion(heroLogoRef.current, { opacity: 1 });
+    setScrollMotion(valAssetsRef.current, { opacity: 0, x: -120 });
+    setScrollMotion(valContentRef.current, { opacity: 0, x: 120 });
+    setScrollMotion(lolContentRef.current, { opacity: 0, x: -120 });
+    setScrollMotion(lolAssetsRef.current, { opacity: 0, x: 120 });
 
-        valorantOffset =
-          document.getElementById("valorant-section")?.offsetTop ?? vh;
-        leagueOffset =
-          document.getElementById("lol-section")?.offsetTop ?? vh * 2;
-        ctaOffset =
-          document.getElementById("cta-section")?.offsetTop ?? vh * 3;
-      };
+    const refreshSectionOffsets = () => {
+      const vh = scrollContainer.clientHeight;
 
-      const animateScrollState = () => {
-        const scrollPos = scrollContainer.scrollTop;
-        const vh = scrollContainer.clientHeight;
-        const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
-        const valorantEnter = sectionEnterProgress(scrollPos, vh, valorantOffset);
-        const valorantExit = sectionEnterProgress(scrollPos, vh, leagueOffset);
-        const valorantProgress = clamp(valorantEnter - valorantExit);
-        const leagueEnter = sectionEnterProgress(scrollPos, vh, leagueOffset);
-        const leagueExit = sectionEnterProgress(scrollPos, vh, ctaOffset);
-        const leagueProgress = clamp(leagueEnter - leagueExit);
+      valorantOffset =
+        document.getElementById("valorant-section")?.offsetTop ?? vh;
+      leagueOffset =
+        document.getElementById("lol-section")?.offsetTop ?? vh * 2;
+      ctaOffset =
+        document.getElementById("cta-section")?.offsetTop ?? vh * 3;
+    };
 
-        gsap.set(heroTextRef.current, {
-          autoAlpha: 1 - heroExit,
-          x: -120 * heroExit,
-        });
+    const animateScrollState = () => {
+      const scrollPos = scrollContainer.scrollTop;
+      const vh = scrollContainer.clientHeight;
+      const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
+      const valorantEnter = sectionEnterProgress(scrollPos, vh, valorantOffset);
+      const valorantExit = sectionEnterProgress(scrollPos, vh, leagueOffset);
+      const valorantProgress = clamp(valorantEnter - valorantExit);
+      const leagueEnter = sectionEnterProgress(scrollPos, vh, leagueOffset);
+      const leagueExit = sectionEnterProgress(scrollPos, vh, ctaOffset);
+      const leagueProgress = clamp(leagueEnter - leagueExit);
 
-        gsap.set(heroCtaRef.current, {
-          autoAlpha: 1 - heroExit,
-          x: -120 * heroExit,
-        });
+      setScrollMotion(heroTextRef.current, {
+        opacity: 1 - heroExit,
+        x: -120 * heroExit,
+      });
 
-        gsap.set(heroLogoRef.current, {
-          autoAlpha: 1 - heroExit,
-          scale: 1 - 0.12 * heroExit,
-          x: 120 * heroExit,
-        });
+      setScrollMotion(heroCtaRef.current, {
+        opacity: 1 - heroExit,
+        x: -120 * heroExit,
+      });
 
-        gsap.set(valAssetsRef.current, {
-          autoAlpha: valorantProgress,
-          x: -120 * (1 - valorantProgress),
-        });
-        gsap.set(valContentRef.current, {
-          autoAlpha: valorantProgress,
-          x: 120 * (1 - valorantProgress),
-        });
+      setScrollMotion(heroLogoRef.current, {
+        opacity: 1 - heroExit,
+        scale: 1 - 0.12 * heroExit,
+        x: 120 * heroExit,
+      });
 
-        gsap.set(lolContentRef.current, {
-          autoAlpha: leagueProgress,
-          x: -120 * (1 - leagueProgress),
-        });
-        gsap.set(lolAssetsRef.current, {
-          autoAlpha: leagueProgress,
-          x: 120 * (1 - leagueProgress),
-        });
-      };
+      setScrollMotion(valAssetsRef.current, {
+        opacity: valorantProgress,
+        x: -120 * (1 - valorantProgress),
+      });
+      setScrollMotion(valContentRef.current, {
+        opacity: valorantProgress,
+        x: 120 * (1 - valorantProgress),
+      });
 
-      const scheduleScrollState = () => {
-        if (animationFrame) {
-          return;
-        }
+      setScrollMotion(lolContentRef.current, {
+        opacity: leagueProgress,
+        x: -120 * (1 - leagueProgress),
+      });
+      setScrollMotion(lolAssetsRef.current, {
+        opacity: leagueProgress,
+        x: 120 * (1 - leagueProgress),
+      });
+    };
 
-        animationFrame = window.requestAnimationFrame(() => {
-          animationFrame = 0;
-          animateScrollState();
-        });
-      };
+    const scheduleScrollState = () => {
+      if (animationFrame) {
+        return;
+      }
 
-      const handleViewportChange = () => {
-        updateViewportHeight();
-        refreshSectionOffsets();
-        scheduleScrollState();
-      };
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        animateScrollState();
+      });
+    };
 
+    const handleViewportChange = () => {
       updateViewportHeight();
       refreshSectionOffsets();
-      animateScrollState();
-      scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
-      window.addEventListener("resize", handleViewportChange);
-      window.visualViewport?.addEventListener("resize", handleViewportChange);
-      window.visualViewport?.addEventListener("scroll", handleViewportChange);
+      scheduleScrollState();
+    };
 
-      removeScrollListeners = () => {
-        scrollContainer.removeEventListener("scroll", scheduleScrollState);
-        window.removeEventListener("resize", handleViewportChange);
-        window.visualViewport?.removeEventListener("resize", handleViewportChange);
-        window.visualViewport?.removeEventListener("scroll", handleViewportChange);
-        if (animationFrame) {
-          window.cancelAnimationFrame(animationFrame);
-        }
-      };
-    });
+    updateViewportHeight();
+    refreshSectionOffsets();
+    animateScrollState();
+    scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
+    window.addEventListener("resize", handleViewportChange);
+    window.visualViewport?.addEventListener("resize", handleViewportChange);
+    window.visualViewport?.addEventListener("scroll", handleViewportChange);
+
+    removeScrollListeners = () => {
+      scrollContainer.removeEventListener("scroll", scheduleScrollState);
+      window.removeEventListener("resize", handleViewportChange);
+      window.visualViewport?.removeEventListener("resize", handleViewportChange);
+      window.visualViewport?.removeEventListener("scroll", handleViewportChange);
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+      }
+    };
 
     return () => {
       removeScrollListeners();
-      ctx.revert();
+      restoreInlineStyles();
     };
   }, []);
 

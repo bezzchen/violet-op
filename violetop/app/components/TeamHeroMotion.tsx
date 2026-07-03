@@ -2,7 +2,10 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import {
+  captureInlineStyles,
+  setScrollMotion,
+} from "../utils/scrollMotion";
 
 type TeamHeroMotionProps = {
   children: ReactNode;
@@ -49,65 +52,63 @@ export default function TeamHeroMotion({
     let animationFrame = 0;
     let removeScrollListeners = () => {};
 
-    const ctx = gsap.context(() => {
-      gsap.set(copy, { autoAlpha: 1, x: 0 });
-      gsap.set(media, { autoAlpha: 1, scale: 1, x: 0 });
+    const restoreInlineStyles = captureInlineStyles([copy, media, backdrop]);
 
-      const animateScrollState = () => {
-        const scrollPos = scrollContainer.scrollTop;
-        const vh = scrollContainer.clientHeight || window.innerHeight;
-        const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
+    setScrollMotion(copy, { opacity: 1 });
+    setScrollMotion(media, { opacity: 1 });
 
-        gsap.set(copy, {
-          autoAlpha: 1 - heroExit,
-          x: -120 * heroExit,
-        });
+    const animateScrollState = () => {
+      const scrollPos = scrollContainer.scrollTop;
+      const vh = scrollContainer.clientHeight || window.innerHeight;
+      const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
 
-        gsap.set(media, {
-          autoAlpha: 1 - heroExit,
-          scale: 1 - 0.12 * heroExit,
-          x: 120 * heroExit,
-        });
+      setScrollMotion(copy, {
+        opacity: 1 - heroExit,
+        x: -120 * heroExit,
+      });
 
-        if (backdrop) {
-          gsap.set(backdrop, {
-            opacity: 0.1 * (1 - heroExit),
-          });
-        }
-      };
+      setScrollMotion(media, {
+        opacity: 1 - heroExit,
+        scale: 1 - 0.12 * heroExit,
+        x: 120 * heroExit,
+      });
 
-      const scheduleScrollState = () => {
-        if (animationFrame) {
-          return;
-        }
+      if (backdrop) {
+        backdrop.style.opacity = `${0.1 * (1 - heroExit)}`;
+      }
+    };
 
-        animationFrame = window.requestAnimationFrame(() => {
-          animationFrame = 0;
-          animateScrollState();
-        });
-      };
+    const scheduleScrollState = () => {
+      if (animationFrame) {
+        return;
+      }
 
-      animateScrollState();
-      scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
-      window.addEventListener("resize", scheduleScrollState);
-      window.visualViewport?.addEventListener("resize", scheduleScrollState);
-      window.visualViewport?.addEventListener("scroll", scheduleScrollState);
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        animateScrollState();
+      });
+    };
 
-      removeScrollListeners = () => {
-        scrollContainer.removeEventListener("scroll", scheduleScrollState);
-        window.removeEventListener("resize", scheduleScrollState);
-        window.visualViewport?.removeEventListener("resize", scheduleScrollState);
-        window.visualViewport?.removeEventListener("scroll", scheduleScrollState);
+    animateScrollState();
+    scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
+    window.addEventListener("resize", scheduleScrollState);
+    window.visualViewport?.addEventListener("resize", scheduleScrollState);
+    window.visualViewport?.addEventListener("scroll", scheduleScrollState);
 
-        if (animationFrame) {
-          window.cancelAnimationFrame(animationFrame);
-        }
-      };
-    }, root);
+    removeScrollListeners = () => {
+      scrollContainer.removeEventListener("scroll", scheduleScrollState);
+      window.removeEventListener("resize", scheduleScrollState);
+      window.visualViewport?.removeEventListener("resize", scheduleScrollState);
+      window.visualViewport?.removeEventListener("scroll", scheduleScrollState);
+
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+      }
+    };
 
     return () => {
       removeScrollListeners();
-      ctx.revert();
+      restoreInlineStyles();
     };
   }, []);
 
