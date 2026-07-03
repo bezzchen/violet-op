@@ -43,7 +43,7 @@ export default function Header() {
           </Link>
 
           <div className="mega-menu absolute left-1/2 top-full pt-4 -translate-x-1/2">
-            <div className="site-header-mega-panel glass-panel flex w-[500px] gap-12 rounded-xl bg-surface-container-lowest/90 p-8 shadow-2xl">
+            <div className="site-header-mega-panel flex w-[500px] gap-12 rounded-xl border border-outline-variant/40 bg-surface-container-lowest p-8 shadow-2xl">
               <div className="flex-1">
                 <h4 className="site-header-mega-title mb-4 border-b border-tertiary/20 pb-2 font-label-caps text-label-caps text-tertiary">
                   Valorant
