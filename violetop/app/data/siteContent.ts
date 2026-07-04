@@ -145,7 +145,7 @@ export const aboutContent = {
       heading: "Creative Department",
       people: [
         { name: "Emily Chen", role: "Website Leader", image: "/images/emily.avif" },
-        { name: "Barry", role: "Website Leader" },
+        { name: "Barry Chen", role: "Website Leader" },
         {
           name: "Artus Yeh",
           role: "Head of Design / Content Lead / Graphic Designer / Video Editor",
@@ -372,7 +372,7 @@ export const teamPages = [
         detail: "Assistant Coach and Analyst",
       },
     ],
-    roster: ["Brandon", "Jake", "Justin", "Fallen", "Alpha"],
+    roster: ["Brandon", "Jake", "Justin", "Lucas", "Alpha"],
   },
   {
     slug: "vop-purple",

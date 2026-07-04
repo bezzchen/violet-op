@@ -33,62 +33,126 @@ const fragmentShaderSource = `
 precision highp float;
 
 uniform vec2 u_resolution;
-uniform float u_time;
+uniform vec2 u_motion;
 uniform float u_scroll;
+uniform float u_idlePhase;
+uniform float u_idleStrength;
 
-float hash(vec2 p) {
-  p = fract(p * vec2(123.34, 456.21));
-  p += dot(p, p + 45.32);
-  return fract(p.x * p.y);
+const float LEFT_APEX = 0.05;
+const float RIGHT_APEX = -0.40;
+const float LEFT_CURVATURE = -12.0;
+const float RIGHT_CURVATURE = 12.0;
+
+float parabolaField(
+  vec2 point,
+  float centerX,
+  float apexY,
+  float curvature
+) {
+  float x = point.x - centerX;
+
+  return point.y - (apexY + curvature * x * x);
 }
 
-float noise(vec2 p) {
-  vec2 i = floor(p);
-  vec2 f = fract(p);
-  f = f * f * (3.0 - 2.0 * f);
+float blendForTargetX(
+  float targetX,
+  float leftCenter,
+  float rightCenter,
+  float elevation
+) {
+  vec2 targetPoint = vec2(targetX, 0.0);
+  float targetLeftField = parabolaField(
+    targetPoint,
+    leftCenter,
+    LEFT_APEX,
+    LEFT_CURVATURE
+  );
+  float targetRightField = parabolaField(
+    targetPoint,
+    rightCenter,
+    RIGHT_APEX,
+    RIGHT_CURVATURE
+  );
 
-  float a = hash(i);
-  float b = hash(i + vec2(1.0, 0.0));
-  float c = hash(i + vec2(0.0, 1.0));
-  float d = hash(i + vec2(1.0, 1.0));
-
-  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+  return clamp(
+    (elevation - targetLeftField) /
+      (targetRightField - targetLeftField),
+    0.02,
+    0.98
+  );
 }
 
-float fbm(vec2 p) {
-  float value = 0.0;
-  float amplitude = 0.5;
+float interpolatedStreakDistance(
+  vec2 point,
+  float leftCenter,
+  float rightCenter,
+  float leftField,
+  float rightField,
+  float targetX,
+  float flow,
+  float elevation
+) {
+  float blend = blendForTargetX(
+    targetX,
+    leftCenter,
+    rightCenter,
+    elevation
+  );
+  float flowingBlend = clamp(blend + flow * point.y, 0.02, 0.98);
+  float leftSlope =
+    2.0 * LEFT_CURVATURE * (point.x - leftCenter);
+  float rightSlope =
+    2.0 * RIGHT_CURVATURE * (point.x - rightCenter);
+  float field =
+    mix(leftField, rightField, flowingBlend) - elevation;
+  float slope = mix(leftSlope, rightSlope, flowingBlend);
+  float gradientY =
+    1.0 + flow * (rightField - leftField);
 
-  for (int i = 0; i < 4; i++) {
-    value += amplitude * noise(p);
-    p = mat2(1.6, 1.2, -1.2, 1.6) * p + 9.7;
-    amplitude *= 0.5;
-  }
-
-  return value;
+  return field * inversesqrt(
+    slope * slope + gradientY * gradientY
+  );
 }
 
-mat2 rotate2d(float angle) {
-  float s = sin(angle);
-  float c = cos(angle);
-  return mat2(c, -s, s, c);
+float softBand(
+  float value,
+  float center,
+  float halfWidth,
+  float feather
+) {
+  return 1.0 - smoothstep(
+    halfWidth,
+    halfWidth + feather,
+    abs(value - center)
+  );
 }
 
-float sheet(vec2 p, float offset, float width, float softness) {
-  return 1.0 - smoothstep(width, width + softness, abs(p.x - offset));
-}
-
-vec3 palette(float t) {
-  vec3 ink = vec3(0.015, 0.0, 0.035);
-  vec3 deep = vec3(0.095, 0.01, 0.20);
-  vec3 violet = vec3(0.34, 0.025, 0.62);
-  vec3 electric = vec3(0.58, 0.08, 0.84);
-  vec3 ultraviolet = vec3(0.70, 0.14, 0.92);
-
-  vec3 color = mix(ink, deep, smoothstep(0.0, 0.34, t));
-  color = mix(color, violet, smoothstep(0.22, 0.72, t));
-  color = mix(color, electric, smoothstep(0.52, 0.96, t));
-  color = mix(color, ultraviolet, smoothstep(0.9, 1.0, t) * 0.48);
+vec3 shadeStreak(
+  vec3 color,
+  float distance,
+  float corridor,
+  vec3 bodyColor,
+  vec3 ridgeColor,
+  float intensity
+) {
+  color +=
+    bodyColor *
+    softBand(distance, 0.0, 0.035, 0.11) *
+    corridor *
+    0.20 *
+    intensity;
+  color +=
+    ridgeColor *
+    softBand(distance, -0.012, 0.012, 0.045) *
+    corridor *
+    0.42 *
+    intensity;
+  color *=
+    1.0 -
+    softBand(distance, 0.065, 0.035, 0.10) *
+    corridor *
+    0.30 *
+    intensity;
 
   return color;
 }
@@ -98,52 +162,233 @@ void main() {
   vec2 p = uv * 2.0 - 1.0;
   p.x *= u_resolution.x / u_resolution.y;
 
-  float scroll = u_scroll;
-  float time = u_time * 0.11;
-  float sweep = scroll - 0.5;
+  float aspect = u_resolution.x / u_resolution.y;
+  float sweep = u_scroll - 0.5;
+  float verticalShift = sweep * 0.58 + u_motion.y * 0.035;
+  float idleWave =
+    sin((p.x / max(aspect, 0.001)) * 3.14159 + u_idlePhase) *
+    0.035 *
+    u_idleStrength;
+  vec2 foldPoint = vec2(p.x, p.y - verticalShift - idleWave);
+  float horizontalShift = u_motion.x * 0.025;
+  float spread = max(aspect * 0.60, 0.35);
+  float leftCenter = -spread + horizontalShift;
+  float rightCenter = spread + horizontalShift;
+  float leftInnerX =
+    leftCenter +
+    sqrt(max(LEFT_APEX / -LEFT_CURVATURE, 0.0));
+  float rightInnerX =
+    rightCenter -
+    sqrt(max(-RIGHT_APEX / RIGHT_CURVATURE, 0.0));
+  float innerSpan = rightInnerX - leftInnerX;
+  float middleX1 = leftInnerX + innerSpan * 0.155;
+  float middleX2 = leftInnerX + innerSpan * 0.325;
+  float middleX3 = leftInnerX + innerSpan * 0.50;
+  float middleX4 = leftInnerX + innerSpan * 0.68;
+  float middleX5 = leftInnerX + innerSpan * 0.845;
+  float leftFold = parabolaField(
+    foldPoint,
+    leftCenter,
+    LEFT_APEX,
+    LEFT_CURVATURE
+  );
+  float rightFold = parabolaField(
+    foldPoint,
+    rightCenter,
+    RIGHT_APEX,
+    RIGHT_CURVATURE
+  );
+  float streakClearance = 0.62;
+  float corridor =
+    smoothstep(streakClearance, streakClearance + 0.18, leftFold) *
+    smoothstep(streakClearance, streakClearance + 0.18, -rightFold);
+  float leftAnchorSlope =
+    2.0 * LEFT_CURVATURE * (foldPoint.x - leftCenter);
+  float rightAnchorSlope =
+    2.0 * RIGHT_CURVATURE * (foldPoint.x - rightCenter);
+  float leftAnchorDistance =
+    leftFold *
+    inversesqrt(1.0 + leftAnchorSlope * leftAnchorSlope);
+  float rightAnchorDistance =
+    rightFold *
+    inversesqrt(1.0 + rightAnchorSlope * rightAnchorSlope);
+  float leftNearDistance =
+    leftAnchorDistance - 0.14;
+  float leftFarDistance =
+    leftAnchorDistance - 0.28;
+  float rightNearDistance =
+    rightAnchorDistance + 0.14;
+  float rightFarDistance =
+    rightAnchorDistance + 0.28;
+  float leftEdgeMask =
+    1.0 -
+    smoothstep(leftCenter - 0.02, leftCenter + 0.06, foldPoint.x);
+  float rightEdgeMask =
+    smoothstep(rightCenter - 0.06, rightCenter + 0.02, foldPoint.x);
 
-  vec2 center = p - vec2(0.18 + sweep * 0.34, -0.05 + sin(scroll * 3.14159) * 0.08);
-  float radius = length(center);
-  float angle = atan(center.y, center.x);
-  float swirl = (0.42 + scroll * 0.58) * exp(-radius * 0.95);
-  angle += swirl + sin(radius * 6.0 - time * 2.0 + scroll * 4.0) * 0.06;
+  vec3 ink = vec3(0.006, 0.0, 0.014);
+  vec3 deep = vec3(0.055, 0.006, 0.12);
+  vec3 violet = vec3(0.30, 0.035, 0.56);
+  vec3 orchid = vec3(0.44, 0.055, 0.68);
+  vec3 electric = vec3(0.56, 0.11, 0.82);
+  vec3 lilac = vec3(0.64, 0.18, 0.88);
+  vec3 ultraviolet = vec3(0.72, 0.24, 0.94);
+  vec3 color = ink;
 
-  vec2 warped = vec2(cos(angle), sin(angle)) * radius;
-  warped += vec2(sin(warped.y * 3.4 + time + scroll * 2.0), cos(warped.x * 2.6 - time)) * 0.055;
-  warped += (fbm(warped * 2.1 + vec2(time, -time) + scroll * 1.8) - 0.5) * 0.13;
+  float ambient = smoothstep(-1.15, 1.25, p.x);
+  color += deep * ambient * 0.22;
 
-  vec2 prism = rotate2d(-0.42 + scroll * 0.18) * warped;
-  prism.x += sweep * -0.5;
-  prism.y += sin(scroll * 3.14159) * 0.12;
+  float leftFabric = softBand(leftFold, 0.0, 0.20, 0.38);
+  float leftLight = smoothstep(-0.28, 0.30, leftFold);
+  color = mix(
+    color,
+    mix(deep * 0.34, violet * 0.92, leftLight),
+    leftFabric * 0.82
+  );
+  color += violet * softBand(leftFold, -0.13, 0.12, 0.20) * 0.17;
+  color += ultraviolet * softBand(leftFold, -0.025, 0.014, 0.05) * 0.48;
+  color *= 1.0 - softBand(leftFold, 0.05, 0.035, 0.11) * 0.46;
 
-  float leftShade = smoothstep(-1.2, 0.72, p.x);
-  float rightGlow = smoothstep(-0.18, 1.18, p.x);
+  float rightFabric = softBand(rightFold, 0.0, 0.20, 0.38);
+  float rightLight = 1.0 - smoothstep(-0.30, 0.28, rightFold);
+  color = mix(
+    color,
+    mix(deep * 0.34, violet * 0.92, rightLight),
+    rightFabric * 0.82
+  );
+  color += violet * softBand(rightFold, 0.13, 0.12, 0.20) * 0.17;
+  color += ultraviolet * softBand(rightFold, 0.025, 0.014, 0.05) * 0.48;
+  color *= 1.0 - softBand(rightFold, -0.05, 0.035, 0.11) * 0.46;
 
-  float broad = sheet(prism, -0.44, 0.16, 0.34) * 0.45;
-  float mid = sheet(prism, -0.04 + scroll * 0.12, 0.07, 0.18) * 0.78;
-  float front = sheet(prism, 0.38 + sin(time + scroll * 5.0) * 0.06, 0.10, 0.22);
-  float blade = sheet(prism, 0.72 - scroll * 0.16, 0.035, 0.08) * 1.35;
-  float shadowCut = smoothstep(0.02, 0.2, abs(prism.x - 0.19)) * 0.2;
+  color += deep * corridor * 0.22;
 
-  float luminous = broad + mid + front + blade;
-  float caustic = pow(max(0.0, sin((prism.x + prism.y * 0.14) * 16.0 + time * 3.0)), 8.0);
-  float smoke = fbm(warped * 1.35 + vec2(scroll * 1.2, time));
-  float depth = smoothstep(0.12, 1.18, radius);
+  color = shadeStreak(
+    color,
+    leftFarDistance,
+    leftEdgeMask,
+    electric,
+    ultraviolet,
+    0.84
+  );
+  color = shadeStreak(
+    color,
+    leftNearDistance,
+    leftEdgeMask,
+    electric,
+    ultraviolet,
+    1.02
+  );
+  color = shadeStreak(
+    color,
+    interpolatedStreakDistance(
+      foldPoint,
+      leftCenter,
+      rightCenter,
+      leftFold,
+      rightFold,
+      middleX1,
+      -0.006,
+      0.10
+    ),
+    corridor,
+    violet,
+    electric,
+    0.76
+  );
+  color = shadeStreak(
+    color,
+    interpolatedStreakDistance(
+      foldPoint,
+      leftCenter,
+      rightCenter,
+      leftFold,
+      rightFold,
+      middleX2,
+      -0.003,
+      -0.07
+    ),
+    corridor,
+    orchid,
+    lilac,
+    0.86
+  );
+  color = shadeStreak(
+    color,
+    interpolatedStreakDistance(
+      foldPoint,
+      leftCenter,
+      rightCenter,
+      leftFold,
+      rightFold,
+      middleX3,
+      0.0,
+      0.03
+    ),
+    corridor,
+    violet,
+    ultraviolet,
+    0.94
+  );
+  color = shadeStreak(
+    color,
+    interpolatedStreakDistance(
+      foldPoint,
+      leftCenter,
+      rightCenter,
+      leftFold,
+      rightFold,
+      middleX4,
+      0.003,
+      0.08
+    ),
+    corridor,
+    orchid,
+    electric,
+    0.82
+  );
+  color = shadeStreak(
+    color,
+    interpolatedStreakDistance(
+      foldPoint,
+      leftCenter,
+      rightCenter,
+      leftFold,
+      rightFold,
+      middleX5,
+      0.006,
+      -0.09
+    ),
+    corridor,
+    electric,
+    ultraviolet,
+    0.88
+  );
+  color = shadeStreak(
+    color,
+    rightFarDistance,
+    rightEdgeMask,
+    electric,
+    ultraviolet,
+    0.86
+  );
+  color = shadeStreak(
+    color,
+    rightNearDistance,
+    rightEdgeMask,
+    electric,
+    ultraviolet,
+    1.04
+  );
 
-  vec3 color = palette(leftShade * 0.42 + rightGlow * 0.34 + luminous * 0.32);
-  color *= 0.38 + rightGlow * 0.76;
-  color += vec3(0.24, 0.015, 0.48) * smoke * (0.2 + rightGlow * 0.36);
-  color += vec3(0.58, 0.08, 0.76) * caustic * (0.045 + luminous * 0.16);
-  color += vec3(0.66, 0.10, 0.86) * luminous * (0.22 + rightGlow * 0.38);
-  color *= 0.92 - depth * 0.2;
-  color *= 0.74 + shadowCut;
-
-  float leftVignette = smoothstep(-1.25, 0.35, p.x);
-  color *= 0.56 + leftVignette * 0.58;
-
-  float grain = hash(gl_FragCoord.xy + u_time) - 0.5;
-  color += grain * 0.012;
-  color = clamp(color, vec3(0.0), vec3(0.72, 0.16, 0.9));
+  float horizontalFade =
+    1.0 - smoothstep(aspect * 0.72, aspect * 1.02, abs(p.x));
+  float verticalFade =
+    smoothstep(-1.20, -0.82, p.y) *
+    (1.0 - smoothstep(0.92, 1.20, p.y));
+  color *=
+    (0.68 + horizontalFade * 0.32) *
+    (0.80 + verticalFade * 0.20);
+  color = clamp(color, vec3(0.0), vec3(0.76, 0.28, 0.98));
 
   gl_FragColor = vec4(color, 1.0);
 }
@@ -232,8 +477,10 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
     const positionBuffer = gl.createBuffer();
     const positionLocation = gl.getAttribLocation(program, "a_position");
     const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
-    const timeLocation = gl.getUniformLocation(program, "u_time");
+    const motionLocation = gl.getUniformLocation(program, "u_motion");
     const scrollLocation = gl.getUniformLocation(program, "u_scroll");
+    const idlePhaseLocation = gl.getUniformLocation(program, "u_idlePhase");
+    const idleStrengthLocation = gl.getUniformLocation(program, "u_idleStrength");
 
     if (!positionBuffer || positionLocation < 0) {
       gl.deleteProgram(program);
@@ -427,8 +674,17 @@ export default function PrismCanvas({ scrollContainerRef }: PrismCanvasProps) {
       gl.enableVertexAttribArray(positionLocation);
       gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
       gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-      gl.uniform1f(timeLocation, time * 0.001);
+      gl.uniform2f(
+        motionLocation,
+        Math.sin(time * 0.00012),
+        Math.cos(time * 0.00009),
+      );
       gl.uniform1f(scrollLocation, scrollProgress);
+      gl.uniform1f(idlePhaseLocation, time * 0.00022);
+      gl.uniform1f(
+        idleStrengthLocation,
+        shouldUseStaticCanvas() ? 0 : 1,
+      );
       gl.drawArrays(gl.TRIANGLES, 0, 6);
     };
 
