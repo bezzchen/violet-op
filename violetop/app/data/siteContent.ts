@@ -196,8 +196,9 @@ export const joinContent = {
   paths: [
     {
       name: "VOP White",
-      joinHref:
-        "https://docs.google.com/forms/d/e/1FAIpQLSfxOvKoNBvC_Bh1Ht5soFYQyKqrFLppxMQhMm2M1ax0ahgULQ/viewform?usp=preview",
+      game: "valorant",
+      filled: true,
+      joinHref: "https://forms.gle/Y349hunA1hgqAiUu6",
       details: [
         "Requirements: Immo 1 or higher",
         "Commitment: High (Daily Scrims, VOD Reviews, LAN Travel)",
@@ -205,8 +206,21 @@ export const joinContent = {
       ],
     },
     {
+      name: "VOP Purple",
+      game: "valorant",
+      filled: false,
+      joinHref: "https://forms.gle/ircHZ4YA3D1YyFm8A",
+      details: [
+        "Requirements: Open Rank",
+        "Commitment: Structured Weekly Practice",
+        "Access: Competitive Tryouts",
+      ],
+    },
+    {
       name: "VOP Black",
-      joinHref: "/join-us",
+      game: "valorant",
+      filled: true,
+      joinHref: "https://forms.gle/ircHZ4YA3D1YyFm8A",
       details: [
         "Requirements: Open Rank",
         "Commitment: Low/Flexible",
@@ -215,8 +229,9 @@ export const joinContent = {
     },
     {
       name: "VOP Game Changers",
-      joinHref:
-        "https://docs.google.com/forms/d/e/1FAIpQLSetRnvnSZzmbQn0PNmpSCIx5mGNCO3_-PJuxlrRoYH4vUEynA/viewform",
+      game: "valorant",
+      filled: false,
+      joinHref: "https://forms.gle/PSpnnByGm8JihwUA9",
       details: [
         "Commitment: Medium/Flexible",
         "Access: Only those with marginalized genders",
@@ -224,23 +239,62 @@ export const joinContent = {
     },
     {
       name: "VOP Elder",
-      joinHref: "https://forms.gle/M25gKjpttLMLzDSc7",
+      game: "league",
+      filled: false,
+      joinHref: "https://forms.gle/24E8hzA8vopwxxZK7",
       details: [],
     },
     {
       name: "VOP Baron",
-      joinHref: "https://forms.gle/M25gKjpttLMLzDSc7",
+      game: "league",
+      filled: false,
+      joinHref: "https://forms.gle/24E8hzA8vopwxxZK7",
       details: [],
     },
   ],
   staffIntro:
     "Behind every great team is an amazing support system. We are always looking for passionate NYU students to help build the VOP legacy behind the scenes.",
   staffRoles: [
-    "Head Coach for White",
-    "Assistant Coach and Analyst for White",
-    "Assistant Coach and Analyst for Purple",
-    "Head Coach for Black",
-    "Assistant Coach and Analyst for Black",
+    {
+      name: "Head Coach for White",
+      filled: false,
+      joinHref: "https://forms.gle/YQqDfLcpYaKnXR2c7",
+    },
+    {
+      name: "Assistant Coach and Analyst for White",
+      filled: false,
+      joinHref: "https://forms.gle/YQqDfLcpYaKnXR2c7",
+    },
+    {
+      name: "Head Coach for Purple",
+      filled: true,
+      joinHref: "https://forms.gle/YQqDfLcpYaKnXR2c7",
+    },
+    {
+      name: "Assistant Coach and Analyst for Purple",
+      filled: false,
+      joinHref: "https://forms.gle/YQqDfLcpYaKnXR2c7",
+    },
+    {
+      name: "Head Coach for Black",
+      filled: false,
+      joinHref: "https://forms.gle/YQqDfLcpYaKnXR2c7",
+    },
+    {
+      name: "Assistant Coach and Analyst for Black",
+      filled: false,
+      joinHref: "https://forms.gle/YQqDfLcpYaKnXR2c7",
+    },
+    {
+      name: "Events Team",
+      filled: false,
+      joinHref: "https://forms.gle/u2pfFXngoD793Emu9",
+    },
+    {
+      name: "Creative Team",
+      filled: false,
+      joinHref: "https://forms.gle/96cJSXrWno85WKC58",
+    },
   ],
   faqs: [
     {
@@ -438,15 +492,7 @@ export const teamPages = [
     proof:
       "Entry into VOP Black is strictly through a formal tryout process. If you want to have fun, join a community, and represent the Black jersey:",
     staff: [],
-    roster: [
-      "Ella",
-      "George",
-      "Artus",
-      "Augus",
-      "Choman",
-      "Rick (Purple Tryout)",
-      "Kuan (Purple Tryout)",
-    ],
+    roster: ["Ella", "George", "Artus", "Augus", "Choman"],
   },
   {
     slug: "gamechangers",

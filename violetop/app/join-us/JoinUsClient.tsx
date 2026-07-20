@@ -8,7 +8,18 @@ import PageShell from "../components/PageShell";
 import { allTeams, joinContent } from "../data/siteContent";
 
 const teamByName = new Map(allTeams.map((team) => [team.name, team]));
-const isExternalHref = (href: string) => /^https?:\/\//i.test(href);
+const gameSections = [
+  {
+    id: "valorant",
+    label: "VALORANT",
+    logo: "/images/valologo.webp",
+  },
+  {
+    id: "league",
+    label: "League of Legends",
+    logo: "/images/lollogo.avif",
+  },
+] as const;
 
 // Match a staff-role string (e.g. "Head Coach for White") back to its team so
 // the card can show that team's crest.
@@ -130,80 +141,126 @@ export default function JoinUsClient() {
 
         <section className="grid scroll-mt-24 gap-8" ref={pathsRef}>
           <SectionHeading
-            blurb="Five rosters across VALORANT and League of Legends — from stage-ready elite to open-rank community play."
+            blurb="Six rosters across VALORANT and League of Legends — from stage-ready elite to open-rank community play."
             eyebrow="Find Your Roster"
             title="Choose Your Path"
           />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {joinContent.paths.map((path, index) => {
-              const team = teamByName.get(path.name);
-
-              return (
-                <div className="reveal-up" key={path.name} style={delay(index)}>
-                  <article className="clip-card glass-panel flex h-full flex-col gap-5 rounded border border-white/10 p-5">
-                    <div className="flex items-center gap-3">
-                      {team ? (
-                        <span className="relative h-12 w-12 shrink-0">
-                          <Image
-                            alt={`${team.name} crest`}
-                            className="object-contain"
-                            fill
-                            quality={70}
-                            sizes="48px"
-                            src={team.image}
-                          />
-                        </span>
-                      ) : null}
-                      <div>
-                        {team ? (
-                          <span className="font-label-caps text-label-caps uppercase text-tertiary">
-                            {team.tier}
-                          </span>
-                        ) : null}
-                        <h3 className="font-headline-md text-lg font-bold uppercase text-primary">
-                          {path.name}
-                        </h3>
-                      </div>
-                    </div>
-
-                    {path.details.length > 0 ? (
-                      <ul className="grid gap-2 font-body-md text-sm text-on-surface-variant">
-                        {path.details.map((detail) => (
-                          <li className="flex gap-2" key={detail}>
-                            <span className="text-primary">›</span>
-                            <span>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="font-body-md text-sm text-on-surface-variant/70">
-                        Open-rank community squad — hop in customs and play.
-                      </p>
-                    )}
-
-                    <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3">
-                      <Link
-                        className="op-clip bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary shadow-lg shadow-primary/20 transition-all hover:neon-glow-purple"
-                        href={path.joinHref}
-                        rel={isExternalHref(path.joinHref) ? "noreferrer" : undefined}
-                        target={isExternalHref(path.joinHref) ? "_blank" : undefined}
-                      >
-                        Join →
-                      </Link>
-                      {team ? (
-                        <Link
-                          className="font-label-caps text-label-caps uppercase text-tertiary transition-colors hover:text-white"
-                          href={team.href}
-                        >
-                          View Team →
-                        </Link>
-                      ) : null}
-                    </div>
-                  </article>
+          <div className="grid gap-12">
+            {gameSections.map((section, sectionIndex) => (
+              <div className="grid gap-6" key={section.id}>
+                <div className="reveal-up flex items-center gap-4" style={delay(sectionIndex)}>
+                  <span className="relative h-14 w-14 shrink-0 md:h-16 md:w-16">
+                    <Image
+                      alt={`${section.label} logo`}
+                      className="object-contain"
+                      fill
+                      quality={70}
+                      sizes="64px"
+                      src={section.logo}
+                    />
+                  </span>
+                  <div>
+                    <span className="font-label-caps text-label-caps uppercase text-tertiary">
+                      Recruiting
+                    </span>
+                    <h3 className="font-headline-md text-2xl font-bold uppercase text-white">
+                      {section.label} Teams
+                    </h3>
+                  </div>
                 </div>
-              );
-            })}
+
+                <div className="grid gap-5 sm:grid-cols-2">
+                  {joinContent.paths
+                    .filter((path) => path.game === section.id)
+                    .map((path, index) => {
+                      const team = teamByName.get(path.name);
+
+                      return (
+                        <div
+                          className="reveal-up"
+                          key={path.name}
+                          style={delay(sectionIndex * 4 + index + 1)}
+                        >
+                          <article
+                            className={`join-path-card clip-card glass-panel flex h-full flex-col gap-6 rounded border p-6 md:p-7 ${
+                              path.filled ? "join-card-filled" : "border-white/10"
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex items-center gap-4">
+                                {team ? (
+                                  <span className="relative h-14 w-14 shrink-0">
+                                    <Image
+                                      alt={`${team.name} crest`}
+                                      className="object-contain"
+                                      fill
+                                      quality={70}
+                                      sizes="56px"
+                                      src={team.image}
+                                    />
+                                  </span>
+                                ) : null}
+                                <div>
+                                  {team ? (
+                                    <span className="font-label-caps text-label-caps uppercase text-tertiary">
+                                      {team.tier}
+                                    </span>
+                                  ) : null}
+                                  <h4 className="font-headline-md text-xl font-bold uppercase text-primary">
+                                    {path.name}
+                                  </h4>
+                                </div>
+                              </div>
+                              <span className="shrink-0 rounded-full border border-white/15 px-3 py-1 font-label-caps text-[10px] uppercase text-on-surface-variant">
+                                {path.filled ? "Filled" : "Open"}
+                              </span>
+                            </div>
+
+                            {path.details.length > 0 ? (
+                              <ul className="grid gap-2 font-body-md text-sm text-on-surface-variant">
+                                {path.details.map((detail) => (
+                                  <li className="flex gap-2" key={detail}>
+                                    <span className="text-primary">›</span>
+                                    <span>{detail}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="font-body-md text-sm text-on-surface-variant/70">
+                                Open-rank community squad — hop in customs and play.
+                              </p>
+                            )}
+
+                            <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
+                              <Link
+                                className={`op-clip px-5 py-3 font-label-caps text-label-caps uppercase transition-all ${
+                                  path.filled
+                                    ? "border border-white/20 bg-white/5 text-on-surface-variant hover:border-white/40"
+                                    : "bg-primary text-on-primary shadow-lg shadow-primary/20 hover:neon-glow-purple"
+                                }`}
+                                href={path.joinHref}
+                                rel="noreferrer"
+                                target="_blank"
+                              >
+                                {path.filled ? "Filled ↗" : "Apply ↗"}
+                              </Link>
+                              {team ? (
+                                <Link
+                                  className="font-label-caps text-label-caps uppercase text-tertiary transition-colors hover:text-white"
+                                  href={team.href}
+                                >
+                                  View Team →
+                                </Link>
+                              ) : null}
+                            </div>
+                          </article>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -222,27 +279,43 @@ export default function JoinUsClient() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             {joinContent.staffRoles.map((role, index) => {
-              const team = teamForRole(role);
+              const team = teamForRole(role.name);
 
               return (
-                <div className="reveal-up" key={role} style={delay(index)}>
-                  <article className="clip-card glass-panel flex h-full items-center gap-4 rounded border border-white/10 p-5">
-                    {team ? (
-                      <span className="relative h-10 w-10 shrink-0">
-                        <Image
-                          alt={`${team.name} crest`}
-                          className="object-contain"
-                          fill
-                          quality={70}
-                          sizes="40px"
-                          src={team.image}
-                        />
-                      </span>
-                    ) : null}
-                    <span className="font-headline-md text-base font-bold uppercase text-white">
-                      {role}
-                    </span>
-                  </article>
+                <div className="reveal-up" key={role.name} style={delay(index)}>
+                  <Link
+                    className="block h-full"
+                    href={role.joinHref}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <article
+                      className={`join-role-card clip-card glass-panel flex h-full items-center gap-4 rounded border p-5 ${
+                        role.filled ? "join-card-filled" : "border-white/10"
+                      }`}
+                    >
+                      {team ? (
+                        <span className="relative h-10 w-10 shrink-0">
+                          <Image
+                            alt={`${team.name} crest`}
+                            className="object-contain"
+                            fill
+                            quality={70}
+                            sizes="40px"
+                            src={team.image}
+                          />
+                        </span>
+                      ) : null}
+                      <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
+                        <span className="font-headline-md text-base font-bold uppercase text-white">
+                          {role.name}
+                        </span>
+                        <span className="shrink-0 font-label-caps text-[10px] uppercase text-tertiary">
+                          {role.filled ? "Filled ↗" : "Apply ↗"}
+                        </span>
+                      </div>
+                    </article>
+                  </Link>
                 </div>
               );
             })}

@@ -162,6 +162,24 @@ a {
     rgba(16, 0, 23, 0.6);
 }
 
+.join-path-card,
+.join-role-card {
+  transition: border-color 0.25s ease, filter 0.25s ease, opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.join-card-filled {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.1);
+  filter: grayscale(0.82);
+  opacity: 0.58;
+}
+
+.join-card-filled:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  opacity: 0.72;
+}
+
 @media (min-width: 768px) {
   .join-hero {
     min-height: 32rem;
