@@ -320,7 +320,9 @@ export default async function TeamPage({
               </div>
               <Image
                 alt={`${team.feature.name} ${team.gameLabel} feature`}
-                className="team-hero-feature object-contain"
+                className={`team-hero-feature object-contain ${
+                  team.slug === "league1" ? "team-hero-feature-elder" : ""
+                }`}
                 fill
                 preload
                 quality={78}

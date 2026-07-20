@@ -286,6 +286,10 @@ a {
   z-index: 20;
 }
 
+.team-hero-feature-elder {
+  object-position: center 68%;
+}
+
 .team-info-card,
 .team-roster-card,
 .clip-card {

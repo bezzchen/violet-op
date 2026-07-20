@@ -49,20 +49,20 @@ export const valorantTeams = [
 
 export const leagueTeams = [
   {
-    name: "VOP League 1",
+    name: "VOP Elder",
     href: "/league1",
     tier: "Varsity",
     image: "/images/red.avif",
     summary:
-      "League 1 is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Elder is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
   },
   {
-    name: "VOP League 2",
+    name: "VOP Baron",
     href: "/league2",
     tier: "Development",
     image: "/images/blue.avif",
     summary:
-      "League 2 is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Baron is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
   },
 ];
 
@@ -223,12 +223,12 @@ export const joinContent = {
       ],
     },
     {
-      name: "VOP League 1",
+      name: "VOP Elder",
       joinHref: "https://forms.gle/M25gKjpttLMLzDSc7",
       details: [],
     },
     {
-      name: "VOP League 2",
+      name: "VOP Baron",
       joinHref: "https://forms.gle/M25gKjpttLMLzDSc7",
       details: [],
     },
@@ -479,7 +479,7 @@ export const teamPages = [
   },
   {
     slug: "league1",
-    name: "VOP League 1",
+    name: "VOP Elder",
     label: "Varsity",
     image: "/images/red.avif",
     accent: "tertiary",
@@ -498,17 +498,17 @@ export const teamPages = [
       "Access: Community signups",
     ],
     paragraphs: [
-      "League 1 is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Elder is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
       "We focus on balanced 5v5 customs where the goal is to learn, improve, and meet the people who make this organization great.",
     ],
     proof:
-      "Entry into VOP League 1 is community-oriented. If you want to improve, queue with a squad, and represent the Red side of VOP:",
+      "Entry into VOP Elder is community-oriented. If you want to improve, queue with a squad, and represent the Red side of VOP:",
     staff: [],
     roster: ["TBA"],
   },
   {
     slug: "league2",
-    name: "VOP League 2",
+    name: "VOP Baron",
     label: "Development",
     image: "/images/blue.avif",
     accent: "primary",
@@ -527,11 +527,11 @@ export const teamPages = [
       "Access: Community signups",
     ],
     paragraphs: [
-      "League 2 is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Baron is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
       "We focus on balanced 5v5 customs where the goal is to learn, improve, and meet the people who make this organization great.",
     ],
     proof:
-      "Entry into VOP League 2 is community-oriented. If you want to improve, queue with a squad, and represent the Blue side of VOP:",
+      "Entry into VOP Baron is community-oriented. If you want to improve, queue with a squad, and represent the Blue side of VOP:",
     staff: [],
     roster: ["TBA"],
   },
