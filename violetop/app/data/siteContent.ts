@@ -324,8 +324,8 @@ const valorantAgentPortraits = {
 };
 
 const leagueCreatureRenders = {
-  krug: "https://wiki.leagueoflegends.com/en-us/images/Krug_Render.png?82903",
-  raptor: "https://wiki.leagueoflegends.com/en-us/images/Raptor_Render.png?bb810",
+  baronNashor: "/images/baron-nashor.webp",
+  elderDragon: "/images/elder-dragon.png",
 };
 
 const gameLogos = {
@@ -488,9 +488,9 @@ export const teamPages = [
     gameLogo: gameLogos.league,
     feature: {
       label: "ボップ",
-      name: "猛禽類",
-      image: leagueCreatureRenders.raptor,
-      summary: "Fast clears, early momentum, and sharp map tempo.",
+      name: "エルダードラゴン",
+      image: leagueCreatureRenders.elderDragon,
+      summary: "Late-game power, decisive teamfights, and a relentless finish.",
     },
     requirements: [
       "Rank: Open rank",
@@ -517,9 +517,9 @@ export const teamPages = [
     gameLogo: gameLogos.league,
     feature: {
       label: "ボップ",
-      name: "クリュッグ",
-      image: leagueCreatureRenders.krug,
-      summary: "Durable fundamentals, lane patience, and steady objective setup.",
+      name: "バロン・ナッシャー",
+      image: leagueCreatureRenders.baronNashor,
+      summary: "Objective control, coordinated pressure, and game-changing pushes.",
     },
     requirements: [
       "Rank: Open rank",
