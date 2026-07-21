@@ -250,7 +250,7 @@ export default function Home() {
               >
                 <Image
                   alt="NYU Violet OP identity"
-                  className="w-full scale-95 drop-shadow-[0_0_90px_rgba(204,72,255,0.72)] md:scale-105"
+                  className="w-full scale-95 drop-shadow-[0_0_90px_rgba(204,72,255,0.32)] md:scale-105"
                   height={720}
                   preload
                   quality={85}
