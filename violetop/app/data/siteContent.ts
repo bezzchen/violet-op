@@ -9,6 +9,7 @@ export const mainNav = [
   { label: "About Us", href: "/about-us" },
   { label: "Events", href: "/events" },
   { label: "Highlights", href: "/highlights" },
+  { label: "Eboard", href: "/eboard" },
   { label: "Join Us", href: "/join-us" },
 ];
 
@@ -315,31 +316,25 @@ export const joinContent = {
   ],
 };
 
+// Public Google Calendar iCal exports. Both are read server-side and parsed by
+// app/lib/ical.ts, so the pages stay in sync with whatever the org schedules.
+export const calendarFeeds = {
+  events:
+    "https://calendar.google.com/calendar/ical/c_e1cc26269e8592fafed866f2db60788a4b0d713574cb46931496d69196c58719%40group.calendar.google.com/public/basic.ics",
+  eboard:
+    "https://calendar.google.com/calendar/ical/nyuvalvop%40gmail.com/public/basic.ics",
+};
+
 export const eventsContent = {
   title: "What's Happening",
-  events: [
-    {
-      month: "APR",
-      day: "11",
-      title: "Late Night Listening Party",
-      time: "8:00 PM - 10:00 PM",
-      category: "Music",
-    },
-    {
-      month: "APR",
-      day: "14",
-      title: "Creator Q&A with @maya.r",
-      time: "6:30 PM - 7:30 PM",
-      category: "Live",
-    },
-    {
-      month: "APR",
-      day: "18",
-      title: "Community Game Night",
-      time: "7:00 PM - 9:00 PM",
-      category: "Gaming",
-    },
-  ],
+  emptyMessage:
+    "Nothing on the calendar right now. Check back soon, or hop in our Discord for the latest.",
+};
+
+export const eboardContent = {
+  title: "E-Board Calendar",
+  intro: "Enter the E-Board PIN to view the internal meeting schedule.",
+  emptyMessage: "No E-Board meetings are scheduled right now.",
 };
 
 export const highlightsContent = {

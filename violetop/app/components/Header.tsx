@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { leagueTeams, mainNav, valorantTeams } from "../data/siteContent";
 
-const visibleHeaderNav = mainNav
-  .slice(1, 4)
-  .filter((item) => item.href !== "/events");
+// Home is the logo and Join Us is the standalone button, so they are dropped
+// from the link row; everything else in mainNav shows on desktop and mobile.
+const visibleHeaderNav = mainNav.filter(
+  (item) => item.href !== "/" && item.href !== "/join-us",
+);
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
