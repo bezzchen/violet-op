@@ -69,6 +69,14 @@ export default function Footer({ pinned = true }: FooterProps) {
         <p className="font-label-caps text-label-caps text-on-surface-variant">
           © 2026 NYU ESPORTS.
         </p>
+        <a
+          className="font-label-caps text-label-caps text-on-surface-variant underline underline-offset-4 transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          href="https://docs.google.com/document/d/1dpVfc-GSqrE4rZi5tDV2NwRhCl0gWfAB0cEIPOFGKIk/edit?usp=sharing"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Constitution<span className="sr-only"> (opens in a new tab)</span>
+        </a>
       </div>
 
       <div className="flex flex-col items-center gap-3 md:items-end">
