@@ -59,11 +59,13 @@ const getTeamTitleParts = (name: string) => {
 };
 
 const normalizeRoster = (team: TeamPageData) => {
-  const minimumSlots = team.game === "valorant" ? 5 : 5;
-  const roster = team.roster.map((member) => (member.trim() ? member : "TBA"));
+  const minimumSlots = 5;
+  const roster = team.roster;
 
   return Array.from({ length: Math.max(minimumSlots, roster.length) }, (_, index) => ({
-    name: roster[index] ?? "TBA",
+    name: roster[index]?.name ?? "TBA",
+    username: roster[index]?.username.split("#")[0] || "TBA",
+    role: roster[index]?.role ?? "teammate",
     slot: `Slot ${String(index + 1).padStart(2, "0")}`,
   }));
 };
@@ -424,15 +426,15 @@ export default async function TeamPage({
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-                      {member.slot}
+                      {isLeague ? member.slot : member.role}
                     </span>
                     {role ? <LaneIcon className={`h-7 w-7 ${accent.text}`} role={role} /> : null}
                   </div>
-                  <h3 className="mt-8 font-headline-md text-2xl font-bold uppercase text-white">
-                    {member.name}
+                  <h3 className="mt-8 break-words font-headline-md text-2xl font-bold uppercase text-white">
+                    {isLeague ? member.name : member.username}
                   </h3>
                   <p className="mt-2 font-label-caps text-label-caps uppercase text-on-surface-variant/60">
-                    {role ?? "Role TBA"}
+                    {isLeague ? role : member.name}
                   </p>
                 </article>
               );

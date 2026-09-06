@@ -39,12 +39,12 @@ export const valorantTeams = [
       "VOP Black is the primary entry point into our competitive ecosystem. This roster focuses on identifying raw talent and integrating players into a professional team structure.",
   },
   {
-    name: "VOP Game Changers",
-    href: "/gamechangers",
+    name: "VOP Ruby",
+    href: "/ruby",
     tier: "Marginalized",
     image: "/images/lavender.avif",
     summary:
-      "VOP Game Changers is our dedicated space for players of marginalized genders (women, non-binary, and genderqueer competitors).",
+      "VOP Ruby is our dedicated space for players of marginalized genders (women, non-binary, and genderqueer competitors).",
   },
 ];
 
@@ -229,7 +229,7 @@ export const joinContent = {
       ],
     },
     {
-      name: "VOP Game Changers",
+      name: "VOP Ruby",
       game: "valorant",
       filled: false,
       joinHref: "https://forms.gle/PSpnnByGm8JihwUA9",
@@ -393,8 +393,8 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ",
-      name: "ホワイト",
+      label: "VOP",
+      name: "White",
       image: valorantAgentPortraits.vyse,
       summary: "Sentinel pressure and disciplined late-round control.",
     },
@@ -421,7 +421,15 @@ export const teamPages = [
         detail: "Assistant Coach and Analyst",
       },
     ],
-    roster: ["Brandon", "Jake", "Justin", "Lucas", "Alpha"],
+    roster: [
+      { name: "Lucas Li", username: "fqll3n", role: "teammate" },
+      { name: "Brandon Wu", username: "Brandon", role: "teammate" },
+      { name: "Jake Rivera", username: "ajek2", role: "teammate" },
+      { name: "Sajal Kaushik", username: "alpha9_", role: "teammate" },
+      { name: "Ricky Zou", username: "solongyixia", role: "teammate" },
+      { name: "Tyler Huynh", username: "tylorui", role: "teammate" },
+      { name: "Damian Engenheiro", username: "mist", role: "sub" },
+    ],
   },
   {
     slug: "vop-purple",
@@ -433,8 +441,8 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ",
-      name: "パープル",
+      label: "VOP",
+      name: "Purple",
       image: valorantAgentPortraits.reyna,
       summary: "Explosive confidence, entry pressure, and clutch focus.",
     },
@@ -458,7 +466,15 @@ export const teamPages = [
         detail: "Assistant Coach and Analyst",
       },
     ],
-    roster: ["Evan Lee", "Katelyn Nguyen", "Nahian Sowalehin", "TBA", "TBA"],
+    roster: [
+      { name: "Evan Lee", username: "Soggy Bread", role: "IGL" },
+      { name: "Kuan Lin", username: "Nauk", role: "teammate" },
+      { name: "Logan Tsai", username: "Phan10mX", role: "teammate" },
+      { name: "Eric Qi", username: "rickpizzaisgood", role: "teammate" },
+      { name: "Nahian Sowalehin", username: "nahianishot", role: "teammate" },
+      { name: "Katelyn Nguyen", username: "kate", role: "sub" },
+      { name: "Lucy Zheng", username: "Tyjihn", role: "sub" },
+    ],
   },
   {
     slug: "vop-black",
@@ -470,8 +486,8 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ",
-      name: "ブラック",
+      label: "VOP",
+      name: "Black",
       image: valorantAgentPortraits.omen,
       summary: "Shadow control, patient defaults, and team-first utility.",
     },
@@ -487,11 +503,17 @@ export const teamPages = [
     proof:
       "Entry into VOP Black is strictly through a formal tryout process. If you want to have fun, join a community, and represent the Black jersey:",
     staff: [],
-    roster: ["Ella", "George", "Artus", "Augus", "Choman"],
+    roster: [
+      { name: "George Zhou", username: "SEN tence", role: "teammate" },
+      { name: "Ella Kaplan", username: "HockeySportsGuy", role: "IGL" },
+      { name: "Ryan Lin", username: "Ethereal", role: "teammate" },
+      { name: "Cho Man Bian", username: "Kira", role: "teammate" },
+      { name: "TBA", username: "TBA", role: "teammate" },
+    ],
   },
   {
-    slug: "gamechangers",
-    name: "VOP Game Changers",
+    slug: "ruby",
+    name: "VOP Ruby",
     label: "Marginalized",
     image: "/images/lavender.avif",
     accent: "primary",
@@ -499,8 +521,8 @@ export const teamPages = [
     gameLabel: "VALORANT",
     gameLogo: gameLogos.valorant,
     feature: {
-      label: "ボップ",
-      name: "ゲームチェンジャー",
+      label: "VOP",
+      name: "Ruby",
       image: valorantAgentPortraits.clove,
       summary: "Resilient controller play and fearless second-chance energy.",
     },
@@ -510,13 +532,20 @@ export const teamPages = [
       "Access: Dedicated tryout process",
     ],
     paragraphs: [
-      "VOP Game Changers is our dedicated space for players of marginalized genders (women, non-binary, and genderqueer competitors).",
+      "VOP Ruby is our dedicated space for players of marginalized genders (women, non-binary, and genderqueer competitors).",
       "We are committed to fostering an inclusive, high-level competitive environment and a strong support network for gender-diverse gamers.",
     ],
     proof:
-      "Entry into VOP Game Changers is strictly through a formal tryout process. If you are ready to prove your skills and grow within a dedicated community:",
+      "Entry into VOP Ruby is strictly through a formal tryout process. If you are ready to prove your skills and grow within a dedicated community:",
     staff: [],
-    roster: ["TBA"],
+    roster: [
+      { name: "Katelyn Nguyen", username: "kate", role: "teammate" },
+      { name: "Lucy Zheng", username: "Tyjihn", role: "teammate" },
+      { name: "Jessica Wang", username: "zuyi", role: "teammate" },
+      { name: "TBA", username: "TBA", role: "teammate" },
+      { name: "TBA", username: "TBA", role: "teammate" },
+      { name: "Ella Kaplan", username: "HockeySportsGuy", role: "sub" },
+    ],
   },
   {
     slug: "league1",
@@ -528,8 +557,8 @@ export const teamPages = [
     gameLabel: "League of Legends",
     gameLogo: gameLogos.league,
     feature: {
-      label: "ボップ",
-      name: "エルダードラゴン",
+      label: "VOP",
+      name: "Elder Dragon",
       image: leagueCreatureRenders.elderDragon,
       summary: "Late-game power, decisive teamfights, and a relentless finish.",
     },
@@ -545,7 +574,7 @@ export const teamPages = [
     proof:
       "Entry into VOP Elder is community-oriented. If you want to improve, queue with a squad, and represent the Red side of VOP:",
     staff: [],
-    roster: ["TBA"],
+    roster: [{ name: "TBA", username: "TBA", role: "teammate" }],
   },
   {
     slug: "league2",
@@ -557,8 +586,8 @@ export const teamPages = [
     gameLabel: "League of Legends",
     gameLogo: gameLogos.league,
     feature: {
-      label: "ボップ",
-      name: "バロン・ナッシャー",
+      label: "VOP",
+      name: "Baron Nashor",
       image: leagueCreatureRenders.baronNashor,
       summary: "Objective control, coordinated pressure, and game-changing pushes.",
     },
@@ -574,6 +603,6 @@ export const teamPages = [
     proof:
       "Entry into VOP Baron is community-oriented. If you want to improve, queue with a squad, and represent the Blue side of VOP:",
     staff: [],
-    roster: ["TBA"],
+    roster: [{ name: "TBA", username: "TBA", role: "teammate" }],
   },
 ];

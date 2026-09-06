@@ -255,7 +255,7 @@ a {
   margin-top: 0.55rem;
 }
 
-/* Multi-word titles (e.g. "Game Changers") must be allowed to wrap onto two
+/* Multi-word titles (e.g. "Ruby") must be allowed to wrap onto two
    lines so they are not clipped by the nowrap applied to single-word titles at
    >=768px. They break only between words, never mid-word. */
 .team-hero-title-rest.is-multiword {
@@ -263,7 +263,7 @@ a {
   white-space: normal;
 }
 
-/* Long titles ("Game Changers") would otherwise overflow the fixed-width copy
+/* Long titles ("Ruby") would otherwise overflow the fixed-width copy
    panel at the largest title sizes, so cap their size from the tablet breakpoint
    up where the longest word stops fitting. */
 @media (min-width: 768px) {
