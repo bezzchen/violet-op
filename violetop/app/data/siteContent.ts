@@ -413,7 +413,8 @@ export const teamPages = [
       "Entry into VOP White is strictly through a formal tryout process. If you have the rank, the experience, and the drive to represent the White jersey:",
     staff: [
       {
-        role: "TBA",
+        role: "Joe",
+        username: "zyng",
         detail: "Head Coach",
       },
       {
@@ -422,12 +423,12 @@ export const teamPages = [
       },
     ],
     roster: [
-      { name: "Lucas Li", username: "fqll3n", role: "teammate" },
-      { name: "Brandon Wu", username: "Brandon", role: "teammate" },
-      { name: "Jake Rivera", username: "ajek2", role: "teammate" },
-      { name: "Sajal Kaushik", username: "alpha9_", role: "teammate" },
-      { name: "Ricky Zou", username: "solongyixia", role: "teammate" },
-      { name: "Tyler Huynh", username: "tylorui", role: "teammate" },
+      { name: "Jake Rivera", username: "ajek2", role: "IGL" },
+      { name: "Brandon Wu", username: "Brandon", role: "player" },
+      { name: "Lucas Li", username: "fqll3n", role: "player" },
+      { name: "Sajal Kaushik", username: "alpha9_", role: "player" },
+      { name: "Ricky Zou", username: "solongyixia", role: "player" },
+      { name: "Tyler Huynh", username: "tylorui", role: "super sub" },
       { name: "Damian Engenheiro", username: "mist", role: "sub" },
     ],
   },
@@ -460,18 +461,15 @@ export const teamPages = [
     proof:
       "Entry into VOP Purple is handled through a formal tryout process. If you have the mechanics, communication, and drive to represent the Purple jersey:",
     staff: [
-      { role: "Wayne Yee", detail: "Head Coach" },
-      {
-        role: "TBA",
-        detail: "Assistant Coach and Analyst",
-      },
+      { role: "Wayne Yee", username: "sumire", detail: "Coach" },
+      { role: "Logan Tsai", username: "Phan10mX", detail: "Assistant Coach" },
     ],
     roster: [
       { name: "Evan Lee", username: "Soggy Bread", role: "IGL" },
-      { name: "Kuan Lin", username: "Nauk", role: "teammate" },
-      { name: "Logan Tsai", username: "Phan10mX", role: "teammate" },
-      { name: "Eric Qi", username: "rickpizzaisgood", role: "teammate" },
-      { name: "Nahian Sowalehin", username: "nahianishot", role: "teammate" },
+      { name: "Logan Tsai", username: "Phan10mX", role: "player" },
+      { name: "Eric Qi", username: "rickpizzaisgood", role: "player" },
+      { name: "Nahian Sowalehin", username: "nahianishot", role: "player" },
+      { name: "Kuan Lin", username: "Nauk", role: "player" },
       { name: "Katelyn Nguyen", username: "kate", role: "sub" },
       { name: "Lucy Zheng", username: "Tyjihn", role: "sub" },
     ],
@@ -502,13 +500,17 @@ export const teamPages = [
     ],
     proof:
       "Entry into VOP Black is strictly through a formal tryout process. If you want to have fun, join a community, and represent the Black jersey:",
-    staff: [],
+    staff: [{ role: "Brandon Wu", username: "Brandon", detail: "Coach" }],
     roster: [
-      { name: "George Zhou", username: "SEN tence", role: "teammate" },
       { name: "Ella Kaplan", username: "HockeySportsGuy", role: "IGL" },
-      { name: "Ryan Lin", username: "Ethereal", role: "teammate" },
-      { name: "Cho Man Bian", username: "Kira", role: "teammate" },
-      { name: "TBA", username: "TBA", role: "teammate" },
+      { name: "Ryan Lin", username: "Ethereal", role: "player" },
+      { name: "Cho Man Bian", username: "Kira", role: "player" },
+      { name: "Malik Umar", username: "toji", role: "player" },
+      { name: "Magnus Wong", username: "sapphire", role: "player" },
+      { name: "George Zhou", username: "SEN tence", role: "sub" },
+      { name: "Dan Huang", username: "2t1cks", role: "sub" },
+      { name: "Tony Lam", username: "yl9341", role: "sub" },
+      { name: "Anna Zhang", username: "fufubawls", role: "sub" },
     ],
   },
   {
@@ -537,13 +539,13 @@ export const teamPages = [
     ],
     proof:
       "Entry into VOP Ruby is strictly through a formal tryout process. If you are ready to prove your skills and grow within a dedicated community:",
-    staff: [],
+    staff: [{ role: "Nicholas Lui", username: "lui", detail: "Coach" }],
     roster: [
-      { name: "Katelyn Nguyen", username: "kate", role: "teammate" },
-      { name: "Lucy Zheng", username: "Tyjihn", role: "teammate" },
-      { name: "Jessica Wang", username: "zuyi", role: "teammate" },
-      { name: "TBA", username: "TBA", role: "teammate" },
-      { name: "TBA", username: "TBA", role: "teammate" },
+      { name: "Katelyn Nguyen", username: "kate", role: "player" },
+      { name: "Jessica Wang", username: "zuyi", role: "player" },
+      { name: "Lucy Zheng", username: "Tyjihn", role: "player" },
+      { name: "Anna Zhang", username: "fufubawls", role: "player" },
+      { name: "Emily Chen", username: "strawberrycow", role: "player" },
       { name: "Ella Kaplan", username: "HockeySportsGuy", role: "sub" },
     ],
   },
@@ -574,7 +576,13 @@ export const teamPages = [
     proof:
       "Entry into VOP Elder is community-oriented. If you want to improve, queue with a squad, and represent the Teal side of VOP:",
     staff: [],
-    roster: [{ name: "TBA", username: "TBA", role: "teammate" }],
+    roster: [
+      { name: "Kuan Lin", username: "Nauk", role: "Top" },
+      { name: "Sara Murphy", username: "dlcre", role: "Jungle" },
+      { name: "Chris He", username: "chrissppy", role: "Middle" },
+      { name: "David Shen", username: "snazzybeatle", role: "Bottom" },
+      { name: "Marissa Yang", username: "iluvv.mari", role: "Support" },
+    ],
   },
   {
     slug: "league2",
@@ -603,6 +611,13 @@ export const teamPages = [
     proof:
       "Entry into VOP Baron is community-oriented. If you want to improve, queue with a squad, and represent the Lime side of VOP:",
     staff: [],
-    roster: [{ name: "TBA", username: "TBA", role: "teammate" }],
+    roster: [
+      { name: "Alston Li", username: "chineseperson12", role: "Top" },
+      { name: "Rachel Cheng", username: "shampoo2119", role: "Jungle" },
+      { name: "Tim Shi", username: "tsbear66f", role: "Middle" },
+      { name: "Augus Li", username: "blink", role: "Bottom" },
+      { name: "Emily Chen", username: "strawberrycow", role: "Support" },
+      { name: "Cho Man Bian", username: "Kira", role: "Support / sub" },
+    ],
   },
 ];

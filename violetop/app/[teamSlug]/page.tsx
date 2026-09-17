@@ -32,7 +32,7 @@ const accentClasses = {
   },
 };
 
-const defaultStaffNeeds = [
+const defaultStaffNeeds: { role: string; detail: string; username?: string }[] = [
   {
     role: "TBA",
     detail: "Head Coach",
@@ -65,7 +65,7 @@ const normalizeRoster = (team: TeamPageData) => {
   return Array.from({ length: Math.max(minimumSlots, roster.length) }, (_, index) => ({
     name: roster[index]?.name ?? "TBA",
     username: roster[index]?.username.split("#")[0] || "TBA",
-    role: roster[index]?.role ?? "teammate",
+    role: roster[index]?.role ?? "player",
     slot: `Slot ${String(index + 1).padStart(2, "0")}`,
   }));
 };
@@ -250,7 +250,8 @@ export default async function TeamPage({
   }
 
   const accent = accentClasses[team.accent as keyof typeof accentClasses];
-  const supportRoles = team.staff.length > 0 ? team.staff : defaultStaffNeeds;
+  const supportRoles: typeof defaultStaffNeeds =
+    team.staff.length > 0 ? team.staff : defaultStaffNeeds;
   const rosterSlots = normalizeRoster(team);
   const isLeague = team.game === "league";
   const titleParts = getTeamTitleParts(team.name);
@@ -416,7 +417,9 @@ export default async function TeamPage({
 
           <div className="grid gap-4 md:grid-cols-5">
             {rosterSlots.map((member, index) => {
-              const role = isLeague ? laneRoles[index % laneRoles.length] : null;
+              const role = isLeague
+                ? laneRoles.find((lane) => member.role.startsWith(lane))
+                : null;
 
               return (
                 <article
@@ -426,15 +429,15 @@ export default async function TeamPage({
                 >
                   <div className="flex items-center justify-between gap-2">
                     <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-                      {isLeague ? member.slot : member.role}
+                      {member.role}
                     </span>
                     {role ? <LaneIcon className={`h-7 w-7 ${accent.text}`} role={role} /> : null}
                   </div>
                   <h3 className="mt-8 break-words font-headline-md text-2xl font-bold uppercase text-white">
-                    {isLeague ? member.name : member.username}
+                    {member.username}
                   </h3>
                   <p className="mt-2 font-label-caps text-label-caps uppercase text-on-surface-variant/60">
-                    {isLeague ? role : member.name}
+                    {member.name}
                   </p>
                 </article>
               );
@@ -452,11 +455,14 @@ export default async function TeamPage({
                   key={`${staff.role}-${staff.detail}`}
                   style={revealStyle(index + 5)}
                 >
-                  <h3 className={`font-headline-md text-xl font-bold uppercase ${accent.text}`}>
-                    {staff.role}
-                  </h3>
-                  <p className="mt-4 font-body-md text-body-md text-on-surface-variant">
+                  <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
                     {staff.detail}
+                  </span>
+                  <h3 className="mt-8 break-words font-headline-md text-2xl font-bold uppercase text-white">
+                    {staff.username ?? "TBA"}
+                  </h3>
+                  <p className="mt-2 font-label-caps text-label-caps uppercase text-on-surface-variant/60">
+                    {staff.role}
                   </p>
                 </article>
               ))}
