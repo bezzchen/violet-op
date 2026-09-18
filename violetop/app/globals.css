@@ -6,45 +6,45 @@
   --color-error: #ffb4ab;
   --color-tertiary-fixed: #ffe2ff;
   --color-inverse-on-surface: #321044;
-  --color-surface-variant: #4c1b63;
-  --color-surface-container-lowest: #100017;
-  --color-outline-variant: #7f4f98;
-  --color-inverse-primary: #a100ff;
-  --color-surface: #190521;
+  --color-surface-variant: #39313f;
+  --color-surface-container-lowest: #151419;
+  --color-outline-variant: #75667d;
+  --color-inverse-primary: #67467e;
+  --color-surface: #1b1920;
   --color-on-secondary-fixed-variant: #8b00ef;
-  --color-tertiary-container: #9d00ff;
-  --color-on-background: #f6eaff;
+  --color-tertiary-container: #68517d;
+  --color-on-background: #f6f3f7;
   --color-on-error: #690005;
-  --color-outline: #c996df;
+  --color-outline: #bca8c9;
   --color-on-error-container: #ffdad6;
-  --color-surface-container-highest: #4d1a67;
-  --color-surface-container-high: #3b1150;
+  --color-surface-container-highest: #302b35;
+  --color-surface-container-high: #29252e;
   --color-on-primary-fixed: #35004d;
   --color-on-tertiary: #3d0055;
-  --color-on-primary: #31004a;
-  --color-background: #170020;
+  --color-on-primary: #1b1420;
+  --color-background: #111115;
   --color-secondary-fixed: #f8d6ff;
-  --color-on-surface-variant: #e8ccf3;
-  --color-primary-container: #9500ff;
+  --color-on-surface-variant: #d4cad9;
+  --color-primary-container: #5e4370;
   --color-secondary-fixed-dim: #ebadff;
   --color-primary-fixed: #f9dcff;
   --color-on-primary-fixed-variant: #8300d4;
-  --color-primary: #f0b8ff;
-  --color-surface-tint: #e06bff;
-  --color-on-secondary: #3a0055;
-  --color-tertiary: #ff9cff;
-  --color-surface-dim: #120019;
-  --color-secondary-container: #c000ff;
+  --color-primary: #d0aef6;
+  --color-surface-tint: #b994d8;
+  --color-on-secondary: #211a28;
+  --color-tertiary: #c4a4e8;
+  --color-surface-dim: #111115;
+  --color-secondary-container: #5b3c70;
   --color-error-container: #93000a;
-  --color-surface-container: #270837;
-  --color-secondary: #e086ff;
+  --color-surface-container: #242129;
+  --color-secondary: #bd9bd8;
   --color-tertiary-fixed-dim: #f0a5ff;
-  --color-surface-container-low: #21042e;
-  --color-surface-bright: #562070;
+  --color-surface-container-low: #1c1a21;
+  --color-surface-bright: #39303f;
   --color-on-tertiary-fixed-variant: #8500c4;
   --color-primary-fixed-dim: #eda5ff;
   --color-on-secondary-fixed: #29003f;
-  --color-on-surface: #fff5ff;
+  --color-on-surface: #f6f3f7;
   --color-on-secondary-container: #ffe2ff;
   --color-on-tertiary-fixed: #320044;
   --color-inverse-surface: #f9eaff;
@@ -79,8 +79,8 @@
 
 :root {
   --app-height: 100dvh;
-  background: #170020;
-  color: #f6eaff;
+  background: #111115;
+  color: #f6f3f7;
 }
 
 * {
@@ -88,17 +88,27 @@
 }
 
 html {
-  background: #170020;
+  background: #111115;
   color-scheme: dark;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  background: #170020;
-  color: #f6eaff;
+  background: #111115;
+  color: #f6f3f7;
   font-family: "Hanken Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
+}
+
+body::before {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  content: "";
+  background: url("/images/flow-pattern.svg") center / cover no-repeat;
+  opacity: .78;
+  pointer-events: none;
 }
 
 button,
@@ -117,33 +127,28 @@ a {
 }
 
 .glass-panel {
-  background: rgba(179, 58, 255, 0.12);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(236, 181, 255, 0.2);
+  background: #211e27;
+  border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .section-text-panel {
-  background: rgba(16, 0, 23, 0.5);
+  background: #211e27;
 }
 
 .event-row-panel {
-  background: rgba(10, 0, 18, 0.82);
+  background: #211e27;
   border-color: rgba(255, 255, 255, 0.12);
 }
 
-/* Scroll-triggered fade/slide-up; an IntersectionObserver toggles is-visible.
-   Used on a wrapper so card hover transforms stay independent. */
+/* Legacy reveal classes remain visible without scroll-driven animation. */
 .reveal-up {
-  opacity: 0;
-  transform: translateY(42px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  transition-delay: var(--reveal-delay, 0ms);
+  opacity: 1;
+  transform: none;
 }
 
 .reveal-up.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .join-hero {
@@ -152,37 +157,31 @@ a {
 
 .join-hero-veil {
   background:
-    linear-gradient(100deg, #160020 6%, rgba(22, 0, 32, 0.9) 27%, rgba(22, 0, 32, 0.42) 50%, rgba(22, 0, 32, 0.12) 76%, rgba(22, 0, 32, 0.5) 100%),
-    linear-gradient(0deg, #160020 1%, transparent 60%);
+    linear-gradient(100deg, #17151d 6%, rgba(23, 21, 29, 0.92) 27%, rgba(23, 21, 29, 0.54) 56%, rgba(23, 21, 29, 0.24) 100%),
+    linear-gradient(0deg, #17151d 1%, transparent 60%);
 }
 
 .join-cta {
-  background:
-    radial-gradient(circle at 50% 0%, rgba(209, 76, 255, 0.28), transparent 62%),
-    rgba(16, 0, 23, 0.6);
+  background: #292330;
 }
 
 .join-path-card,
 .join-role-card {
-  transition: border-color 0.25s ease, filter 0.25s ease, opacity 0.25s ease,
-    transform 0.25s ease;
+  transition: border-color 0.18s ease, background 0.18s ease;
 }
 
 .join-card-filled {
-  background: rgba(255, 255, 255, 0.035);
-  border-color: rgba(255, 255, 255, 0.1);
-  filter: grayscale(0.82);
-  opacity: 0.58;
+  background: #1d1b21;
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .join-card-filled:hover {
-  border-color: rgba(255, 255, 255, 0.22);
-  opacity: 0.72;
+  border-color: rgba(255, 255, 255, 0.26);
 }
 
 @media (min-width: 768px) {
   .join-hero {
-    min-height: 32rem;
+    min-height: 26rem;
   }
 }
 
@@ -195,10 +194,8 @@ a {
 }
 
 .team-reveal {
-  animation: team-reveal 0.7s ease forwards;
-  animation-delay: var(--team-delay, 0ms);
-  opacity: 0;
-  transform: translateY(42px);
+  opacity: 1;
+  transform: none;
 }
 
 .team-hero-section {
@@ -311,7 +308,7 @@ a {
 .team-info-card,
 .team-roster-card,
 .clip-card {
-  background: rgba(10, 0, 18, 0.72);
+  background: #211e27;
   overflow: hidden;
   position: relative;
   transition: border-color 0.25s ease, transform 0.25s ease;
@@ -334,8 +331,7 @@ a {
 .team-info-card:hover,
 .team-roster-card:hover,
 .clip-card:hover {
-  border-color: rgba(240, 184, 255, 0.36);
-  transform: translateY(-4px);
+  border-color: rgba(216, 190, 240, 0.48);
 }
 
 .highlight-feature-glow {
@@ -343,7 +339,7 @@ a {
 }
 
 .highlight-feature-glow::before {
-  background: radial-gradient(circle at 72% 22%, rgba(209, 76, 255, 0.32), transparent 62%);
+  background: radial-gradient(circle at 72% 22%, rgba(147, 111, 171, 0.15), transparent 62%);
   content: "";
   filter: blur(38px);
   /* Vertical halo stays generous; horizontal reach is kept under the page's
@@ -360,15 +356,15 @@ a {
 }
 
 .op-clip {
-  clip-path: polygon(0 0, 95% 0, 100% 15%, 100% 100%, 5% 100%, 0 85%);
+  clip-path: none;
 }
 
 .neon-glow-purple {
-  box-shadow: 0 0 28px -4px #d14cff;
+  box-shadow: none;
 }
 
 .hover\:neon-glow-purple:hover {
-  box-shadow: 0 0 28px -4px #d14cff;
+  box-shadow: none;
 }
 
 .scroll-container {
@@ -381,9 +377,7 @@ a {
 
 .page-scroll-container {
   min-height: 100vh;
-  height: var(--app-height);
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
+  overflow: visible;
 }
 
 .prism-canvas-background {

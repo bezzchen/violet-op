@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#151419"/>
+      <stop offset=".53" stop-color="#1d1922"/>
+      <stop offset="1" stop-color="#111115"/>
+    </linearGradient>
+    <linearGradient id="fold" x1="0" y1=".2" x2="1" y2=".9">
+      <stop stop-color="#35263e" stop-opacity=".15"/>
+      <stop offset=".4" stop-color="#674b79" stop-opacity=".55"/>
+      <stop offset=".7" stop-color="#2d2636" stop-opacity=".26"/>
+      <stop offset="1" stop-color="#6a526e" stop-opacity=".15"/>
+    </linearGradient>
+    <linearGradient id="ridge" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#816394" stop-opacity="0"/>
+      <stop offset=".45" stop-color="#ae89be" stop-opacity=".29"/>
+      <stop offset="1" stop-color="#7b638d" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="shade">
+      <stop stop-color="#17151a" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0d0d11" stop-opacity=".82"/>
+    </radialGradient>
+  </defs>
+  <path fill="url(#field)" d="M0 0h1920v1200H0z"/>
+  <g fill="none" stroke="url(#fold)" stroke-linecap="round">
+    <path d="M-360 890C30 1040 248 625 533 444c267-170 457-95 673 111 201 193 374 280 1025-50" stroke-width="290" opacity=".38"/>
+    <path d="M-320 1150C44 1110 271 773 568 624c277-139 463-46 651 153 218 232 432 291 970-33" stroke-width="183" opacity=".34"/>
+    <path d="M-250 460C72 525 246 268 526 240c263-27 388 157 588 252 257 122 528 68 1096-280" stroke-width="225" opacity=".28"/>
+  </g>
+  <g fill="none" stroke="url(#ridge)" stroke-linecap="round">
+    <path d="M-300 783C29 960 256 586 523 418c275-174 462-83 680 130 207 202 382 262 995-56" stroke-width="19"/>
+    <path d="M-215 1054C74 1034 290 713 559 595c283-125 471-27 664 173 229 238 418 262 1001-68" stroke-width="12"/>
+    <path d="M-250 362C76 485 269 205 532 206c255 2 393 174 596 269 260 123 524 49 1061-277" stroke-width="13"/>
+  </g>
+  <path fill="url(#shade)" d="M0 0h1920v1200H0z"/>
+</svg>

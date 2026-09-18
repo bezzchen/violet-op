@@ -258,7 +258,7 @@ export default function FeaturedPlayer({
             <span className="font-label-caps text-label-caps uppercase text-primary">
               Featured
             </span>
-            <h2 className="mt-2 font-headline-md text-2xl font-bold uppercase text-white md:text-3xl">
+            <h2 className="mt-2 font-headline-md text-2xl font-bold text-white md:text-3xl">
               {clip.title}
             </h2>
           </div>

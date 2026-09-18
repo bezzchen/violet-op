@@ -28,10 +28,10 @@ export default function HighlightsPage() {
               <span className="font-label-caps text-label-caps uppercase text-primary">
                 Highlights
               </span>
-              <h1 className="mt-4 font-display-xl text-4xl font-extrabold uppercase text-white md:text-display-xl">
+              <h1 className="mt-4 font-display-xl text-4xl font-extrabold text-white md:text-display-xl">
                 {highlightsContent.title}
               </h1>
-              <p className="mt-4 font-headline-md text-headline-md font-bold uppercase text-tertiary">
+              <p className="mt-4 font-headline-md text-headline-md font-bold text-tertiary">
                 {highlightsContent.subtitle}
               </p>
             </div>
@@ -49,8 +49,8 @@ export default function HighlightsPage() {
               <span className="font-label-caps text-label-caps uppercase text-tertiary">
                 More Plays
               </span>
-              <h2 className="mt-3 font-display-xl text-4xl font-extrabold uppercase text-white md:text-[3.25rem]">
-              Video Archive
+              <h2 className="mt-3 font-display-xl text-4xl font-extrabold text-white md:text-[3.25rem]">
+                Video Archive
               </h2>
             </div>
             <p className="max-w-xl font-body-md text-body-md text-on-surface-variant/75">

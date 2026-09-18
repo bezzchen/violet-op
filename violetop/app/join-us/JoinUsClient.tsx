@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import PageShell from "../components/PageShell";
@@ -47,7 +47,7 @@ function SectionHeading({
         <span className="font-label-caps text-label-caps uppercase text-tertiary">
           {eyebrow}
         </span>
-        <h2 className="mt-3 font-display-xl text-3xl font-extrabold uppercase text-white md:text-[2.75rem]">
+        <h2 className="mt-3 font-display-xl text-3xl font-extrabold text-white md:text-[2.75rem]">
           {title}
         </h2>
       </div>
@@ -61,41 +61,13 @@ function SectionHeading({
 }
 
 export default function JoinUsClient() {
-  const scrollRef = useRef<HTMLElement | null>(null);
   const pathsRef = useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
-    const elements = Array.from(
-      document.querySelectorAll<HTMLElement>(".reveal-up"),
-    );
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      elements.forEach((element) => element.classList.add("is-visible"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-
-    return () => observer.disconnect();
-  }, []);
-
   const scrollToPaths = () =>
-    pathsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    pathsRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
 
   return (
-    <PageShell scrollContainerRef={scrollRef}>
+    <PageShell>
       <div className="wide-page-shell relative mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 pb-16 pt-24 md:gap-24 md:px-grid-margin md:pb-24 md:pt-28">
         <header className="reveal-up join-hero relative flex items-end overflow-hidden rounded-2xl border border-white/10">
           <div className="absolute inset-0">
@@ -106,7 +78,7 @@ export default function JoinUsClient() {
               preload
               quality={78}
               sizes="100vw"
-              src="/images/background.webp"
+              src="/images/groupphoto.avif"
             />
             <div className="join-hero-veil absolute inset-0" />
           </div>
@@ -115,7 +87,7 @@ export default function JoinUsClient() {
             <span className="font-label-caps text-label-caps uppercase text-primary">
               Join Us
             </span>
-            <h1 className="mt-4 font-display-xl text-4xl font-extrabold uppercase text-white md:text-display-xl">
+            <h1 className="mt-4 font-display-xl text-4xl font-extrabold text-white md:text-display-xl">
               {joinContent.title}
             </h1>
             <p className="mt-6 max-w-xl font-body-lg text-body-lg text-on-surface-variant">
@@ -164,7 +136,7 @@ export default function JoinUsClient() {
                     <span className="font-label-caps text-label-caps uppercase text-tertiary">
                       Recruiting
                     </span>
-                    <h3 className="font-headline-md text-2xl font-bold uppercase text-white">
+                    <h3 className="font-headline-md text-2xl font-bold text-white">
                       {section.label} Teams
                     </h3>
                   </div>
@@ -207,7 +179,7 @@ export default function JoinUsClient() {
                                       {team.tier}
                                     </span>
                                   ) : null}
-                                  <h4 className="font-headline-md text-xl font-bold uppercase text-primary">
+                                  <h4 className="font-headline-md text-xl font-bold text-primary">
                                     {path.name}
                                   </h4>
                                 </div>
@@ -271,7 +243,7 @@ export default function JoinUsClient() {
             <span className="font-label-caps text-label-caps uppercase text-tertiary">
               Not a Player?
             </span>
-            <h2 className="mt-4 font-display-xl text-3xl font-extrabold uppercase text-white md:text-[2.75rem]">
+            <h2 className="mt-4 font-display-xl text-3xl font-extrabold text-white md:text-[2.75rem]">
               Join the Staff
             </h2>
             <p className="mt-6 font-body-lg text-body-lg text-on-surface-variant">
@@ -301,7 +273,7 @@ export default function JoinUsClient() {
                     </span>
                   ) : null}
                   <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                    <span className="font-headline-md text-base font-bold uppercase text-white">
+                    <span className="font-headline-md text-base font-bold text-white">
                       {role.name}
                     </span>
                     <span className="shrink-0 font-label-caps text-[10px] uppercase text-tertiary">
@@ -348,7 +320,7 @@ export default function JoinUsClient() {
             <span className="font-label-caps text-label-caps uppercase text-primary">
               Your Journey Starts Here
             </span>
-            <h2 className="font-display-xl text-3xl font-extrabold uppercase text-white md:text-5xl">
+            <h2 className="font-display-xl text-3xl font-extrabold text-white md:text-5xl">
               Ready to Represent?
             </h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant">

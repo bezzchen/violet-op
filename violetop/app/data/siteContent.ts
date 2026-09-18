@@ -79,22 +79,22 @@ export const homeContent = {
 
 export const homeFaqs = [
   {
-    question: "Do I need to be an NYU student?",
+    question: "Do I Need to Be an NYU Student?",
     answer:
       "Violet OP is based at NYU, and the Discord and community events welcome people beyond campus. Ask the team about eligibility for a specific competitive roster.",
   },
   {
-    question: "What if I'm new to competitive play?",
+    question: "What If I'm New to Competitive Play?",
     answer:
       "There are open-rank paths alongside selective tryouts. Browse each team's requirements, or start by meeting people in Discord.",
   },
   {
-    question: "How much time does it take?",
+    question: "How Much Time Does It Take?",
     answer:
       "Commitment depends on the path. Some rosters have structured practice, while community play is more flexible. Each listing on Join Us gives the current details.",
   },
   {
-    question: "How do I join?",
+    question: "How Do I Join?",
     answer:
       "Join Discord to connect with the community. For a roster or staff role, use the open applications on Join Us; filled roles are marked there.",
   },
@@ -104,7 +104,7 @@ export const aboutContent = {
   title: "Who We Are",
   image: "/images/groupphoto.avif",
   paragraphs: [
-    "Violet OP is a competitive collegiate team based at New York University, bringing together a diverse group of players who share a passion for gaming.",
+    "Violet OP is a collegiate esports organization based at New York University. Its rosters span selective and open-rank competition, while events, content, and community play give players and fans ways to take part.",
     "We compete across multiple tiers of competition, ranging from high rank elite roster to open rank teams, making it easy for players of all skill levels to get involved.",
     "As a team, we're all about building a strong community, whether that's through competition, content, or just connecting people who love gaming.",
     "VOP is a space where players and fans alike can get involved, support each other, and be part of something bigger.",
@@ -126,7 +126,7 @@ export const aboutContent = {
       people: [
         {
           name: "Jessica Wang",
-          role: "Valorant Esports Leader / GC Team Manager",
+          role: "VALORANT Esports Leader / GC Team Manager",
           image: "/images/jessica.avif",
         },
         {
@@ -261,6 +261,7 @@ export const joinContent = {
         "Rank: Open rank",
         "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
         "Gender eligibility: Women and marginalized genders",
+        "Participation: Open to media and events on or off campus",
         "Commitment: Medium/Flexible",
       ],
     },
@@ -325,17 +326,17 @@ export const joinContent = {
   ],
   faqs: [
     {
-      question: "Do I have to be an NYU student?",
+      question: "Do I Have to Be an NYU Student?",
       answer:
         "Violet OP is based at NYU, and the broader community is welcome at events and in Discord. Ask the team about eligibility for a specific competitive roster.",
     },
     {
-      question: "How do I move from Black to Purple or White?",
+      question: "How Do I Move from Black to Purple or White?",
       answer:
         "The transition from community play to our elite rosters is based on performance, attitude, and scouting.",
     },
     {
-      question: "What if I don't play the current main games?",
+      question: "What If I Don't Play the Current Main Games?",
       answer:
         "Join our Discord! We are always looking to expand our reach based on community interest.",
     },
@@ -365,7 +366,7 @@ export const eboardContent = {
 
 export const highlightsContent = {
   title: "Highlights",
-  subtitle: "VALORANT videos",
+  subtitle: "VALORANT Videos",
   intro:
     "Watch recorded Violet OP VALORANT matches and moments from the team.",
   clips: [
@@ -426,7 +427,7 @@ export const teamPages = [
     },
     requirements: [
       "Rank: Immortal 1 or higher",
-      "Commitment: Daily scrims, VOD review, tournament play",
+      "Commitment: Daily scrims, VOD reviews, LAN travel",
       "Access: Highly selective tryouts",
     ],
     paragraphs: [
@@ -518,7 +519,7 @@ export const teamPages = [
     },
     requirements: [
       "Rank: Open rank",
-      "Commitment: Flexible practice blocks",
+      "Commitment: Low / flexible practice",
       "Access: Seasonal tryouts",
     ],
     paragraphs: [
@@ -559,6 +560,8 @@ export const teamPages = [
       "Rank: Open rank",
       "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
       "Gender eligibility: Women and marginalized genders",
+      "Participation: Open to media and events on or off campus",
+      "Commitment: Medium / flexible",
       "Access: Dedicated tryout process",
     ],
     paragraphs: [
