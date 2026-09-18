@@ -13,7 +13,7 @@
 
 .page :is(a, button):focus-visible { outline: 3px solid #e8cfff; outline-offset: 4px; }
 .page a { text-decoration: none; }
-.page section[id] { scroll-margin-top: 84px; }
+.page :is(section, article)[id] { scroll-margin-top: 84px; }
 .eyebrow, .kicker {
   margin: 0;
   color: var(--accent);
@@ -169,7 +169,7 @@
 
 @media (max-width: 760px) {
   .page { padding-top: 64px; }
-  .page section[id] { scroll-margin-top: 76px; }
+  .page :is(section, article)[id] { scroll-margin-top: 76px; }
   .hero { display: flex; flex-direction: column; min-height: 0; }
   .heroContent { padding: 63px 22px 45px; }
   .hero h1 { margin: 19px 0 22px; font-size: clamp(2.55rem, 10.6vw, 4.2rem); }

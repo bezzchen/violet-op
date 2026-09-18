@@ -51,7 +51,7 @@ export default async function Home() {
     <>
       <Header />
       <main className={styles.page} id="main-content" tabIndex={-1}>
-        <section aria-labelledby="hero-title" className={styles.hero}>
+        <section aria-labelledby="hero-title" className={styles.hero} id="hero-section">
           <div className={styles.heroContent}>
             <p className={styles.eyebrow}>{homeContent.eyebrow} <span> / Collegiate esports</span></p>
             <h1 id="hero-title">Play together.<br /><em>Compete together.</em></h1>
@@ -121,7 +121,7 @@ export default async function Home() {
             <p className={styles.sectionLead}>Find a team to follow, a squad to grow with, or your next place to compete.</p>
           </div>
           <div className={styles.gameGrid}>
-            <article className={`${styles.gamePanel} ${styles.valorantPanel}`}>
+            <article className={`${styles.gamePanel} ${styles.valorantPanel}`} id="valorant-section">
               <div className={styles.gameArt}>
                 <Image alt="" fill quality={75} sizes="(max-width: 760px) 85vw, 40vw" src="/images/jettfull.webp" />
               </div>
@@ -139,7 +139,7 @@ export default async function Home() {
                 </div>
               </div>
             </article>
-            <article className={`${styles.gamePanel} ${styles.leaguePanel}`}>
+            <article className={`${styles.gamePanel} ${styles.leaguePanel}`} id="lol-section">
               <div className={styles.gameArt}>
                 <Image alt="" fill quality={75} sizes="(max-width: 760px) 85vw, 40vw" src="/images/ahri.avif" />
               </div>
@@ -230,7 +230,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="close-title" className={styles.closing}>
+        <section aria-labelledby="close-title" className={styles.closing} id="cta-section">
           <div>
             <p className={styles.eyebrow}>Your next move</p>
             <h2 id="close-title">Start with the people.<br />Find your place in the game.</h2>
