@@ -1,7 +1,7 @@
 export const siteMeta = {
   title: "NYU Violet OP",
   description:
-    "We are a diverse collegiate VALORANT Esports team at New York University with the main goal of having esports and gaming to be brought into a bigger space.",
+    "Violet OP is a collegiate esports community at New York University for VALORANT, League of Legends, events, and creative collaboration.",
 };
 
 export const mainNav = [
@@ -52,18 +52,18 @@ export const leagueTeams = [
   {
     name: "VOP Elder",
     href: "/league1",
-    tier: "Varsity",
+    tier: "Open rank",
     image: "/images/tealvoplogo.png",
     summary:
-      "VOP Elder is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Elder is an open-rank League of Legends roster built around flexible customs, review, and a consistent squad.",
   },
   {
     name: "VOP Baron",
     href: "/league2",
-    tier: "Development",
+    tier: "Open rank",
     image: "/images/limevoplogo.png",
     summary:
-      "VOP Baron is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Baron is an open-rank League of Legends roster for team play, learning, and community.",
   },
 ];
 
@@ -72,10 +72,33 @@ export const allTeams = [...valorantTeams, ...leagueTeams];
 export const homeContent = {
   eyebrow: "NYU Violet OP",
   body:
-    "We are a diverse collegiate esports team at New York University with the main goal of having esports and gaming to be brought into a bigger space.",
+    "Based at New York University, Violet OP brings players together through VALORANT and League of Legends rosters, open-rank play, events, and creative work.",
   join:
-    "Join NYU's collegiate VALORANT team and be part of a diverse community working to elevate esports and gaming to new heights on campus and beyond.",
+    "Find a competitive roster, meet people in our community, or help make the next event happen.",
 };
+
+export const homeFaqs = [
+  {
+    question: "Do I need to be an NYU student?",
+    answer:
+      "Violet OP is based at NYU, and the Discord and community events welcome people beyond campus. Ask the team about eligibility for a specific competitive roster.",
+  },
+  {
+    question: "What if I'm new to competitive play?",
+    answer:
+      "There are open-rank paths alongside selective tryouts. Browse each team's requirements, or start by meeting people in Discord.",
+  },
+  {
+    question: "How much time does it take?",
+    answer:
+      "Commitment depends on the path. Some rosters have structured practice, while community play is more flexible. Each listing on Join Us gives the current details.",
+  },
+  {
+    question: "How do I join?",
+    answer:
+      "Join Discord to connect with the community. For a roster or staff role, use the open applications on Join Us; filled roles are marked there.",
+  },
+];
 
 export const aboutContent = {
   title: "Who We Are",
@@ -213,6 +236,7 @@ export const joinContent = {
       joinHref: "https://forms.gle/ircHZ4YA3D1YyFm8A",
       details: [
         "Requirements: Open Rank",
+        "Eligibility: Previous VOP Black members or subs for Purple tryouts",
         "Commitment: Structured Weekly Practice",
         "Access: Competitive Tryouts",
       ],
@@ -234,8 +258,10 @@ export const joinContent = {
       filled: false,
       joinHref: "https://forms.gle/PSpnnByGm8JihwUA9",
       details: [
+        "Rank: Open rank",
+        "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
+        "Gender eligibility: Women and marginalized genders",
         "Commitment: Medium/Flexible",
-        "Access: Only those with marginalized genders",
       ],
     },
     {
@@ -243,14 +269,14 @@ export const joinContent = {
       game: "league",
       filled: false,
       joinHref: "https://forms.gle/24E8hzA8vopwxxZK7",
-      details: [],
+      details: ["Requirements: Open rank", "Access: Shared League of Legends tryout form"],
     },
     {
       name: "VOP Baron",
       game: "league",
       filled: false,
       joinHref: "https://forms.gle/24E8hzA8vopwxxZK7",
-      details: [],
+      details: ["Requirements: Open rank", "Access: Shared League of Legends tryout form"],
     },
   ],
   staffIntro:
@@ -301,7 +327,7 @@ export const joinContent = {
     {
       question: "Do I have to be an NYU student?",
       answer:
-        "While our primary focus is the NYU collegiate scene, we welcome the broader community to our events, teams, and Discord.",
+        "Violet OP is based at NYU, and the broader community is welcome at events and in Discord. Ask the team about eligibility for a specific competitive roster.",
     },
     {
       question: "How do I move from Black to Purple or White?",
@@ -339,23 +365,23 @@ export const eboardContent = {
 
 export const highlightsContent = {
   title: "Highlights",
-  subtitle: "Valorant Clips",
+  subtitle: "VALORANT videos",
   intro:
-    "A quick reel of Violet OP Valorant moments, from clean picks to round-closing plays.",
+    "Watch recorded Violet OP VALORANT matches and moments from the team.",
   clips: [
     {
       id: "BUTEgoy3bXo",
-      title: "Valorant Highlight 01",
+      title: "WE DESERVE LAN... (NYU vs UMICH)",
       url: "https://www.youtube.com/watch?v=BUTEgoy3bXo",
     },
     {
       id: "cWTQb-wiOSI",
-      title: "Valorant Highlight 02",
+      title: "This Match is a HARD WATCH... (NYU vs RMU)",
       url: "https://www.youtube.com/watch?v=cWTQb-wiOSI",
     },
     {
       id: "Rx-xkubvrjs",
-      title: "Valorant Highlight 03",
+      title: "How it sounds to win our first game of the season (NYU vs USNA)",
       url: "https://www.youtube.com/watch?v=Rx-xkubvrjs",
     },
   ],
@@ -449,6 +475,7 @@ export const teamPages = [
     },
     requirements: [
       "Rank: Open rank",
+      "Eligibility: Previous VOP Black member or sub for Purple tryouts",
       "Commitment: Structured weekly practice",
       "Access: Competitive tryouts",
     ],
@@ -459,7 +486,7 @@ export const teamPages = [
     support:
       "VOP Purple is supported by coaching, analysis, and staff systems as roles become available.",
     proof:
-      "Entry into VOP Purple is handled through a formal tryout process. If you have the mechanics, communication, and drive to represent the Purple jersey:",
+      "VOP Purple uses the shared Purple/Black tryout form. The current form limits Purple tryouts to previous VOP Black members or subs.",
     staff: [
       { role: "Wayne Yee", username: "sumire", detail: "Coach" },
       { role: "Logan Tsai", username: "Phan10mX", detail: "Assistant Coach" },
@@ -530,7 +557,8 @@ export const teamPages = [
     },
     requirements: [
       "Rank: Open rank",
-      "Eligibility: Marginalized genders",
+      "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
+      "Gender eligibility: Women and marginalized genders",
       "Access: Dedicated tryout process",
     ],
     paragraphs: [
@@ -552,7 +580,7 @@ export const teamPages = [
   {
     slug: "league1",
     name: "VOP Elder",
-    label: "Varsity",
+    label: "Open rank",
     image: "/images/tealvoplogo.png",
     accent: "tertiary",
     game: "league",
@@ -567,14 +595,14 @@ export const teamPages = [
     requirements: [
       "Rank: Open rank",
       "Commitment: Flexible customs and review",
-      "Access: Community signups",
+      "Access: Shared League of Legends tryout form",
     ],
     paragraphs: [
-      "VOP Elder is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Elder is one of Violet OP's open-rank League of Legends rosters, with space to learn alongside a consistent squad.",
       "We focus on balanced 5v5 customs where the goal is to learn, improve, and meet the people who make this organization great.",
     ],
     proof:
-      "Entry into VOP Elder is community-oriented. If you want to improve, queue with a squad, and represent the Teal side of VOP:",
+      "VOP Elder uses the shared League of Legends tryout form. Check the current joining page for details.",
     staff: [],
     roster: [
       { name: "Kuan Lin", username: "Nauk", role: "Top" },
@@ -587,7 +615,7 @@ export const teamPages = [
   {
     slug: "league2",
     name: "VOP Baron",
-    label: "Development",
+    label: "Open rank",
     image: "/images/limevoplogo.png",
     accent: "primary",
     game: "league",
@@ -602,14 +630,14 @@ export const teamPages = [
     requirements: [
       "Rank: Open rank",
       "Commitment: Flexible customs and review",
-      "Access: Community signups",
+      "Access: Shared League of Legends tryout form",
     ],
     paragraphs: [
-      "VOP Baron is the heart of VOP's open-rank community. Whether you are new to the game or just looking for a consistent squad to vibe with, this is your home.",
+      "VOP Baron is one of Violet OP's open-rank League of Legends rosters, with space for team play and community.",
       "We focus on balanced 5v5 customs where the goal is to learn, improve, and meet the people who make this organization great.",
     ],
     proof:
-      "Entry into VOP Baron is community-oriented. If you want to improve, queue with a squad, and represent the Lime side of VOP:",
+      "VOP Baron uses the shared League of Legends tryout form. Check the current joining page for details.",
     staff: [],
     roster: [
       { name: "Alston Li", username: "chineseperson12", role: "Top" },

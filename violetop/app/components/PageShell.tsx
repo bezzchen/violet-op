@@ -50,7 +50,9 @@ export default function PageShell({
       <Header />
       <main
         className="page-scroll-container relative z-10 bg-transparent text-on-background selection:bg-primary selection:text-on-primary"
+        id="main-content"
         ref={scrollRef}
+        tabIndex={-1}
       >
         {children}
         <Footer pinned={false} />

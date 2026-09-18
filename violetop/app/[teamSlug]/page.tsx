@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PageShell from "../components/PageShell";
 import TeamHeroMotion from "../components/TeamHeroMotion";
-import { siteMeta, teamPages } from "../data/siteContent";
+import { joinContent, siteMeta, teamPages } from "../data/siteContent";
 
 type TeamRouteParams = {
   teamSlug: string;
@@ -254,6 +254,7 @@ export default async function TeamPage({
     team.staff.length > 0 ? team.staff : defaultStaffNeeds;
   const rosterSlots = normalizeRoster(team);
   const isLeague = team.game === "league";
+  const recruitment = joinContent.paths.find((path) => path.name === team.name);
   const titleParts = getTeamTitleParts(team.name);
   const restWords = titleParts.rest.trim().split(/\s+/);
   const titleRestClass = [
@@ -471,19 +472,21 @@ export default async function TeamPage({
 
           <div className={`glass-panel section-text-panel op-clip border-l-4 ${accent.borderSide} p-6 md:p-stack-xl`}>
             <span className={`font-label-caps text-label-caps uppercase ${accent.text}`}>
-              Tryout Path
+              Joining status
             </span>
             <h2 className="mt-4 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
-              Ready to join?
+              {recruitment?.filled ? "Roster currently filled" : "Interested in joining?"}
             </h2>
             <p className="mt-6 font-body-lg text-body-lg text-on-surface-variant">
-              {team.proof}
+              {recruitment?.filled
+                ? "Applications for this roster are currently closed. Follow Violet OP for future updates, or explore other ways to get involved."
+                : team.proof}
             </p>
             <Link
               className="mt-8 inline-flex op-clip bg-primary px-7 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
-              href="/join-us"
+              href="/join-us#player-paths"
             >
-              Join Us
+              {recruitment?.filled ? "See other joining paths" : "View application details"}
             </Link>
           </div>
         </section>

@@ -139,7 +139,7 @@ export default function JoinUsClient() {
           </div>
         </header>
 
-        <section className="grid scroll-mt-24 gap-8" ref={pathsRef}>
+        <section className="grid scroll-mt-24 gap-8" id="player-paths" ref={pathsRef}>
           <SectionHeading
             blurb="Six rosters across VALORANT and League of Legends — from stage-ready elite to open-rank community play."
             eyebrow="Find Your Roster"
@@ -233,18 +233,20 @@ export default function JoinUsClient() {
                             )}
 
                             <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
-                              <Link
-                                className={`op-clip px-5 py-3 font-label-caps text-label-caps uppercase transition-all ${
-                                  path.filled
-                                    ? "border border-white/20 bg-white/5 text-on-surface-variant hover:border-white/40"
-                                    : "bg-primary text-on-primary shadow-lg shadow-primary/20 hover:neon-glow-purple"
-                                }`}
-                                href={path.joinHref}
-                                rel="noreferrer"
-                                target="_blank"
-                              >
-                                {path.filled ? "Filled ↗" : "Apply ↗"}
-                              </Link>
+                              {path.filled ? (
+                                <span className="op-clip border border-white/20 bg-white/5 px-5 py-3 font-label-caps text-label-caps uppercase text-on-surface-variant">
+                                  Applications closed
+                                </span>
+                              ) : (
+                                <Link
+                                  className="op-clip bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary shadow-lg shadow-primary/20 transition-all hover:neon-glow-purple"
+                                  href={path.joinHref}
+                                  rel="noreferrer"
+                                  target="_blank"
+                                >
+                                  Apply ↗
+                                </Link>
+                              )}
                               {team ? (
                                 <Link
                                   className="font-label-caps text-label-caps uppercase text-tertiary transition-colors hover:text-white"
@@ -264,7 +266,7 @@ export default function JoinUsClient() {
           </div>
         </section>
 
-        <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <section className="grid scroll-mt-24 gap-8 lg:grid-cols-[0.9fr_1.1fr]" id="staff-roles">
           <div className="reveal-up glass-panel section-text-panel op-clip border-r-4 border-r-tertiary p-6 md:p-stack-xl">
             <span className="font-label-caps text-label-caps uppercase text-tertiary">
               Not a Player?
@@ -280,42 +282,42 @@ export default function JoinUsClient() {
           <div className="grid gap-4 sm:grid-cols-2">
             {joinContent.staffRoles.map((role, index) => {
               const team = teamForRole(role.name);
+              const card = (
+                <article
+                  className={`join-role-card clip-card glass-panel flex h-full items-center gap-4 rounded border p-5 ${
+                    role.filled ? "join-card-filled" : "border-white/10"
+                  }`}
+                >
+                  {team ? (
+                    <span className="relative h-10 w-10 shrink-0">
+                      <Image
+                        alt={`${team.name} crest`}
+                        className="object-contain"
+                        fill
+                        quality={70}
+                        sizes="40px"
+                        src={team.image}
+                      />
+                    </span>
+                  ) : null}
+                  <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
+                    <span className="font-headline-md text-base font-bold uppercase text-white">
+                      {role.name}
+                    </span>
+                    <span className="shrink-0 font-label-caps text-[10px] uppercase text-tertiary">
+                      {role.filled ? "Filled" : "Apply ↗"}
+                    </span>
+                  </div>
+                </article>
+              );
 
               return (
                 <div className="reveal-up" key={role.name} style={delay(index)}>
-                  <Link
-                    className="block h-full"
-                    href={role.joinHref}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <article
-                      className={`join-role-card clip-card glass-panel flex h-full items-center gap-4 rounded border p-5 ${
-                        role.filled ? "join-card-filled" : "border-white/10"
-                      }`}
-                    >
-                      {team ? (
-                        <span className="relative h-10 w-10 shrink-0">
-                          <Image
-                            alt={`${team.name} crest`}
-                            className="object-contain"
-                            fill
-                            quality={70}
-                            sizes="40px"
-                            src={team.image}
-                          />
-                        </span>
-                      ) : null}
-                      <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                        <span className="font-headline-md text-base font-bold uppercase text-white">
-                          {role.name}
-                        </span>
-                        <span className="shrink-0 font-label-caps text-[10px] uppercase text-tertiary">
-                          {role.filled ? "Filled ↗" : "Apply ↗"}
-                        </span>
-                      </div>
-                    </article>
-                  </Link>
+                  {role.filled ? card : (
+                    <Link className="block h-full" href={role.joinHref} rel="noreferrer" target="_blank">
+                      {card}
+                    </Link>
+                  )}
                 </div>
               );
             })}

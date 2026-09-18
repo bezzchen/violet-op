@@ -50,11 +50,11 @@ export default function HighlightsPage() {
                 More Plays
               </span>
               <h2 className="mt-3 font-display-xl text-4xl font-extrabold uppercase text-white md:text-[3.25rem]">
-                Clip Archive
+              Video Archive
               </h2>
             </div>
             <p className="max-w-xl font-body-md text-body-md text-on-surface-variant/75">
-              Rewatch the Valorant moments that deserve a second look.
+              Explore recorded Violet OP VALORANT matches and team moments.
             </p>
           </div>
 

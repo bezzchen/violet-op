@@ -1,502 +1,248 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 import {
+  calendarFeeds,
+  eventsContent,
+  highlightsContent,
   homeContent,
+  homeFaqs,
   joinContent,
   leagueTeams,
   valorantTeams,
 } from "./data/siteContent";
-import useLenisScroll from "./hooks/useLenisScroll";
-import {
-  captureInlineStyles,
-  setScrollMotion,
-} from "./utils/scrollMotion";
+import { getCalendarEvents, type CalendarEvent } from "./lib/ical";
+import styles from "./Home.module.css";
 
-const PrismCanvas = dynamic(() => import("./components/PrismCanvas"), {
-  ssr: false,
-});
+const discordUrl = "https://discord.gg/MAmXcrkADb";
 
-const clamp = (value: number, min = 0, max = 1) =>
-  Math.min(Math.max(value, min), max);
+function Arrow({ external = false }: { external?: boolean }) {
+  return <span aria-hidden="true">{external ? "↗" : "→"}</span>;
+}
 
-const smoothstep = (value: number) => {
-  const progress = clamp(value);
+function EventPreview({ event, featured = false }: { event: CalendarEvent; featured?: boolean }) {
+  return (
+    <article className={featured ? styles.featuredEvent : styles.supportEvent}>
+      <div className={styles.eventDate}>
+        <span>{event.month}</span>
+        <strong>{event.day}</strong>
+      </div>
+      <div className={styles.eventText}>
+        <span className={styles.kicker}>{event.weekday} · Violet OP event</span>
+        <h3>{event.title}</h3>
+        <time dateTime={event.startsAt}>{event.time}</time>
+        {event.location ? <p>{event.location}</p> : null}
+      </div>
+    </article>
+  );
+}
 
-  return progress * progress * (3 - 2 * progress);
-};
-
-const scrollRange = (scrollPos: number, vh: number, start: number, end: number) =>
-  smoothstep((scrollPos - vh * start) / (vh * (end - start)));
-
-const sectionEnterProgress = (scrollPos: number, vh: number, offsetTop: number) =>
-  smoothstep((scrollPos - (offsetTop - vh * 0.75)) / (vh * 0.6));
-
-export default function Home() {
-  const scrollRef = useRef<HTMLElement | null>(null);
-  const heroTextRef = useRef<HTMLDivElement | null>(null);
-  const heroLogoRef = useRef<HTMLDivElement | null>(null);
-  const heroCtaRef = useRef<HTMLDivElement | null>(null);
-  const valAssetsRef = useRef<HTMLDivElement | null>(null);
-  const valContentRef = useRef<HTMLDivElement | null>(null);
-  const lolAssetsRef = useRef<HTMLDivElement | null>(null);
-  const lolContentRef = useRef<HTMLDivElement | null>(null);
-
-  useLenisScroll(scrollRef);
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) {
-      return;
-    }
-
-    let animationFrame = 0;
-    let removeScrollListeners = () => {};
-    let valorantOffset = scrollContainer.clientHeight;
-    let leagueOffset = scrollContainer.clientHeight * 2;
-    let ctaOffset = scrollContainer.clientHeight * 3;
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const updateViewportHeight = () => {
-      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
-
-      document.documentElement.style.setProperty(
-        "--app-height",
-        `${viewportHeight}px`,
-      );
-    };
-
-    if (reducedMotionQuery.matches) {
-      const handleViewportChange = () => {
-        updateViewportHeight();
-      };
-
-      updateViewportHeight();
-      window.addEventListener("resize", handleViewportChange);
-      window.visualViewport?.addEventListener("resize", handleViewportChange);
-      window.visualViewport?.addEventListener("scroll", handleViewportChange);
-
-      return () => {
-        window.removeEventListener("resize", handleViewportChange);
-        window.visualViewport?.removeEventListener("resize", handleViewportChange);
-        window.visualViewport?.removeEventListener("scroll", handleViewportChange);
-      };
-    }
-
-    const restoreInlineStyles = captureInlineStyles([
-      heroTextRef.current,
-      heroCtaRef.current,
-      heroLogoRef.current,
-      valAssetsRef.current,
-      valContentRef.current,
-      lolContentRef.current,
-      lolAssetsRef.current,
-    ]);
-
-    setScrollMotion(heroTextRef.current, { opacity: 1 });
-    setScrollMotion(heroCtaRef.current, { opacity: 1 });
-    setScrollMotion(heroLogoRef.current, { opacity: 1 });
-    setScrollMotion(valAssetsRef.current, { opacity: 0, x: -120 });
-    setScrollMotion(valContentRef.current, { opacity: 0, x: 120 });
-    setScrollMotion(lolContentRef.current, { opacity: 0, x: -120 });
-    setScrollMotion(lolAssetsRef.current, { opacity: 0, x: 120 });
-
-    const refreshSectionOffsets = () => {
-      const vh = scrollContainer.clientHeight;
-
-      valorantOffset =
-        document.getElementById("valorant-section")?.offsetTop ?? vh;
-      leagueOffset =
-        document.getElementById("lol-section")?.offsetTop ?? vh * 2;
-      ctaOffset =
-        document.getElementById("cta-section")?.offsetTop ?? vh * 3;
-    };
-
-    const animateScrollState = () => {
-      const scrollPos = scrollContainer.scrollTop;
-      const vh = scrollContainer.clientHeight;
-      const heroExit = scrollRange(scrollPos, vh, 0.05, 0.55);
-      const valorantEnter = sectionEnterProgress(scrollPos, vh, valorantOffset);
-      const valorantExit = sectionEnterProgress(scrollPos, vh, leagueOffset);
-      const valorantProgress = clamp(valorantEnter - valorantExit);
-      const leagueEnter = sectionEnterProgress(scrollPos, vh, leagueOffset);
-      const leagueExit = sectionEnterProgress(scrollPos, vh, ctaOffset);
-      const leagueProgress = clamp(leagueEnter - leagueExit);
-
-      setScrollMotion(heroTextRef.current, {
-        opacity: 1 - heroExit,
-        x: -120 * heroExit,
-      });
-
-      setScrollMotion(heroCtaRef.current, {
-        opacity: 1 - heroExit,
-        x: -120 * heroExit,
-      });
-
-      setScrollMotion(heroLogoRef.current, {
-        opacity: 1 - heroExit,
-        scale: 1 - 0.12 * heroExit,
-        x: 120 * heroExit,
-      });
-
-      setScrollMotion(valAssetsRef.current, {
-        opacity: valorantProgress,
-        x: -120 * (1 - valorantProgress),
-      });
-      setScrollMotion(valContentRef.current, {
-        opacity: valorantProgress,
-        x: 120 * (1 - valorantProgress),
-      });
-
-      setScrollMotion(lolContentRef.current, {
-        opacity: leagueProgress,
-        x: -120 * (1 - leagueProgress),
-      });
-      setScrollMotion(lolAssetsRef.current, {
-        opacity: leagueProgress,
-        x: 120 * (1 - leagueProgress),
-      });
-    };
-
-    const scheduleScrollState = () => {
-      if (animationFrame) {
-        return;
-      }
-
-      animationFrame = window.requestAnimationFrame(() => {
-        animationFrame = 0;
-        animateScrollState();
-      });
-    };
-
-    const handleViewportChange = () => {
-      updateViewportHeight();
-      refreshSectionOffsets();
-      scheduleScrollState();
-    };
-
-    updateViewportHeight();
-    refreshSectionOffsets();
-    animateScrollState();
-    scrollContainer.addEventListener("scroll", scheduleScrollState, { passive: true });
-    window.addEventListener("resize", handleViewportChange);
-    window.visualViewport?.addEventListener("resize", handleViewportChange);
-    window.visualViewport?.addEventListener("scroll", handleViewportChange);
-
-    removeScrollListeners = () => {
-      scrollContainer.removeEventListener("scroll", scheduleScrollState);
-      window.removeEventListener("resize", handleViewportChange);
-      window.visualViewport?.removeEventListener("resize", handleViewportChange);
-      window.visualViewport?.removeEventListener("scroll", handleViewportChange);
-      if (animationFrame) {
-        window.cancelAnimationFrame(animationFrame);
-      }
-    };
-
-    return () => {
-      removeScrollListeners();
-      restoreInlineStyles();
-    };
-  }, []);
+export default async function Home() {
+  const { events, error } = await getCalendarEvents(calendarFeeds.events, 3);
+  const [featuredEvent, ...supportEvents] = events;
+  const openPlayerPaths = joinContent.paths.filter((path) => !path.filled);
+  const openStaffExamples = joinContent.staffRoles.filter(
+    (role) => !role.filled && /events|creative/i.test(role.name),
+  );
+  const featuredClip = highlightsContent.clips[0];
 
   return (
     <>
-      <PrismCanvas scrollContainerRef={scrollRef} />
       <Header />
-      <main
-        className="scroll-container relative z-10 bg-transparent text-on-background selection:bg-primary selection:text-on-primary"
-        id="main-scroll"
-        ref={scrollRef}
-      >
-        <section
-          className="scroll-section z-10 flex items-center justify-center bg-transparent"
-          id="hero-section"
-        >
-          <div className="home-section-shell relative z-20 mx-auto grid grid-cols-1 items-center gap-gutter px-4 md:px-grid-margin lg:grid-cols-12">
-            <div className="relative flex min-h-[calc(var(--app-height)-6rem)] flex-col justify-start pt-12 md:min-h-0 md:justify-center md:pt-0 lg:col-span-12">
-              <div
-                className="pointer-events-none relative z-30 max-w-[22rem] md:max-w-none"
-                ref={heroTextRef}
-              >
-                <span className="mb-4 block font-label-caps text-label-caps uppercase text-primary">
-                  {homeContent.eyebrow}
-                </span>
-                <h1 className="hero-title font-display-xl uppercase italic text-white drop-shadow-2xl">
-                  Violet
-                  <br />
-                  <span className="text-primary not-italic">OP</span>
-                </h1>
-                <p className="home-hero-copy mt-6 max-w-xl font-body-lg text-body-lg text-on-surface-variant drop-shadow-2xl">
-                  {homeContent.body}
-                </p>
-                <div className="relative z-40 mt-12 hidden gap-4 md:flex">
-                  <Link
-                    className="pointer-events-auto op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
-                    href="/about-us"
-                  >
-                    About Us
-                  </Link>
-                </div>
-              </div>
-
-              <div
-                className="home-hero-logo pointer-events-none absolute left-1/2 top-[70%] z-20 w-[min(88vw,24rem)] -translate-x-1/2 -translate-y-1/2 opacity-55 md:top-[55%] md:w-full md:max-w-2xl lg:left-[75%] lg:opacity-100"
-                ref={heroLogoRef}
-              >
-                <Image
-                  alt="NYU Violet OP identity"
-                  className="w-full scale-95 drop-shadow-[0_0_90px_rgba(204,72,255,0.32)] md:scale-105"
-                  height={720}
-                  preload
-                  quality={85}
-                  sizes="(min-width: 1024px) 42vw, (min-width: 768px) 70vw, 92vw"
-                  src="/images/logo.avif"
-                  width={720}
-                />
-              </div>
+      <main className={styles.page} id="main-content" tabIndex={-1}>
+        <section aria-labelledby="hero-title" className={styles.hero}>
+          <div className={styles.heroContent}>
+            <p className={styles.eyebrow}>{homeContent.eyebrow} <span> / Collegiate esports</span></p>
+            <h1 id="hero-title">Play together.<br /><em>Compete together.</em></h1>
+            <p className={styles.heroIntro}>{homeContent.body}</p>
+            <div className={styles.heroActions}>
+              <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">
+                Join Discord <Arrow external />
+              </a>
+              <Link className={styles.secondaryAction} href="#teams">
+                Explore Teams <Arrow />
+              </Link>
             </div>
+            <p className={styles.heroNote}>Competition, community, and the people who make both happen.</p>
           </div>
-
-          <div
-            className="fixed bottom-40 left-4 z-40 flex md:hidden"
-            ref={heroCtaRef}
-          >
-            <Link
-              className="op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
-              href="/about-us"
-            >
-              About Us
-            </Link>
-          </div>
-        </section>
-
-        <section
-          className="scroll-section z-10 flex items-center justify-center bg-transparent"
-          id="valorant-section"
-        >
-          <div className="absolute inset-0 z-0">
+          <div className={styles.heroMedia}>
             <Image
-              alt="Violet OP Valorant group"
-              className="object-cover opacity-25"
+              alt="Violet OP members gathered for a group photo"
+              className={styles.heroPhoto}
               fill
-              quality={45}
-              sizes="100vw"
-              src="/images/valologo.webp"
+              preload
+              quality={82}
+              sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 48vw"
+              src="/images/groupphoto.avif"
             />
+            <div className={styles.photoCaption}><span>01 / The community</span><span>New York University</span></div>
           </div>
+        </section>
 
-          <div className="home-section-shell relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
-            <div
-              className="relative flex flex-col items-center justify-center"
-              ref={valAssetsRef}
-            >
-              <Image
-                alt="Waylay Valorant agent"
-                className="home-feature-character relative z-10 max-h-[56vh] object-contain drop-shadow-[0_0_38px_rgba(204,72,255,0.48)] md:max-h-[70vh]"
-                height={1100}
-                quality={70}
-                sizes="(min-width: 1024px) 34vw, (min-width: 768px) 55vw, 82vw"
-                src="/images/waylay.webp"
-                width={700}
-              />
+        <section aria-labelledby="events-title" className={styles.section} id="latest">
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>On the calendar</p>
+              <h2 id="events-title">What’s happening</h2>
             </div>
-
-            <div
-              className="home-roster-panel glass-panel section-text-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
-              ref={valContentRef}
-            >
-              <div className="mb-6 flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-tertiary" />
-                <span className="font-label-caps text-label-caps uppercase text-tertiary">
-                  Meet the Teams
-                </span>
+            <Link className={styles.textLink} href="/events">View all events <Arrow /></Link>
+          </div>
+          {featuredEvent ? (
+            <div className={supportEvents.length ? styles.eventLayout : styles.eventLayoutSingle}>
+              <EventPreview event={featuredEvent} featured />
+              {supportEvents.length ? (
+                <div className={styles.supportEvents}>
+                  {supportEvents.map((event) => <EventPreview event={event} key={event.id} />)}
+                </div>
+              ) : null}
+            </div>
+          ) : (
+            <div className={styles.emptyEvents}>
+              <div>
+                <span className={styles.emptyMark} aria-hidden="true">↗</span>
+                <h3>{error ? "Calendar temporarily unavailable" : "Nothing scheduled just yet"}</h3>
+                <p>{error ? "We couldn't load the calendar right now. Find current updates on the Events page or in Discord." : eventsContent.emptyMessage}</p>
               </div>
-              <h2 className="mb-8 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
-                VALORANT <span className="text-tertiary">Rosters</span>
-              </h2>
-
-              <div className="mb-8 grid grid-cols-2 gap-4">
-                {valorantTeams.map((team) => (
-                  <Link
-                    className="home-roster-card flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
-                    href={team.href}
-                    key={team.name}
-                  >
-                    <div className="home-roster-card-media relative h-28 w-full overflow-hidden rounded bg-surface-container">
-                      <Image
-                        alt={`${team.name} team`}
-                        className="object-contain object-center opacity-80"
-                        fill
-                        quality={60}
-                        sizes="(min-width: 1024px) 240px, 50vw"
-                        src={team.image}
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-headline-md text-lg text-on-surface">
-                        {team.name}
-                      </span>
-                      <span className="font-label-caps text-[10px] uppercase text-tertiary">
-                        {team.tier}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+              <div className={styles.emptyActions}>
+                <Link className={styles.secondaryAction} href="/events">Check events <Arrow /></Link>
+                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Ask in Discord <Arrow external /></a>
               </div>
+            </div>
+          )}
+        </section>
 
-              <Link
-                className="flex items-center gap-2 font-label-caps text-label-caps text-tertiary transition-transform hover:translate-x-2"
-                href="/join-us"
-              >
-                Join Us <span aria-hidden="true">→</span>
-              </Link>
+        <section aria-labelledby="teams-title" className={`${styles.section} ${styles.teamsSection}`} id="teams">
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>Meet the rosters</p>
+              <h2 id="teams-title">Two games. One community.</h2>
+            </div>
+            <p className={styles.sectionLead}>Find a team to follow, a squad to grow with, or your next place to compete.</p>
+          </div>
+          <div className={styles.gameGrid}>
+            <article className={`${styles.gamePanel} ${styles.valorantPanel}`}>
+              <div className={styles.gameArt}>
+                <Image alt="" fill quality={75} sizes="(max-width: 760px) 85vw, 40vw" src="/images/jettfull.webp" />
+              </div>
+              <div className={styles.gamePanelContent}>
+                <span className={styles.kicker}>01 / Tactical shooter</span>
+                <h3>VALORANT</h3>
+                <p>Four rosters across competitive and open-rank pathways, including a dedicated space for marginalized-gender players.</p>
+                <div aria-label="VALORANT teams" className={styles.teamLinks}>
+                  {valorantTeams.map((team) => (
+                    <Link href={team.href} key={team.href}>
+                      <Image alt="" height={28} quality={75} src={team.image} width={30} />
+                      <span>{team.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </article>
+            <article className={`${styles.gamePanel} ${styles.leaguePanel}`}>
+              <div className={styles.gameArt}>
+                <Image alt="" fill quality={75} sizes="(max-width: 760px) 85vw, 40vw" src="/images/ahri.avif" />
+              </div>
+              <div className={styles.gamePanelContent}>
+                <span className={styles.kicker}>02 / Multiplayer strategy</span>
+                <h3>League of Legends</h3>
+                <p>Meet VOP Elder and VOP Baron, our open-rank League rosters for team play, customs, and community.</p>
+                <div aria-label="League of Legends teams" className={styles.teamLinks}>
+                  {leagueTeams.map((team) => (
+                    <Link href={team.href} key={team.href}>
+                      <Image alt="" height={28} quality={75} src={team.image} width={30} />
+                      <span>{team.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </article>
+          </div>
+          <Link className={styles.textLink} href="/join-us#player-paths">See current roster applications <Arrow /></Link>
+        </section>
+
+        <section aria-labelledby="paths-title" className={`${styles.section} ${styles.pathsSection}`} id="get-involved">
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>Find your place</p>
+              <h2 id="paths-title">More than one way in.</h2>
+            </div>
+            <p className={styles.sectionLead}>{homeContent.join}</p>
+          </div>
+          <div className={styles.pathList}>
+            <article className={styles.pathRow}>
+              <span className={styles.pathNumber}>01</span>
+              <div><h3>Competitive teams</h3><p>Try out for a VALORANT roster or join a League squad. Each listing shows its requirements and current status.</p></div>
+              <div className={styles.pathAction}>
+                <span>{openPlayerPaths.length ? `Listed as open: ${openPlayerPaths.map((path) => path.name.replace("VOP ", "")).join(", ")}` : "No player applications currently listed as open"}</span>
+                <Link className={styles.textLink} href="/join-us#player-paths">Explore roster paths <Arrow /></Link>
+              </div>
+            </article>
+            <article className={styles.pathRow}>
+              <span className={styles.pathNumber}>02</span>
+              <div><h3>Community play</h3><p>Meet other players, follow events, and find people to queue with without starting in a formal tryout.</p></div>
+              <div className={styles.pathAction}>
+                <span>Start with the Violet OP Discord.</span>
+                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Join the community <Arrow external /></a>
+              </div>
+            </article>
+            <article className={styles.pathRow}>
+              <span className={styles.pathNumber}>03</span>
+              <div><h3>Staff & creative</h3><p>Support the teams through coaching, events, design, content, and the work behind the scenes.</p></div>
+              <div className={styles.pathAction}>
+                <span>{openStaffExamples.length ? `Open examples: ${openStaffExamples.map((role) => role.name).join(", ")}` : "See current staff listings"}</span>
+                <Link className={styles.textLink} href="/join-us#staff-roles">See staff opportunities <Arrow /></Link>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section aria-labelledby="community-title" className={`${styles.section} ${styles.communitySection}`}>
+          <div className={styles.communityIntro}>
+            <p className={styles.eyebrow}>The community in motion</p>
+            <h2 id="community-title">The players make the moments.</h2>
+            <p>Violet OP brings competition, creative work, and friendship into the same space. Meet the people behind the teams and watch their plays.</p>
+            <Link className={styles.textLink} href="/about-us">Get to know Violet OP <Arrow /></Link>
+          </div>
+          <div className={styles.highlightFeature}>
+            <span className={styles.kicker}>From the video archive</span>
+            <span className={styles.playSymbol} aria-hidden="true">▶</span>
+            <h3>{featuredClip.title}</h3>
+            <p>Start with this Violet OP VALORANT video, or browse the rest of the archive.</p>
+            <div className={styles.highlightActions}>
+              <a className={styles.textLink} href={featuredClip.url} rel="noopener noreferrer" target="_blank">Watch video <Arrow external /></a>
+              <Link className={styles.textLink} href="/highlights">All highlights <Arrow /></Link>
             </div>
           </div>
         </section>
 
-        <section
-          className="scroll-section z-10 flex items-center justify-center bg-transparent"
-          id="lol-section"
-        >
-          <div className="absolute inset-0 z-0">
-            <Image
-              alt="League of Legends atmospheric backdrop"
-              className="object-cover opacity-20"
-              fill
-              quality={45}
-              sizes="100vw"
-              src="/images/lollogo.avif"
-            />
+        <section aria-labelledby="faq-title" className={`${styles.section} ${styles.faqSection}`}>
+          <div className={styles.sectionHeading}>
+            <div><p className={styles.eyebrow}>Good to know</p><h2 id="faq-title">A few common questions.</h2></div>
           </div>
-
-          <div className="home-section-shell relative z-20 mx-auto grid grid-cols-1 items-center gap-8 px-4 md:px-grid-margin lg:grid-cols-2 lg:gap-12">
-            <div
-              className="home-roster-panel glass-panel section-text-panel op-clip order-2 flex flex-col items-end border-r-4 border-r-primary p-6 text-right md:p-stack-xl lg:order-1"
-              ref={lolContentRef}
-            >
-              <div className="mb-6 flex items-center gap-2">
-                <span className="font-label-caps text-label-caps uppercase text-primary">
-                  Meet the Teams
-                </span>
-                <span className="h-2 w-2 rounded-full bg-primary" />
+          <div className={styles.faqList}>
+            {homeFaqs.map((faq) => (
+              <div className={styles.faqItem} key={faq.question}>
+                <h3>{faq.question}</h3>
+                <p>{faq.answer}</p>
               </div>
-              <h2 className="mb-8 font-headline-lg text-3xl font-bold uppercase text-white md:text-headline-lg">
-                League <span className="text-primary">Rosters</span>
-              </h2>
-
-              <div className="mb-8 grid w-full grid-cols-2 gap-4">
-                {leagueTeams.map((team) => (
-                  <Link
-                    className="home-roster-card flex min-h-48 flex-col gap-2 rounded border border-white/10 bg-white/5 p-3 transition-colors hover:bg-white/10"
-                    href={team.href}
-                    key={team.name}
-                  >
-                    <div className="home-roster-card-media relative h-28 w-full overflow-hidden rounded bg-surface-container">
-                      <Image
-                        alt={`${team.name} team`}
-                        className="object-contain object-center opacity-80"
-                        fill
-                        quality={60}
-                        sizes="(min-width: 1024px) 240px, 50vw"
-                        src={team.image}
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-headline-md text-lg text-on-surface">
-                        {team.name}
-                      </span>
-                      <span className="font-label-caps text-[10px] uppercase text-tertiary">
-                        {team.tier}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              <Link
-                className="flex items-center gap-2 self-end font-label-caps text-label-caps text-primary transition-transform hover:-translate-x-2"
-                href="/join-us"
-              >
-                <span aria-hidden="true">←</span> Join Us
-              </Link>
-            </div>
-
-            <div
-              className="order-1 flex flex-col items-center justify-center lg:order-2"
-              ref={lolAssetsRef}
-            >
-              <Image
-                alt="Ahri League of Legends champion"
-                className="home-feature-character relative z-10 max-h-[58vh] object-contain drop-shadow-[0_0_48px_rgba(240,120,255,0.58)] md:max-h-[70vh]"
-                height={1100}
-                quality={70}
-                sizes="(min-width: 1024px) 34vw, (min-width: 768px) 55vw, 82vw"
-                src="/images/ahri.avif"
-                width={700}
-              />
-            </div>
+            ))}
           </div>
         </section>
 
-        <section
-          className="scroll-section z-10 flex flex-col items-center justify-center bg-transparent px-4 text-center md:px-grid-margin"
-          id="cta-section"
-        >
-          <div className="home-cta-shell relative z-10 max-w-4xl space-y-stack-md md:pb-12">
-            <span className="font-label-caps text-label-caps uppercase text-on-primary-container">
-              {joinContent.title}
-            </span>
-            <h2 className="font-display-xl text-4xl font-extrabold uppercase text-white md:text-display-xl">
-              Join <span className="text-primary">Us</span>
-            </h2>
-            <p className="mx-auto max-w-2xl font-body-lg text-body-lg text-on-surface-variant">
-              {homeContent.join}
-            </p>
-
-            <div className="grid w-full grid-cols-1 items-stretch gap-gutter pt-stack-md md:grid-cols-2">
-              <Link
-                className="home-cta-card glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
-                href="/join-us"
-              >
-                <div>
-                  <h3 className="mb-2 font-bold font-headline-md text-headline-md text-primary">
-                    Choose Your Path
-                  </h3>
-                  <p className="mb-4 font-body-md text-body-md text-on-surface/70">
-                    {joinContent.intro}
-                  </p>
-                </div>
-                <span className="border-b border-primary pb-1 font-label-caps text-label-caps">
-                  Join Us
-                </span>
-              </Link>
-
-              <Link
-                className="home-cta-card glass-panel op-clip flex h-full min-h-80 w-full flex-col justify-between p-8 transition-all hover:neon-glow-purple"
-                href="/join-us"
-              >
-                <div>
-                  <h3 className="mb-2 font-bold font-headline-md text-headline-md text-tertiary">
-                    Not a Player?
-                  </h3>
-                  <p className="mb-4 font-body-md text-body-md text-on-surface/70">
-                    {joinContent.staffIntro}
-                  </p>
-                </div>
-                <span className="border-b border-tertiary pb-1 font-label-caps text-label-caps">
-                  Join the Staff
-                </span>
-              </Link>
-            </div>
+        <section aria-labelledby="close-title" className={styles.closing}>
+          <div>
+            <p className={styles.eyebrow}>Your next move</p>
+            <h2 id="close-title">Start with the people.<br />Find your place in the game.</h2>
           </div>
-          <Footer />
+          <div className={styles.closingActions}>
+            <p>Join the conversation now, or explore the current player and staff paths.</p>
+            <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">Join Discord <Arrow external /></a>
+            <Link className={styles.secondaryAction} href="/join-us">View joining paths <Arrow /></Link>
+          </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
