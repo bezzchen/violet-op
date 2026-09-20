@@ -270,11 +270,6 @@ export default function VopIntroBanner() {
 
         <div className={styles.controls}>
           <span aria-live="polite" className={styles.themeName}>{currentTheme.name}</span>
-          <div aria-hidden="true" className={styles.dots}>
-            {themes.map((theme, index) => (
-              <span className={index === currentIndex ? styles.activeDot : ""} key={theme.name} />
-            ))}
-          </div>
           <button
             aria-label={reducedMotion ? "Color cycle disabled by reduced motion preference" : userPlaying ? "Pause color cycle" : "Play color cycle"}
             className={styles.motionButton}
@@ -282,7 +277,15 @@ export default function VopIntroBanner() {
             onClick={() => setUserPlaying((playing) => !playing)}
             type="button"
           >
-            <span aria-hidden="true">{reducedMotion ? "—" : userPlaying ? "Ⅱ" : "▶"}</span>
+            {userPlaying && !reducedMotion ? (
+              <svg aria-hidden="true" className={styles.motionIcon} viewBox="0 0 14 14">
+                <path d="M3.25 2.25h2.5v9.5h-2.5zm5 0h2.5v9.5h-2.5z" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" className={styles.motionIcon} viewBox="0 0 14 14">
+                <path d="m3.5 2 8 5-8 5z" />
+              </svg>
+            )}
           </button>
         </div>
       </section>

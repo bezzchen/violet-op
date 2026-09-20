@@ -214,47 +214,51 @@
   right: clamp(18px, 3vw, 44px);
   bottom: clamp(16px, 2.5vw, 28px);
   display: flex;
-  min-height: 40px;
+  width: 98px;
+  height: 44px;
   align-items: center;
-  gap: 12px;
-  padding: 0 5px 0 13px;
-  border: 1px solid #ffffff24;
-  background: #08090ce8;
-  box-shadow: 0 8px 28px #0008;
-  backdrop-filter: blur(8px);
+  justify-content: flex-end;
+  gap: 6px;
+  pointer-events: none;
 }
 
 .themeName {
-  min-width: 48px;
+  width: 48px;
   color: #ddd9e1;
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: .13em;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .1em;
   line-height: 1;
+  text-align: right;
+  text-shadow: 0 1px 5px #000, 0 0 12px #000;
   text-transform: uppercase;
 }
 
-.dots { display: flex; gap: 4px; }
-.dots span { width: 12px; height: 2px; background: #ffffff30; }
-.dots .activeDot { background: #eee9f3; }
-
 .motionButton {
   display: inline-flex;
-  width: 32px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   align-items: center;
   justify-content: center;
   border: 0;
-  background: #ffffff0c;
+  padding: 0;
+  background: transparent;
   color: white;
   cursor: pointer;
-  font: inherit;
-  font-size: 11px;
+  pointer-events: auto;
 }
 
-.motionButton:hover { background: #ffffff1c; }
+.motionIcon {
+  display: block;
+  width: 13px;
+  height: 13px;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 4px #000);
+}
+
+.motionButton:hover { color: #e8cfff; }
 .motionButton:disabled { color: #77727b; cursor: default; }
-.motionButton:focus-visible { outline: 3px solid #e8cfff; outline-offset: 3px; }
+.motionButton:focus-visible { outline: 3px solid #e8cfff; outline-offset: 0; }
 
 .screenReaderOnly {
   position: absolute;
@@ -277,9 +281,7 @@
   .banner { height: clamp(330px, 72vw, 390px); }
   .markWrap { top: 53%; width: clamp(145px, 39vw, 180px); }
   .surfaceArtwork, .emissionArtwork { opacity: .94; }
-  .controls { right: 13px; bottom: 13px; min-height: 38px; gap: 9px; }
-  .themeName { min-width: 43px; }
-  .dots span { width: 8px; }
+  .controls { right: 8px; bottom: 8px; }
   .contactShadows { stroke-width: 12; }
   .fissureBevels { stroke-width: 9; }
   .fissureCuts { stroke-width: 5.5; }
@@ -290,7 +292,6 @@
 @media (max-width: 420px) {
   .banner { height: 330px; }
   .markWrap { width: 148px; }
-  .controls { padding-left: 11px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
