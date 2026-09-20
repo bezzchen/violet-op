@@ -95,89 +95,48 @@ const themes: BannerTheme[] = [
   },
 ];
 
-const mainFissures = [
-  "M-32 166 64 148 126 185 190 151 256 207 335 187 408 229",
-  "M824-24 856 58 826 115 895 152 873 218 934 249",
-  "M154 516 180 447 246 416 232 359 307 326 361 278",
-  "M1472 359 1390 341 1344 386 1259 352 1192 403 1104 374 1046 430",
-  "M619 501 647 442 625 397 665 354",
+const polygonCells = [
+  "M-46-18 166-26 246 72 132 166-34 132Z",
+  "M246 72 397 14 456 136Z",
+  "M246 72 456 136 344 205Z",
+  "M-34 132 132 166 278 230 223 356 52 320-40 246Z",
+  "M278 230 344 205 456 136 549 235 423 331Z",
+  "M52 320 223 356 349 514-36 526Z",
+  "M223 356 423 331 585 276 684 388 600 514 349 514Z",
+  "M397 14 650-36 595 101 456 136Z",
+  "M595 101 721 43 850 112Z",
+  "M595 101 850 112 806 220 641 207Z",
+  "M650-36 901-24 850 112 721 43Z",
+  "M806 220 1001 222 1047 341 882 383 747 299Z",
+  "M684 388 747 299 882 383 979 514 600 514Z",
+  "M850 112 984-18 1128 69Z",
+  "M850 112 1128 69 1071 187 904 127Z",
+  "M1001 222 1071 187 1248 171 1197 307 1047 341Z",
+  "M984-18 1346-22 1490 94 1391 204 1248 171 1128 69Z",
+  "M1047 341 1197 307 1354 389 1298 520 979 514Z",
+  "M1197 307 1391 204 1492 274 1450 421 1354 389Z",
+  "M1391 204 1490 94 1514 90 1518 278 1492 274Z",
+  "M1354 389 1450 421 1512 389 1518 522 1298 520Z",
 ];
 
-const branchFissures = [
-  "M126 185 100 127 132 76",
-  "M190 151 178 105 199 67",
-  "M256 207 279 157 332 134",
-  "M335 187 367 142 359 103",
-  "M856 58 912 35 946-4",
-  "M826 115 780 95 743 52",
-  "M895 152 954 126 1008 139",
-  "M873 218 824 243 788 286",
-  "M246 416 202 386 160 389",
-  "M232 359 185 334 142 345",
-  "M307 326 331 280 318 239",
-  "M1390 341 1405 294 1442 263",
-  "M1344 386 1320 432 1274 458",
-  "M1259 352 1239 305 1191 281",
-  "M1192 403 1160 449 1112 472",
-  "M647 442 698 419 727 382",
-  "M625 397 580 369 548 329",
-  "M493 39 532 76 524 122 566 147",
-  "M1119-8 1094 46 1118 91 1081 127",
-  "M1015 316 974 335 944 373",
-];
-
-const emissionFissures = [
-  mainFissures[0],
-  mainFissures[1],
-  mainFissures[2],
-  mainFissures[3],
-  branchFissures[0],
-  branchFissures[2],
-  branchFissures[6],
-  branchFissures[9],
-  branchFissures[12],
-  branchFissures[15],
-  branchFissures[18],
-];
-
-function PathSet({ paths }: { paths: string[] }) {
+function PolygonCells() {
+  const paths = polygonCells;
   return <>{paths.map((path, index) => <path d={path} key={`${path}-${index}`} />)}</>;
 }
 
-function SurfaceArtwork() {
+function SurfaceNetwork() {
   return (
-    <svg className={styles.surfaceArtwork} preserveAspectRatio="none" viewBox="0 0 1440 500">
-      <g className={styles.contactShadows} transform="translate(0 4)">
-        <PathSet paths={mainFissures} />
-        <PathSet paths={branchFissures} />
-      </g>
-      <g className={styles.fissureBevels}>
-        <PathSet paths={mainFissures} />
-        <PathSet paths={branchFissures} />
-      </g>
-      <g className={styles.fissureCuts}>
-        <PathSet paths={mainFissures} />
-        <PathSet paths={branchFissures} />
-      </g>
-      <g className={styles.chippedEdges}>
-        <path d="m54 144 21-16 18 17-26 10Z" />
-        <path d="m247 204 16-18 19 9-18 18Z" />
-        <path d="m820 109 18-17 14 24-18 10Z" />
-        <path d="m886 148 22-16 12 23-20 13Z" />
-        <path d="m224 355 18-15 14 18-20 13Z" />
-        <path d="m1337 381 20-14 13 19-19 14Z" />
-        <path d="m1184 399 16-17 16 17-17 14Z" />
-      </g>
+    <svg className={`${styles.networkArtwork} ${styles.surfaceNetwork}`} preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 500">
+      <g><PolygonCells /></g>
     </svg>
   );
 }
 
-function EmissionArtwork() {
+function ColorNetwork() {
   return (
-    <svg className={styles.emissionArtwork} preserveAspectRatio="none" viewBox="0 0 1440 500">
-      <g className={styles.emissionGlow}><PathSet paths={emissionFissures} /></g>
-      <g className={styles.emissionCore}><PathSet paths={emissionFissures} /></g>
-      <g className={styles.emissionHot}><PathSet paths={emissionFissures.slice(0, 4)} /></g>
+    <svg className={`${styles.networkArtwork} ${styles.colorNetwork}`} preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 500">
+      <g className={styles.networkGlow}><PolygonCells /></g>
+      <g className={styles.networkCore}><PolygonCells /></g>
     </svg>
   );
 }
@@ -189,7 +148,7 @@ function ThemeLayer({ theme, variant }: { theme: BannerTheme; variant: "current"
       data-theme={theme.name.toLowerCase()}
       style={theme.style}
     >
-      <EmissionArtwork />
+      <ColorNetwork />
       <div className={styles.markWrap}>
         <span className={styles.markAura} />
         <span className={styles.mark} />
@@ -261,7 +220,7 @@ export default function VopIntroBanner() {
       <section aria-label="Violet OP colorway banner" className={styles.banner} id="hero-section" ref={bannerRef}>
         <h1 className={styles.screenReaderOnly}>Violet OP</h1>
         <div aria-hidden="true" className={styles.background}>
-          <SurfaceArtwork />
+          <SurfaceNetwork />
         </div>
         <div aria-hidden="true" className={styles.layers}>
           <ThemeLayer theme={currentTheme} variant="current" />

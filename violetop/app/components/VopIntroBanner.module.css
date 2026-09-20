@@ -21,7 +21,7 @@
   height: clamp(420px, 34vw, 500px);
   overflow: hidden;
   isolation: isolate;
-  border-bottom: 1px solid #ffffff20;
+  border-bottom: 1px solid var(--site-border);
   background: #08090b;
   color: #f7f5f8;
 }
@@ -69,70 +69,34 @@
   box-shadow: inset 0 0 110px #000b;
 }
 
-.surfaceArtwork,
-.emissionArtwork {
+.networkArtwork {
   position: absolute;
   inset: 0;
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
+  -webkit-mask-image: radial-gradient(ellipse 26% 47% at 50% 50%, transparent 0 45%, #0002 60%, #0009 82%, #000 100%);
+  mask-image: radial-gradient(ellipse 26% 47% at 50% 50%, transparent 0 45%, #0002 60%, #0009 82%, #000 100%);
 }
 
-.surfaceArtwork {
+.surfaceNetwork {
   z-index: 1;
-  opacity: .94;
+  opacity: .48;
 }
 
-.contactShadows,
-.fissureBevels,
-.fissureCuts,
-.emissionGlow,
-.emissionCore,
-.emissionHot {
+.surfaceNetwork g,
+.networkGlow,
+.networkCore {
   fill: none;
-  stroke-linecap: butt;
-  stroke-linejoin: miter;
+  stroke-linecap: square;
+  stroke-linejoin: bevel;
   vector-effect: non-scaling-stroke;
 }
 
-.contactShadows {
-  stroke: #000;
-  stroke-width: 15;
-  opacity: .92;
-  filter: blur(5px);
-}
-
-.contactShadows path:nth-child(n+6) { stroke-width: 7; }
-
-.fissureBevels {
-  stroke: #5a5d643d;
-  stroke-width: 12;
-  filter: drop-shadow(0 -1px 0 #a4a7ad1f);
-}
-
-.fissureBevels path:nth-child(n+6) {
-  stroke: #53565d35;
-  stroke-width: 5;
-}
-
-.fissureCuts {
-  stroke: #020305;
-  stroke-width: 7;
-}
-
-.fissureCuts path:nth-child(2),
-.fissureCuts path:nth-child(4) { stroke-width: 8.5; }
-.fissureCuts path:nth-child(5) { stroke-width: 5.5; }
-.fissureCuts path:nth-child(n+6) { stroke-width: 2.3; }
-.fissureCuts path:nth-child(8n+7),
-.fissureCuts path:nth-child(7n+9) { stroke-width: 1.3; }
-
-.chippedEdges {
-  fill: #030406;
-  stroke: #777a8030;
-  stroke-width: 1;
-  filter: drop-shadow(0 3px 3px #000);
+.surfaceNetwork g {
+  stroke: #8d8497;
+  stroke-width: 1.05;
 }
 
 .layers {
@@ -142,28 +106,18 @@
 
 .themeLayer { pointer-events: none; }
 
-.emissionGlow {
+.networkGlow {
   stroke: var(--aura);
-  stroke-width: 17;
-  opacity: .52;
-  filter: blur(12px);
+  stroke-width: 8;
+  opacity: .34;
+  filter: blur(6px);
 }
 
-.emissionGlow path:nth-child(n+5) { stroke-width: 9; opacity: .55; }
-
-.emissionCore {
+.networkCore {
   stroke: var(--emission);
-  stroke-width: 2.6;
-  opacity: .8;
-  filter: drop-shadow(0 0 5px var(--aura));
-}
-
-.emissionCore path:nth-child(n+5) { stroke-width: 1.35; opacity: .62; }
-
-.emissionHot {
-  stroke: var(--emission-hot);
-  stroke-width: .75;
-  opacity: .75;
+  stroke-width: 1.45;
+  opacity: .84;
+  filter: drop-shadow(0 0 3px var(--aura));
 }
 
 .markWrap {
@@ -280,13 +234,14 @@
 @media (max-width: 760px) {
   .banner { height: clamp(330px, 72vw, 390px); }
   .markWrap { top: 53%; width: clamp(145px, 39vw, 180px); }
-  .surfaceArtwork, .emissionArtwork { opacity: .94; }
+  .networkArtwork {
+    -webkit-mask-image: radial-gradient(ellipse 68% 46% at 50% 53%, transparent 0 45%, #0002 59%, #0009 82%, #000 100%);
+    mask-image: radial-gradient(ellipse 68% 46% at 50% 53%, transparent 0 45%, #0002 59%, #0009 82%, #000 100%);
+  }
+  .surfaceNetwork { opacity: .45; }
   .controls { right: 8px; bottom: 8px; }
-  .contactShadows { stroke-width: 12; }
-  .fissureBevels { stroke-width: 9; }
-  .fissureCuts { stroke-width: 5.5; }
-  .emissionGlow { stroke-width: 13; }
-  .emissionCore { stroke-width: 2.2; }
+  .networkGlow { stroke-width: 7; }
+  .networkCore { stroke-width: 1.35; }
 }
 
 @media (max-width: 420px) {

@@ -1,4 +1,4 @@
-.footer { position: relative; z-index: 2; width: 100%; padding: 72px 24px 20px; border-top: 1px solid #ffffff24; background: #101014; color: #f4f1f5; }
+.footer { position: relative; z-index: 2; width: 100%; padding: 72px 24px 20px; border-top: 1px solid var(--site-border); background: #07060a; color: var(--site-text); }
 .pinned { margin-top: auto; }
 .inner, .base { width: min(100%, 1380px); margin: 0 auto; }
 .inner { display: grid; grid-template-columns: minmax(220px, 1fr) 1.6fr; gap: 70px; padding-bottom: 64px; }
@@ -10,7 +10,7 @@
 .links span { margin-bottom: 8px; color: #c7a8ee; font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
 .links a { color: #e9e5ed; font-size: 14px; text-decoration: none; }
 .links a:hover { color: #d4b5fc; text-decoration: underline; text-underline-offset: 4px; }
-.base { display: flex; justify-content: space-between; gap: 24px; padding-top: 20px; border-top: 1px solid #ffffff20; color: #99939e; font-size: 12px; }
+.base { display: flex; justify-content: space-between; gap: 24px; padding-top: 20px; border-top: 1px solid #30263f; color: #aaa1b3; font-size: 12px; }
 .footer a:focus-visible { outline: 3px solid #e6c8ff; outline-offset: 4px; }
 @media (max-width: 760px) {
   .footer { padding: 54px 18px 24px; }

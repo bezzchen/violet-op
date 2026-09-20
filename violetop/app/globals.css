@@ -6,25 +6,25 @@
   --color-error: #ffb4ab;
   --color-tertiary-fixed: #ffe2ff;
   --color-inverse-on-surface: #321044;
-  --color-surface-variant: #39313f;
-  --color-surface-container-lowest: #151419;
-  --color-outline-variant: #75667d;
+  --color-surface-variant: #2a2237;
+  --color-surface-container-lowest: #0d0b12;
+  --color-outline-variant: #3d324e;
   --color-inverse-primary: #67467e;
-  --color-surface: #1b1920;
+  --color-surface: #1b1626;
   --color-on-secondary-fixed-variant: #8b00ef;
   --color-tertiary-container: #68517d;
-  --color-on-background: #f6f3f7;
+  --color-on-background: #f5f2fa;
   --color-on-error: #690005;
   --color-outline: #bca8c9;
   --color-on-error-container: #ffdad6;
-  --color-surface-container-highest: #302b35;
-  --color-surface-container-high: #29252e;
+  --color-surface-container-highest: #2a2237;
+  --color-surface-container-high: #211a2e;
   --color-on-primary-fixed: #35004d;
   --color-on-tertiary: #3d0055;
   --color-on-primary: #1b1420;
-  --color-background: #111115;
+  --color-background: #09080d;
   --color-secondary-fixed: #f8d6ff;
-  --color-on-surface-variant: #d4cad9;
+  --color-on-surface-variant: #c2b8ce;
   --color-primary-container: #5e4370;
   --color-secondary-fixed-dim: #ebadff;
   --color-primary-fixed: #f9dcff;
@@ -33,18 +33,18 @@
   --color-surface-tint: #b994d8;
   --color-on-secondary: #211a28;
   --color-tertiary: #c4a4e8;
-  --color-surface-dim: #111115;
+  --color-surface-dim: #09080d;
   --color-secondary-container: #5b3c70;
   --color-error-container: #93000a;
-  --color-surface-container: #242129;
+  --color-surface-container: #1b1626;
   --color-secondary: #bd9bd8;
   --color-tertiary-fixed-dim: #f0a5ff;
-  --color-surface-container-low: #1c1a21;
-  --color-surface-bright: #39303f;
+  --color-surface-container-low: #100d18;
+  --color-surface-bright: #30263f;
   --color-on-tertiary-fixed-variant: #8500c4;
   --color-primary-fixed-dim: #eda5ff;
   --color-on-secondary-fixed: #29003f;
-  --color-on-surface: #f6f3f7;
+  --color-on-surface: #f5f2fa;
   --color-on-secondary-container: #ffe2ff;
   --color-on-tertiary-fixed: #320044;
   --color-inverse-surface: #f9eaff;
@@ -79,8 +79,15 @@
 
 :root {
   --app-height: 100dvh;
-  background: #111115;
-  color: #f6f3f7;
+  --site-bg: #09080d;
+  --site-bg-alt: #100d18;
+  --site-surface: #1b1626;
+  --site-surface-raised: #211a2e;
+  --site-border: #3d324e;
+  --site-text: #f5f2fa;
+  --site-text-muted: #c2b8ce;
+  background: var(--site-bg);
+  color: var(--site-text);
 }
 
 * {
@@ -88,15 +95,15 @@
 }
 
 html {
-  background: #111115;
+  background: var(--site-bg);
   color-scheme: dark;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  background: #111115;
-  color: #f6f3f7;
+  background: var(--site-bg);
+  color: var(--site-text);
   font-family: "Hanken Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
 }
@@ -107,7 +114,7 @@ body::before {
   inset: 0;
   content: "";
   background: url("/images/flow-pattern.svg") center / cover no-repeat;
-  opacity: 1;
+  opacity: .16;
   pointer-events: none;
 }
 
@@ -127,17 +134,17 @@ a {
 }
 
 .glass-panel {
-  background: #211e27;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: var(--site-surface);
+  border: 1px solid var(--site-border);
 }
 
 .section-text-panel {
-  background: #211e27;
+  background: var(--site-surface-raised);
 }
 
 .event-row-panel {
-  background: #211e27;
-  border-color: rgba(255, 255, 255, 0.12);
+  background: var(--site-surface);
+  border-color: var(--site-border);
 }
 
 /* Legacy reveal classes remain visible without scroll-driven animation. */
@@ -153,17 +160,17 @@ a {
 
 .join-hero {
   min-height: 24rem;
-  background: #211e27;
+  background: var(--site-surface);
 }
 
 .join-hero-veil {
   background:
-    linear-gradient(100deg, #17151d 6%, rgba(23, 21, 29, 0.92) 27%, rgba(23, 21, 29, 0.54) 56%, rgba(23, 21, 29, 0.24) 100%),
-    linear-gradient(0deg, #17151d 1%, transparent 60%);
+    linear-gradient(100deg, #100d18 6%, #100d18eb 27%, #100d188a 56%, #100d183d 100%),
+    linear-gradient(0deg, #100d18 1%, transparent 60%);
 }
 
 .join-cta {
-  background: #292330;
+  background: var(--site-surface-raised);
 }
 
 .join-path-card,
@@ -172,12 +179,12 @@ a {
 }
 
 .join-card-filled {
-  background: #1d1b21;
-  border-color: rgba(255, 255, 255, 0.14);
+  background: #15121d;
+  border-color: var(--site-border);
 }
 
 .join-card-filled:hover {
-  border-color: rgba(255, 255, 255, 0.26);
+  border-color: #66527e;
 }
 
 @media (min-width: 768px) {
@@ -309,7 +316,7 @@ a {
 .team-info-card,
 .team-roster-card,
 .clip-card {
-  background: #211e27;
+  background: var(--site-surface);
   overflow: hidden;
   position: relative;
   transition: border-color 0.25s ease, transform 0.25s ease;
@@ -379,6 +386,7 @@ a {
 .page-scroll-container {
   min-height: 100vh;
   overflow: visible;
+  background: var(--site-bg);
 }
 
 .prism-canvas-background {
@@ -387,7 +395,7 @@ a {
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: #08000f;
+  background: var(--site-bg);
   contain: paint;
 }
 
@@ -417,11 +425,11 @@ a {
 }
 
 .scroll-container::-webkit-scrollbar-track {
-  background: #170020;
+  background: var(--site-bg-alt);
 }
 
 .page-scroll-container::-webkit-scrollbar-track {
-  background: #170020;
+  background: var(--site-bg-alt);
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
