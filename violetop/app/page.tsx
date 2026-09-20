@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+import VopIntroBanner from "./components/VopIntroBanner";
 import {
   calendarFeeds,
   eventsContent,
@@ -49,37 +49,8 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
+      <VopIntroBanner />
       <main className={styles.page} id="main-content" tabIndex={-1}>
-        <section aria-labelledby="hero-title" className={styles.hero} id="hero-section">
-          <div className={styles.heroContent}>
-            <p className={styles.eyebrow}>{homeContent.eyebrow} <span> / Collegiate esports</span></p>
-            <h1 id="hero-title">Play Together.<br /><em>Compete Together.</em></h1>
-            <p className={styles.heroIntro}>{homeContent.body}</p>
-            <div className={styles.heroActions}>
-              <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">
-                Join Discord <Arrow external />
-              </a>
-              <Link className={styles.secondaryAction} href="#teams">
-                Explore Teams <Arrow />
-              </Link>
-            </div>
-            <p className={styles.heroNote}>Competition, community, and the people who make both happen.</p>
-          </div>
-          <div className={styles.heroMedia}>
-            <Image
-              alt="Violet OP members gathered for a group photo"
-              className={styles.heroPhoto}
-              fill
-              preload
-              quality={82}
-              sizes="(max-width: 760px) 100vw, (max-width: 1100px) 50vw, 48vw"
-              src="/images/groupphoto.avif"
-            />
-            <div className={styles.photoCaption}><span>01 / The community</span><span>New York University</span></div>
-          </div>
-        </section>
-
         <section aria-labelledby="events-title" className={styles.section} id="latest">
           <div className={styles.sectionHeading}>
             <div>

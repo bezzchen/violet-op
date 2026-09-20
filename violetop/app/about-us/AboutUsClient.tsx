@@ -1,29 +1,26 @@
 import Image from "next/image";
+import MemberPortrait from "../components/MemberPortrait";
 import PageShell from "../components/PageShell";
-import { aboutContent } from "../data/siteContent";
+import { aboutContent, type MemberImage } from "../data/siteContent";
 import styles from "./AboutUs.module.css";
 
 type DirectoryPerson = {
   name: string;
-  image?: string;
+  image?: MemberImage;
   roles: string[];
 };
 
 function buildDirectory() {
   const people: DirectoryPerson[] = [];
   const byIdentity = new Map<string, DirectoryPerson>();
-  const unnamedRoles: string[] = [];
 
   aboutContent.sections.forEach((section, sectionIndex) => {
     section.people.forEach((entry, entryIndex) => {
-      if (entry.name === "TBA") {
-        unnamedRoles.push(entry.role);
-        return;
-      }
+      if (entry.name === "TBA") return;
 
       const image = "image" in entry ? entry.image : undefined;
       // A repeated name is merged only when the same portrait confirms the identity.
-      const identity = image ? `${entry.name}::${image}` : `${sectionIndex}::${entryIndex}`;
+      const identity = image ? `${entry.name}::${image.src}` : `${sectionIndex}::${entryIndex}`;
       let person = byIdentity.get(identity);
       if (!person) {
         person = { name: entry.name, image, roles: [] };
@@ -37,11 +34,11 @@ function buildDirectory() {
     });
   });
 
-  return { people, unnamedRoles };
+  return people;
 }
 
 export default function AboutUsClient() {
-  const { people, unnamedRoles } = buildDirectory();
+  const people = buildDirectory();
 
   return (
     <PageShell>
@@ -65,14 +62,8 @@ export default function AboutUsClient() {
           </div>
           <div className={styles.peopleGrid}>
             {people.map((person, index) => (
-              <article className={styles.personCard} key={`${person.name}-${person.image ?? index}`}>
-                <div className={styles.portrait}>
-                  {person.image ? (
-                    <Image alt={`Portrait of ${person.name}`} fill quality={70} sizes="(max-width: 600px) 45vw, (max-width: 1000px) 28vw, 19vw" src={person.image} />
-                  ) : (
-                    <span aria-hidden="true">{person.name.split(" ").map((part) => part[0]).join("")}</span>
-                  )}
-                </div>
+              <article className={styles.personCard} key={`${person.name}-${person.image?.src ?? index}`}>
+                <MemberPortrait image={person.image} name={person.name} />
                 <div className={styles.personInfo}>
                   <h3>{person.name}</h3>
                   <ul aria-label={`${person.name}'s roles`}>
@@ -84,13 +75,6 @@ export default function AboutUsClient() {
           </div>
         </section>
 
-        {unnamedRoles.length > 0 ? (
-          <aside className={styles.unnamed}>
-            <h2>Roles Without Named Members</h2>
-            <p>The current organization records list these roles without a member name:</p>
-            <ul>{unnamedRoles.map((role) => <li key={role}>{role}</li>)}</ul>
-          </aside>
-        ) : null}
       </div>
     </PageShell>
   );

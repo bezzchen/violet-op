@@ -100,6 +100,25 @@ export const homeFaqs = [
   },
 ];
 
+export type MemberImage = {
+  src: string;
+  focalPoint?: string;
+  fit?: "cover" | "contain";
+};
+
+const memberImages = {
+  katelyn: { src: "/images/katelyn.avif", focalPoint: "50% 9%" },
+  logan: { src: "/images/logan.avif", focalPoint: "50% 7%" },
+  eric: { src: "/images/eric.avif", focalPoint: "50% 5%" },
+  augus: { src: "/images/augus.avif", focalPoint: "50% 8%" },
+  jessica: { src: "/images/jessica.avif", focalPoint: "50% 7%" },
+  emily: { src: "/images/emily.avif", focalPoint: "50% 8%" },
+  kuan: { src: "/images/kuan.avif", focalPoint: "50% 6%" },
+  artus: { src: "/images/artus.avif", focalPoint: "50% 7%" },
+  alston: { src: "/images/alston.avif", focalPoint: "50% 5%" },
+  ella: { src: "/images/ella.avif", focalPoint: "50% 8%" },
+} satisfies Record<string, MemberImage>;
+
 export const aboutContent = {
   title: "Who We Are",
   image: "/images/groupphoto.avif",
@@ -114,10 +133,10 @@ export const aboutContent = {
       eyebrow: "VOP E-Board",
       heading: "Executive Leadership",
       people: [
-        { name: "Katelyn Nguyen", role: "President", image: "/images/katelyn.avif" },
-        { name: "Logan Tsai", role: "General Manager", image: "/images/logan.avif" },
-        { name: "Eric Qi", role: "Secretary", image: "/images/eric.avif" },
-        { name: "Augus Li", role: "Human Resources", image: "/images/augus.avif" },
+        { name: "Katelyn Nguyen", role: "President", image: memberImages.katelyn },
+        { name: "Logan Tsai", role: "General Manager", image: memberImages.logan },
+        { name: "Eric Qi", role: "Secretary", image: memberImages.eric },
+        { name: "Augus Li", role: "Human Resources", image: memberImages.augus },
       ],
     },
     {
@@ -127,26 +146,23 @@ export const aboutContent = {
         {
           name: "Jessica Wang",
           role: "VALORANT Esports Leader / GC Team Manager",
-          image: "/images/jessica.avif",
+          image: memberImages.jessica,
         },
         {
           name: "Katelyn Nguyen",
           role: "Team Manager - Purple, Black",
-          image: "/images/katelyn.avif",
+          image: memberImages.katelyn,
         },
         {
           name: "Logan Tsai",
           role: "Team Manager - White / Coach & Analyst / Scouting Lead",
-          image: "/images/logan.avif",
+          image: memberImages.logan,
         },
         {
           name: "Emily Chen",
           role: "League of Legends Esports Leader",
-          image: "/images/emily.avif",
+          image: memberImages.emily,
         },
-        { name: "TBA", role: "League Team Managers" },
-        { name: "TBA", role: "League Coaches/Analysts" },
-        { name: "TBA", role: "League Player Recruitment/Scouting Lead" },
       ],
     },
     {
@@ -154,28 +170,26 @@ export const aboutContent = {
       heading: "Events Department",
       people: [
         { name: "Charice Huang", role: "Head of Event Coordination" },
-        { name: "Kuan Lin", role: "Event Designer/Helper", image: "/images/kuan.avif" },
+        { name: "Kuan Lin", role: "Event Designer/Helper", image: memberImages.kuan },
         {
           name: "Katelyn Nguyen",
           role: "Tournament Operations Lead",
-          image: "/images/katelyn.avif",
+          image: memberImages.katelyn,
         },
-        { name: "Logan Tsai", role: "Tournament Operations Lead", image: "/images/logan.avif" },
-        { name: "TBA", role: "Broadcast/Production Lead" },
+        { name: "Logan Tsai", role: "Tournament Operations Lead", image: memberImages.logan },
       ],
     },
     {
       eyebrow: "VOP E-Board",
       heading: "Creative Department",
       people: [
-        { name: "Emily Chen", role: "Website Leader", image: "/images/emily.avif" },
+        { name: "Emily Chen", role: "Website Leader", image: memberImages.emily },
         { name: "Barry Chen", role: "Website Leader" },
         {
           name: "Artus Yeh",
-          role: "Head of Design / Content Lead / Graphic Designer / Video Editor",
-          image: "/images/artus.avif",
+          role: "Head of Marketing / Head of Design",
+          image: memberImages.artus,
         },
-        { name: "TBA", role: "Stream Content Creators" },
       ],
     },
     {
@@ -183,19 +197,14 @@ export const aboutContent = {
       heading: "Marketing & Growth",
       people: [
         {
-          name: "Artus Yeh",
-          role: "Head of Marketing / Social Media Manager / Content Strategist",
-          image: "/images/artus.avif",
-        },
-        {
           name: "Katelyn Nguyen",
           role: "Social Media Manager / Community Discord Manager",
-          image: "/images/katelyn.avif",
+          image: memberImages.katelyn,
         },
-        { name: "Logan Tsai", role: "Social Media Manager", image: "/images/logan.avif" },
-        { name: "Eric Qi", role: "Social Media Manager", image: "/images/eric.avif" },
+        { name: "Logan Tsai", role: "Social Media Manager", image: memberImages.logan },
+        { name: "Eric Qi", role: "Social Media Manager", image: memberImages.eric },
         { name: "Nahian Sowalehin", role: "Head of Communications, Operations & Outreach" },
-        { name: "Alston Li", role: "Campus Outreach Team/Partnership", image: "/images/alston.avif" },
+        { name: "Alston Li", role: "Campus Outreach Team/Partnership", image: memberImages.alston },
       ],
     },
     {
@@ -205,7 +214,7 @@ export const aboutContent = {
         {
           name: "Ella Kaplan",
           role: "Head of Financial Planning and Budgeting",
-          image: "/images/ella.avif",
+          image: memberImages.ella,
         },
         { name: "George Zhou", role: "Fundraising Lead" },
       ],

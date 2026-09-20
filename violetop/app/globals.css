@@ -107,7 +107,7 @@ body::before {
   inset: 0;
   content: "";
   background: url("/images/flow-pattern.svg") center / cover no-repeat;
-  opacity: .78;
+  opacity: 1;
   pointer-events: none;
 }
 
@@ -153,6 +153,7 @@ a {
 
 .join-hero {
   min-height: 24rem;
+  background: #211e27;
 }
 
 .join-hero-veil {
@@ -884,10 +885,6 @@ a {
     min-height: calc(var(--app-height) * 0.88);
     padding-top: 4rem;
     padding-bottom: 1rem;
-  }
-
-  #hero-section {
-    min-height: var(--app-height);
   }
 
   #cta-section {

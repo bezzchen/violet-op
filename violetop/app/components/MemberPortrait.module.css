@@ -1,0 +1,12 @@
+.frame {
+  position: relative;
+  display: flex;
+  aspect-ratio: 1;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #39313f;
+}
+.frame img { width: 100%; height: 100%; }
+.frame.contain { background: #211e27; }
+.frame > span { color: #dac2ed; font-size: 50px; font-weight: 900; letter-spacing: -.08em; }

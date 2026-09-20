@@ -13,18 +13,10 @@
 .sectionHeading > p:last-child { max-width: 710px; margin: 0; color: #c9c1ce; font-size: 15px; line-height: 1.55; }
 .peopleGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; }
 .personCard { display: flex; flex-direction: column; min-width: 0; border: 1px solid #ffffff27; background: #211e27; }
-.portrait { position: relative; display: flex; aspect-ratio: 1.55; align-items: center; justify-content: center; overflow: hidden; background: #39313f; }
-.portrait img { object-fit: cover; object-position: center 32%; }
-.portrait > span { color: #dac2ed; font-size: 50px; font-weight: 900; letter-spacing: -.08em; }
 .personInfo { padding: 21px; }
 .personInfo h3 { margin: 0 0 14px; color: white; font-size: 21px; font-weight: 850; letter-spacing: -.04em; }
 .personInfo ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
 .personInfo li { padding: 6px 8px; border: 1px solid #ffffff2c; color: #dfd1e8; font-size: 11px; line-height: 1.35; }
-.unnamed { margin-top: 64px; padding: 27px; border-top: 1px solid #ffffff30; background: #211e27; }
-.unnamed h2 { margin: 0 0 8px; font-size: 24px; font-weight: 850; }
-.unnamed p { margin: 0 0 16px; color: #c9c1ce; }
-.unnamed ul { display: flex; flex-wrap: wrap; gap: 9px; margin: 0; padding: 0; list-style: none; }
-.unnamed li { padding: 7px 10px; border: 1px solid #ffffff28; color: #e0d7e6; font-size: 12px; }
 @media (max-width: 1000px) { .peopleGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 760px) {
   .wrap { width: min(100% - 32px, 680px); padding: 84px 0 70px; }
@@ -36,7 +28,6 @@
 }
 @media (max-width: 480px) {
   .peopleGrid { gap: 9px; }
-  .portrait { aspect-ratio: 1.1; }
   .personInfo { padding: 14px; }
   .personInfo h3 { font-size: 17px; }
   .personInfo li { font-size: 10px; }

@@ -1,36 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
-  <defs>
-    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#151419"/>
-      <stop offset=".53" stop-color="#1d1922"/>
-      <stop offset="1" stop-color="#111115"/>
-    </linearGradient>
-    <linearGradient id="fold" x1="0" y1=".2" x2="1" y2=".9">
-      <stop stop-color="#35263e" stop-opacity=".15"/>
-      <stop offset=".4" stop-color="#674b79" stop-opacity=".55"/>
-      <stop offset=".7" stop-color="#2d2636" stop-opacity=".26"/>
-      <stop offset="1" stop-color="#6a526e" stop-opacity=".15"/>
-    </linearGradient>
-    <linearGradient id="ridge" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#816394" stop-opacity="0"/>
-      <stop offset=".45" stop-color="#ae89be" stop-opacity=".29"/>
-      <stop offset="1" stop-color="#7b638d" stop-opacity="0"/>
-    </linearGradient>
-    <radialGradient id="shade">
-      <stop stop-color="#17151a" stop-opacity="0"/>
-      <stop offset="1" stop-color="#0d0d11" stop-opacity=".82"/>
-    </radialGradient>
-  </defs>
-  <path fill="url(#field)" d="M0 0h1920v1200H0z"/>
-  <g fill="none" stroke="url(#fold)" stroke-linecap="round">
-    <path d="M-360 890C30 1040 248 625 533 444c267-170 457-95 673 111 201 193 374 280 1025-50" stroke-width="290" opacity=".38"/>
-    <path d="M-320 1150C44 1110 271 773 568 624c277-139 463-46 651 153 218 232 432 291 970-33" stroke-width="183" opacity=".34"/>
-    <path d="M-250 460C72 525 246 268 526 240c263-27 388 157 588 252 257 122 528 68 1096-280" stroke-width="225" opacity=".28"/>
-  </g>
-  <g fill="none" stroke="url(#ridge)" stroke-linecap="round">
-    <path d="M-300 783C29 960 256 586 523 418c275-174 462-83 680 130 207 202 382 262 995-56" stroke-width="19"/>
-    <path d="M-215 1054C74 1034 290 713 559 595c283-125 471-27 664 173 229 238 418 262 1001-68" stroke-width="12"/>
-    <path d="M-250 362C76 485 269 205 532 206c255 2 393 174 596 269 260 123 524 49 1061-277" stroke-width="13"/>
-  </g>
-  <path fill="url(#shade)" d="M0 0h1920v1200H0z"/>
+  <path fill="#151419" d="M0 0h1920v1200H0z"/>
+  <path fill="#211e26" d="M-130 0h690c-116 84-191 163-217 279-29 128 70 188 215 234 104 33 189 78 181 164-9 98-179 135-287 209-125 86-150 179-138 314H-130z"/>
+  <path fill="#1b1a21" d="M-130 1200V802c167-67 275-57 353 18 67 64 76 149 151 174 95 32 190-92 304-101 109-8 169 71 208 152 24 50 62 95 119 155z"/>
+  <path fill="#29252e" d="M641-120h649c-76 113-91 201-22 270 73 73 207 71 274 151 73 88 11 198-91 251-90 47-207 59-256 139-42 70 11 148 113 190 98 41 200 49 289 97 101 54 174 133 210 222h-696c-85-138-234-163-324-252-80-78-61-161 52-239 100-69 173-96 173-184 0-98-114-129-217-188-162-92-219-223-154-457z"/>
+  <path fill="#24212a" d="M1685-120h365v761c-148-66-271-52-359 6-111 72-175 171-324 156-70-7-121-36-157-81 51-89 179-123 286-170 119-53 166-161 94-254-48-63-162-98-164-182-2-76 107-158 259-236z"/>
+  <path fill="#1d1b22" d="M2050 587v613h-513c31-93 103-172 214-246 81-54 114-112 81-170-37-64-136-95-135-157 2-62 122-100 353-40z"/>
+  <path fill="#302a34" opacity=".52" d="M-100 505c173-55 321-58 450-1 129 56 199 123 342 129 87 3 156-31 244-93-26 98-125 148-245 182-138 39-263 2-365-56-135-77-269-74-426-14z"/>
+  <path fill="#312b36" opacity=".45" d="M1116 1200c115-151 247-188 373-170 119 17 239 67 372-14 75-46 142-119 189-205v389z"/>
 </svg>

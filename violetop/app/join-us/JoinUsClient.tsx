@@ -73,7 +73,7 @@ export default function JoinUsClient() {
           <div className="absolute inset-0">
             <Image
               alt=""
-              className="object-cover object-center"
+              className="hidden object-cover object-center md:block"
               fill
               preload
               quality={78}
