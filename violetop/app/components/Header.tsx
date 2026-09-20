@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { leagueTeams, valorantTeams } from "../data/siteContent";
@@ -27,6 +28,7 @@ type HeaderProps = {
 };
 
 export default function Header({ homeAnimation }: HeaderProps = {}) {
+  const pathname = usePathname();
   const isHomeHeader = Boolean(homeAnimation);
   const [teamsOpen, setTeamsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -156,8 +158,9 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
                 </section>
               ))}
             </div>
-            <Link href="/events" onClick={closeMenus}>Events</Link>
-            <Link href="/about-us" onClick={closeMenus}>About</Link>
+            <Link aria-current={pathname === "/events" ? "page" : undefined} href="/events" onClick={closeMenus}>Events</Link>
+            <Link aria-current={pathname === "/about-us" ? "page" : undefined} href="/about-us" onClick={closeMenus}>About</Link>
+            <Link aria-current={pathname === "/join-us" ? "page" : undefined} href="/join-us" onClick={closeMenus}>Join Us</Link>
           </nav>
 
           <div className={styles.actions}>
@@ -213,8 +216,9 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
               </section>
             ))}
           </div>
-          <Link className={styles.mobilePageLink} href="/events" onClick={closeMenus}>Events</Link>
-          <Link className={styles.mobilePageLink} href="/about-us" onClick={closeMenus}>About</Link>
+          <Link aria-current={pathname === "/events" ? "page" : undefined} className={styles.mobilePageLink} href="/events" onClick={closeMenus}>Events</Link>
+          <Link aria-current={pathname === "/about-us" ? "page" : undefined} className={styles.mobilePageLink} href="/about-us" onClick={closeMenus}>About</Link>
+          <Link aria-current={pathname === "/join-us" ? "page" : undefined} className={styles.mobilePageLink} href="/join-us" onClick={closeMenus}>Join Us</Link>
           <a
             aria-label="Join the Violet OP Discord"
             className={`${styles.mobileJoin} ${homeAnimation?.wiping ? styles.mobileJoinWiping : ""}`}

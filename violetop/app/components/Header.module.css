@@ -78,6 +78,7 @@
 }
 .teamsTrigger { padding: 0; border: 0; background: none; cursor: pointer; }
 .desktopNav > a:hover, .teamsTrigger:hover, .teamsTrigger[aria-expanded="true"] { color: #d6b7fb; }
+.desktopNav > a[aria-current="page"] { color: #e0c9ff; box-shadow: inset 0 -2px #c9a8f5; }
 .chevron {
   display: inline-block; width: 0; height: 0; margin-left: 2px;
   border-right: 4px solid transparent; border-left: 4px solid transparent;
@@ -159,6 +160,7 @@
     letter-spacing: .12em; text-transform: uppercase;
   }
   .mobileTeamsTrigger { width: 100%; padding: 0; cursor: pointer; }
+  .mobilePageLink[aria-current="page"] { border-bottom-color: #c9a8f5; color: #e0c9ff; }
   .mobileTeams { display: grid; gap: 12px; padding: 16px 0 20px; }
   .mobileGame { padding: 12px; border: 1px solid var(--site-border); background: var(--site-surface); }
   .mobileOverview { display: flex; justify-content: space-between; color: #d9bdf5; font-size: 14px; font-weight: 850; text-decoration: none; }
