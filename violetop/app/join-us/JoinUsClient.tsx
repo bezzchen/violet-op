@@ -70,20 +70,22 @@ export default function JoinUsClient() {
     <PageShell>
       <div className="wide-page-shell relative mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 pb-16 pt-24 md:gap-24 md:px-grid-margin md:pb-24 md:pt-28">
         <header className="reveal-up join-hero relative flex items-end overflow-hidden rounded-2xl border border-white/10">
-          <div className="absolute inset-0">
-            <Image
-              alt=""
-              className="hidden object-cover object-center md:block"
-              fill
-              preload
-              quality={78}
-              sizes="100vw"
-              src="/images/groupphoto.avif"
-            />
+          <div className="join-hero-media absolute inset-0">
+            <div className="join-hero-sharp absolute">
+              <Image
+                alt="Violet OP game characters gathered for competitive and community play"
+                className="join-hero-image"
+                fill
+                preload
+                quality={92}
+                sizes="(max-width: 767px) 118vw, 930px"
+                src="/images/join-us-hero-cutout.png"
+              />
+            </div>
             <div className="join-hero-veil absolute inset-0" />
           </div>
 
-          <div className="relative z-10 max-w-2xl p-6 py-12 md:p-stack-xl md:py-16">
+          <div className="join-hero-copy relative z-10 max-w-2xl p-6 py-9 md:p-stack-xl md:py-12">
             <span className="font-label-caps text-label-caps uppercase text-primary">
               Join Us
             </span>

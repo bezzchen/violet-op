@@ -159,14 +159,38 @@ a {
 }
 
 .join-hero {
-  min-height: 24rem;
+  min-height: 22rem;
   background: var(--site-surface);
+}
+
+.join-hero-media {
+  background:
+    radial-gradient(ellipse at 78% 50%, rgb(48 115 193 / 18%) 0%, transparent 30%),
+    radial-gradient(ellipse at 58% 58%, rgb(111 56 168 / 17%) 0%, transparent 43%),
+    linear-gradient(125deg, #100d18 0%, #0b0a11 54%, #08070c 100%);
+}
+
+.join-hero-sharp {
+  inset: 0 -1.25rem 0 auto;
+  width: min(84%, 1050px);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 11%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 11%, #000 96%, transparent 100%);
+}
+
+.join-hero-image {
+  object-fit: contain;
+  object-position: right bottom;
+  filter:
+    saturate(1.04)
+    contrast(1.03)
+    drop-shadow(0 0 18px rgb(52 125 223 / 28%))
+    drop-shadow(0 0 32px rgb(110 51 166 / 18%));
 }
 
 .join-hero-veil {
   background:
-    linear-gradient(100deg, #100d18 6%, #100d18eb 27%, #100d188a 56%, #100d183d 100%),
-    linear-gradient(0deg, #100d18 1%, transparent 60%);
+    linear-gradient(96deg, #100d18 2%, #100d18fa 25%, #100d18e6 42%, #100d1899 55%, #100d1838 68%, transparent 80%),
+    linear-gradient(0deg, #100d18d9 0%, #100d1838 30%, transparent 55%);
 }
 
 .join-cta {
@@ -189,7 +213,46 @@ a {
 
 @media (min-width: 768px) {
   .join-hero {
-    min-height: 26rem;
+    min-height: 22rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .join-hero {
+    min-height: 0;
+  }
+
+  .join-hero-sharp {
+    inset: .25rem auto auto -9%;
+    width: 118%;
+    height: clamp(150px, 47vw, 184px);
+    -webkit-mask-image: radial-gradient(ellipse 86% 88% at 50% 43%, #000 0%, #000 72%, transparent 100%);
+    mask-image: radial-gradient(ellipse 86% 88% at 50% 43%, #000 0%, #000 72%, transparent 100%);
+  }
+
+  .join-hero-image {
+    object-position: center top;
+  }
+
+  .join-hero-veil {
+    background:
+      linear-gradient(180deg, transparent 0%, #100d180f 24%, #100d18c7 42%, #100d18 58%, #100d18 100%),
+      linear-gradient(90deg, #100d1857, transparent 35%, transparent 70%, #100d1845);
+  }
+
+  .join-hero-copy {
+    padding-top: clamp(9.75rem, 47vw, 10.75rem);
+    padding-bottom: 2rem;
+  }
+
+  .join-hero-copy > p {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .join-hero-copy > div {
+    margin-top: 1.5rem;
   }
 }
 
