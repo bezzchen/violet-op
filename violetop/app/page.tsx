@@ -12,6 +12,7 @@ import {
   leagueTeams,
   valorantTeams,
 } from "./data/siteContent";
+import { getEventArtwork } from "./data/eventArtwork";
 import { getCalendarEvents, type CalendarEvent } from "./lib/ical";
 import styles from "./Home.module.css";
 
@@ -22,17 +23,31 @@ function Arrow({ external = false }: { external?: boolean }) {
 }
 
 function EventPreview({ event, featured = false }: { event: CalendarEvent; featured?: boolean }) {
+  const artwork = getEventArtwork(event);
+
   return (
     <article className={featured ? styles.featuredEvent : styles.supportEvent}>
-      <div className={styles.eventDate}>
-        <span>{event.month}</span>
-        <strong>{event.day}</strong>
+      <div className={styles.eventVisual}>
+        <Image
+          alt={artwork.alt}
+          fill
+          quality={82}
+          sizes={featured ? "(max-width: 760px) calc(100vw - 40px), 62vw" : "(max-width: 760px) calc(100vw - 40px), 24vw"}
+          src={artwork.src}
+          style={{ objectPosition: artwork.objectPosition }}
+        />
       </div>
-      <div className={styles.eventText}>
-        <span className={styles.kicker}>{event.weekday} · Violet OP event</span>
-        <h3>{event.title}</h3>
-        <time dateTime={event.startsAt}>{event.time}</time>
-        {event.location ? <p>{event.location}</p> : null}
+      <div className={styles.eventDetails}>
+        <div className={styles.eventDate}>
+          <span>{event.month}</span>
+          <strong>{event.day}</strong>
+        </div>
+        <div className={styles.eventText}>
+          <span className={styles.kicker}>{event.weekday} · Violet OP event</span>
+          <h3>{event.title}</h3>
+          <time dateTime={event.startsAt}>{event.time}</time>
+          {event.location ? <p>{event.location}</p> : null}
+        </div>
       </div>
     </article>
   );
@@ -181,13 +196,31 @@ export default async function Home() {
             <Link className={styles.textLink} href="/about-us">Get to know Violet OP <Arrow /></Link>
           </div>
           <div className={styles.highlightFeature}>
-            <span className={styles.kicker}>From the video archive</span>
-            <span className={styles.playSymbol} aria-hidden="true">▶</span>
-            <h3>{featuredClip.title}</h3>
-            <p>Start with this Violet OP VALORANT video, or browse the rest of the archive.</p>
-            <div className={styles.highlightActions}>
-              <a className={styles.textLink} href={featuredClip.url} rel="noopener noreferrer" target="_blank">Watch video <Arrow external /></a>
-              <Link className={styles.textLink} href="/highlights">All highlights <Arrow /></Link>
+            <a
+              aria-label={`Watch ${featuredClip.title} on YouTube`}
+              className={styles.highlightMedia}
+              href={featuredClip.url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Image
+                alt={`Thumbnail for ${featuredClip.title}`}
+                fill
+                quality={84}
+                sizes="(max-width: 760px) calc(100vw - 40px), 48vw"
+                src="/images/highlights/we-deserve-lan-thumbnail.webp"
+              />
+              <span className={styles.highlightShade} aria-hidden="true" />
+              <span className={styles.playSymbol} aria-hidden="true">▶</span>
+            </a>
+            <div className={styles.highlightCopy}>
+              <span className={styles.kicker}>From the video archive</span>
+              <h3>{featuredClip.title}</h3>
+              <p>Start with this Violet OP VALORANT video, or browse the rest of the archive.</p>
+              <div className={styles.highlightActions}>
+                <a className={styles.textLink} href={featuredClip.url} rel="noopener noreferrer" target="_blank">Watch Video <Arrow external /></a>
+                <Link className={styles.textLink} href="/highlights">All Highlights <Arrow /></Link>
+              </div>
             </div>
           </div>
         </section>

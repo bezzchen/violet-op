@@ -11,7 +11,7 @@ export default function Footer({ pinned = false }: FooterProps) {
         <div className={styles.identity}>
           <Link aria-label="Violet OP home" className={styles.brand} href="/">
             <BrandLogo />
-            <span>Violet OP</span>
+            <span>Violet <strong>OP</strong></span>
           </Link>
           <p>Collegiate esports and community at New York University.</p>
         </div>

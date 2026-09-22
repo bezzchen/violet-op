@@ -4,6 +4,16 @@
 .inner { display: grid; grid-template-columns: minmax(220px, 1fr) 1.6fr; gap: 70px; padding-bottom: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 12px; color: white; font-size: 22px; font-weight: 900; letter-spacing: -.05em; text-decoration: none; }
 .brand img { width: 42px; height: 42px; object-fit: contain; }
+.brand strong {
+  display: inline-block;
+  padding-inline-end: .14em;
+  margin-inline-end: -.14em;
+  background: linear-gradient(145deg, #f0c7ff 4%, #d878ff 52%, #bb43ff 96%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .identity p { max-width: 270px; margin: 22px 0 0; color: #b9b5be; font-size: 14px; line-height: 1.6; }
 .links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 .links > div { display: flex; flex-direction: column; align-items: start; gap: 15px; }
