@@ -6,6 +6,7 @@
 
 .scene {
   --reveal: -18%;
+  --reveal-canvas-height: clamp(420px, 34vw, 500px);
   position: relative;
 }
 
@@ -18,7 +19,7 @@
 
 .banner {
   position: relative;
-  height: clamp(420px, 34vw, 500px);
+  height: var(--reveal-canvas-height);
   overflow: hidden;
   isolation: isolate;
   border-bottom: 1px solid var(--site-border);
@@ -232,7 +233,7 @@
 }
 
 @media (max-width: 760px) {
-  .banner { height: clamp(330px, 72vw, 390px); }
+  .scene { --reveal-canvas-height: clamp(330px, 72vw, 390px); }
   .markWrap { top: 53%; width: clamp(145px, 39vw, 180px); }
   .networkArtwork {
     -webkit-mask-image: radial-gradient(ellipse 68% 46% at 50% 53%, transparent 0 45%, #0002 59%, #0009 82%, #000 100%);
@@ -245,7 +246,7 @@
 }
 
 @media (max-width: 420px) {
-  .banner { height: 330px; }
+  .scene { --reveal-canvas-height: 330px; }
   .markWrap { width: 148px; }
 }
 

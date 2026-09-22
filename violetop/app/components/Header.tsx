@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { CSSProperties } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { leagueTeams, valorantTeams } from "../data/siteContent";
 import BrandLogo from "./BrandLogo";
 import styles from "./Header.module.css";
@@ -33,12 +33,17 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
   const [teamsOpen, setTeamsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileTeamsOpen, setMobileTeamsOpen] = useState(false);
-  const [homeSolid, setHomeSolid] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const teamsTriggerRef = useRef<HTMLButtonElement>(null);
   const megaRef = useRef<HTMLDivElement>(null);
   const mobileTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileTeamsTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileNavRef = useRef<HTMLElement>(null);
+  const brandMarkRef = useRef<HTMLSpanElement>(null);
+  const brandOpRef = useRef<HTMLElement>(null);
+  const desktopJoinRef = useRef<HTMLAnchorElement>(null);
+  const mobileJoinRef = useRef<HTMLAnchorElement>(null);
 
   const closeMenus = useCallback(() => {
     setTeamsOpen(false);
@@ -85,44 +90,111 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
     return () => breakpoint.removeEventListener("change", closeMenus);
   }, [closeMenus]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isHomeHeader) return;
 
-    const updateSurface = () => {
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+
+    const applySurface = () => {
       const hero = document.getElementById("hero-section");
-      const headerHeight = window.matchMedia("(max-width: 900px)").matches ? 64 : 72;
-      setHomeSolid(!hero || hero.getBoundingClientRect().bottom <= headerHeight);
+      const header = headerRef.current;
+      const inner = innerRef.current;
+      if (!header || !inner) return;
+
+      const headerHeight = inner.getBoundingClientRect().height;
+      const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
+      const fadeDistance = headerHeight * 1.5;
+      const progress = motionPreference.matches
+        ? Number(heroBottom <= headerHeight)
+        : Math.min(1, Math.max(0, (headerHeight + fadeDistance - heroBottom) / fadeDistance));
+
+      header.style.setProperty("--home-surface-opacity", progress.toFixed(3));
     };
 
-    updateSurface();
+    const updateSurface = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(applySurface);
+    };
+
+    applySurface();
     window.addEventListener("scroll", updateSurface, { passive: true });
     window.addEventListener("resize", updateSurface);
+    motionPreference.addEventListener("change", updateSurface);
     return () => {
+      window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", updateSurface);
       window.removeEventListener("resize", updateSurface);
+      motionPreference.removeEventListener("change", updateSurface);
     };
   }, [isHomeHeader]);
+
+  const syncAccentGeometry = useCallback(() => {
+    if (!isHomeHeader) return;
+
+    [brandMarkRef.current, brandOpRef.current, desktopJoinRef.current, mobileJoinRef.current].forEach((element) => {
+      if (!element) return;
+      const bounds = element.getBoundingClientRect();
+      element.style.setProperty("--reveal-canvas-width", `${document.documentElement.clientWidth}px`);
+      element.style.setProperty("--reveal-mask-x", `${-bounds.left}px`);
+      element.style.setProperty("--reveal-mask-y", `${-bounds.top}px`);
+    });
+  }, [isHomeHeader]);
+
+  useLayoutEffect(() => {
+    if (!isHomeHeader) return;
+
+    const frame = window.requestAnimationFrame(syncAccentGeometry);
+    const observer = new ResizeObserver(syncAccentGeometry);
+    [brandMarkRef.current, brandOpRef.current, desktopJoinRef.current, mobileJoinRef.current].forEach((element) => {
+      if (element) observer.observe(element);
+    });
+    window.addEventListener("resize", syncAccentGeometry);
+    window.addEventListener("scroll", syncAccentGeometry, { passive: true });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("resize", syncAccentGeometry);
+      window.removeEventListener("scroll", syncAccentGeometry);
+    };
+  }, [isHomeHeader, menuOpen, mobileTeamsOpen, syncAccentGeometry]);
 
   return (
     <>
       <a className={styles.skipLink} href="#main-content">Skip to content</a>
-      <header className={`${styles.header} ${homeAnimation ? styles.homeHeader : ""} ${homeAnimation && homeSolid ? styles.homeSolid : ""}`}>
-        {homeAnimation ? (
-          <div className={`${styles.homeAccentCanvas} ${homeAnimation.wiping ? styles.homeWiping : ""}`} aria-hidden="true">
-            <div className={`${styles.homeAccentTheme} ${styles.homeAccentCurrent}`} data-theme={homeAnimation.current.name.toLowerCase()} style={homeAnimation.current.style}>
-              <span className={styles.homeAccentLogo} />
-              <span className={styles.homeAccentJoin} />
-            </div>
-            <div className={`${styles.homeAccentTheme} ${styles.homeAccentIncoming}`} data-theme={homeAnimation.incoming.name.toLowerCase()} style={homeAnimation.incoming.style}>
-              <span className={styles.homeAccentLogo} />
-              <span className={styles.homeAccentJoin} />
-            </div>
-          </div>
-        ) : null}
-        <div className={styles.inner}>
+      <header className={`${styles.header} ${homeAnimation ? styles.homeHeader : ""}`} ref={headerRef}>
+        <div className={styles.inner} ref={innerRef}>
           <Link aria-label="Violet OP home" className={styles.brand} href="/" onClick={closeMenus}>
-            <BrandLogo priority />
-            <span>Violet <strong>OP</strong></span>
+            <span className={`${styles.brandMark} ${homeAnimation?.wiping ? styles.accentWiping : ""}`} ref={brandMarkRef}>
+              <BrandLogo className={styles.brandBaseLogo} priority />
+              {homeAnimation ? (
+                <>
+                  <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentCurrent}`} style={homeAnimation.current.style}>
+                    <span className={styles.brandAccentColor} />
+                  </span>
+                  <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentIncoming}`} style={homeAnimation.incoming.style}>
+                    <span className={styles.brandAccentColor} />
+                  </span>
+                </>
+              ) : null}
+            </span>
+            <span className={styles.brandWordmark}>
+              Violet{" "}
+              <strong className={`${styles.brandOp} ${homeAnimation?.wiping ? styles.accentWiping : ""}`} ref={brandOpRef}>
+                <span className={styles.brandOpBase}>OP</span>
+                {homeAnimation ? (
+                  <>
+                    <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentCurrent}`} style={homeAnimation.current.style}>
+                      <span className={styles.brandOpColor}>OP</span>
+                    </span>
+                    <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentIncoming}`} style={homeAnimation.incoming.style}>
+                      <span className={styles.brandOpColor}>OP</span>
+                    </span>
+                  </>
+                ) : null}
+              </strong>
+            </span>
           </Link>
 
           <nav aria-label="Main navigation" className={styles.desktopNav}>
@@ -166,13 +238,24 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
           <div className={styles.actions}>
             <a
               aria-label="Join the Violet OP Discord"
-              className={styles.join}
+              className={`${styles.join} ${homeAnimation?.wiping ? styles.accentWiping : ""}`}
               href="https://discord.gg/MAmXcrkADb"
               onClick={closeMenus}
+              ref={desktopJoinRef}
               rel="noopener noreferrer"
               target="_blank"
             >
-              Discord <span aria-hidden="true">↗</span>
+              {homeAnimation ? (
+                <>
+                  <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentCurrent}`} style={homeAnimation.current.style}>
+                    <span className={styles.joinAccentColor} />
+                  </span>
+                  <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentIncoming}`} style={homeAnimation.incoming.style}>
+                    <span className={styles.joinAccentColor} />
+                  </span>
+                </>
+              ) : null}
+              <span className={styles.joinLabel}>Discord <span aria-hidden="true">↗</span></span>
             </a>
             <button
               aria-controls="mobile-navigation"
@@ -221,19 +304,24 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
           <Link aria-current={pathname === "/join-us" ? "page" : undefined} className={styles.mobilePageLink} href="/join-us" onClick={closeMenus}>Join Us</Link>
           <a
             aria-label="Join the Violet OP Discord"
-            className={`${styles.mobileJoin} ${homeAnimation?.wiping ? styles.mobileJoinWiping : ""}`}
+            className={`${styles.mobileJoin} ${homeAnimation?.wiping ? styles.accentWiping : ""}`}
             href="https://discord.gg/MAmXcrkADb"
             onClick={closeMenus}
+            ref={mobileJoinRef}
             rel="noopener noreferrer"
             target="_blank"
           >
             {homeAnimation ? (
               <>
-                <span aria-hidden="true" className={`${styles.mobileJoinPalette} ${styles.mobileJoinCurrent}`} style={homeAnimation.current.style} />
-                <span aria-hidden="true" className={`${styles.mobileJoinPalette} ${styles.mobileJoinIncoming}`} style={homeAnimation.incoming.style} />
-                <span className={styles.mobileJoinLabel}>Discord ↗</span>
+                <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentCurrent}`} style={homeAnimation.current.style}>
+                  <span className={styles.joinAccentColor} />
+                </span>
+                <span aria-hidden="true" className={`${styles.accentLayer} ${styles.accentIncoming}`} style={homeAnimation.incoming.style}>
+                  <span className={styles.joinAccentColor} />
+                </span>
               </>
-            ) : "Discord ↗"}
+            ) : null}
+            <span className={styles.joinLabel}>Discord <span aria-hidden="true">↗</span></span>
           </a>
         </nav>
       </header>

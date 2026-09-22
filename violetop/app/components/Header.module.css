@@ -4,6 +4,8 @@
 }
 .skipLink:focus { top: 12px; }
 .header {
+  --header-bar-height: 72px;
+  --home-surface-opacity: 0;
   position: fixed; inset: 0 0 auto; z-index: 100;
   border-bottom: 1px solid var(--site-border); background: #100d18f5; color: var(--site-text);
 }
@@ -12,54 +14,58 @@
   display: flex; width: min(100% - 48px, 1440px); height: 72px;
   align-items: center; gap: clamp(26px, 3vw, 50px); margin: auto;
 }
-.homeHeader:not(.homeSolid) {
+.homeHeader {
   border-bottom-color: transparent;
   background: transparent;
   box-shadow: none;
 }
-.homeHeader:not(.homeSolid) .brand img { opacity: 0; }
-.homeHeader:not(.homeSolid) .brand strong { color: #f3eff6; }
-.homeHeader:not(.homeSolid) .join { position: relative; background: transparent; }
-.homeHeader:not(.homeSolid) .mobileJoin { background: transparent; }
-.homeHeader:not(.homeSolid) :is(.brand, .desktopNav > a, .teamsTrigger) {
+.homeHeader::before,
+.homeHeader::after {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  width: 100%;
+  content: "";
+  opacity: var(--home-surface-opacity);
+  pointer-events: none;
+  transition: opacity 90ms linear;
+  will-change: opacity;
+}
+.homeHeader::before {
+  top: 0;
+  height: var(--header-bar-height);
+  background: #100d18f5;
+}
+.homeHeader::after {
+  top: calc(var(--header-bar-height) - 1px);
+  height: 1px;
+  background: var(--site-border);
+}
+.homeHeader .brandBaseLogo { opacity: 0; }
+.homeHeader .brandOpBase { opacity: 0; }
+.homeHeader .join { position: relative; background: transparent; }
+.homeHeader .mobileJoin { background: transparent; }
+.homeHeader :is(.brand, .desktopNav > a, .teamsTrigger) {
   text-shadow: 0 1px 8px #000, 0 0 18px #000b;
 }
-.homeSolid { background: #100d18f5; box-shadow: 0 10px 28px #0008; }
-.homeSolid .homeAccentCanvas,
-.homeSolid .mobileJoinPalette { display: none; }
-.homeAccentCanvas {
+.accentLayer {
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   inset: 0;
-  overflow: hidden;
+  display: block;
   pointer-events: none;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: var(--reveal-canvas-width, 100vw) var(--reveal-canvas-height, 500px);
+  -webkit-mask-position: var(--reveal-mask-x, 0) var(--reveal-mask-y, 0);
+  mask-repeat: no-repeat;
+  mask-size: var(--reveal-canvas-width, 100vw) var(--reveal-canvas-height, 500px);
+  mask-position: var(--reveal-mask-x, 0) var(--reveal-mask-y, 0);
 }
-.homeAccentTheme { position: absolute; inset: 0; pointer-events: none; }
-.homeAccentLogo,
-.homeAccentJoin { position: absolute; display: block; }
-.homeAccentLogo {
-  top: 15px;
-  left: max(24px, calc((100vw - 1440px) / 2));
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(145deg, var(--mark-start) 4%, var(--mark-mid) 52%, var(--mark-end) 96%);
-  filter: drop-shadow(0 0 8px var(--aura));
-  -webkit-mask: url("/images/vop-logo.png") center / contain no-repeat;
-  mask: url("/images/vop-logo.png") center / contain no-repeat;
-}
-.homeAccentJoin {
-  top: 14px;
-  right: max(24px, calc((100vw - 1440px) / 2));
-  width: 128px;
-  height: 44px;
-  background: var(--button-bg);
-  box-shadow: 0 0 18px var(--button-glow);
-}
-.homeAccentIncoming {
+.accentIncoming {
   -webkit-mask-image: linear-gradient(108deg, #000 0%, #000 calc(var(--reveal) - 2.5%), #0008 var(--reveal), transparent calc(var(--reveal) + 2.5%), transparent 100%);
   mask-image: linear-gradient(108deg, #000 0%, #000 calc(var(--reveal) - 2.5%), #0008 var(--reveal), transparent calc(var(--reveal) + 2.5%), transparent 100%);
 }
-.homeWiping .homeAccentCurrent {
+.accentWiping .accentCurrent {
   -webkit-mask-image: linear-gradient(108deg, transparent 0%, transparent calc(var(--reveal) - 2.5%), #0008 var(--reveal), #000 calc(var(--reveal) + 2.5%), #000 100%);
   mask-image: linear-gradient(108deg, transparent 0%, transparent calc(var(--reveal) - 2.5%), #0008 var(--reveal), #000 calc(var(--reveal) + 2.5%), #000 100%);
 }
@@ -68,8 +74,37 @@
   color: inherit; text-decoration: none; font-size: 18px; font-weight: 800;
   letter-spacing: -.05em; white-space: nowrap;
 }
-.brand img { width: 42px; height: 42px; object-fit: contain; }
-.brand strong { color: #bd96ed; }
+.brandMark {
+  position: relative;
+  display: block;
+  width: 42px;
+  height: 42px;
+  flex: none;
+}
+.brandBaseLogo { display: block; width: 100%; height: 100%; object-fit: contain; }
+.brandAccentColor {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, var(--mark-start) 4%, var(--mark-mid) 52%, var(--mark-end) 96%);
+  filter: drop-shadow(0 0 8px var(--aura));
+  -webkit-mask: url("/images/vop-logo.png") center / contain no-repeat;
+  mask: url("/images/vop-logo.png") center / contain no-repeat;
+}
+.brandWordmark { display: inline-block; }
+.brandOp {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+.brandOpBase,
+.brandOpColor {
+  display: block;
+  background: linear-gradient(145deg, var(--mark-start, #7100c7) 4%, var(--mark-mid, #a800f0) 52%, var(--mark-end, #cc35ff) 96%);
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .desktopNav { display: flex; align-items: center; gap: clamp(22px, 2.5vw, 40px); }
 .desktopNav > a, .teamsTrigger {
   display: inline-flex; min-height: 44px; align-items: center; gap: 8px;
@@ -88,30 +123,23 @@
 .mobileTeamsTrigger[aria-expanded="true"] .chevron { transform: rotate(180deg); }
 .actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 .join, .mobileJoin {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: inline-flex; min-height: 44px; align-items: center; justify-content: center;
-  gap: 14px; padding: 0 22px; background: #c9a8f5; color: #15101a;
+  padding: 0 22px; background: #c9a8f5; color: #15101a;
   text-decoration: none; font-size: 12px; font-weight: 900;
   letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
 }
-.mobileJoin { position: relative; overflow: hidden; }
-.mobileJoinPalette { position: absolute; inset: 0; background: var(--button-bg); pointer-events: none; }
-.mobileJoinIncoming {
-  -webkit-mask-image: linear-gradient(108deg, #000 0%, #000 calc(var(--reveal) - 2.5%), #0008 var(--reveal), transparent calc(var(--reveal) + 2.5%), transparent 100%);
-  -webkit-mask-position: -16px 0;
-  -webkit-mask-size: 100vw 100%;
-  mask-image: linear-gradient(108deg, #000 0%, #000 calc(var(--reveal) - 2.5%), #0008 var(--reveal), transparent calc(var(--reveal) + 2.5%), transparent 100%);
-  mask-position: -16px 0;
-  mask-size: 100vw 100%;
+.joinAccentColor { position: absolute; inset: 0; background: var(--button-bg); }
+.joinLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
 }
-.mobileJoinWiping .mobileJoinCurrent {
-  -webkit-mask-image: linear-gradient(108deg, transparent 0%, transparent calc(var(--reveal) - 2.5%), #0008 var(--reveal), #000 calc(var(--reveal) + 2.5%), #000 100%);
-  -webkit-mask-position: -16px 0;
-  -webkit-mask-size: 100vw 100%;
-  mask-image: linear-gradient(108deg, transparent 0%, transparent calc(var(--reveal) - 2.5%), #0008 var(--reveal), #000 calc(var(--reveal) + 2.5%), #000 100%);
-  mask-position: -16px 0;
-  mask-size: 100vw 100%;
-}
-.mobileJoinLabel { position: relative; z-index: 1; }
 .join:hover, .mobileJoin:hover { background: #e0c9ff; }
 .menuButton { display: none; width: 44px; height: 44px; border: 1px solid #66527e; background: transparent; color: white; font-size: 23px; cursor: pointer; }
 .megaMenu {
@@ -138,14 +166,13 @@
 .teamLink img { width: 30px; height: 30px; flex: none; object-fit: contain; }
 .teamLink img.darkCrest, .mobileTeamGrid img.darkCrest { padding: 3px; background: #d4cddd; }
 .teamArrow { margin-left: auto; color: #c5a7e2; }
-.mobileNav { display: none; }
+.mobileNav { position: relative; z-index: 2; display: none; }
 .header :is(a, button):focus-visible, .skipLink:focus-visible { outline: 3px solid #e6c8ff; outline-offset: 3px; }
 @media (max-width: 900px) {
+  .header { --header-bar-height: 64px; }
   .inner { width: min(100% - 32px, 1440px); height: 64px; gap: 8px; }
   .brand { font-size: 16px; }
-  .brand img { width: 38px; height: 38px; }
-  .homeAccentLogo { top: 13px; left: 16px; width: 38px; height: 38px; }
-  .homeAccentJoin { display: none; }
+  .brandMark { width: 38px; height: 38px; }
   .desktopNav, .join, .megaMenu { display: none; }
   .menuButton { display: block; }
   .mobileNav {
@@ -171,8 +198,8 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .chevron { transition: none; }
-  .homeWiping .homeAccentCurrent { -webkit-mask-image: none; mask-image: none; }
-  .homeAccentIncoming { display: none; }
-  .mobileJoinWiping .mobileJoinCurrent { -webkit-mask-image: none; mask-image: none; }
-  .mobileJoinIncoming { display: none; }
+  .homeHeader::before,
+  .homeHeader::after { transition: none; }
+  .accentWiping .accentCurrent { -webkit-mask-image: none; mask-image: none; }
+  .accentIncoming { display: none; }
 }
