@@ -41,8 +41,16 @@
   height: 1px;
   background: var(--site-border);
 }
-.homeHeader .brandBaseLogo { opacity: 0; }
-.homeHeader .brandOpBase { opacity: 0; }
+.homeHeader .brandBaseLogo,
+.homeHeader .brandOpBase {
+  opacity: var(--home-surface-opacity);
+  transition: opacity 90ms linear;
+}
+.homeHeader .brandMark > .accentLayer,
+.homeHeader .brandOp > .accentLayer {
+  opacity: calc(1 - var(--home-surface-opacity));
+  transition: opacity 90ms linear;
+}
 .homeHeader .join { position: relative; background: transparent; }
 .homeHeader .mobileJoin { background: transparent; }
 .homeHeader :is(.brand, .desktopNav > a, .teamsTrigger) {
@@ -199,7 +207,11 @@
 @media (prefers-reduced-motion: reduce) {
   .chevron { transition: none; }
   .homeHeader::before,
-  .homeHeader::after { transition: none; }
+  .homeHeader::after,
+  .homeHeader .brandBaseLogo,
+  .homeHeader .brandOpBase,
+  .homeHeader .brandMark > .accentLayer,
+  .homeHeader .brandOp > .accentLayer { transition: none; }
   .accentWiping .accentCurrent { -webkit-mask-image: none; mask-image: none; }
   .accentIncoming { display: none; }
 }
