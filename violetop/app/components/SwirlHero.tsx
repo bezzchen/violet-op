@@ -2,28 +2,32 @@
 
 import type { PaperShaderElement } from "@paper-design/shaders";
 import { Swirl } from "@paper-design/shaders-react";
+import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
-import { easeSwirlSpeed, SWIRL_BASE_SPEED, SWIRL_SPEED_EPSILON, swirlTargetSpeed } from "../utils/swirlSpeed";
+import { easeSwirlSpeed, scrollSpeedPerMs, SWIRL_BASE_SPEED, SWIRL_SPEED_EPSILON, swirlTargetSpeed } from "../utils/swirlSpeed";
 import BrandLogo from "./BrandLogo";
 import styles from "./SwirlHero.module.css";
 
 // Brand purples from deep violet to lavender; the swirl bands blend through them.
 const swirlColors = ["#2a0b4d", "#7100c7", "#a800f0", "#d9b8ff"];
-// Animation time (ms) the swirl starts from; also the still frame shown for reduced motion.
+// Animation time (ms) the swirl starts from; the still frame when reduced motion is on at load.
 const SWIRL_START_FRAME = 24_000;
 // About 1.6 megapixels. The soft bands upscale invisibly, so there's no need to shade every device pixel.
 const SWIRL_MAX_PIXELS = 1_600_000;
+// Frame length assumed for the first eased frame, before a real interval exists.
+const FALLBACK_FRAME_MS = 1000 / 60;
 
-type SpeedLoop = { frame: number; lastTime: number; speed: number; target: number };
+type SpeedLoop = { frame: number; lastTime: number; speed: number };
 
 let webgl2Supported: boolean | undefined;
 
 // Paper Shaders needs WebGL2 and throws without it, so check once before mounting.
 function supportsWebGL2() {
   if (webgl2Supported === undefined) {
-    const context = document.createElement("canvas").getContext("webgl2");
+    // Software-rendered WebGL would stutter, so those machines keep the static gradient.
+    const context = document.createElement("canvas").getContext("webgl2", { failIfMajorPerformanceCaveat: true });
     webgl2Supported = Boolean(context);
     context?.getExtension("WEBGL_lose_context")?.loseContext();
   }
@@ -38,16 +42,20 @@ export default function SwirlHero() {
   // False on the server and during hydration, so the static gradient renders first.
   const canRenderShader = useSyncExternalStore(subscribeToNothing, supportsWebGL2, withoutShader);
   const shaderRef = useRef<PaperShaderElement>(null);
-  const loopRef = useRef<SpeedLoop>({ frame: 0, lastTime: 0, speed: SWIRL_BASE_SPEED, target: SWIRL_BASE_SPEED });
+  const loopRef = useRef<SpeedLoop>({ frame: 0, lastTime: 0, speed: SWIRL_BASE_SPEED });
+  const lenisRef = useRef<Lenis | undefined>(undefined);
 
-  // Eases the shader toward the scroll-driven target speed, then stops once it settles.
+  // Eases the shader toward a speed set by the live scroll velocity, then stops once scrolling ends and it settles.
   const easeSpeed = useCallback(function step(time: number) {
     const loop = loopRef.current;
     const elapsed = loop.lastTime ? time - loop.lastTime : 0;
     loop.lastTime = time;
-    const next = easeSwirlSpeed(loop.speed, loop.target, elapsed);
-    const settled = Math.abs(loop.target - next) < SWIRL_SPEED_EPSILON;
-    loop.speed = settled ? loop.target : next;
+    // Read Lenis live: its reset() zeroes velocity without emitting a scroll event.
+    const velocity = lenisRef.current?.velocity ?? 0;
+    const target = swirlTargetSpeed(scrollSpeedPerMs(velocity, elapsed || FALLBACK_FRAME_MS));
+    const next = easeSwirlSpeed(loop.speed, target, elapsed);
+    const settled = velocity === 0 && Math.abs(target - next) < SWIRL_SPEED_EPSILON;
+    loop.speed = settled ? target : next;
     shaderRef.current?.paperShaderMount?.setSpeed(loop.speed);
 
     if (settled) {
@@ -58,15 +66,18 @@ export default function SwirlHero() {
     }
   }, []);
 
-  useLenis(
-    ({ velocity }) => {
+  const lenis = useLenis(
+    () => {
       if (prefersReducedMotion) return;
       const loop = loopRef.current;
-      loop.target = swirlTargetSpeed(velocity);
       if (!loop.frame) loop.frame = requestAnimationFrame(easeSpeed);
     },
     [prefersReducedMotion, easeSpeed],
   );
+
+  useEffect(() => {
+    lenisRef.current = lenis;
+  }, [lenis]);
 
   // Reduced motion freezes the swirl, so drop any acceleration already in flight.
   useEffect(() => {
@@ -76,7 +87,6 @@ export default function SwirlHero() {
     loop.frame = 0;
     loop.lastTime = 0;
     loop.speed = SWIRL_BASE_SPEED;
-    loop.target = SWIRL_BASE_SPEED;
   }, [prefersReducedMotion]);
 
   useEffect(() => {
