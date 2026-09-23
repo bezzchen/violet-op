@@ -89,7 +89,7 @@
 
 - **Files:** `public/images/events/{valorant-vyse, valorant-reyna, valorant-omen, valorant-clove, league-elder-dragon, league-baron-nashor}.webp`.
   - 1920px wide WebP.
-  - The VALORANT crops end at 83% of the frame to drop the vertical "VALORANT" wordmark strip, and start at 2% (Vyse, Reyna), 3.2% (Clove) or 10.5% (Omen) to clear each layout's dark left side panel.
+  - The VALORANT crops end at 83% of the frame to drop the vertical "VALORANT" wordmark strip, and start at 2% (Vyse, Reyna), 3.9% (Clove) or 10.5% (Omen) to clear each layout's dark left side panel.
   - Per-image `objectPosition` keeps each character in frame in both tall and wide crops.
 - **Provenance:** 6 entries appended to `public/images/events/sources.json`.
 

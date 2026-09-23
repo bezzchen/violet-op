@@ -80,7 +80,7 @@ export const teamEventArtwork = {
   black: {
     src: "/images/events/valorant-omen.webp",
     alt: "VALORANT artwork of Omen, VOP Black's featured agent",
-    objectPosition: "44% 24%",
+    objectPosition: "44% 8%",
   },
   ruby: {
     src: "/images/events/valorant-clove.webp",

@@ -1544,4 +1544,4 @@ Changes made during review, after the tasks above were written:
   - There are 13 tests in total.
 - The WebGL2 probe uses `failIfMajorPerformanceCaveat`.
 - The mobile support grid resets to `grid-auto-rows: auto`.
-- The Omen and Clove art is re-cropped from x 10.5% and 3.2% respectively.
+- The Omen and Clove art is re-cropped from x 10.5% and 3.9% respectively.
