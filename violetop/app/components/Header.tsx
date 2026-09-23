@@ -20,6 +20,9 @@ export type HeaderPalette = {
 };
 
 type HeaderProps = {
+  /** Sit transparently over `#hero-section`, gaining the normal surface as the hero scrolls away. */
+  overlay?: boolean;
+  /** Colorway accents driven by the stashed VopIntroBanner. Implies `overlay`. */
   homeAnimation?: {
     current: HeaderPalette;
     incoming: HeaderPalette;
@@ -27,9 +30,10 @@ type HeaderProps = {
   };
 };
 
-export default function Header({ homeAnimation }: HeaderProps = {}) {
+export default function Header({ overlay = false, homeAnimation }: HeaderProps = {}) {
   const pathname = usePathname();
-  const isHomeHeader = Boolean(homeAnimation);
+  const isOverlay = overlay || Boolean(homeAnimation);
+  const hasAccents = Boolean(homeAnimation);
   const [teamsOpen, setTeamsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileTeamsOpen, setMobileTeamsOpen] = useState(false);
@@ -91,7 +95,7 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
   }, [closeMenus]);
 
   useLayoutEffect(() => {
-    if (!isHomeHeader) return;
+    if (!isOverlay) return;
 
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
@@ -127,10 +131,10 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
       window.removeEventListener("resize", updateSurface);
       motionPreference.removeEventListener("change", updateSurface);
     };
-  }, [isHomeHeader]);
+  }, [isOverlay]);
 
   const syncAccentGeometry = useCallback(() => {
-    if (!isHomeHeader) return;
+    if (!hasAccents) return;
 
     [brandMarkRef.current, brandOpRef.current, desktopJoinRef.current, mobileJoinRef.current].forEach((element) => {
       if (!element) return;
@@ -139,10 +143,10 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
       element.style.setProperty("--reveal-mask-x", `${-bounds.left}px`);
       element.style.setProperty("--reveal-mask-y", `${-bounds.top}px`);
     });
-  }, [isHomeHeader]);
+  }, [hasAccents]);
 
   useLayoutEffect(() => {
-    if (!isHomeHeader) return;
+    if (!hasAccents) return;
 
     const frame = window.requestAnimationFrame(syncAccentGeometry);
     const observer = new ResizeObserver(syncAccentGeometry);
@@ -158,12 +162,12 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
       window.removeEventListener("resize", syncAccentGeometry);
       window.removeEventListener("scroll", syncAccentGeometry);
     };
-  }, [isHomeHeader, menuOpen, mobileTeamsOpen, syncAccentGeometry]);
+  }, [hasAccents, menuOpen, mobileTeamsOpen, syncAccentGeometry]);
 
   return (
     <>
       <a className={styles.skipLink} href="#main-content">Skip to content</a>
-      <header className={`${styles.header} ${homeAnimation ? styles.homeHeader : ""}`} ref={headerRef}>
+      <header className={`${styles.header} ${isOverlay ? styles.overlayHeader : ""} ${hasAccents ? styles.accentHeader : ""}`} ref={headerRef}>
         <div className={styles.inner} ref={innerRef}>
           <Link aria-label="Violet OP home" className={styles.brand} href="/" onClick={closeMenus}>
             <span className={`${styles.brandMark} ${homeAnimation?.wiping ? styles.accentWiping : ""}`} ref={brandMarkRef}>

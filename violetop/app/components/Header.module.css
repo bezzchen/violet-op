@@ -14,13 +14,14 @@
   display: flex; width: min(100% - 48px, 1440px); height: 72px;
   align-items: center; gap: clamp(26px, 3vw, 50px); margin: auto;
 }
-.homeHeader {
+/* Transparent over #hero-section until the hero scrolls away (Header's `overlay`). */
+.overlayHeader {
   border-bottom-color: transparent;
   background: transparent;
   box-shadow: none;
 }
-.homeHeader::before,
-.homeHeader::after {
+.overlayHeader::before,
+.overlayHeader::after {
   position: absolute;
   z-index: 0;
   left: 0;
@@ -31,32 +32,33 @@
   transition: opacity 90ms linear;
   will-change: opacity;
 }
-.homeHeader::before {
+.overlayHeader::before {
   top: 0;
   height: var(--header-bar-height);
   background: #100d18f5;
 }
-.homeHeader::after {
+.overlayHeader::after {
   top: calc(var(--header-bar-height) - 1px);
   height: 1px;
   background: var(--site-border);
 }
-.homeHeader .brandBaseLogo,
-.homeHeader .brandOpBase {
+.overlayHeader :is(.brand, .desktopNav > a, .teamsTrigger) {
+  text-shadow: 0 1px 8px #000, 0 0 18px #000b;
+}
+/* Colorway accents for the stashed VopIntroBanner replace the base logo until the hero scrolls away. */
+.accentHeader .brandBaseLogo,
+.accentHeader .brandOpBase {
   opacity: var(--home-surface-opacity);
   transition: opacity 90ms linear;
 }
-.homeHeader .brandMark > .accentLayer,
-.homeHeader .brandOp > .accentLayer,
-.homeHeader :is(.join, .mobileJoin) > .accentLayer {
+.accentHeader .brandMark > .accentLayer,
+.accentHeader .brandOp > .accentLayer,
+.accentHeader :is(.join, .mobileJoin) > .accentLayer {
   opacity: calc(1 - var(--home-surface-opacity));
   transition: opacity 90ms linear;
 }
-.homeHeader .join { position: relative; background: #c9a8f5; }
-.homeHeader .mobileJoin { background: #c9a8f5; }
-.homeHeader :is(.brand, .desktopNav > a, .teamsTrigger) {
-  text-shadow: 0 1px 8px #000, 0 0 18px #000b;
-}
+.accentHeader .join { position: relative; background: #c9a8f5; }
+.accentHeader .mobileJoin { background: #c9a8f5; }
 .accentLayer {
   position: absolute;
   z-index: 0;
@@ -215,13 +217,13 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .chevron { transition: none; }
-  .homeHeader::before,
-  .homeHeader::after,
-  .homeHeader .brandBaseLogo,
-  .homeHeader .brandOpBase,
-  .homeHeader .brandMark > .accentLayer,
-  .homeHeader .brandOp > .accentLayer,
-  .homeHeader :is(.join, .mobileJoin) > .accentLayer { transition: none; }
+  .overlayHeader::before,
+  .overlayHeader::after,
+  .accentHeader .brandBaseLogo,
+  .accentHeader .brandOpBase,
+  .accentHeader .brandMark > .accentLayer,
+  .accentHeader .brandOp > .accentLayer,
+  .accentHeader :is(.join, .mobileJoin) > .accentLayer { transition: none; }
   .accentWiping .accentCurrent { -webkit-mask-image: none; mask-image: none; }
   .accentIncoming { display: none; }
 }
