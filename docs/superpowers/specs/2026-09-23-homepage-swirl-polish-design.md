@@ -32,6 +32,7 @@
   - `overlay` (new): the transparent bar over `#hero-section` that fades to the normal surface as the hero scrolls away. This is the existing `--home-surface-opacity` logic.
   - `homeAnimation` (banner only): the colorway accent layers. It implies `overlay`.
   - The base logo and "OP" fade out only when `homeAnimation` is present. With `overlay` alone the logo is the standard solid one.
+  - The overlay's legibility `text-shadow` is not applied to "OP": on gradient-clipped text with a transparent fill, a text shadow paints over the gradient and dulls it (part of the "slightly dark" logo).
 
 ### `SwirlHero` (new client component + CSS module)
 
@@ -49,7 +50,7 @@
 - **Swirl settings (starting point, tuned visually):**
   - `colorBack #09080d`, colours drawn from the brand purples (`#2a0b4d → #7100c7 → #a800f0 → #d9b8ff`).
   - Few, soft bands: `bandCount≈3`, `softness 1`, `twist≈0.3`, light noise.
-  - Scaled up and offset so the bands sweep diagonally across the panel rather than reading as a bullseye.
+  - Tuned result: the vortex's dark eye is centred behind the mark (offset 0, scale 1.25) with the arms swirling around it. The first, off-centre sweep left the purple mark low-contrast against the purple bands.
   - Base speed ≈0.18.
 - **Performance:**
   - `minPixelRatio={1}` (the library default of 2 would supersample 1× screens) and `maxPixelCount≈1.6M`. The soft bands hide the upscaling.

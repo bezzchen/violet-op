@@ -100,11 +100,11 @@ export default function SwirlHero() {
           minPixelRatio={1}
           noise={0.16}
           noiseFrequency={0.3}
-          offsetX={-0.42}
-          offsetY={0.36}
+          offsetX={0}
+          offsetY={0}
           proportion={0.45}
           ref={shaderRef}
-          scale={1.7}
+          scale={1.25}
           softness={1}
           speed={prefersReducedMotion ? 0 : SWIRL_BASE_SPEED}
           twist={0.3}
