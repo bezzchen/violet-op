@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import LaneIcon from "../components/LaneIcon";
 import PageShell from "../components/PageShell";
+import { laneRole } from "../data/laneRoles";
 import { joinContent, siteMeta, teamPages } from "../data/siteContent";
 import styles from "./TeamProfile.module.css";
 
@@ -89,16 +91,21 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
               <span>{team.roster.length} listed members</span>
             </div>
             <div className={styles.rosterGrid}>
-              {team.roster.map((member, index) => (
-                <article className={styles.member} key={`${member.name}-${member.username}-${index}`}>
-                  <span aria-hidden="true" className={styles.avatar}>{initials(member.name)}</span>
-                  <div>
-                    <h3>{member.name}</h3>
-                    <p>{member.username}</p>
-                  </div>
-                  <span className={styles.memberRole}>{displayRole(member.role)}</span>
-                </article>
-              ))}
+              {team.roster.map((member, index) => {
+                const lane = team.game === "league" ? laneRole(member.role) : null;
+                return (
+                  <article className={styles.member} key={`${member.name}-${member.username}-${index}`}>
+                    <span aria-hidden="true" className={styles.avatar}>
+                      {lane ? <LaneIcon className={styles.laneIcon} role={lane} /> : initials(member.name)}
+                    </span>
+                    <div>
+                      <h3>{member.name}</h3>
+                      <p>{member.username}</p>
+                    </div>
+                    <span className={styles.memberRole}>{displayRole(member.role)}</span>
+                  </article>
+                );
+              })}
             </div>
 
             <div className={styles.staffSection}>

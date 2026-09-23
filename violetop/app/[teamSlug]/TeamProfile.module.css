@@ -43,6 +43,7 @@
 .rosterGrid, .staffGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .member { display: flex; align-items: center; gap: 11px; min-width: 0; min-height: 71px; padding: 11px; border: 1px solid var(--site-border); border-radius: var(--radius-md); background: var(--site-surface); }
 .avatar { display: flex; flex: 0 0 42px; width: 42px; height: 42px; border-radius: var(--radius-sm); align-items: center; justify-content: center; background: color-mix(in srgb, var(--team-accent) 25%, #292430); color: white; font-size: 14px; font-weight: 900; }
+.laneIcon { width: 24px; height: 24px; color: var(--team-accent); }
 .member > div { min-width: 0; }
 .member h3 { overflow: hidden; margin: 0 0 3px; color: white; font-size: 14px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
 .member p { overflow: hidden; margin: 0; color: #b8aebe; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
