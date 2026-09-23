@@ -1527,3 +1527,21 @@ Expected: `longTasks: 0`, and `avgFrameMs` close to the display refresh interval
 - [ ] **Step 5: Report**
 
 Summarise results to the user with the homepage screenshots (hero top, What's Happening, mobile). If Step 1–4 required fixes, list each fix and its commit.
+
+---
+
+## As built
+
+Changes made during review, after the tasks above were written:
+
+- The `test` script also passes `--disable-warning=MODULE_TYPELESS_PACKAGE_JSON`, which keeps the output free of Node's module-type notice.
+- Four filled buttons that Task 2's tables missed now use `rounded-md`: the three `op-clip … bg-primary` buttons on Join Us and the E-Board submit button.
+- `.overlayHeader .brandOp { text-shadow: none; }`: the overlay's text shadow was painting over the gradient-clipped "OP".
+- Swirl tuning settled on `offsetX={0}`, `offsetY={0}` and `scale={1.25}`, which centres the vortex's dark eye behind the mark.
+- The scroll boost is measured in px per ms:
+  - `scrollSpeedPerMs(velocityPerFrame, frameMs)` was added, and `swirlTargetSpeed` now takes px per ms (full boost at 2.88).
+  - The easing loop reads `lenis.velocity` live each frame, with non-finite guards.
+  - There are 13 tests in total.
+- The WebGL2 probe uses `failIfMajorPerformanceCaveat`.
+- The mobile support grid resets to `grid-auto-rows: auto`.
+- The Omen and Clove art is re-cropped from x 10.5% and 3.2% respectively.

@@ -36,7 +36,7 @@
 
 ### `SwirlHero` (new client component + CSS module)
 
-- **Layout:** an inset panel with a 12px margin (8px at ≤760px), radius `--radius-xl`, and height `clamp(440px, 60vh, 640px)`. `id="hero-section"`, labelled section, and the screen-reader-only `<h1>Violet OP</h1>` is kept.
+- **Layout:** an inset panel with a 12px margin (8px at ≤760px), radius `--radius-xl`, and height `clamp(440px, 60vh, 640px)` (`clamp(360px, 56vh, 520px)` at ≤760px). `id="hero-section"`, labelled section, and the screen-reader-only `<h1>Violet OP</h1>` is kept.
 - **Content:** the solid VOP mark (`BrandLogo`) centred, about `clamp(112px, 13vw, 176px)`, with a soft purple glow.
 - **Layers, bottom to top:**
   1. A static CSS gradient in the swirl colours. It covers server rendering, loading, and browsers without WebGL2.
@@ -56,11 +56,11 @@
   - `minPixelRatio={1}` (the library default of 2 would supersample 1× screens) and `maxPixelCount≈1.6M`. The soft bands hide the upscaling.
   - Paper pauses the shader automatically when it's off-screen or the tab is hidden.
 - **Scroll acceleration:**
-  - A `useLenis` scroll callback maps `|lenis.velocity|` to a target speed: `base + min(|v| × k, boost)`, reaching about 6× base.
-  - A small rAF loop runs only while easing: faster attack, roughly 1s release. It calls `setSpeed` on the mounted shader.
+  - A `useLenis` scroll callback starts a small rAF loop; each frame the loop reads `lenis.velocity` live (px per frame), converts it to px per ms with the measured frame interval (clamped 4–50 ms, so the boost is the same at 60 and 120 Hz), and maps it to a target speed `base + min(pxPerMs / 2.88, 1) × boost`, reaching about 6× base.
+  - The loop runs while Lenis reports motion and eases toward that target (faster attack, roughly 1s release), calling `setSpeed` on the mounted shader; it stops once velocity is 0 and the speed has settled.
   - No React state updates per frame.
 - **Reduced motion:** `prefers-reduced-motion: reduce` gives speed 0 (a static frame) and no acceleration. It reacts to preference changes.
-- **No WebGL2:** detected up front, the shader is not mounted, and the CSS gradient remains. Paper would otherwise throw inside an async effect.
+- **No WebGL2:** detected up front, the shader is not mounted, and the CSS gradient remains. Paper would otherwise throw inside an async effect. The probe asks for `failIfMajorPerformanceCaveat`, so machines with only software rendering also keep the gradient.
 
 ## 2. Lenis smooth scrolling
 
@@ -89,7 +89,7 @@
 
 - **Files:** `public/images/events/{valorant-vyse, valorant-reyna, valorant-omen, valorant-clove, league-elder-dragon, league-baron-nashor}.webp`.
   - 1920px wide WebP.
-  - The VALORANT crops keep x ≈ 2–83% of the frame. That drops the vertical "VALORANT" wordmark strip and re-centres the agent.
+  - The VALORANT crops end at 83% of the frame to drop the vertical "VALORANT" wordmark strip, and start at 2% (Vyse, Reyna), 3.2% (Clove) or 10.5% (Omen) to clear each layout's dark left side panel.
   - Per-image `objectPosition` keeps each character in frame in both tall and wide crops.
 - **Provenance:** 6 entries appended to `public/images/events/sources.json`.
 
@@ -98,7 +98,7 @@
 - The grid stretches (`align-items: stretch`).
 - Featured and support cards are flex columns, and their `.eventVisual` keeps `aspect-ratio: 16/9` as its base size with `flex-grow: 1`. Whichever column is taller, the other column's images grow to match.
 - Support cards share the height evenly.
-- Mobile (≤760px) stays stacked at natural size.
+- Mobile (≤760px) stays stacked at natural size (the support grid resets to `grid-auto-rows: auto`).
 
 ### Hover
 
