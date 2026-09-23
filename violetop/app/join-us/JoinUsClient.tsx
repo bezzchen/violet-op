@@ -97,7 +97,7 @@ export default function JoinUsClient() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <button
-                className="op-clip cursor-pointer bg-primary px-7 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+                className="op-clip cursor-pointer rounded-md bg-primary px-7 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
                 onClick={scrollToPaths}
                 type="button"
               >
@@ -213,7 +213,7 @@ export default function JoinUsClient() {
                                 </span>
                               ) : (
                                 <Link
-                                  className="op-clip bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary shadow-lg shadow-primary/20 transition-all hover:neon-glow-purple"
+                                  className="op-clip rounded-md bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary shadow-lg shadow-primary/20 transition-all hover:neon-glow-purple"
                                   href={path.joinHref}
                                   rel="noreferrer"
                                   target="_blank"
@@ -331,7 +331,7 @@ export default function JoinUsClient() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                className="op-clip bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+                className="op-clip rounded-md bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
                 href="/events"
               >
                 Community Events

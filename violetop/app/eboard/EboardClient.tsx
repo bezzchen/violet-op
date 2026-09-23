@@ -147,7 +147,7 @@ export default function EboardClient() {
             ) : null}
 
             <button
-              className="op-clip bg-primary-container px-6 py-3 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 disabled:opacity-60"
+              className="op-clip rounded-md bg-primary-container px-6 py-3 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 disabled:opacity-60"
               disabled={status === "checking" || !pin.trim()}
               type="submit"
             >
