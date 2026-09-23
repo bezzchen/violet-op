@@ -45,6 +45,8 @@
 .overlayHeader :is(.brand, .desktopNav > a, .teamsTrigger) {
   text-shadow: 0 1px 8px #000, 0 0 18px #000b;
 }
+/* A text shadow paints over gradient-clipped text, so "OP" keeps the same crisp gradient as every other page. */
+.overlayHeader .brandOp { text-shadow: none; }
 /* Colorway accents for the stashed VopIntroBanner replace the base logo until the hero scrolls away. */
 .accentHeader .brandBaseLogo,
 .accentHeader .brandOpBase {
