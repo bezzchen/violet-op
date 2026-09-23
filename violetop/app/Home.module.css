@@ -2,6 +2,8 @@
   --ink: var(--site-text);
   --muted: var(--site-text-muted);
   --accent: #cfaff3;
+  --card-gutter: clamp(12px, 3vw, 40px);
+  --card-gap: clamp(24px, 6vh, 64px);
   position: relative;
   z-index: 1;
   width: 100%;
@@ -51,7 +53,19 @@
 .primaryAction:hover { background: #e4cfff; }
 .secondaryAction { border: 1px solid #ffffff5c; background: transparent; color: white; }
 .secondaryAction:hover { border-color: #d7b7fc; color: #ddc4fc; }
-.section { width: min(100% - 64px, 1380px); margin: 0 auto; padding: clamp(78px, 7vw, 116px) 0; }
+/* Every section is a card over the swirl; the gaps between cards are where it shows through. */
+.section {
+  width: min(100% - 2 * var(--card-gutter), 1440px);
+  margin: 0 auto var(--card-gap);
+  padding: clamp(40px, 5vw, 72px) clamp(24px, 4.5vw, 64px);
+  border: 1px solid #ffffff12;
+  border-radius: var(--radius-xl);
+}
+.solidCard { background: #0d0a14; }
+/* Glass blurs the swirl so a ribbon reads as colour behind the text, not as an edge. */
+.glassCard, .violetCard { -webkit-backdrop-filter: blur(22px) saturate(1.15); backdrop-filter: blur(22px) saturate(1.15); }
+.glassCard { background: rgb(11 8 18 / 80%); }
+.violetCard { background: rgb(37 21 56 / 76%); }
 .sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 34px; }
 .sectionHeading h2, .communityIntro h2 {
   max-width: 800px; margin: 9px 0 0;
@@ -107,7 +121,6 @@
 .emptyEvents p { max-width: 500px; margin: 0; color: #c8c3cf; font-size: 16px; line-height: 1.55; }
 .emptyActions { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
 
-.teamsSection { padding-top: 90px; border-top: 1px solid var(--site-border); }
 .gameGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .gamePanel { position: relative; display: flex; flex-direction: column; min-height: 600px; overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-lg); isolation: isolate; }
 .valorantPanel { background: #22272d; }
@@ -129,7 +142,6 @@
 .teamLinks a:hover { border-color: #e3c6ff; background: #30263f; }
 .teamLinks img { width: 30px; height: 28px; padding: 2px; border-radius: var(--radius-sm); background: #62606b; object-fit: contain; }
 
-.pathsSection { border-top: 1px solid var(--site-border); }
 .pathList { border-top: 1px solid var(--site-border); }
 .pathRow { display: grid; grid-template-columns: 75px minmax(0, 1fr) minmax(220px, .65fr); gap: 28px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--site-border); }
 .pathNumber { padding-top: 6px; color: #bc9bdc; font-size: 14px; font-weight: 900; letter-spacing: .12em; }
@@ -138,7 +150,7 @@
 .pathAction { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-top: 5px; }
 .pathAction > span { color: #bdb7c5; font-size: 13px; line-height: 1.45; }
 
-.communitySection { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(45px, 8vw, 130px); align-items: center; border-top: 1px solid var(--site-border); }
+.communitySection { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(45px, 8vw, 130px); align-items: center; }
 .communityIntro h2 { margin-bottom: 21px; }
 .communityIntro > p:not(.eyebrow) { max-width: 570px; margin: 0 0 28px; color: var(--muted); font-size: 17px; line-height: 1.6; }
 .highlightFeature { overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-lg); background: var(--site-surface-raised); }
@@ -153,13 +165,12 @@
 .highlightFeature p { margin: 0; color: #c9c1d0; font-size: 15px; line-height: 1.5; }
 .highlightActions { display: flex; flex-wrap: wrap; gap: 18px 26px; margin-top: 24px; }
 
-.faqSection { border-top: 1px solid var(--site-border); }
 .faqList { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 50px; }
 .faqItem { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 24px; padding: 27px 0; border-top: 1px solid var(--site-border); }
 .faqItem h3 { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: -.025em; }
 .faqItem p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
 
-.closing { display: grid; grid-template-columns: 1.25fr .75fr; gap: 65px; align-items: end; padding: clamp(70px, 7vw, 114px) max(32px, calc((100vw - 1380px) / 2)); border-top: 1px solid var(--site-border); background: var(--site-surface-raised); }
+.closing { display: grid; grid-template-columns: 1.25fr .75fr; gap: 65px; align-items: end; }
 .closing h2 { margin: 14px 0 0; font-size: clamp(2.8rem, 5vw, 5.8rem); font-weight: 900; letter-spacing: -.07em; line-height: 1.02; }
 .closingActions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .closingActions p { flex-basis: 100%; max-width: 420px; margin: 0 0 14px; color: #d2c9d9; font-size: 16px; line-height: 1.55; }
@@ -178,7 +189,7 @@
   .page { padding-top: 0; }
   .page :is(section, article)[id] { scroll-margin-top: 76px; }
   .hero { height: clamp(340px, 54vh, 520px); }
-  .section { width: min(100% - 36px, 680px); padding: 74px 0; }
+  .section { padding: 36px 20px; }
   .sectionHeading { display: block; margin-bottom: 27px; }
   .sectionHeading > .textLink { margin-top: 20px; }
   .sectionLead { margin: 18px 0 0; }
@@ -189,7 +200,6 @@
   .supportEvents { grid-auto-rows: auto; gap: 12px; margin-top: 12px; }
   .emptyEvents { display: block; min-height: 0; padding: 28px; }
   .emptyActions { flex-direction: row; flex-wrap: wrap; align-items: center; margin-top: 26px; }
-  .teamsSection { padding-top: 74px; }
   .gameGrid { grid-template-columns: 1fr; gap: 14px; }
   .gamePanel { min-height: 510px; }
   .gameArt { inset: 0 0 31% 12%; }
@@ -206,7 +216,7 @@
   .highlightCopy { padding: 24px; }
   .faqList { grid-template-columns: 1fr; }
   .faqItem { grid-template-columns: 1fr; gap: 8px; padding: 22px 0; }
-  .closing { display: block; padding: 69px 22px; }
+  .closing { display: block; }
   .closing h2 { font-size: clamp(2.6rem, 10vw, 4rem); }
   .closingActions { margin-top: 28px; }
 }

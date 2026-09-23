@@ -76,7 +76,7 @@ export default async function Home() {
         </div>
       </section>
       <main className={styles.page} id="main-content" tabIndex={-1}>
-        <section aria-labelledby="events-title" className={styles.section} id="latest">
+        <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">
           <div className={styles.sectionHeading}>
             <div>
               <p className={styles.eyebrow}>On the calendar</p>
@@ -108,7 +108,7 @@ export default async function Home() {
           )}
         </section>
 
-        <section aria-labelledby="teams-title" className={`${styles.section} ${styles.teamsSection}`} id="teams">
+        <section aria-labelledby="teams-title" className={`${styles.section} ${styles.solidCard}`} id="teams">
           <div className={styles.sectionHeading}>
             <div>
               <p className={styles.eyebrow}>Meet the rosters</p>
@@ -162,7 +162,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="paths-title" className={`${styles.section} ${styles.pathsSection}`} id="get-involved">
+        <section aria-labelledby="paths-title" className={`${styles.section} ${styles.violetCard}`} id="get-involved">
           <div className={styles.sectionHeading}>
             <div>
               <p className={styles.eyebrow}>Find your place</p>
@@ -198,7 +198,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="community-title" className={`${styles.section} ${styles.communitySection}`}>
+        <section aria-labelledby="community-title" className={`${styles.section} ${styles.solidCard} ${styles.communitySection}`}>
           <div className={styles.communityIntro}>
             <p className={styles.eyebrow}>The community in motion</p>
             <h2 id="community-title">The Players Make the Moments.</h2>
@@ -235,7 +235,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="faq-title" className={`${styles.section} ${styles.faqSection}`}>
+        <section aria-labelledby="faq-title" className={`${styles.section} ${styles.glassCard}`}>
           <div className={styles.sectionHeading}>
             <div><p className={styles.eyebrow}>Good to know</p><h2 id="faq-title">A Few Common Questions.</h2></div>
           </div>
@@ -249,7 +249,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="close-title" className={styles.closing} id="cta-section">
+        <section aria-labelledby="close-title" className={`${styles.section} ${styles.solidCard} ${styles.closing}`} id="cta-section">
           <div>
             <p className={styles.eyebrow}>Your next move</p>
             <h2 id="close-title">Start with the People.<br />Find Your Place in the Game.</h2>
