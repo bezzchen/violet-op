@@ -27,7 +27,8 @@ test("the same scroll speed earns the same boost at 60 Hz and 120 Hz", () => {
 });
 
 test("frame intervals are clamped so a first frame or a stalled tab can't spike or zero the boost", () => {
-  assert.equal(scrollSpeedPerMs(48, 0), 12);
+  assert.equal(scrollSpeedPerMs(48, 0), 24);
+  assert.ok(Math.abs(scrollSpeedPerMs(8, 1000 / 360) - 2.88) < 1e-9);
   assert.equal(scrollSpeedPerMs(48, 2000), 0.96);
 });
 

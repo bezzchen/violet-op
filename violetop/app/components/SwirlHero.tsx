@@ -91,7 +91,12 @@ export default function SwirlHero() {
 
   useEffect(() => {
     const loop = loopRef.current;
-    return () => cancelAnimationFrame(loop.frame);
+    return () => {
+      cancelAnimationFrame(loop.frame);
+      // Zero the handle so a remount (Strict Mode, Fast Refresh) can start the loop again.
+      loop.frame = 0;
+      loop.lastTime = 0;
+    };
   }, []);
 
   return (

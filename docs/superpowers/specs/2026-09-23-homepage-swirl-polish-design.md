@@ -56,7 +56,7 @@
   - `minPixelRatio={1}` (the library default of 2 would supersample 1× screens) and `maxPixelCount≈1.6M`. The soft bands hide the upscaling.
   - Paper pauses the shader automatically when it's off-screen or the tab is hidden.
 - **Scroll acceleration:**
-  - A `useLenis` scroll callback starts a small rAF loop; each frame the loop reads `lenis.velocity` live (px per frame), converts it to px per ms with the measured frame interval (clamped 4–50 ms, so the boost is the same at 60 and 120 Hz), and maps it to a target speed `base + min(pxPerMs / 2.88, 1) × boost`, reaching about 6× base.
+  - A `useLenis` scroll callback starts a small rAF loop; each frame the loop reads `lenis.velocity` live (px per frame), converts it to px per ms with the measured frame interval (clamped 2–50 ms, so the boost is the same from 60 up to 360 Hz), and maps it to a target speed `base + min(pxPerMs / 2.88, 1) × boost`, reaching about 6× base.
   - The loop runs while Lenis reports motion and eases toward that target (faster attack, roughly 1s release), calling `setSpeed` on the mounted shader; it stops once velocity is 0 and the speed has settled.
   - No React state updates per frame.
 - **Reduced motion:** `prefers-reduced-motion: reduce` gives speed 0 (a static frame) and no acceleration. It reacts to preference changes.

@@ -8,7 +8,7 @@ export const SWIRL_SPEED_EPSILON = 0.002;
 // Scroll speed (px per ms) that earns the full boost: a brisk wheel flick, 48 px per frame at 60 Hz.
 const FULL_BOOST_PX_PER_MS = 2.88;
 // Frame intervals are clamped so a first frame or a stalled tab can't spike or zero the boost.
-const MIN_FRAME_MS = 4;
+const MIN_FRAME_MS = 2;
 const MAX_FRAME_MS = 50;
 // Easing time constants: quick to spin up, about a second to settle back.
 const SPIN_UP_MS = 120;
