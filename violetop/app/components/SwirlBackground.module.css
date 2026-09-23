@@ -1,0 +1,16 @@
+/* Fixed behind the homepage. Plain near-black until the first frame, so nothing flashes. */
+.canvas {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #08060d;
+  pointer-events: none;
+}
+
+/* Without WebGL: one still ribbon in the same three violets the shader mixes. */
+.canvas[data-fallback] {
+  background: linear-gradient(126deg, #08060d 0%, #08060d 34%, #291e52 46%, #8024fe 52%, #291e52 58%, #08060d 72%, #08060d 100%);
+}

@@ -1,12 +1,10 @@
-/** Resting spin speed of the homepage swirl, in Paper Shaders speed units. */
-export const SWIRL_BASE_SPEED = 0.18;
-/** Extra speed at full scroll speed; base plus boost is about six times the base. */
-export const SWIRL_MAX_BOOST = 0.9;
-/** Below this gap the eased speed snaps to its target and the easing loop stops. */
-export const SWIRL_SPEED_EPSILON = 0.002;
+/** Resting drift of the homepage swirl, in shader time units per second (violetdiabolo drifts at 3). */
+export const SWIRL_BASE_SPEED = 2;
+/** Extra drift at full scroll speed; base plus boost is four times the base, the most that still reads as motion. */
+export const SWIRL_MAX_BOOST = 6;
 
-// Scroll speed (px per ms) that earns the full boost: a brisk wheel flick, 48 px per frame at 60 Hz.
-const FULL_BOOST_PX_PER_MS = 2.88;
+// Scroll speed (px per ms) that earns the full boost: 60 px per frame at 60 Hz, as in violetdiabolo.
+const FULL_BOOST_PX_PER_MS = 3.6;
 // Frame intervals are clamped so a first frame or a stalled tab can't spike or zero the boost.
 const MIN_FRAME_MS = 2;
 const MAX_FRAME_MS = 50;
