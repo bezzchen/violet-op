@@ -180,7 +180,7 @@
   .eventDetails, .supportEvent .eventDetails { grid-template-columns: 67px minmax(0, 1fr); gap: 14px; padding: 20px; }
   .featuredEvent .eventDate strong { font-size: 46px; }
   .eventText h3 { font-size: 27px; }
-  .supportEvents { gap: 12px; margin-top: 12px; }
+  .supportEvents { grid-auto-rows: auto; gap: 12px; margin-top: 12px; }
   .emptyEvents { display: block; min-height: 0; padding: 28px; }
   .emptyActions { flex-direction: row; flex-wrap: wrap; align-items: center; margin-top: 26px; }
   .teamsSection { padding-top: 74px; }
