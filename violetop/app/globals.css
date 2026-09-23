@@ -77,6 +77,16 @@
   --text-label-caps--line-height: 16px;
 }
 
+/* Corner radius scale shared by Tailwind's rounded-* utilities and the CSS modules.
+   `static` makes Tailwind always emit these as :root variables. */
+@theme static {
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+  --radius-2xl: 18px;
+}
+
 :root {
   --app-height: 100dvh;
   --site-bg: #09080d;

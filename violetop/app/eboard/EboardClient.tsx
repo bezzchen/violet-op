@@ -94,7 +94,7 @@ export default function EboardClient() {
     <PageShell>
       <section className="wide-page-shell relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-10 px-4 pb-12 pt-28 md:px-grid-margin">
         <div
-          className="reveal-up glass-panel section-text-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
+          className="reveal-up glass-panel section-text-panel op-clip rounded-lg border-l-4 border-l-tertiary p-6 md:p-stack-xl"
           style={revealDelay(0)}
         >
           <span className="font-label-caps text-label-caps uppercase text-tertiary">
@@ -129,7 +129,7 @@ export default function EboardClient() {
 
             <input
               autoComplete="off"
-              className="w-full rounded border border-outline-variant bg-surface-container-lowest px-4 py-3 text-center font-label-caps text-headline-md tracking-[0.5em] text-white outline-none transition-colors focus:border-primary"
+              className="w-full rounded-md border border-outline-variant bg-surface-container-lowest px-4 py-3 text-center font-label-caps text-headline-md tracking-[0.5em] text-white outline-none transition-colors focus:border-primary"
               disabled={status === "checking"}
               id="eboard-pin"
               inputMode="numeric"

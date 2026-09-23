@@ -21,7 +21,7 @@ export default function EventsClient({ events, error }: EventsClientProps) {
       <section className="wide-page-shell relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-10 px-4 pb-12 pt-28 md:px-grid-margin">
         <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1fr]">
           <div
-            className="reveal-up relative aspect-[4/3] overflow-hidden rounded border border-white/10 bg-surface-container-lowest shadow-2xl"
+            className="reveal-up relative aspect-[4/3] overflow-hidden rounded-lg border border-white/10 bg-surface-container-lowest shadow-2xl"
             style={revealDelay(0)}
           >
             <Image
@@ -36,7 +36,7 @@ export default function EventsClient({ events, error }: EventsClientProps) {
           </div>
 
           <div
-            className="reveal-up glass-panel section-text-panel op-clip border-r-4 border-r-tertiary p-6 text-right md:p-stack-xl"
+            className="reveal-up glass-panel section-text-panel op-clip rounded-lg border-r-4 border-r-tertiary p-6 text-right md:p-stack-xl"
             style={revealDelay(1)}
           >
             <span className="font-label-caps text-label-caps uppercase text-tertiary">

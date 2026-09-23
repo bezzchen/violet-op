@@ -104,7 +104,7 @@ export default function JoinUsClient() {
                 Choose Your Path
               </button>
               <Link
-                className="op-clip border border-white/25 px-7 py-4 font-label-caps text-label-caps uppercase text-white transition-colors hover:border-primary hover:text-primary"
+                className="op-clip rounded-md border border-white/25 px-7 py-4 font-label-caps text-label-caps uppercase text-white transition-colors hover:border-primary hover:text-primary"
                 href="/highlights"
               >
                 Watch Highlights
@@ -157,7 +157,7 @@ export default function JoinUsClient() {
                           style={delay(sectionIndex * 4 + index + 1)}
                         >
                           <article
-                            className={`join-path-card clip-card glass-panel flex h-full flex-col gap-6 rounded border p-6 md:p-7 ${
+                            className={`join-path-card clip-card glass-panel flex h-full flex-col gap-6 rounded-lg border p-6 md:p-7 ${
                               path.filled ? "join-card-filled" : "border-white/10"
                             }`}
                           >
@@ -208,7 +208,7 @@ export default function JoinUsClient() {
 
                             <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
                               {path.filled ? (
-                                <span className="op-clip border border-white/20 bg-white/5 px-5 py-3 font-label-caps text-label-caps uppercase text-on-surface-variant">
+                                <span className="op-clip rounded-md border border-white/20 bg-white/5 px-5 py-3 font-label-caps text-label-caps uppercase text-on-surface-variant">
                                   Applications closed
                                 </span>
                               ) : (
@@ -241,7 +241,7 @@ export default function JoinUsClient() {
         </section>
 
         <section className="grid scroll-mt-24 gap-8 lg:grid-cols-[0.9fr_1.1fr]" id="staff-roles">
-          <div className="reveal-up glass-panel section-text-panel op-clip border-r-4 border-r-tertiary p-6 md:p-stack-xl">
+          <div className="reveal-up glass-panel section-text-panel op-clip rounded-lg border-r-4 border-r-tertiary p-6 md:p-stack-xl">
             <span className="font-label-caps text-label-caps uppercase text-tertiary">
               Not a Player?
             </span>
@@ -258,7 +258,7 @@ export default function JoinUsClient() {
               const team = teamForRole(role.name);
               const card = (
                 <article
-                  className={`join-role-card clip-card glass-panel flex h-full items-center gap-4 rounded border p-5 ${
+                  className={`join-role-card clip-card glass-panel flex h-full items-center gap-4 rounded-lg border p-5 ${
                     role.filled ? "join-card-filled" : "border-white/10"
                   }`}
                 >
@@ -304,7 +304,7 @@ export default function JoinUsClient() {
           <div className="grid gap-4 md:grid-cols-3">
             {joinContent.faqs.map((faq, index) => (
               <div className="reveal-up" key={faq.question} style={delay(index)}>
-                <article className="clip-card glass-panel flex h-full flex-col gap-4 rounded border border-white/10 p-6">
+                <article className="clip-card glass-panel flex h-full flex-col gap-4 rounded-lg border border-white/10 p-6">
                   <h3 className="font-headline-md text-lg font-bold text-primary">
                     {faq.question}
                   </h3>
@@ -337,7 +337,7 @@ export default function JoinUsClient() {
                 Community Events
               </Link>
               <Link
-                className="op-clip border border-white/25 px-8 py-4 font-label-caps text-label-caps uppercase text-white transition-colors hover:border-primary hover:text-primary"
+                className="op-clip rounded-md border border-white/25 px-8 py-4 font-label-caps text-label-caps uppercase text-white transition-colors hover:border-primary hover:text-primary"
                 href="/about-us"
               >
                 Meet the Team

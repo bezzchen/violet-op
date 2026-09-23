@@ -3,7 +3,7 @@
 .gameNav { display: flex; gap: 28px; padding: 29px 0; border-bottom: 1px solid var(--site-border); }
 .gameNav a { color: #c5b5d0; font-size: 12px; font-weight: 800; letter-spacing: .07em; text-decoration: none; }
 .gameNav a[aria-current="page"] { color: #f6f3f7; border-bottom: 2px solid #d0aef6; padding-bottom: 7px; }
-.hero { display: grid; grid-template-columns: 1.05fr .95fr; min-height: 380px; margin-top: 28px; overflow: hidden; background: var(--site-surface-raised); border: 1px solid var(--site-border); }
+.hero { display: grid; grid-template-columns: 1.05fr .95fr; min-height: 380px; margin-top: 28px; overflow: hidden; border-radius: var(--radius-xl); background: var(--site-surface-raised); border: 1px solid var(--site-border); }
 .heroCopy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(32px, 5vw, 72px); }
 .eyebrow, .tier { margin: 0; color: #caa9ed; font-size: 11px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
 .hero h1 { margin: 16px 0 20px; font-size: clamp(3.2rem, 6vw, 6rem); font-weight: 900; letter-spacing: -.07em; line-height: 1; }
@@ -19,10 +19,10 @@
 .sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
 .sectionHeading h2 { margin: 9px 0 0; font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 900; letter-spacing: -.06em; }
 .teamGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.teamCard { display: flex; flex-direction: column; align-items: flex-start; min-height: 282px; padding: 28px; border: 1px solid var(--site-border); background: var(--site-surface); color: var(--site-text); text-decoration: none; transition: border-color .18s ease, background .18s ease; }
+.teamCard { display: flex; flex-direction: column; align-items: flex-start; min-height: 282px; padding: 28px; border: 1px solid var(--site-border); border-radius: var(--radius-lg); background: var(--site-surface); color: var(--site-text); text-decoration: none; transition: border-color .18s ease, background .18s ease; }
 .teamCard:hover, .teamCard:focus-visible { border-color: #cfaff3; background: var(--site-surface-raised); }
 .teamCardTop { display: flex; align-items: start; justify-content: space-between; gap: 18px; width: 100%; margin-bottom: 22px; }
-.crest { position: relative; display: block; width: 70px; height: 68px; padding: 8px; background: #4a4551; }
+.crest { position: relative; display: block; width: 70px; height: 68px; padding: 8px; border-radius: var(--radius-md); background: #4a4551; }
 .crest img { object-fit: contain; padding: 7px; }
 .status { color: #cec4d4; font-size: 11px; font-weight: 700; text-align: right; }
 .teamCard h3 { margin: 7px 0 8px; font-size: clamp(1.7rem, 2.4vw, 2.4rem); font-weight: 850; letter-spacing: -.05em; }

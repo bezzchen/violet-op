@@ -266,7 +266,7 @@ export default function FeaturedPlayer({
           <div className="flex items-center gap-4">
             <button
               aria-pressed={!muted}
-              className="op-clip inline-flex items-center gap-2 bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary transition-all hover:neon-glow-purple"
+              className="op-clip inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary transition-all hover:neon-glow-purple"
               onClick={toggleMute}
               type="button"
             >
