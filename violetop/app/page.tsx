@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
-import VopIntroBanner from "./components/VopIntroBanner";
+import Header from "./components/Header";
+import SwirlHero from "./components/SwirlHero";
 import {
   calendarFeeds,
   eventsContent,
@@ -64,7 +65,9 @@ export default async function Home() {
 
   return (
     <>
-      <VopIntroBanner />
+      {/* The colorway banner (VopIntroBanner) is stashed; render it in place of these two to restore it. */}
+      <Header overlay />
+      <SwirlHero />
       <main className={styles.page} id="main-content" tabIndex={-1}>
         <section aria-labelledby="events-title" className={styles.section} id="latest">
           <div className={styles.sectionHeading}>
