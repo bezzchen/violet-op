@@ -3,12 +3,15 @@ export const SWIRL_TARGET_FPS = 30;
 /** Fragment work scales with pixel count, so half the linear resolution is a quarter of the work. */
 export const SWIRL_RENDER_SCALE = 0.5;
 
+/** Frame timestamps jitter around vsync, so two 60 Hz frames can add up to a hair under 1/30 s. */
+const FRAME_JITTER_SECONDS = 0.002;
+
 /**
  * Accumulates frame time and returns the seconds to render with, or 0 to skip the frame.
  * It hands back everything that accumulated, so the swirl still moves in real time.
  */
 export function createFrameCap(fps = SWIRL_TARGET_FPS) {
-  const interval = 1 / fps;
+  const interval = 1 / fps - FRAME_JITTER_SECONDS;
   let accumulated = 0;
   return (deltaSeconds: number) => {
     accumulated += deltaSeconds;
