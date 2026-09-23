@@ -208,7 +208,7 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
             >
               Teams <span aria-hidden="true" className={styles.chevron} />
             </button>
-            <div aria-label="Teams" className={styles.megaMenu} hidden={!teamsOpen} id="teams-mega-menu" ref={megaRef} role="region">
+            <div aria-label="Teams" className={styles.megaMenu} data-lenis-prevent hidden={!teamsOpen} id="teams-mega-menu" ref={megaRef} role="region">
               {gameGroups.map((group) => (
                 <section aria-label={`${group.name} teams`} className={styles.megaGroup} key={group.href}>
                   <div className={styles.gameHeading}>
@@ -271,7 +271,7 @@ export default function Header({ homeAnimation }: HeaderProps = {}) {
           </div>
         </div>
 
-        <nav aria-label="Mobile navigation" className={styles.mobileNav} hidden={!menuOpen} id="mobile-navigation" ref={mobileNavRef}>
+        <nav aria-label="Mobile navigation" className={styles.mobileNav} data-lenis-prevent hidden={!menuOpen} id="mobile-navigation" ref={mobileNavRef}>
           <button
             aria-controls="mobile-team-groups"
             aria-expanded={mobileTeamsOpen}
