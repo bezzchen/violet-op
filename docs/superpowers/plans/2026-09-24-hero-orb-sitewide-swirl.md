@@ -49,7 +49,7 @@ file /Users/bezzchen/Documents/violet-op/violetop/public/images/hero-orb.png
 wc -c < /Users/bezzchen/Documents/violet-op/violetop/public/images/hero-orb.png
 ```
 
-Expected: `PNG image data, 256 x 256, 8-bit/color RGBA, non-interlaced` and `4931`.
+Expected: `PNG image data, 256 x 256, 8-bit colormap, non-interlaced` and `4931`. It is an indexed PNG whose palette carries the transparency, and a CSS mask reads that alpha.
 
 - [ ] **Step 2: Size and orb styles** in `violetop/app/Home.module.css`. Replace:
 
