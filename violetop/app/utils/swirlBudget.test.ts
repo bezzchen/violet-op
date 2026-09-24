@@ -29,6 +29,21 @@ test("the frame cap still holds a 120 Hz display to 30 fps", () => {
   assert.deepEqual(drawn, [false, false, false, true, false, false, false, true]);
 });
 
+test("the frame cap draws every frame of a 30 Hz display, even with jitter", () => {
+  const cap = createFrameCap(30);
+  const drawn = [0.0333, 0.0334, 0.0332, 0.0333].map((delta) => cap(delta) > 0);
+  assert.deepEqual(drawn, [true, true, true, true]);
+});
+
+test("the frame cap never draws more than 30 times a second at common refresh rates", () => {
+  for (const hz of [60, 75, 90, 120, 144, 165, 240]) {
+    const cap = createFrameCap(30);
+    let draws = 0;
+    for (let frame = 0; frame < hz; frame++) if (cap(1 / hz) > 0) draws++;
+    assert.ok(draws >= 25 && draws <= 30, `${hz} Hz drew ${draws} times in a second`);
+  }
+});
+
 test("the swirl renders at half the device resolution", () => {
   assert.deepEqual(swirlRenderSize(1440, 900, 2), { width: 1440, height: 900 });
   assert.deepEqual(swirlRenderSize(390, 844, 3), { width: 585, height: 1266 });

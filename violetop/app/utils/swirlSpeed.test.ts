@@ -56,3 +56,9 @@ test("the swirl is back within 10% of its base speed a second after scrolling st
   for (let frame = 0; frame < 60; frame += 1) speed = easeSwirlSpeed(speed, SWIRL_BASE_SPEED, 1000 / 60);
   assert.ok(speed - SWIRL_BASE_SPEED < SWIRL_MAX_BOOST * 0.1);
 });
+
+test("the swirl rests at 2 units per second, gets half its boost at 1.8 px per ms and all of it at 3.6", () => {
+  assert.equal(swirlTargetSpeed(0), 2);
+  assert.equal(swirlTargetSpeed(1.8), 5);
+  assert.equal(swirlTargetSpeed(3.6), 8);
+});
