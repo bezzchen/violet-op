@@ -28,7 +28,7 @@ export default function HighlightCard({
 }) {
   const [playing, setPlaying] = useState(false);
   const [thumbSrc, setThumbSrc] = useState(
-    getThumbnailUrl(clip.id, clip.id === "Rx-xkubvrjs" ? "hqdefault" : "maxresdefault"),
+    getThumbnailUrl(clip.id, "maxresdefault"),
   );
 
   const revealStyle = { "--team-delay": `${revealDelay}ms` } as CSSProperties;
@@ -84,7 +84,7 @@ export default function HighlightCard({
       </div>
       <div className="flex items-center justify-between gap-4 border-t border-white/10 p-5">
         <div>
-          <h3 className="font-headline-md text-xl font-bold text-white">
+          <h3 className="font-headline-md text-xl font-bold uppercase text-white">
             {clip.title}
           </h3>
         </div>

@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import "lenis/dist/lenis.css";
 import "./globals.css";
-import SmoothScroll from "./components/SmoothScroll";
-import SwirlBackground from "./components/SwirlBackground";
 import { siteMeta } from "./data/siteContent";
 
 export const metadata: Metadata = {
@@ -17,11 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html className="dark" lang="en">
-      <body>
-        <SmoothScroll />
-        <SwirlBackground />
-        <div className="site-content">{children}</div>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

@@ -6,45 +6,45 @@
   --color-error: #ffb4ab;
   --color-tertiary-fixed: #ffe2ff;
   --color-inverse-on-surface: #321044;
-  --color-surface-variant: #2a2237;
-  --color-surface-container-lowest: #0d0b12;
-  --color-outline-variant: #3d324e;
-  --color-inverse-primary: #67467e;
-  --color-surface: #1b1626;
+  --color-surface-variant: #4c1b63;
+  --color-surface-container-lowest: #100017;
+  --color-outline-variant: #7f4f98;
+  --color-inverse-primary: #a100ff;
+  --color-surface: #190521;
   --color-on-secondary-fixed-variant: #8b00ef;
-  --color-tertiary-container: #68517d;
-  --color-on-background: #f5f2fa;
+  --color-tertiary-container: #9d00ff;
+  --color-on-background: #f6eaff;
   --color-on-error: #690005;
-  --color-outline: #bca8c9;
+  --color-outline: #c996df;
   --color-on-error-container: #ffdad6;
-  --color-surface-container-highest: #2a2237;
-  --color-surface-container-high: #211a2e;
+  --color-surface-container-highest: #4d1a67;
+  --color-surface-container-high: #3b1150;
   --color-on-primary-fixed: #35004d;
   --color-on-tertiary: #3d0055;
-  --color-on-primary: #1b1420;
-  --color-background: #09080d;
+  --color-on-primary: #31004a;
+  --color-background: #170020;
   --color-secondary-fixed: #f8d6ff;
-  --color-on-surface-variant: #c2b8ce;
-  --color-primary-container: #5e4370;
+  --color-on-surface-variant: #e8ccf3;
+  --color-primary-container: #9500ff;
   --color-secondary-fixed-dim: #ebadff;
   --color-primary-fixed: #f9dcff;
   --color-on-primary-fixed-variant: #8300d4;
-  --color-primary: #d0aef6;
-  --color-surface-tint: #b994d8;
-  --color-on-secondary: #211a28;
-  --color-tertiary: #c4a4e8;
-  --color-surface-dim: #09080d;
-  --color-secondary-container: #5b3c70;
+  --color-primary: #f0b8ff;
+  --color-surface-tint: #e06bff;
+  --color-on-secondary: #3a0055;
+  --color-tertiary: #ff9cff;
+  --color-surface-dim: #120019;
+  --color-secondary-container: #c000ff;
   --color-error-container: #93000a;
-  --color-surface-container: #1b1626;
-  --color-secondary: #bd9bd8;
+  --color-surface-container: #270837;
+  --color-secondary: #e086ff;
   --color-tertiary-fixed-dim: #f0a5ff;
-  --color-surface-container-low: #100d18;
-  --color-surface-bright: #30263f;
+  --color-surface-container-low: #21042e;
+  --color-surface-bright: #562070;
   --color-on-tertiary-fixed-variant: #8500c4;
   --color-primary-fixed-dim: #eda5ff;
   --color-on-secondary-fixed: #29003f;
-  --color-on-surface: #f5f2fa;
+  --color-on-surface: #fff5ff;
   --color-on-secondary-container: #ffe2ff;
   --color-on-tertiary-fixed: #320044;
   --color-inverse-surface: #f9eaff;
@@ -77,27 +77,10 @@
   --text-label-caps--line-height: 16px;
 }
 
-/* Corner radius scale shared by Tailwind's rounded-* utilities and the CSS modules.
-   `static` makes Tailwind always emit these as :root variables. */
-@theme static {
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 18px;
-  --radius-2xl: 18px;
-}
-
 :root {
   --app-height: 100dvh;
-  --site-bg: #09080d;
-  --site-bg-alt: #100d18;
-  --site-surface: #1b1626;
-  --site-surface-raised: #211a2e;
-  --site-border: #3d324e;
-  --site-text: #f5f2fa;
-  --site-text-muted: #c2b8ce;
-  background: var(--site-bg);
-  color: var(--site-text);
+  background: #170020;
+  color: #f6eaff;
 }
 
 * {
@@ -105,27 +88,17 @@
 }
 
 html {
-  background: var(--site-bg);
+  background: #170020;
   color-scheme: dark;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--site-bg);
-  color: var(--site-text);
+  background: #170020;
+  color: #f6eaff;
   font-family: "Hanken Grotesk", Inter, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
-}
-
-body::before {
-  position: fixed;
-  z-index: 0;
-  inset: 0;
-  content: "";
-  background: url("/images/flow-pattern.svg") center / cover no-repeat;
-  opacity: .16;
-  pointer-events: none;
 }
 
 button,
@@ -144,125 +117,72 @@ a {
 }
 
 .glass-panel {
-  background: var(--site-surface);
-  border: 1px solid var(--site-border);
+  background: rgba(179, 58, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(236, 181, 255, 0.2);
 }
 
 .section-text-panel {
-  background: var(--site-surface-raised);
+  background: rgba(16, 0, 23, 0.5);
 }
 
 .event-row-panel {
-  background: var(--site-surface);
-  border-color: var(--site-border);
+  background: rgba(10, 0, 18, 0.82);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-/* Legacy reveal classes remain visible without scroll-driven animation. */
+/* Scroll-triggered fade/slide-up; an IntersectionObserver toggles is-visible.
+   Used on a wrapper so card hover transforms stay independent. */
 .reveal-up {
-  opacity: 1;
-  transform: none;
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 .reveal-up.is-visible {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
 }
 
 .join-hero {
-  min-height: 22rem;
-  background: var(--site-surface);
-}
-
-.join-hero-media {
-  background:
-    radial-gradient(ellipse at 78% 50%, rgb(48 115 193 / 18%) 0%, transparent 30%),
-    radial-gradient(ellipse at 58% 58%, rgb(111 56 168 / 17%) 0%, transparent 43%),
-    linear-gradient(125deg, #100d18 0%, #0b0a11 54%, #08070c 100%);
-}
-
-.join-hero-sharp {
-  inset: 0 -1.25rem 0 auto;
-  width: min(84%, 1050px);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 11%, #000 96%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 11%, #000 96%, transparent 100%);
-}
-
-.join-hero-image {
-  object-fit: contain;
-  object-position: right bottom;
-  filter:
-    saturate(1.04)
-    contrast(1.03)
-    drop-shadow(0 0 18px rgb(52 125 223 / 28%))
-    drop-shadow(0 0 32px rgb(110 51 166 / 18%));
+  min-height: 24rem;
 }
 
 .join-hero-veil {
   background:
-    linear-gradient(96deg, #100d18 2%, #100d18fa 25%, #100d18e6 42%, #100d1899 55%, #100d1838 68%, transparent 80%),
-    linear-gradient(0deg, #100d18d9 0%, #100d1838 30%, transparent 55%);
+    linear-gradient(100deg, #160020 6%, rgba(22, 0, 32, 0.9) 27%, rgba(22, 0, 32, 0.42) 50%, rgba(22, 0, 32, 0.12) 76%, rgba(22, 0, 32, 0.5) 100%),
+    linear-gradient(0deg, #160020 1%, transparent 60%);
 }
 
 .join-cta {
-  background: var(--site-surface-raised);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(209, 76, 255, 0.28), transparent 62%),
+    rgba(16, 0, 23, 0.6);
 }
 
 .join-path-card,
 .join-role-card {
-  transition: border-color 0.18s ease, background 0.18s ease;
+  transition: border-color 0.25s ease, filter 0.25s ease, opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .join-card-filled {
-  background: #15121d;
-  border-color: var(--site-border);
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(255, 255, 255, 0.1);
+  filter: grayscale(0.82);
+  opacity: 0.58;
 }
 
 .join-card-filled:hover {
-  border-color: #66527e;
+  border-color: rgba(255, 255, 255, 0.22);
+  opacity: 0.72;
 }
 
 @media (min-width: 768px) {
   .join-hero {
-    min-height: 22rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .join-hero {
-    min-height: 0;
-  }
-
-  .join-hero-sharp {
-    inset: .25rem auto auto -9%;
-    width: 118%;
-    height: clamp(150px, 47vw, 184px);
-    -webkit-mask-image: radial-gradient(ellipse 86% 88% at 50% 43%, #000 0%, #000 72%, transparent 100%);
-    mask-image: radial-gradient(ellipse 86% 88% at 50% 43%, #000 0%, #000 72%, transparent 100%);
-  }
-
-  .join-hero-image {
-    object-position: center top;
-  }
-
-  .join-hero-veil {
-    background:
-      linear-gradient(180deg, transparent 0%, #100d180f 24%, #100d18c7 42%, #100d18 58%, #100d18 100%),
-      linear-gradient(90deg, #100d1857, transparent 35%, transparent 70%, #100d1845);
-  }
-
-  .join-hero-copy {
-    padding-top: clamp(9.75rem, 47vw, 10.75rem);
-    padding-bottom: 2rem;
-  }
-
-  .join-hero-copy > p {
-    margin-top: 1rem;
-    font-size: 1rem;
-    line-height: 1.55;
-  }
-
-  .join-hero-copy > div {
-    margin-top: 1.5rem;
+    min-height: 32rem;
   }
 }
 
@@ -275,8 +195,10 @@ a {
 }
 
 .team-reveal {
-  opacity: 1;
-  transform: none;
+  animation: team-reveal 0.7s ease forwards;
+  animation-delay: var(--team-delay, 0ms);
+  opacity: 0;
+  transform: translateY(42px);
 }
 
 .team-hero-section {
@@ -389,7 +311,7 @@ a {
 .team-info-card,
 .team-roster-card,
 .clip-card {
-  background: var(--site-surface);
+  background: rgba(10, 0, 18, 0.72);
   overflow: hidden;
   position: relative;
   transition: border-color 0.25s ease, transform 0.25s ease;
@@ -412,7 +334,8 @@ a {
 .team-info-card:hover,
 .team-roster-card:hover,
 .clip-card:hover {
-  border-color: rgba(216, 190, 240, 0.48);
+  border-color: rgba(240, 184, 255, 0.36);
+  transform: translateY(-4px);
 }
 
 .highlight-feature-glow {
@@ -420,7 +343,7 @@ a {
 }
 
 .highlight-feature-glow::before {
-  background: radial-gradient(circle at 72% 22%, rgba(147, 111, 171, 0.15), transparent 62%);
+  background: radial-gradient(circle at 72% 22%, rgba(209, 76, 255, 0.32), transparent 62%);
   content: "";
   filter: blur(38px);
   /* Vertical halo stays generous; horizontal reach is kept under the page's
@@ -437,15 +360,15 @@ a {
 }
 
 .op-clip {
-  clip-path: none;
+  clip-path: polygon(0 0, 95% 0, 100% 15%, 100% 100%, 5% 100%, 0 85%);
 }
 
 .neon-glow-purple {
-  box-shadow: none;
+  box-shadow: 0 0 28px -4px #d14cff;
 }
 
 .hover\:neon-glow-purple:hover {
-  box-shadow: none;
+  box-shadow: 0 0 28px -4px #d14cff;
 }
 
 .scroll-container {
@@ -456,19 +379,11 @@ a {
   overscroll-behavior-y: contain;
 }
 
-/* Every route renders inside this layer, above the fixed site-wide swirl (z-index 0) and in the site's
-   text colour, so pages that aren't positioned themselves, like Next's built-in 404, still paint over the
-   swirl and stay readable. */
-.site-content {
-  position: relative;
-  z-index: 1;
-  color: var(--site-text);
-}
-
-/* No background of its own: the site-wide swirl, dimmed on this page, shows through. */
 .page-scroll-container {
   min-height: 100vh;
-  overflow: visible;
+  height: var(--app-height);
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
 }
 
 .prism-canvas-background {
@@ -477,7 +392,7 @@ a {
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background: var(--site-bg);
+  background: #08000f;
   contain: paint;
 }
 
@@ -507,11 +422,11 @@ a {
 }
 
 .scroll-container::-webkit-scrollbar-track {
-  background: var(--site-bg-alt);
+  background: #170020;
 }
 
 .page-scroll-container::-webkit-scrollbar-track {
-  background: var(--site-bg-alt);
+  background: #170020;
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
@@ -975,6 +890,21 @@ a {
     min-height: calc(var(--app-height) * 0.88);
     padding-top: 4rem;
     padding-bottom: 1rem;
+  }
+
+  #hero-section {
+    min-height: var(--app-height);
+  }
+
+  #cta-section {
+    justify-content: space-between;
+    min-height: var(--app-height);
+    padding-bottom: 0;
+  }
+
+  #cta-section > div:first-child {
+    margin-bottom: auto;
+    margin-top: auto;
   }
 }
 

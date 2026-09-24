@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import BrandLogo from "./BrandLogo";
 import styles from "./Footer.module.css";
 
 type FooterProps = { pinned?: boolean };
@@ -9,9 +9,9 @@ export default function Footer({ pinned = false }: FooterProps) {
     <footer className={`${styles.footer} ${pinned ? styles.pinned : ""}`}>
       <div className={styles.inner}>
         <div className={styles.identity}>
-          <Link aria-label="Violet OP home" className={styles.brand} href="/">
-            <BrandLogo />
-            <span>Violet <strong>OP</strong></span>
+          <Link className={styles.brand} href="/">
+            <Image alt="" height={42} src="/images/logo.avif" width={42} />
+            <span>Violet OP</span>
           </Link>
           <p>Collegiate esports and community at New York University.</p>
         </div>
