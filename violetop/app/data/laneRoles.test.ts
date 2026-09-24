@@ -25,3 +25,9 @@ test("roles that are not a lane get no icon", () => {
   assert.equal(laneRole("player"), null);
   assert.equal(laneRole("sub"), null);
 });
+
+test("words that are only built-in object keys get no icon", () => {
+  assert.equal(laneRole("constructor"), null);
+  assert.equal(laneRole("__proto__"), null);
+  assert.equal(laneRole("Constructor / sub"), null);
+});
