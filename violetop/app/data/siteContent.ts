@@ -79,32 +79,51 @@ export const homeContent = {
 
 export const homeFaqs = [
   {
-    question: "Do I need to be an NYU student?",
+    question: "Do I Need to Be an NYU Student?",
     answer:
       "Violet OP is based at NYU, and the Discord and community events welcome people beyond campus. Ask the team about eligibility for a specific competitive roster.",
   },
   {
-    question: "What if I'm new to competitive play?",
+    question: "What If I'm New to Competitive Play?",
     answer:
       "There are open-rank paths alongside selective tryouts. Browse each team's requirements, or start by meeting people in Discord.",
   },
   {
-    question: "How much time does it take?",
+    question: "How Much Time Does It Take?",
     answer:
       "Commitment depends on the path. Some rosters have structured practice, while community play is more flexible. Each listing on Join Us gives the current details.",
   },
   {
-    question: "How do I join?",
+    question: "How Do I Join?",
     answer:
       "Join Discord to connect with the community. For a roster or staff role, use the open applications on Join Us; filled roles are marked there.",
   },
 ];
 
+export type MemberImage = {
+  src: string;
+  focalPoint?: string;
+  fit?: "cover" | "contain";
+};
+
+const memberImages = {
+  katelyn: { src: "/images/katelyn.avif", focalPoint: "50% 9%" },
+  logan: { src: "/images/logan.avif", focalPoint: "50% 7%" },
+  eric: { src: "/images/eric.avif", focalPoint: "50% 5%" },
+  augus: { src: "/images/augus.avif", focalPoint: "50% 8%" },
+  jessica: { src: "/images/jessica.avif", focalPoint: "50% 7%" },
+  emily: { src: "/images/emily.avif", focalPoint: "50% 8%" },
+  kuan: { src: "/images/kuan.avif", focalPoint: "50% 6%" },
+  artus: { src: "/images/artus.avif", focalPoint: "50% 7%" },
+  alston: { src: "/images/alston.avif", focalPoint: "50% 5%" },
+  ella: { src: "/images/ella.avif", focalPoint: "50% 8%" },
+} satisfies Record<string, MemberImage>;
+
 export const aboutContent = {
   title: "Who We Are",
   image: "/images/groupphoto.avif",
   paragraphs: [
-    "Violet OP is a competitive collegiate team based at New York University, bringing together a diverse group of players who share a passion for gaming.",
+    "Violet OP is a collegiate esports organization based at New York University. Its rosters span selective and open-rank competition, while events, content, and community play give players and fans ways to take part.",
     "We compete across multiple tiers of competition, ranging from high rank elite roster to open rank teams, making it easy for players of all skill levels to get involved.",
     "As a team, we're all about building a strong community, whether that's through competition, content, or just connecting people who love gaming.",
     "VOP is a space where players and fans alike can get involved, support each other, and be part of something bigger.",
@@ -114,10 +133,10 @@ export const aboutContent = {
       eyebrow: "VOP E-Board",
       heading: "Executive Leadership",
       people: [
-        { name: "Katelyn Nguyen", role: "President", image: "/images/katelyn.avif" },
-        { name: "Logan Tsai", role: "General Manager", image: "/images/logan.avif" },
-        { name: "Eric Qi", role: "Secretary", image: "/images/eric.avif" },
-        { name: "Augus Li", role: "Human Resources", image: "/images/augus.avif" },
+        { name: "Katelyn Nguyen", role: "President", image: memberImages.katelyn },
+        { name: "Logan Tsai", role: "General Manager", image: memberImages.logan },
+        { name: "Eric Qi", role: "Secretary", image: memberImages.eric },
+        { name: "Augus Li", role: "Human Resources", image: memberImages.augus },
       ],
     },
     {
@@ -126,27 +145,24 @@ export const aboutContent = {
       people: [
         {
           name: "Jessica Wang",
-          role: "Valorant Esports Leader / GC Team Manager",
-          image: "/images/jessica.avif",
+          role: "VALORANT Esports Leader / GC Team Manager",
+          image: memberImages.jessica,
         },
         {
           name: "Katelyn Nguyen",
           role: "Team Manager - Purple, Black",
-          image: "/images/katelyn.avif",
+          image: memberImages.katelyn,
         },
         {
           name: "Logan Tsai",
           role: "Team Manager - White / Coach & Analyst / Scouting Lead",
-          image: "/images/logan.avif",
+          image: memberImages.logan,
         },
         {
           name: "Emily Chen",
           role: "League of Legends Esports Leader",
-          image: "/images/emily.avif",
+          image: memberImages.emily,
         },
-        { name: "TBA", role: "League Team Managers" },
-        { name: "TBA", role: "League Coaches/Analysts" },
-        { name: "TBA", role: "League Player Recruitment/Scouting Lead" },
       ],
     },
     {
@@ -154,28 +170,26 @@ export const aboutContent = {
       heading: "Events Department",
       people: [
         { name: "Charice Huang", role: "Head of Event Coordination" },
-        { name: "Kuan Lin", role: "Event Designer/Helper", image: "/images/kuan.avif" },
+        { name: "Kuan Lin", role: "Event Designer/Helper", image: memberImages.kuan },
         {
           name: "Katelyn Nguyen",
           role: "Tournament Operations Lead",
-          image: "/images/katelyn.avif",
+          image: memberImages.katelyn,
         },
-        { name: "Logan Tsai", role: "Tournament Operations Lead", image: "/images/logan.avif" },
-        { name: "TBA", role: "Broadcast/Production Lead" },
+        { name: "Logan Tsai", role: "Tournament Operations Lead", image: memberImages.logan },
       ],
     },
     {
       eyebrow: "VOP E-Board",
       heading: "Creative Department",
       people: [
-        { name: "Emily Chen", role: "Website Leader", image: "/images/emily.avif" },
+        { name: "Emily Chen", role: "Website Leader", image: memberImages.emily },
         { name: "Barry Chen", role: "Website Leader" },
         {
           name: "Artus Yeh",
-          role: "Head of Design / Content Lead / Graphic Designer / Video Editor",
-          image: "/images/artus.avif",
+          role: "Head of Marketing / Head of Design",
+          image: memberImages.artus,
         },
-        { name: "TBA", role: "Stream Content Creators" },
       ],
     },
     {
@@ -183,19 +197,14 @@ export const aboutContent = {
       heading: "Marketing & Growth",
       people: [
         {
-          name: "Artus Yeh",
-          role: "Head of Marketing / Social Media Manager / Content Strategist",
-          image: "/images/artus.avif",
-        },
-        {
           name: "Katelyn Nguyen",
           role: "Social Media Manager / Community Discord Manager",
-          image: "/images/katelyn.avif",
+          image: memberImages.katelyn,
         },
-        { name: "Logan Tsai", role: "Social Media Manager", image: "/images/logan.avif" },
-        { name: "Eric Qi", role: "Social Media Manager", image: "/images/eric.avif" },
+        { name: "Logan Tsai", role: "Social Media Manager", image: memberImages.logan },
+        { name: "Eric Qi", role: "Social Media Manager", image: memberImages.eric },
         { name: "Nahian Sowalehin", role: "Head of Communications, Operations & Outreach" },
-        { name: "Alston Li", role: "Campus Outreach Team/Partnership", image: "/images/alston.avif" },
+        { name: "Alston Li", role: "Campus Outreach Team/Partnership", image: memberImages.alston },
       ],
     },
     {
@@ -205,7 +214,7 @@ export const aboutContent = {
         {
           name: "Ella Kaplan",
           role: "Head of Financial Planning and Budgeting",
-          image: "/images/ella.avif",
+          image: memberImages.ella,
         },
         { name: "George Zhou", role: "Fundraising Lead" },
       ],
@@ -261,6 +270,7 @@ export const joinContent = {
         "Rank: Open rank",
         "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
         "Gender eligibility: Women and marginalized genders",
+        "Participation: Open to media and events on or off campus",
         "Commitment: Medium/Flexible",
       ],
     },
@@ -325,17 +335,17 @@ export const joinContent = {
   ],
   faqs: [
     {
-      question: "Do I have to be an NYU student?",
+      question: "Do I Have to Be an NYU Student?",
       answer:
         "Violet OP is based at NYU, and the broader community is welcome at events and in Discord. Ask the team about eligibility for a specific competitive roster.",
     },
     {
-      question: "How do I move from Black to Purple or White?",
+      question: "How Do I Move from Black to Purple or White?",
       answer:
         "The transition from community play to our elite rosters is based on performance, attitude, and scouting.",
     },
     {
-      question: "What if I don't play the current main games?",
+      question: "What If I Don't Play the Current Main Games?",
       answer:
         "Join our Discord! We are always looking to expand our reach based on community interest.",
     },
@@ -365,7 +375,7 @@ export const eboardContent = {
 
 export const highlightsContent = {
   title: "Highlights",
-  subtitle: "VALORANT videos",
+  subtitle: "VALORANT Videos",
   intro:
     "Watch recorded Violet OP VALORANT matches and moments from the team.",
   clips: [
@@ -426,7 +436,7 @@ export const teamPages = [
     },
     requirements: [
       "Rank: Immortal 1 or higher",
-      "Commitment: Daily scrims, VOD review, tournament play",
+      "Commitment: Daily scrims, VOD reviews, LAN travel",
       "Access: Highly selective tryouts",
     ],
     paragraphs: [
@@ -518,7 +528,7 @@ export const teamPages = [
     },
     requirements: [
       "Rank: Open rank",
-      "Commitment: Flexible practice blocks",
+      "Commitment: Low / flexible practice",
       "Access: Seasonal tryouts",
     ],
     paragraphs: [
@@ -559,6 +569,8 @@ export const teamPages = [
       "Rank: Open rank",
       "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
       "Gender eligibility: Women and marginalized genders",
+      "Participation: Open to media and events on or off campus",
+      "Commitment: Medium / flexible",
       "Access: Dedicated tryout process",
     ],
     paragraphs: [

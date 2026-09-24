@@ -258,7 +258,7 @@ export default function FeaturedPlayer({
             <span className="font-label-caps text-label-caps uppercase text-primary">
               Featured
             </span>
-            <h2 className="mt-2 font-headline-md text-2xl font-bold uppercase text-white md:text-3xl">
+            <h2 className="mt-2 font-headline-md text-2xl font-bold text-white md:text-3xl">
               {clip.title}
             </h2>
           </div>
@@ -266,7 +266,7 @@ export default function FeaturedPlayer({
           <div className="flex items-center gap-4">
             <button
               aria-pressed={!muted}
-              className="op-clip inline-flex items-center gap-2 bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary transition-all hover:neon-glow-purple"
+              className="op-clip inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary transition-all hover:neon-glow-purple"
               onClick={toggleMute}
               type="button"
             >

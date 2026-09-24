@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, FormEvent } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import EventList from "../components/EventList";
 import PageShell from "../components/PageShell";
 import { eboardContent } from "../data/siteContent";
@@ -42,7 +42,6 @@ async function requestEvents(candidate: string): Promise<UnlockResult> {
 }
 
 export default function EboardClient() {
-  const scrollRef = useRef<HTMLElement | null>(null);
   const [pin, setPin] = useState("");
   const [status, setStatus] = useState<Status>("locked");
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -78,34 +77,6 @@ export default function EboardClient() {
     };
   }, [applyResult]);
 
-  // Re-runs after unlocking so the event rows added to the DOM get observed too.
-  useEffect(() => {
-    const elements = Array.from(
-      document.querySelectorAll<HTMLElement>(".reveal-up:not(.is-visible)"),
-    );
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      elements.forEach((element) => element.classList.add("is-visible"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-
-    return () => observer.disconnect();
-  }, [status, events]);
-
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -120,16 +91,16 @@ export default function EboardClient() {
   };
 
   return (
-    <PageShell scrollContainerRef={scrollRef}>
+    <PageShell>
       <section className="wide-page-shell relative mx-auto flex min-h-[var(--app-height)] w-full max-w-7xl flex-col gap-10 px-4 pb-12 pt-28 md:px-grid-margin">
         <div
-          className="reveal-up glass-panel section-text-panel op-clip border-l-4 border-l-tertiary p-6 md:p-stack-xl"
+          className="reveal-up glass-panel section-text-panel op-clip rounded-lg border-l-4 border-l-tertiary p-6 md:p-stack-xl"
           style={revealDelay(0)}
         >
           <span className="font-label-caps text-label-caps uppercase text-tertiary">
             Members Only
           </span>
-          <h1 className="mt-4 font-display-xl text-4xl font-extrabold uppercase text-white md:text-display-xl">
+          <h1 className="mt-4 font-display-xl text-4xl font-extrabold text-white md:text-display-xl">
             {eboardContent.title}
           </h1>
         </div>
@@ -158,7 +129,7 @@ export default function EboardClient() {
 
             <input
               autoComplete="off"
-              className="w-full rounded border border-outline-variant bg-surface-container-lowest px-4 py-3 text-center font-label-caps text-headline-md tracking-[0.5em] text-white outline-none transition-colors focus:border-primary"
+              className="w-full rounded-md border border-outline-variant bg-surface-container-lowest px-4 py-3 text-center font-label-caps text-headline-md tracking-[0.5em] text-white outline-none transition-colors focus:border-primary"
               disabled={status === "checking"}
               id="eboard-pin"
               inputMode="numeric"
@@ -176,7 +147,7 @@ export default function EboardClient() {
             ) : null}
 
             <button
-              className="op-clip bg-primary-container px-6 py-3 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 disabled:opacity-60"
+              className="op-clip rounded-md bg-primary-container px-6 py-3 font-label-caps text-label-nav text-white transition-all hover:brightness-110 active:scale-95 disabled:opacity-60"
               disabled={status === "checking" || !pin.trim()}
               type="submit"
             >
