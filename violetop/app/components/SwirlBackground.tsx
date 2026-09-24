@@ -53,8 +53,11 @@ export default function SwirlBackground() {
     };
     // Mobile browsers drop a backgrounded tab's GPU context. preventDefault() lets the browser
     // restore it; until then the canvas shows the still CSS ribbon.
+    // Objects from a lost context can't be deleted on the restored one, so cleanup skips them.
+    let lost = false;
     const onContextLost = (event: Event) => {
       event.preventDefault();
+      lost = true;
       gradientRef.current = null;
       canvas.dataset.fallback = "";
     };
@@ -69,7 +72,9 @@ export default function SwirlBackground() {
       canvas.removeEventListener("webglcontextlost", onContextLost);
       canvas.removeEventListener("webglcontextrestored", onContextRestored);
       gradientRef.current = null;
-      // Leaving the page frees the context now; a re-run on the same, still-attached canvas keeps it.
+      if (lost) return;
+      // Unmounting (now only a full teardown, since the swirl lives in the root layout) frees the context
+      // straight away; a re-run on the same, still-attached canvas keeps it.
       gradient.dispose({ releaseContext: !canvas.isConnected });
     };
   }, [contextGeneration]);
