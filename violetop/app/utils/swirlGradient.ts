@@ -94,7 +94,8 @@ export type SwirlGradient = {
   render(elapsedSeconds: number, rate: number): void;
   /** Sets the framebuffer size. This clears the canvas, so draw again afterwards. */
   resize(width: number, height: number): void;
-  dispose(): void;
+  /** Frees the program and buffer. `releaseContext` also hands the GPU context back; pass it once the canvas is gone. */
+  dispose(options?: { releaseContext?: boolean }): void;
 };
 
 function compileShader(gl: WebGLRenderingContext, type: number, source: string) {
@@ -169,9 +170,11 @@ export function createSwirlGradient(canvas: HTMLCanvasElement): SwirlGradient | 
       canvas.height = height;
       gl.viewport(0, 0, width, height);
     },
-    dispose() {
+    dispose({ releaseContext = false } = {}) {
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
+      // Frees the context now instead of whenever the canvas is garbage collected.
+      if (releaseContext) gl.getExtension("WEBGL_lose_context")?.loseContext();
     },
   };
 }
