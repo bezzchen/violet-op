@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <SmoothScroll />
         <SwirlBackground />
-        {children}
+        <div className="site-content">{children}</div>
       </body>
     </html>
   );

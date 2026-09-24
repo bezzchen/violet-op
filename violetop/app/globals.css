@@ -456,6 +456,15 @@ a {
   overscroll-behavior-y: contain;
 }
 
+/* Every route renders inside this layer, above the fixed site-wide swirl (z-index 0) and in the site's
+   text colour, so pages that aren't positioned themselves, like Next's built-in 404, still paint over the
+   swirl and stay readable. */
+.site-content {
+  position: relative;
+  z-index: 1;
+  color: var(--site-text);
+}
+
 /* No background of its own: the site-wide swirl, dimmed on this page, shows through. */
 .page-scroll-container {
   min-height: 100vh;
