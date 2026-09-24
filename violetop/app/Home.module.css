@@ -18,7 +18,7 @@
 .page :is(a, button):focus-visible { outline: 3px solid #e8cfff; outline-offset: 4px; }
 .page a { text-decoration: none; }
 .page :is(section, article)[id] { scroll-margin-top: 84px; }
-/* The first screen is the swirl itself: no card, just the mark over the ribbons. */
+/* The first screen is the swirl itself: no card, just the mark on its orb over the ribbons. */
 .hero { --hero-mark-width: clamp(136px, 16vw, 216px); position: relative; z-index: 1; display: grid; place-items: center; height: clamp(420px, 62vh, 680px); }
 /* The V and its orb share the hero's one grid cell; the orb comes first, so it sits underneath. */
 .heroOrb, .heroMark { grid-area: 1 / 1; }

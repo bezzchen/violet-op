@@ -1,4 +1,4 @@
-// The homepage swirl: violetdiabolo's ribbon shader (the club's sister site), ported.
+// The site-wide swirl: violetdiabolo's ribbon shader (the club's sister site), ported.
 
 const VERTEX_SHADER = `
 attribute vec2 a_position;

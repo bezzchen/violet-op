@@ -1,7 +1,7 @@
 # Hero Orb & Site-wide Swirl — Design
 
 **Date:** 2026-09-24
-**Status:** Choices made in chat; awaiting spec review
+**Status:** Approved in chat
 **App:** `violetop/` (Next.js 16.2, React 19.2, Tailwind 4, CSS modules)
 **Builds on:** `2026-09-24-swirl-background-design.md`
 
@@ -49,11 +49,12 @@
   - `.main` in `app/components/GameOverview.module.css`, used by `/teams/valorant` and `/teams/league-of-legends`.
 
   `html` and `body` keep `--site-bg` underneath the canvas.
+- **Content layer:** every route renders inside `<div className="site-content">` in `app/layout.tsx` (`position: relative; z-index: 1; color: var(--site-text)` in `app/globals.css`). Next's built-in 404 isn't positioned and sets `body{color:#000}` in light mode; without this layer the opaque fixed canvas covered it, and with it the 404 paints above the swirl in the site's text colour.
 - **Stacking, bottom to top:**
   1. The body's `flow-pattern` `::before` layer, already hidden today and left alone.
   2. The canvas (fixed, z 0).
   3. The dim layer (fixed, z 0, later in the DOM).
-  4. Page content.
+  4. Page content, inside the positioned `.site-content` layer (z 1) that `app/layout.tsx` wraps around every route.
   5. The header.
 - **Unchanged:**
   - The scroll boost, now on every page.

@@ -373,3 +373,13 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 Expected: `longTasks: 0`, `avgFrameMs` near the refresh interval (about 16.7 at 60 Hz), and `worstFrameMs` < 50.
 - [ ] **Step 3:** Reduced motion, emulated, on `/` and `/events`: one still frame and no loop. `/events` is still dimmed, with no fade on navigation.
 - [ ] **Step 4:** Report to the user with screenshots of the homepage hero with the orb, `/events`, and a team page.
+
+---
+
+## As built
+
+Changes made during review, after the tasks above were written:
+
+- The final review found every 404 page blank: Next's built-in not-found markup isn't positioned, so the fixed swirl canvas from Task 2 painted over it. `app/layout.tsx` now wraps `{children}` in `<div className="site-content">`, a `position: relative; z-index: 1; color: var(--site-text)` layer in `app/globals.css`, which also keeps the 404's text readable in light mode.
+- After a WebGL context restore, cleanup no longer deletes the lost context's objects on the restored context (which logged `INVALID_OPERATION` warnings).
+- Stale comments in `swirlGradient.ts` and `Home.module.css` now describe the site-wide swirl and the orb.
