@@ -3,7 +3,6 @@ import Link from "next/link";
 import BrandLogo from "./components/BrandLogo";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import SwirlBackground from "./components/SwirlBackground";
 import {
   calendarFeeds,
   eventsContent,
@@ -66,7 +65,6 @@ export default async function Home() {
 
   return (
     <>
-      <SwirlBackground />
       {/* The colorway banner (VopIntroBanner) is stashed; render it in place of the header and hero section to restore it. */}
       <Header overlay />
       <section aria-labelledby="hero-title" className={styles.hero} id="hero-section">

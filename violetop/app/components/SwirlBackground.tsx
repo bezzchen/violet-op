@@ -2,6 +2,7 @@
 
 import type Lenis from "lenis";
 import { useLenis } from "lenis/react";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 import { createFrameCap, swirlRenderSize } from "../utils/swirlBudget";
@@ -14,7 +15,7 @@ const FALLBACK_FRAME_MS = 1000 / 60;
 // Longest step the swirl takes in one frame, so waking from a stalled tab doesn't lurch.
 const MAX_STEP_MS = 100;
 
-/** The homepage's animated backdrop: violetdiabolo's ribbons, drifting faster while the page scrolls. */
+/** The site's animated backdrop: violetdiabolo's ribbons, drifting faster while the page scrolls and dimmed on every page but the homepage. */
 export default function SwirlBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gradientRef = useRef<SwirlGradient | null>(null);
@@ -24,6 +25,8 @@ export default function SwirlBackground() {
   const [contextGeneration, setContextGeneration] = useState(0);
   const prefersReducedMotion = usePrefersReducedMotion();
   const lenis = useLenis();
+  // Every page but the homepage dims the swirl, so it stays behind their content.
+  const dimmed = usePathname() !== "/";
 
   useEffect(() => {
     lenisRef.current = lenis;
@@ -114,5 +117,10 @@ export default function SwirlBackground() {
     };
   }, [prefersReducedMotion, contextGeneration]);
 
-  return <canvas aria-hidden="true" className={styles.canvas} ref={canvasRef} />;
+  return (
+    <>
+      <canvas aria-hidden="true" className={styles.canvas} ref={canvasRef} />
+      <div aria-hidden="true" className={styles.dim} data-dimmed={dimmed ? "" : undefined} />
+    </>
+  );
 }

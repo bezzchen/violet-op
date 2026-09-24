@@ -456,10 +456,10 @@ a {
   overscroll-behavior-y: contain;
 }
 
+/* No background of its own: the site-wide swirl, dimmed on this page, shows through. */
 .page-scroll-container {
   min-height: 100vh;
   overflow: visible;
-  background: var(--site-bg);
 }
 
 .prism-canvas-background {

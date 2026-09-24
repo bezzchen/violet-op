@@ -1,4 +1,4 @@
-.main { position: relative; z-index: 1; min-height: 100vh; padding: 72px 0 90px; background: var(--site-bg); color: var(--site-text); }
+.main { position: relative; z-index: 1; min-height: 100vh; padding: 72px 0 90px; color: var(--site-text); }
 .wrap { width: min(100% - 48px, 1380px); margin: 0 auto; }
 .gameNav { display: flex; gap: 28px; padding: 29px 0; border-bottom: 1px solid var(--site-border); }
 .gameNav a { color: #c5b5d0; font-size: 12px; font-weight: 800; letter-spacing: .07em; text-decoration: none; }
