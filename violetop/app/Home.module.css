@@ -19,8 +19,12 @@
 .page a { text-decoration: none; }
 .page :is(section, article)[id] { scroll-margin-top: 84px; }
 /* The first screen is the swirl itself: no card, just the mark over the ribbons. */
-.hero { position: relative; z-index: 1; display: grid; place-items: center; height: clamp(420px, 62vh, 680px); }
-.heroMark { width: clamp(112px, 13vw, 176px); aspect-ratio: 896 / 802; filter: drop-shadow(0 0 30px #8024ff99) drop-shadow(0 12px 28px #000000b3); }
+.hero { --hero-mark-width: clamp(136px, 16vw, 216px); position: relative; z-index: 1; display: grid; place-items: center; height: clamp(420px, 62vh, 680px); }
+/* The V and its orb share the hero's one grid cell; the orb comes first, so it sits underneath. */
+.heroOrb, .heroMark { grid-area: 1 / 1; }
+/* Riot's orb as a mask, filled with the swirl's deep colour at 70%: dark enough that the V never blends into a ribbon, while the ribbons still show faintly through it and its open slit. */
+.heroOrb { width: calc(var(--hero-mark-width) * 1.42); aspect-ratio: 1; background: rgb(8 6 13 / 70%); -webkit-mask: url("/images/hero-orb.png") center / contain no-repeat; mask: url("/images/hero-orb.png") center / contain no-repeat; }
+.heroMark { width: var(--hero-mark-width); aspect-ratio: 896 / 802; filter: drop-shadow(0 0 30px #8024ff99) drop-shadow(0 12px 28px #000000b3); }
 .heroMarkImage { display: block; width: 100%; height: 100%; object-fit: contain; }
 .screenReaderOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 .eyebrow, .kicker {

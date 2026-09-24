@@ -71,6 +71,7 @@ export default async function Home() {
       <Header overlay />
       <section aria-labelledby="hero-title" className={styles.hero} id="hero-section">
         <h1 className={styles.screenReaderOnly} id="hero-title">Violet OP</h1>
+        <span aria-hidden="true" className={styles.heroOrb} />
         <div aria-hidden="true" className={styles.heroMark}>
           <BrandLogo className={styles.heroMarkImage} priority />
         </div>
