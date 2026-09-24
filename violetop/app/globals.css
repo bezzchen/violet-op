@@ -967,17 +967,6 @@ a {
     padding-top: 4rem;
     padding-bottom: 1rem;
   }
-
-  #cta-section {
-    justify-content: space-between;
-    min-height: var(--app-height);
-    padding-bottom: 0;
-  }
-
-  #cta-section > div:first-child {
-    margin-bottom: auto;
-    margin-top: auto;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
