@@ -32,6 +32,10 @@ type HeaderProps = {
 
 export default function Header({ overlay = false, homeAnimation }: HeaderProps = {}) {
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  const joinHref = isHome ? "/join-us" : "https://discord.gg/MAmXcrkADb";
+  const joinLabel = isHome ? "Join Us" : "Discord";
+  const joinAccessibleLabel = isHome ? "Join Violet OP" : "Join the Violet OP Discord";
   const isOverlay = overlay || Boolean(homeAnimation);
   const hasAccents = Boolean(homeAnimation);
   const [teamsOpen, setTeamsOpen] = useState(false);
@@ -236,18 +240,18 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
             </div>
             <Link aria-current={pathname === "/events" ? "page" : undefined} href="/events" onClick={closeMenus}>Events</Link>
             <Link aria-current={pathname === "/about-us" ? "page" : undefined} href="/about-us" onClick={closeMenus}>About</Link>
-            <Link aria-current={pathname === "/join-us" ? "page" : undefined} href="/join-us" onClick={closeMenus}>Join Us</Link>
+            {!isHome ? <Link aria-current={pathname === "/join-us" ? "page" : undefined} href="/join-us" onClick={closeMenus}>Join Us</Link> : null}
           </nav>
 
           <div className={styles.actions}>
-            <a
-              aria-label="Join the Violet OP Discord"
+            <Link
+              aria-label={joinAccessibleLabel}
               className={`${styles.join} ${homeAnimation?.wiping ? styles.accentWiping : ""}`}
-              href="https://discord.gg/MAmXcrkADb"
+              href={joinHref}
               onClick={closeMenus}
               ref={desktopJoinRef}
-              rel="noopener noreferrer"
-              target="_blank"
+              rel={isHome ? undefined : "noopener noreferrer"}
+              target={isHome ? undefined : "_blank"}
             >
               {homeAnimation ? (
                 <>
@@ -259,8 +263,8 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
                   </span>
                 </>
               ) : null}
-              <span className={styles.joinLabel}>Discord <span aria-hidden="true">↗</span></span>
-            </a>
+              <span className={styles.joinLabel}>{joinLabel} <span aria-hidden="true">{isHome ? "→" : "↗"}</span></span>
+            </Link>
             <button
               aria-controls="mobile-navigation"
               aria-expanded={menuOpen}
@@ -305,15 +309,15 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
           </div>
           <Link aria-current={pathname === "/events" ? "page" : undefined} className={styles.mobilePageLink} href="/events" onClick={closeMenus}>Events</Link>
           <Link aria-current={pathname === "/about-us" ? "page" : undefined} className={styles.mobilePageLink} href="/about-us" onClick={closeMenus}>About</Link>
-          <Link aria-current={pathname === "/join-us" ? "page" : undefined} className={styles.mobilePageLink} href="/join-us" onClick={closeMenus}>Join Us</Link>
-          <a
-            aria-label="Join the Violet OP Discord"
+          {!isHome ? <Link aria-current={pathname === "/join-us" ? "page" : undefined} className={styles.mobilePageLink} href="/join-us" onClick={closeMenus}>Join Us</Link> : null}
+          <Link
+            aria-label={joinAccessibleLabel}
             className={`${styles.mobileJoin} ${homeAnimation?.wiping ? styles.accentWiping : ""}`}
-            href="https://discord.gg/MAmXcrkADb"
+            href={joinHref}
             onClick={closeMenus}
             ref={mobileJoinRef}
-            rel="noopener noreferrer"
-            target="_blank"
+            rel={isHome ? undefined : "noopener noreferrer"}
+            target={isHome ? undefined : "_blank"}
           >
             {homeAnimation ? (
               <>
@@ -325,8 +329,8 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
                 </span>
               </>
             ) : null}
-            <span className={styles.joinLabel}>Discord <span aria-hidden="true">↗</span></span>
-          </a>
+            <span className={styles.joinLabel}>{joinLabel} <span aria-hidden="true">{isHome ? "→" : "↗"}</span></span>
+          </Link>
         </nav>
       </header>
     </>
