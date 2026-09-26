@@ -1,0 +1,82 @@
+{
+  "retrieved": "2026-09-26",
+  "processing": "Original photographs, EXIF orientation applied, resized and encoded as WebP. No generated images or retouched faces. Drive originals and permissions unchanged.",
+  "photos": [
+    {
+      "asset": "level-up-valorant-group-1920.webp",
+      "original_file": "IMG_0163.JPG",
+      "drive_file_id": "1J1bJgWy78zpT6PCsW8a837ANowHvFKCD",
+      "source_url": "https://drive.google.com/file/d/1J1bJgWy78zpT6PCsW8a837ANowHvFKCD/view",
+      "folder_url": "https://drive.google.com/drive/folders/1fNa6t8xGgbT948JzjHFH-RGT4NlxdTXE",
+      "caption": "LEVEL UP! VALORANT \u00b7 September 20",
+      "caption_basis": "Source event folder label; year intentionally omitted. No individual identities asserted.",
+      "original_size": [
+        3520,
+        1980
+      ],
+      "asset_size": [
+        1920,
+        1080
+      ],
+      "original_sha256": "8f24d09fccd7895fa73f952fc17b80247a180c986335dc8b70adb4ae4bdb7a8f",
+      "optimized_bytes": 219316
+    },
+    {
+      "asset": "vct-americas-watch-party-1920.webp",
+      "original_file": "IMG_9348.jpg",
+      "drive_file_id": "1xjsmdrzt6CIfUjnU5GAayY7Hlcv4Wgts",
+      "source_url": "https://drive.google.com/file/d/1xjsmdrzt6CIfUjnU5GAayY7Hlcv4Wgts/view",
+      "folder_url": "https://drive.google.com/drive/folders/1MOQIqtZA3OaRIRZNGBdZHo0yJpBQaOnM",
+      "caption": "VCT Americas Watch Party \u00b7 September 6",
+      "caption_basis": "Source event folder label; year intentionally omitted. No individual identities asserted.",
+      "original_size": [
+        3672,
+        2066
+      ],
+      "asset_size": [
+        1920,
+        1080
+      ],
+      "original_sha256": "e85877704e5beee3c387191c65beee3b4672f7e08625f08df259c97f47c0f0a8",
+      "optimized_bytes": 244834
+    },
+    {
+      "asset": "level-up-league-play-1920.webp",
+      "original_file": "IMG_8310.HEIC",
+      "drive_file_id": "1XnEs5xk_YevxyKe2L6e3oM1_oAHV7HaQ",
+      "source_url": "https://drive.google.com/file/d/1XnEs5xk_YevxyKe2L6e3oM1_oAHV7HaQ/view",
+      "folder_url": "https://drive.google.com/drive/folders/1MR3fpChyKVCCEZfnLOSNvl9ADxIrhkNf",
+      "caption": "LEVEL UP! \u00b7 September 13",
+      "caption_basis": "Source event folder label; year intentionally omitted. No individual identities asserted.",
+      "original_size": [
+        4284,
+        5712
+      ],
+      "asset_size": [
+        1920,
+        2560
+      ],
+      "original_sha256": "427dc4490e6a57db89bed716596f616bc8ad619adc42054693e17ebee9c65d6c",
+      "optimized_bytes": 435870
+    },
+    {
+      "asset": "level-up-valorant-gameplay-1920.webp",
+      "original_file": "IMG_8424.HEIC",
+      "drive_file_id": "1JvjfaCqOrH-8SZE17QusqGBc5xx62Os0",
+      "source_url": "https://drive.google.com/file/d/1JvjfaCqOrH-8SZE17QusqGBc5xx62Os0/view",
+      "folder_url": "https://drive.google.com/drive/folders/1fNa6t8xGgbT948JzjHFH-RGT4NlxdTXE",
+      "caption": "LEVEL UP! VALORANT \u00b7 September 20",
+      "caption_basis": "Source event folder label; year intentionally omitted. No individual identities asserted.",
+      "original_size": [
+        4284,
+        5712
+      ],
+      "asset_size": [
+        1920,
+        2560
+      ],
+      "original_sha256": "9ed0b8824b0457c05d7476c6b99a22d9b3e260ff4b5d0bd7888886ce2f9cfa06",
+      "optimized_bytes": 509002
+    }
+  ]
+}

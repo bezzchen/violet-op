@@ -1,0 +1,35 @@
+.page { width: min(100% - 48px, 1352px); margin: auto; padding: 110px 0 64px; }
+.page :is(a, button, [tabindex]):focus-visible { outline: 3px solid #e8cfff; outline-offset: 4px; }
+.heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.heading h1 { margin: 8px 0 0; font-size: clamp(40px, 5vw, 72px); font-weight: 900; letter-spacing: -.06em; line-height: 1.05; }
+.eyebrow { color: #cfaff3; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.calendarLink { display: inline-flex; min-height: 44px; align-items: center; gap: 14px; color: #e2c8fa; font-size: 13px; font-weight: 800; text-decoration: none; }
+.calendarLink:hover { text-decoration: underline; text-underline-offset: 4px; }
+.carousel { border: 1px solid var(--site-border); background: var(--site-bg-alt); }
+.figure { margin: 0; }
+.photoFrame { position: relative; aspect-ratio: 2.5; overflow: hidden; background: #100d18; touch-action: pan-y pinch-zoom; }
+.photo { object-fit: cover; }
+.captionBar { display: flex; min-height: 90px; justify-content: space-between; align-items: center; gap: 20px; padding: 16px 24px; border-top: 1px solid var(--site-border); }
+.captionBar p { margin: 6px 0 0; font-size: 15px; color: var(--site-text); }
+.controls { display: flex; flex-shrink: 0; align-items: center; gap: 10px; }
+.controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #766186; background: transparent; color: white; font-size: 22px; cursor: pointer; }
+.controls button:hover { background: var(--site-surface-raised); border-color: #cfaff3; }
+.count { width: 38px; text-align: center; color: var(--site-text-muted); font-size: 11px; }
+.columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 24px; margin-top: 40px; }
+.column { min-width: 0; }
+.column h2, .unclassified h2 { margin: 0 0 10px; font-size: clamp(26px, 2.6vw, 36px); font-weight: 850; letter-spacing: -.045em; }
+.columnIntro { margin: 0 0 24px; color: var(--site-text-muted); font-size: 15px; line-height: 1.6; }
+.unclassified { margin-top: 40px; border-top: 1px solid var(--site-border); padding-top: 28px; }
+.unclassified > p { max-width: 740px; color: var(--site-text-muted); line-height: 1.6; margin-bottom: 24px; }
+.status { padding: 20px; border: 1px solid var(--site-border); background: var(--site-surface); }
+@media (max-width: 760px) {
+  .page { width: calc(100% - 32px); padding-top: 92px; }
+  .heading { display: block; }
+  .calendarLink { margin-top: 14px; }
+  .photoFrame { aspect-ratio: 16 / 9; }
+  .captionBar { min-height: 104px; align-items: start; padding: 16px; gap: 12px; }
+  .captionBar p { font-size: 13px; line-height: 1.5; }
+  .controls { gap: 6px; }
+  .count { display: none; }
+  .columns { grid-template-columns: 1fr; gap: 36px; margin-top: 30px; }
+}

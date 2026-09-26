@@ -10,9 +10,9 @@
   pointer-events: none;
 }
 
-/* Without WebGL: one still ribbon in the same three violets the shader mixes. */
+/* Without WebGL: the same still ribbon with the shader's muted violet palette. */
 .canvas[data-fallback] {
-  background: linear-gradient(126deg, #08060d 0%, #08060d 34%, #291e52 46%, #8024fe 52%, #291e52 58%, #08060d 72%, #08060d 100%);
+  background: linear-gradient(126deg, #08060d 0%, #08060d 34%, #120d1b 46%, #1a1028 52%, #120d1b 58%, #08060d 72%, #08060d 100%);
 }
 
 /* Other pages dim the swirl so it stays a backdrop; the homepage shows it at full strength. */

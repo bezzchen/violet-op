@@ -186,7 +186,7 @@ export default function JoinUsClient() {
                                   </h4>
                                 </div>
                               </div>
-                              <span className="shrink-0 rounded-full border border-white/15 px-3 py-1 font-label-caps text-[10px] uppercase text-on-surface-variant">
+                              <span className="shrink-0 rounded-none border border-white/15 px-3 py-1 font-label-caps text-[10px] uppercase text-on-surface-variant">
                                 {path.filled ? "Filled" : "Open"}
                               </span>
                             </div>

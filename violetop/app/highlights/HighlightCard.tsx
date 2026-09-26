@@ -73,7 +73,7 @@ export default function HighlightCard({
             <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent transition-colors duration-300 group-hover/play:from-black/60" />
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary/90 text-on-primary shadow-lg transition-all duration-300 group-hover/play:scale-110 group-hover/play:neon-glow-purple"
+              className="pointer-events-none absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-none bg-primary/90 text-on-primary shadow-lg transition-all duration-300 group-hover/play:scale-110 group-hover/play:neon-glow-purple"
             >
               <svg className="ml-1 h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />

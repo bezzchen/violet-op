@@ -1,12 +1,12 @@
 .wrap { width: min(100% - 48px, 1380px); margin: 0 auto; padding: 104px 0 100px; }
-.intro { display: grid; grid-template-columns: 1.08fr .92fr; min-height: 360px; overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-xl); background: var(--site-surface-raised); }
+.intro { display: grid; grid-template-columns: 1.08fr .92fr; min-height: 360px; overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-xl); background: var(--site-surface); }
 .introCopy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(34px, 5vw, 74px); }
 .eyebrow { margin: 0; color: #caa9ed; font-size: 11px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
 .intro h1 { margin: 17px 0 19px; color: white; font-size: clamp(3.25rem, 6vw, 6rem); font-weight: 900; letter-spacing: -.07em; line-height: 1; }
 .introCopy > p:not(.eyebrow) { max-width: 550px; margin: 0; color: #d7cfdc; font-size: 17px; line-height: 1.55; }
-.introPhoto { position: relative; min-height: 350px; overflow: hidden; background: #25222a; }
+.introPhoto { position: relative; min-height: 350px; overflow: hidden; background: var(--site-surface); }
 .introPhoto img { object-fit: cover; object-position: center 70%; }
-.introPhoto::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, #211a2e70, transparent 45%); pointer-events: none; }
+.introPhoto::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, color-mix(in srgb, var(--site-surface) 44%, transparent), transparent 45%); pointer-events: none; }
 .directory { margin-top: 80px; }
 .sectionHeading { margin-bottom: 30px; }
 .sectionHeading h2 { margin: 9px 0 12px; color: white; font-size: clamp(2.5rem, 4.6vw, 4.5rem); font-weight: 900; letter-spacing: -.065em; }

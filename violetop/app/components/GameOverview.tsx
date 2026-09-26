@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "./Footer";
 import Header from "./Header";
+import { HomeGameArtwork, HomeGameLogo } from "./HomeGameArtwork";
 import { joinContent, leagueTeams, valorantTeams } from "../data/siteContent";
 import styles from "./GameOverview.module.css";
 
@@ -25,15 +26,15 @@ export default function GameOverview({ game }: { game: Game }) {
             <Link aria-current={!isValorant ? "page" : undefined} href="/teams/league-of-legends">League of Legends</Link>
           </nav>
 
-          <section aria-labelledby="game-title" className={styles.hero}>
+          <section aria-labelledby="game-title" className={styles.hero} data-game={game}>
             <div className={styles.heroCopy}>
               <p className={styles.eyebrow}>Violet OP / Teams</p>
-              <h1 id="game-title">{title}</h1>
+              <h1 className={styles.gameTitle} id="game-title"><span className="sr-only">{title}</span><HomeGameLogo game={game} /></h1>
               <p>{description}</p>
               <Link className={styles.secondaryLink} href="/#teams">← All Teams</Link>
             </div>
-            <div className={`${styles.heroArt} ${isValorant ? styles.valorantArt : styles.leagueArt}`}>
-              <Image alt="" fill priority quality={75} sizes="(max-width: 760px) 100vw, 43vw" src={isValorant ? "/images/jettfull.webp" : "/images/ahri.avif"} />
+            <div className={styles.heroArt}>
+              <HomeGameArtwork alignment={isValorant ? "xMidYMid" : "xMaxYMid"} game={game} />
             </div>
           </section>
 

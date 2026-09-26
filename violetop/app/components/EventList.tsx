@@ -8,6 +8,7 @@ type EventListProps = {
   error?: string | null;
   emptyMessage?: string;
   startDelayIndex?: number;
+  compact?: boolean;
 };
 
 const revealDelay = (index: number) =>
@@ -29,6 +30,7 @@ export default function EventList({
   error = null,
   emptyMessage = "No upcoming events on the calendar right now. Check back soon.",
   startDelayIndex = 0,
+  compact = false,
 }: EventListProps) {
   if (error) {
     return (
@@ -49,7 +51,7 @@ export default function EventList({
 
         return (
             <article
-              className="reveal-up glass-panel event-row-panel grid overflow-hidden rounded-lg md:grid-cols-[minmax(240px,340px)_1fr]"
+              className={`reveal-up glass-panel event-row-panel grid overflow-hidden rounded-lg ${compact ? "" : "md:grid-cols-[minmax(240px,340px)_1fr]"}`}
               key={event.id}
               style={revealDelay(startDelayIndex + index)}
             >
@@ -59,13 +61,13 @@ export default function EventList({
                   className="object-cover"
                   fill
                   quality={82}
-                  sizes="(max-width: 767px) calc(100vw - 40px), 340px"
+                  sizes={compact ? "(max-width: 760px) calc(100vw - 32px), 45vw" : "(max-width: 767px) calc(100vw - 40px), 340px"}
                   src={artwork.src}
                   style={{ objectPosition: artwork.objectPosition }}
                 />
               </div>
 
-              <div className="flex min-w-0 flex-col gap-5 px-6 py-6 sm:flex-row sm:items-center sm:gap-7 md:px-8 md:py-7">
+              <div className={`flex min-w-0 flex-col gap-5 px-6 py-6 ${compact ? "xl:flex-row xl:items-center xl:gap-4" : "sm:flex-row sm:items-center sm:gap-7 md:px-8 md:py-7"}`}>
                 <div className="flex shrink-0 items-center gap-6">
                   <div className="w-16 shrink-0 text-center">
                     <span className="block font-label-caps text-label-caps font-bold uppercase text-primary">
@@ -82,17 +84,16 @@ export default function EventList({
                   <h3 className="font-headline-md text-2xl font-bold text-white">
                     {event.title}
                   </h3>
-                  <p className="mt-1 font-body-md text-body-lg text-on-surface-variant/70">
-                    {event.time}
-                  </p>
+                  <time className="mt-1 block font-body-md text-body-lg text-on-surface-variant" dateTime={event.startsAt}>{event.time}</time>
                   {event.location ? (
-                    <p className="mt-1 font-body-md text-body-md text-on-surface-variant/50">
+                    <p className="mt-1 font-body-md text-body-md text-on-surface-variant">
                       {event.location}
                     </p>
                   ) : null}
+                  {event.url && /^https?:\/\//i.test(event.url) ? <a className="mt-3 inline-block text-primary underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4" href={event.url} rel="noopener noreferrer" target="_blank">Event details ↗</a> : null}
                 </div>
 
-                <span className="inline-flex self-start rounded-full bg-primary-fixed px-4 py-1.5 font-headline-md text-base font-bold text-on-primary-fixed sm:self-center">
+                <span className={`inline-flex self-start rounded-none bg-primary-fixed px-4 py-1.5 font-headline-md text-base font-bold text-on-primary-fixed ${compact ? "xl:self-center" : "sm:self-center"}`}>
                   {event.weekday}
                 </span>
               </div>

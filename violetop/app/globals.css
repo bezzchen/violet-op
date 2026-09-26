@@ -80,11 +80,14 @@
 /* Corner radius scale shared by Tailwind's rounded-* utilities and the CSS modules.
    `static` makes Tailwind always emit these as :root variables. */
 @theme static {
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 18px;
-  --radius-2xl: 18px;
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
 }
 
 :root {
@@ -283,7 +286,7 @@ a {
   background:
     radial-gradient(circle at 78% 16%, rgba(209, 76, 255, 0.28), transparent 32rem),
     linear-gradient(115deg, rgba(10, 0, 18, 0.84), rgba(75, 0, 108, 0.28) 55%, rgba(10, 0, 18, 0.74));
-  clip-path: polygon(0 0, 96% 0, 100% 12%, 100% 100%, 4% 100%, 0 88%);
+  clip-path: none;
 }
 
 .team-hero-game-backdrop {
@@ -516,12 +519,12 @@ a {
 
 .scroll-container::-webkit-scrollbar-thumb {
   background: #b300ff;
-  border-radius: 10px;
+  border-radius: 0;
 }
 
 .page-scroll-container::-webkit-scrollbar-thumb {
   background: #b300ff;
-  border-radius: 10px;
+  border-radius: 0;
 }
 
 .mega-menu {

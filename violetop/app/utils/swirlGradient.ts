@@ -82,11 +82,11 @@ void main() {
 }
 `;
 
-// Near-black ground, then two violets; the shader mixes through them in this order.
+// Keep the near-black ground and blend toward restrained, dark violet ribbons.
 const PALETTE = {
   deep: [0.031, 0.024, 0.051],
-  mid: [0.322, 0.118, 0.62],
-  bright: [0.502, 0.141, 1.0],
+  mid: [18 / 255, 13 / 255, 27 / 255], // #120D1B
+  bright: [26 / 255, 16 / 255, 40 / 255], // #1A1028
 } as const;
 
 export type SwirlGradient = {

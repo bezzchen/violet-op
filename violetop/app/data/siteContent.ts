@@ -41,10 +41,10 @@ export const valorantTeams = [
   {
     name: "VOP Ruby",
     href: "/ruby",
-    tier: "Marginalized",
+    tier: "Gamechangers",
     image: "/images/red.avif",
     summary:
-      "VOP Ruby is our dedicated space for players of marginalized genders (women, non-binary, and genderqueer competitors).",
+      "VOP Ruby is our Gamechangers VALORANT roster.",
   },
 ];
 
@@ -73,8 +73,6 @@ export const homeContent = {
   eyebrow: "NYU Violet OP",
   body:
     "Based at New York University, Violet OP brings players together through VALORANT and League of Legends rosters, open-rank play, events, and creative work.",
-  join:
-    "Find a competitive roster, meet people in our community, or help make the next event happen.",
 };
 
 export const homeFaqs = [
@@ -145,7 +143,7 @@ export const aboutContent = {
       people: [
         {
           name: "Jessica Wang",
-          role: "VALORANT Esports Leader / GC Team Manager",
+          role: "VALORANT Esports Leader / Gamechangers Team Manager",
           image: memberImages.jessica,
         },
         {
@@ -177,6 +175,7 @@ export const aboutContent = {
           image: memberImages.katelyn,
         },
         { name: "Logan Tsai", role: "Tournament Operations Lead", image: memberImages.logan },
+        { name: "Chris He", role: "Dish Washer" },
       ],
     },
     {
@@ -269,7 +268,7 @@ export const joinContent = {
       details: [
         "Rank: Open rank",
         "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
-        "Gender eligibility: Women and marginalized genders",
+        "Category: Gamechangers",
         "Participation: Open to media and events on or off campus",
         "Commitment: Medium/Flexible",
       ],
@@ -553,7 +552,7 @@ export const teamPages = [
   {
     slug: "ruby",
     name: "VOP Ruby",
-    label: "Marginalized",
+    label: "Gamechangers",
     image: "/images/red.avif",
     accent: "primary",
     game: "valorant",
@@ -568,14 +567,14 @@ export const teamPages = [
     requirements: [
       "Rank: Open rank",
       "Student eligibility: Full-time NYU degree-seeking, in good academic standing",
-      "Gender eligibility: Women and marginalized genders",
+      "Category: Gamechangers",
       "Participation: Open to media and events on or off campus",
       "Commitment: Medium / flexible",
       "Access: Dedicated tryout process",
     ],
     paragraphs: [
-      "VOP Ruby is our dedicated space for players of marginalized genders (women, non-binary, and genderqueer competitors).",
-      "We are committed to fostering an inclusive, high-level competitive environment and a strong support network for gender-diverse gamers.",
+      "VOP Ruby is our Gamechangers VALORANT roster.",
+      "We support Gamechangers players with an inclusive, high-level competitive environment and a strong team support network.",
     ],
     proof:
       "Entry into VOP Ruby is strictly through a formal tryout process. If you are ready to prove your skills and grow within a dedicated community:",

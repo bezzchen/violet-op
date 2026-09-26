@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import BrandLogo from "./components/BrandLogo";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { HomeGameArtwork, HomeGameLogo } from "./components/HomeGameArtwork";
 import {
   calendarFeeds,
   eventsContent,
@@ -65,16 +65,24 @@ export default async function Home() {
 
   return (
     <>
-      {/* The colorway banner (VopIntroBanner) is stashed; render it in place of the header and hero section to restore it. */}
-      <Header overlay />
-      <section aria-labelledby="hero-title" className={styles.hero} id="hero-section">
-        <h1 className={styles.screenReaderOnly} id="hero-title">Violet OP</h1>
-        <span aria-hidden="true" className={styles.heroOrb} />
-        <div aria-hidden="true" className={styles.heroMark}>
-          <BrandLogo className={styles.heroMarkImage} priority />
-        </div>
-      </section>
+      <Header />
       <main className={styles.page} id="main-content" tabIndex={-1}>
+        <section aria-labelledby="hero-title" className={`${styles.hero} ${styles.glassCard}`} id="hero-section">
+          <div className={styles.heroContent}>
+            <p className={styles.eyebrow}>{homeContent.eyebrow}<span> / Collegiate esports</span></p>
+            <h1 id="hero-title">Play together.<br /><em>Compete together.</em></h1>
+            <p className={styles.heroIntro}>{homeContent.body}</p>
+            <div className={styles.heroActions}>
+              <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">Join Discord <Arrow external /></a>
+              <Link className={styles.secondaryAction} href="#teams">Explore Teams <Arrow /></Link>
+            </div>
+            <p className={styles.heroNote}>Competition, community, and the people who make both happen.</p>
+          </div>
+          <div className={styles.heroMedia}>
+            <Image alt="Violet OP members gathered for a community group photo" className={styles.heroPhoto} fill preload quality={85} sizes="(max-width: 900px) 100vw, 50vw" src="/images/groupphoto.avif" />
+            <div className={styles.photoCaption}><span>New York University</span></div>
+          </div>
+        </section>
         <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">
           <div className={styles.sectionHeading}>
             <div>
@@ -113,18 +121,16 @@ export default async function Home() {
               <p className={styles.eyebrow}>Meet the rosters</p>
               <h2 id="teams-title">Two Games. One Community.</h2>
             </div>
-            <p className={styles.sectionLead}>Find a team to follow, a squad to grow with, or your next place to compete.</p>
           </div>
           <div className={styles.gameGrid}>
             <article className={`${styles.gamePanel} ${styles.valorantPanel}`} id="valorant-section">
               <div className={styles.gameArt}>
-                <Image alt="" fill quality={75} sizes="(max-width: 760px) 85vw, 40vw" src="/images/jettfull.webp" />
+                <HomeGameArtwork game="valorant" />
               </div>
               <Link aria-label="Explore VALORANT teams" className={styles.gamePanelLink} href="/teams/valorant">
                 <div className={styles.gamePanelContent}>
-                  <span className={styles.kicker}>01 / Tactical shooter</span>
-                  <h3>VALORANT</h3>
-                  <p>Four rosters across competitive and open-rank pathways, including a dedicated space for marginalized-gender players.</p>
+                  <h3 className={styles.gameTitle}><span className="sr-only">VALORANT</span><HomeGameLogo game="valorant" /></h3>
+                  <p>Four rosters across competitive and open-rank pathways, including Gamechangers.</p>
                   <span className={styles.panelAction}>Explore VALORANT Teams <Arrow /></span>
                 </div>
               </Link>
@@ -139,13 +145,12 @@ export default async function Home() {
             </article>
             <article className={`${styles.gamePanel} ${styles.leaguePanel}`} id="lol-section">
               <div className={styles.gameArt}>
-                <Image alt="" fill quality={75} sizes="(max-width: 760px) 85vw, 40vw" src="/images/ahri.avif" />
+                <HomeGameArtwork game="league" />
               </div>
               <Link aria-label="Explore League of Legends teams" className={styles.gamePanelLink} href="/teams/league-of-legends">
                 <div className={styles.gamePanelContent}>
-                  <span className={styles.kicker}>02 / Multiplayer strategy</span>
-                  <h3>League of Legends</h3>
-                  <p>Meet VOP Elder and VOP Baron, our open-rank League rosters for team play, customs, and community.</p>
+                  <h3 className={styles.gameTitle}><span className="sr-only">League of Legends</span><HomeGameLogo game="league" /></h3>
+                  <p>Two League of Legends rosters for competitive and community play.</p>
                   <span className={styles.panelAction}>Explore League Teams <Arrow /></span>
                 </div>
               </Link>
@@ -156,42 +161,6 @@ export default async function Home() {
                     <span>{team.name}</span>
                   </Link>
                 ))}
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section aria-labelledby="paths-title" className={`${styles.section} ${styles.violetCard}`} id="get-involved">
-          <div className={styles.sectionHeading}>
-            <div>
-              <p className={styles.eyebrow}>Find your place</p>
-              <h2 id="paths-title">More Than One Way In.</h2>
-            </div>
-            <p className={styles.sectionLead}>{homeContent.join}</p>
-          </div>
-          <div className={styles.pathList}>
-            <article className={styles.pathRow}>
-              <span className={styles.pathNumber}>01</span>
-              <div><h3>Competitive Teams</h3><p>Try out for a VALORANT roster or join a League squad. Each listing shows its requirements and current status.</p></div>
-              <div className={styles.pathAction}>
-                <span>{openPlayerPaths.length ? `Listed as open: ${openPlayerPaths.map((path) => path.name.replace("VOP ", "")).join(", ")}` : "No player applications currently listed as open"}</span>
-                <Link className={styles.textLink} href="/join-us#player-paths">Explore roster paths <Arrow /></Link>
-              </div>
-            </article>
-            <article className={styles.pathRow}>
-              <span className={styles.pathNumber}>02</span>
-              <div><h3>Community Play</h3><p>Meet other players, follow events, and find people to queue with without starting in a formal tryout.</p></div>
-              <div className={styles.pathAction}>
-                <span>Start with the Violet OP Discord.</span>
-                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Join the community <Arrow external /></a>
-              </div>
-            </article>
-            <article className={styles.pathRow}>
-              <span className={styles.pathNumber}>03</span>
-              <div><h3>Staff & Creative</h3><p>Support the teams through coaching, events, design, content, and the work behind the scenes.</p></div>
-              <div className={styles.pathAction}>
-                <span>{openStaffExamples.length ? `Open examples: ${openStaffExamples.map((role) => role.name).join(", ")}` : "See current staff listings"}</span>
-                <Link className={styles.textLink} href="/join-us#staff-roles">See staff opportunities <Arrow /></Link>
               </div>
             </article>
           </div>
@@ -234,9 +203,44 @@ export default async function Home() {
           </div>
         </section>
 
+        <section aria-labelledby="paths-title" className={`${styles.section} ${styles.violetCard}`} id="get-involved">
+          <div className={styles.sectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>Find your place</p>
+              <h2 id="paths-title">Get Involved.</h2>
+            </div>
+          </div>
+          <div className={styles.pathList}>
+            <article className={styles.pathRow}>
+              <span className={styles.pathNumber}>01</span>
+              <div><h3>Competitive Teams</h3><p>Try out for a VALORANT roster or join a League squad. Each listing shows its requirements and current status.</p></div>
+              <div className={styles.pathAction}>
+                <span>{openPlayerPaths.length ? `Listed as open: ${openPlayerPaths.map((path) => path.name.replace("VOP ", "")).join(", ")}` : "No player applications currently listed as open"}</span>
+                <Link className={styles.textLink} href="/join-us#player-paths">Explore roster paths <Arrow /></Link>
+              </div>
+            </article>
+            <article className={styles.pathRow}>
+              <span className={styles.pathNumber}>02</span>
+              <div><h3>Community Play</h3><p>Meet other players, follow events, and find people to queue with without starting in a formal tryout.</p></div>
+              <div className={styles.pathAction}>
+                <span>Start with the Violet OP Discord.</span>
+                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Join the community <Arrow external /></a>
+              </div>
+            </article>
+            <article className={styles.pathRow}>
+              <span className={styles.pathNumber}>03</span>
+              <div><h3>Staff & Creative</h3><p>Support the teams through coaching, events, design, content, and the work behind the scenes.</p></div>
+              <div className={styles.pathAction}>
+                <span>{openStaffExamples.length ? `Open examples: ${openStaffExamples.map((role) => role.name).join(", ")}` : "See current staff listings"}</span>
+                <Link className={styles.textLink} href="/join-us#staff-roles">See staff opportunities <Arrow /></Link>
+              </div>
+            </article>
+          </div>
+        </section>
+
         <section aria-labelledby="faq-title" className={`${styles.section} ${styles.glassCard}`}>
           <div className={styles.sectionHeading}>
-            <div><p className={styles.eyebrow}>Good to know</p><h2 id="faq-title">A Few Common Questions.</h2></div>
+            <div><p className={styles.eyebrow}>Good to know</p><h2 id="faq-title">Frequently Asked Questions.</h2></div>
           </div>
           <div className={styles.faqList}>
             {homeFaqs.map((faq) => (
@@ -248,17 +252,6 @@ export default async function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="close-title" className={`${styles.section} ${styles.solidCard} ${styles.closing}`} id="cta-section">
-          <div>
-            <p className={styles.eyebrow}>Your next move</p>
-            <h2 id="close-title">Start with the People.<br />Find Your Place in the Game.</h2>
-          </div>
-          <div className={styles.closingActions}>
-            <p>Join the conversation now, or explore the current player and staff paths.</p>
-            <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">Join Discord <Arrow external /></a>
-            <Link className={styles.secondaryAction} href="/join-us">View joining paths <Arrow /></Link>
-          </div>
-        </section>
       </main>
       <Footer />
     </>

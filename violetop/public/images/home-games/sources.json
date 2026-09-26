@@ -1,0 +1,25 @@
+{
+  "description": "Supplied game artwork for the two homepage game panels. Originals are preserved; WebP delivery copies retain full source geometry. Rendering crops exclude baked-in game titles.",
+  "assets": [
+    {
+      "game": "VALORANT",
+      "source": "User attachment codex-clipboard-2e4d98f1-3980-41cf-8833-f619a9ed1244.png",
+      "original": "valorant-agents-original.png",
+      "delivery": "valorant-agents.webp",
+      "sourceDimensions": [1440, 811],
+      "artworkViewBox": [0, 0, 985, 811],
+      "separateTitle": "/images/valologo.webp",
+      "titleViewBox": [119, 251, 742, 478]
+    },
+    {
+      "game": "League of Legends",
+      "source": "User attachment codex-clipboard-1515a63c-1345-483f-b9b7-48a22922cdec.png",
+      "original": "league-champions-original.png",
+      "delivery": "league-champions.webp",
+      "sourceDimensions": [1920, 1080],
+      "artworkViewBox": [0, 0, 1435, 1080],
+      "separateTitle": "/images/lollogo.avif",
+      "titleViewBox": [29, 368, 3189, 1360]
+    }
+  ]
+}

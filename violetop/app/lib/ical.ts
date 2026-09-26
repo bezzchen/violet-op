@@ -22,6 +22,8 @@ export type CalendarEvent = {
   time: string;
   location: string | null;
   startsAt: string;
+  categories?: string[];
+  url?: string;
 };
 
 export type CalendarFeedResult = {
@@ -645,8 +647,8 @@ export function parseCalendar(
       if ((endMs ?? occurrence) < now) continue;
       if (occurrence > horizonMs) continue;
 
-      events.push(
-        toCalendarEvent(
+      events.push({
+        ...toCalendarEvent(
           occurrence,
           endMs,
           start.allDay,
@@ -655,7 +657,11 @@ export function parseCalendar(
           uid,
           calendarZone,
         ),
-      );
+        categories: allProperties(component, "CATEGORIES").flatMap((property) =>
+          property.value.split(/(?<!\\),/).map(unescapeText),
+        ),
+        url: firstProperty(component, "URL")?.value.trim() || undefined,
+      });
     }
   }
 
