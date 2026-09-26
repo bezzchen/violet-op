@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import HomeGameCard from "./components/HomeGameCard";
 import { HomeGameArtwork, HomeGameLogo } from "./components/HomeGameArtwork";
 import {
   calendarFeeds,
@@ -123,7 +124,7 @@ export default async function Home() {
             </div>
           </div>
           <div className={styles.gameGrid}>
-            <article className={`${styles.gamePanel} ${styles.valorantPanel}`} id="valorant-section">
+            <HomeGameCard className={`${styles.gamePanel} ${styles.valorantPanel}`} id="valorant-section">
               <div className={styles.gameArt}>
                 <HomeGameArtwork game="valorant" />
               </div>
@@ -142,8 +143,8 @@ export default async function Home() {
                   </Link>
                 ))}
               </div>
-            </article>
-            <article className={`${styles.gamePanel} ${styles.leaguePanel}`} id="lol-section">
+            </HomeGameCard>
+            <HomeGameCard className={`${styles.gamePanel} ${styles.leaguePanel}`} id="lol-section">
               <div className={styles.gameArt}>
                 <HomeGameArtwork game="league" />
               </div>
@@ -162,7 +163,7 @@ export default async function Home() {
                   </Link>
                 ))}
               </div>
-            </article>
+            </HomeGameCard>
           </div>
         </section>
 

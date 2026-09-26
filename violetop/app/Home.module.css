@@ -130,15 +130,18 @@
 .emptyActions { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
 
 .gameGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.gamePanel { position: relative; display: flex; flex-direction: column; min-height: 600px; overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-lg); isolation: isolate; }
+.gameCardInteraction { display: flex; min-width: 0; }
+.gamePanel { position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 600px; overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-lg); isolation: isolate; transition: transform 250ms cubic-bezier(.2, .7, .3, 1), border-color 250ms ease, box-shadow 250ms ease; }
+.gamePanel[data-hovered="true"], .gamePanel:focus-within { transform: translateY(-5px); border-color: #806595; box-shadow: 0 14px 28px -14px #000000b3; }
 .valorantPanel { background: #22272d; }
 .leaguePanel { background: #28222d; }
 .gamePanel::after { position: absolute; z-index: -1; inset: 0; content: ""; background: linear-gradient(0deg, #0d0a14 0%, #0d0a14ed 25%, #0d0a14b8 42%, #0d0a140d 75%); pointer-events: none; }
 .gamePanelLink { position: relative; z-index: 1; display: flex; flex: 1; align-items: end; width: 100%; color: white; }
-.gamePanelLink:focus-visible { outline: 3px solid #e8cfff; outline-offset: -5px; }
+.page .gamePanelLink:focus-visible { outline: 3px solid #e8cfff; outline-offset: -5px; }
 .gamePanelLink:hover .panelAction, .gamePanelLink:focus-visible .panelAction { color: white; text-decoration: underline; text-underline-offset: 5px; }
 .gameArt { position: absolute; z-index: -2; inset: 0; pointer-events: none; }
-.gameArt > svg { display: block; overflow: hidden; }
+.gameArt > svg { display: block; overflow: hidden; transform-origin: center; transition: transform 250ms cubic-bezier(.2, .7, .3, 1); }
+.gamePanel[data-hovered="true"] .gameArt > svg, .gamePanel:focus-within .gameArt > svg { transform: scale(1.03); }
 .gamePanelContent { position: relative; max-width: 500px; padding: 42px 42px 0; }
 .gamePanelContent h3 { margin: 0 0 15px; font-size: clamp(2.35rem, 3.2vw, 3.8rem); font-weight: 900; letter-spacing: -.06em; line-height: 1.02; }
 .gameTitle svg { display: block; width: auto; height: 85px; max-width: 100%; }
@@ -241,6 +244,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .gamePanel { transition: border-color 250ms ease, box-shadow 250ms ease; }
+  .gamePanel[data-hovered="true"], .gamePanel:focus-within { transform: none; }
+  .gameArt > svg { transition: none; }
+  .gamePanel[data-hovered="true"] .gameArt > svg, .gamePanel:focus-within .gameArt > svg { transform: none; }
   .primaryAction, .secondaryAction, .playSymbol { transition: none; }
   .featuredEvent, .supportEvent { transition: border-color .22s ease, box-shadow .22s ease; }
   .featuredEvent:hover, .supportEvent:hover { transform: none; }
