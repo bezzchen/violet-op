@@ -136,7 +136,7 @@ export default function JoinUsClient() {
                   </span>
                   <div>
                     <span className="font-label-caps text-label-caps uppercase text-tertiary">
-                      Recruiting
+                      {joinContent.paths.some((path) => path.game === section.id && path.applicationsOpen) ? "Recruiting" : "Applications Closed"}
                     </span>
                     <h3 className="font-headline-md text-2xl font-bold text-white">
                       {section.label} Teams
@@ -158,7 +158,7 @@ export default function JoinUsClient() {
                         >
                           <article
                             className={`join-path-card clip-card glass-panel flex h-full flex-col gap-6 rounded-lg border p-6 md:p-7 ${
-                              path.filled ? "join-card-filled" : "border-white/10"
+                              !path.applicationsOpen ? "join-card-filled" : "border-white/10"
                             }`}
                           >
                             <div className="flex items-start justify-between gap-4">
@@ -187,7 +187,7 @@ export default function JoinUsClient() {
                                 </div>
                               </div>
                               <span className="shrink-0 rounded-none border border-white/15 px-3 py-1 font-label-caps text-[10px] uppercase text-on-surface-variant">
-                                {path.filled ? "Filled" : "Open"}
+                                {path.applicationsOpen ? "Open" : "Closed"}
                               </span>
                             </div>
 
@@ -207,7 +207,7 @@ export default function JoinUsClient() {
                             )}
 
                             <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
-                              {path.filled ? (
+                              {!path.applicationsOpen ? (
                                 <span className="op-clip rounded-md border border-white/20 bg-white/5 px-5 py-3 font-label-caps text-label-caps uppercase text-on-surface-variant">
                                   Applications closed
                                 </span>

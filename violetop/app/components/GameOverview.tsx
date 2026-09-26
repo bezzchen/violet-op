@@ -53,7 +53,7 @@ export default function GameOverview({ game }: { game: Game }) {
                   <Link className={styles.teamCard} href={team.href} key={team.href}>
                     <div className={styles.teamCardTop}>
                       <span className={styles.crest}><Image alt="" fill quality={75} sizes="76px" src={team.image} /></span>
-                      <span className={styles.status}>{recruitment?.filled ? "Roster Filled" : "Applications Listed Open"}</span>
+                      <span className={styles.status}>{recruitment?.applicationsOpen ? "Applications Listed Open" : "Applications Closed"}</span>
                     </div>
                     <span className={styles.tier}>{team.tier}</span>
                     <h3>{team.name}</h3>

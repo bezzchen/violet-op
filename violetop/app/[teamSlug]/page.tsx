@@ -64,8 +64,8 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
             <h1>{team.name}</h1>
             <p className={styles.tagline}>{team.feature.summary}</p>
             <div className={styles.heroActions}>
-              <span className={styles.status}>{recruitment?.filled ? "Roster Filled" : "Applications Listed Open"}</span>
-              <Link href="/join-us#player-paths">{recruitment?.filled ? "See Other Joining Paths" : "View Joining Details"} <span aria-hidden="true">↗</span></Link>
+              <span className={styles.status}>{recruitment?.applicationsOpen ? "Applications Listed Open" : "Applications Closed"}</span>
+              <Link href="/join-us#player-paths">View Recruitment Status <span aria-hidden="true">↗</span></Link>
             </div>
           </div>
           <div className={styles.art}>
@@ -144,11 +144,11 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
             </section>
             <section aria-labelledby="joining-heading" className={styles.detailBlock}>
               <p className={styles.eyebrow}>Joining Status</p>
-              <h2 id="joining-heading">{recruitment?.filled ? "Roster Currently Filled" : "Interested in Joining?"}</h2>
-              <p>{recruitment?.filled
-                ? "Applications for this roster are currently closed. Explore the other teams and community paths."
-                : "Check the current application and full joining details before applying."}</p>
-              <Link className={styles.detailAction} href="/join-us#player-paths">{recruitment?.filled ? "Explore Joining Paths" : "View Application Details"} <span aria-hidden="true">→</span></Link>
+              <h2 id="joining-heading">{recruitment?.applicationsOpen ? "Interested in Joining?" : "Applications Currently Closed"}</h2>
+              <p>{recruitment?.applicationsOpen
+                ? "Check the current application and full joining details before applying."
+                : "Applications for this roster are currently closed. You can still connect with the Violet OP community."}</p>
+              <Link className={styles.detailAction} href="/join-us#player-paths">{recruitment?.applicationsOpen ? "View Application Details" : "View Recruitment Status"} <span aria-hidden="true">→</span></Link>
             </section>
           </aside>
         </div>

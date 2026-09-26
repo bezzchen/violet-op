@@ -4,13 +4,15 @@ import EventList from "../components/EventList";
 import PageShell from "../components/PageShell";
 import { calendarFeeds, eventsContent } from "../data/siteContent";
 import { groupEvents } from "../data/eventGroups";
+import { isScheduledMainEvent } from "../data/mainEvents";
 import type { CalendarEvent } from "../lib/ical";
 import EventPhotoCarousel from "./EventPhotoCarousel";
 import PlayerMatchList from "./PlayerMatchList";
+import MainEventList from "./MainEventList";
 import styles from "./Events.module.css";
 
 export default function EventsClient({ events, error }: { events: CalendarEvent[]; error: string | null }) {
-  const groups = groupEvents(events);
+  const groups = groupEvents(events.filter((event) => !isScheduledMainEvent(event)));
   return (
     <PageShell>
       <div className={styles.page}>
@@ -27,8 +29,8 @@ export default function EventsClient({ events, error }: { events: CalendarEvent[
           </section>
           <section aria-labelledby="main-events-title" className={styles.column}>
             <h2 id="main-events-title">Main Events</h2>
-            <p className={styles.columnIntro}>Club gatherings and community activities.</p>
-            <EventList compact emptyMessage="No upcoming club or community events are listed. Check the calendar or Discord for updates." error={error} events={groups.main} />
+            <p className={styles.columnIntro}>Draft schedule · 2026. Tentative dates are marked; details may change. All times are New York local time.</p>
+            <MainEventList />
           </section>
         </div>
         {groups.unclassified.length ? (

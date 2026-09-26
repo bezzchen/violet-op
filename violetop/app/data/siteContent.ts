@@ -94,7 +94,7 @@ export const homeFaqs = [
   {
     question: "How Do I Join?",
     answer:
-      "Join Discord to connect with the community. For a roster or staff role, use the open applications on Join Us; filled roles are marked there.",
+      "Join Discord to connect with the community. Team applications are currently closed; check Join Us for recruitment status and staff opportunities.",
   },
 ];
 
@@ -230,6 +230,7 @@ export const joinContent = {
       name: "VOP White",
       game: "valorant",
       filled: true,
+      applicationsOpen: false,
       joinHref: "https://forms.gle/Y349hunA1hgqAiUu6",
       details: [
         "Requirements: Immo 1 or higher",
@@ -241,6 +242,7 @@ export const joinContent = {
       name: "VOP Purple",
       game: "valorant",
       filled: false,
+      applicationsOpen: false,
       joinHref: "https://forms.gle/ircHZ4YA3D1YyFm8A",
       details: [
         "Requirements: Open Rank",
@@ -253,6 +255,7 @@ export const joinContent = {
       name: "VOP Black",
       game: "valorant",
       filled: true,
+      applicationsOpen: false,
       joinHref: "https://forms.gle/ircHZ4YA3D1YyFm8A",
       details: [
         "Requirements: Open Rank",
@@ -264,6 +267,7 @@ export const joinContent = {
       name: "VOP Ruby",
       game: "valorant",
       filled: false,
+      applicationsOpen: false,
       joinHref: "https://forms.gle/PSpnnByGm8JihwUA9",
       details: [
         "Rank: Open rank",
@@ -277,6 +281,7 @@ export const joinContent = {
       name: "VOP Elder",
       game: "league",
       filled: false,
+      applicationsOpen: false,
       joinHref: "https://forms.gle/24E8hzA8vopwxxZK7",
       details: ["Requirements: Open rank", "Access: Shared League of Legends tryout form"],
     },
@@ -284,6 +289,7 @@ export const joinContent = {
       name: "VOP Baron",
       game: "league",
       filled: false,
+      applicationsOpen: false,
       joinHref: "https://forms.gle/24E8hzA8vopwxxZK7",
       details: ["Requirements: Open rank", "Access: Shared League of Legends tryout form"],
     },

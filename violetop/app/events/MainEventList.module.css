@@ -1,0 +1,25 @@
+/* Retain EventList's original generous image, surface, typography and padding,
+ * stacked vertically to fit the Main Events column without squeezing its copy. */
+.list { display: grid; gap: 24px; }
+.card { min-width: 0; overflow: hidden; border-radius: 0; }
+.imageFrame { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #13101b; }
+.imageFrame img { object-fit: cover; }
+.content { padding: 28px 32px; }
+.date { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; color: #e2c8fa; font-size: 15px; font-weight: 750; line-height: 1.5; }
+.tentative { border: 1px solid #766186; padding: 3px 8px; color: var(--site-text); font-size: 12px; font-weight: 650; }
+.content h3 { margin: 14px 0 18px; color: var(--site-text); font-size: clamp(24px, 2.2vw, 30px); font-weight: 800; line-height: 1.15; letter-spacing: -.025em; overflow-wrap: break-word; }
+.logistics { display: flex; flex-wrap: wrap; gap: 12px 32px; margin: 0 0 20px; }
+.logistics dt { margin-bottom: 3px; color: var(--site-text-muted); font-size: 12px; font-weight: 700; }
+.logistics dd { margin: 0; color: var(--site-text); font-size: 16px; line-height: 1.5; }
+.description, .details { margin: 0; color: var(--site-text-muted); font-size: 16px; line-height: 1.65; }
+.details { margin-top: 14px; font-size: 14px; }
+.registrationNotice { margin: 20px 0 0; color: #e2c8fa; font-size: 14px; font-weight: 750; line-height: 1.5; }
+@media (max-width: 900px) {
+  .content { padding: 24px; }
+}
+@media (max-width: 760px) {
+  .content { padding: 22px 20px; }
+  .content h3 { font-size: 25px; }
+  .date { font-size: 14px; }
+  .description { font-size: 15px; }
+}

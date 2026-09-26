@@ -58,7 +58,7 @@ function EventPreview({ event, featured = false }: { event: CalendarEvent; featu
 export default async function Home() {
   const { events, error } = await getCalendarEvents(calendarFeeds.events, 3);
   const [featuredEvent, ...supportEvents] = events;
-  const openPlayerPaths = joinContent.paths.filter((path) => !path.filled);
+  const openPlayerPaths = joinContent.paths.filter((path) => path.applicationsOpen);
   const openStaffExamples = joinContent.staffRoles.filter(
     (role) => !role.filled && /events|creative/i.test(role.name),
   );
@@ -214,10 +214,10 @@ export default async function Home() {
           <div className={styles.pathList}>
             <article className={styles.pathRow}>
               <span className={styles.pathNumber}>01</span>
-              <div><h3>Competitive Teams</h3><p>Try out for a VALORANT roster or join a League squad. Each listing shows its requirements and current status.</p></div>
+              <div><h3>Competitive Teams</h3><p>Explore our VALORANT and League of Legends rosters. Each listing shows its requirements and current recruitment status.</p></div>
               <div className={styles.pathAction}>
-                <span>{openPlayerPaths.length ? `Listed as open: ${openPlayerPaths.map((path) => path.name.replace("VOP ", "")).join(", ")}` : "No player applications currently listed as open"}</span>
-                <Link className={styles.textLink} href="/join-us#player-paths">Explore roster paths <Arrow /></Link>
+                <span>{openPlayerPaths.length ? `Listed as open: ${openPlayerPaths.map((path) => path.name.replace("VOP ", "")).join(", ")}` : "All team applications are currently closed"}</span>
+                <Link className={styles.textLink} href="/join-us#player-paths">View recruitment status <Arrow /></Link>
               </div>
             </article>
             <article className={styles.pathRow}>
