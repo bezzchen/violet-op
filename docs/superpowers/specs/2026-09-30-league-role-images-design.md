@@ -1,7 +1,7 @@
 # League Role Images — Design
 
 **Date:** 2026-09-30
-**Status:** Choices made in chat; awaiting spec review
+**Status:** Approved in chat
 **App:** `violetop/` (Next.js 16.2, React 19.2, CSS modules)
 
 ## Goal
@@ -13,6 +13,7 @@ League roster tiles show Riot's official position icons, the set the user provid
 | Date | Commit | What happened |
 |---|---|---|
 | 2026-06-10 | `99190fd` | The first lane icons were hand-drawn glyphs: an arrow, a diamond and a shield. |
+| 2026-06-10 | `88cd4d2` | "Redraw League lane icons to match the official position icons": an intermediate hand redraw. |
 | 2026-06-10 | `f8d29bc` | "Use the provided official-style SVGs for League lane icons". The artwork was inlined into the team page so it recoloured to the team accent. |
 | 2026-09-18 | `ccbd424` | Removed them. |
 | 2026-09-23 | `f9f6d59` | Restored the older `99190fd` glyphs by mistake. |

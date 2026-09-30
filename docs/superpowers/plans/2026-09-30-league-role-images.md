@@ -150,3 +150,10 @@ Expected:
 - Every `/images/lanes/*.svg` request returns 200.
 - No console errors and no horizontal overflow.
 - Screenshot the `/league2` roster and compare it with the comparison image's bottom row: the two-tone frame must show.
+
+---
+
+## As built
+
+- The branch base already had 35 tests (a teammate's commits added `eventGroups` and `mainEvents` tests), so the counts above read 36 after Task 1, not 28.
+- After the final review, `LaneIcon.module.css` gained a `forced-colors` rule (the icon draws in `CanvasText`, since forced colours override `background-color` but not the mask), and the icon-file test also checks each file's `xmlns`, which an SVG loaded as an image needs.
