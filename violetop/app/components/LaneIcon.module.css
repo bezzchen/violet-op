@@ -10,3 +10,11 @@
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
 }
+
+/* Forced colours would repaint the fill as the page background and hide the icon; draw it in the text colour instead. */
+@media (forced-colors: active) {
+  .icon {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+}

@@ -37,5 +37,6 @@ test("every lane has its icon file", () => {
   for (const role of ["Top", "Jungle", "Middle", "Bottom", "Support"] as const) {
     const svg = readFileSync(new URL(`../../public/images/lanes/${role.toLowerCase()}.svg`, import.meta.url), "utf8");
     assert.match(svg, /viewBox="0 0 136 136"/, `${role} icon`);
+    assert.match(svg, /xmlns="http:\/\/www\.w3\.org\/2000\/svg"/, `${role} icon is a standalone SVG`);
   }
 });
