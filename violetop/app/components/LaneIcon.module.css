@@ -1,0 +1,12 @@
+/* The icon is its file's alpha filled with currentColor, so the team accent tints it and the 37.5% frame stays two-tone. */
+.icon {
+  display: inline-block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}

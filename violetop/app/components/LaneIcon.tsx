@@ -1,44 +1,17 @@
-import type { ReactNode } from "react";
 import type { LaneRole } from "../data/laneRoles";
+import styles from "./LaneIcon.module.css";
 
-// Inline SVGs keep these icons request-free and crisp at any size; they take the
-// surrounding colour through currentColor.
-const lanePaths: Record<LaneRole, ReactNode> = {
-  Top: (
-    <>
-      <path d="M6 13.5l6-6 6 6" />
-      <path d="M12 7.5V18" />
-    </>
-  ),
-  Jungle: (
-    <>
-      <path d="M12 4l6 11H6z" />
-      <path d="M12 15v4.5" />
-    </>
-  ),
-  Middle: <path d="M12 3.5l8.5 8.5-8.5 8.5L3.5 12z" />,
-  Bottom: (
-    <>
-      <path d="M6 10.5l6 6 6-6" />
-      <path d="M12 6V16.5" />
-    </>
-  ),
-  Support: <path d="M12 4l6 2.4v5c0 3.8-2.6 6.6-6 7.6-3.4-1-6-3.8-6-7.6v-5z" />,
-};
-
+/**
+ * Riot's official League position icon for a lane (the files in public/images/lanes), drawn as a
+ * mask so it takes the surrounding colour through currentColor and keeps its two-tone frame.
+ */
 export default function LaneIcon({ className, role }: { className?: string; role: LaneRole }) {
+  const mask = `url("/images/lanes/${role.toLowerCase()}.svg")`;
   return (
-    <svg
+    <span
       aria-hidden="true"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.75}
-      viewBox="0 0 24 24"
-    >
-      {lanePaths[role]}
-    </svg>
+      className={className ? `${styles.icon} ${className}` : styles.icon}
+      style={{ maskImage: mask, WebkitMaskImage: mask }}
+    />
   );
 }

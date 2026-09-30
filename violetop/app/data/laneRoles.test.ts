@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { readFileSync } from "node:fs";
 import { laneRole } from "./laneRoles.ts";
 
 test("each roster lane maps to its icon", () => {
@@ -30,4 +31,11 @@ test("words that are only built-in object keys get no icon", () => {
   assert.equal(laneRole("constructor"), null);
   assert.equal(laneRole("__proto__"), null);
   assert.equal(laneRole("Constructor / sub"), null);
+});
+
+test("every lane has its icon file", () => {
+  for (const role of ["Top", "Jungle", "Middle", "Bottom", "Support"] as const) {
+    const svg = readFileSync(new URL(`../../public/images/lanes/${role.toLowerCase()}.svg`, import.meta.url), "utf8");
+    assert.match(svg, /viewBox="0 0 136 136"/, `${role} icon`);
+  }
 });
