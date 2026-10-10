@@ -1,11 +1,21 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import type { CalendarEvent } from "../lib/ical";
-import { isScheduledMainEvent } from "./mainEvents.ts";
+import { getUpcomingMainEvents, isScheduledMainEvent } from "./mainEvents.ts";
 
 function event(title: string, startsAt: string): CalendarEvent {
   return { id: title, title, startsAt, month: "OCT", day: "9", weekday: "FRI", time: "TBA", location: null };
 }
+
+test("homepage keeps ongoing main events and drops past events on New York dates", () => {
+  const events = getUpcomingMainEvents(new Date("2026-10-10T12:00:00Z"));
+  assert.deepEqual(events.slice(0, 3).map((event) => event.id), [
+    "vop-cup-registration-2026", "vop-cup-online-stage-2026", "halloween-event-2026",
+  ]);
+  assert.equal(getUpcomingMainEvents(new Date("2026-10-17T03:59:00Z"))[0].id, "vop-cup-registration-2026");
+  assert.equal(getUpcomingMainEvents(new Date("2026-10-17T04:00:00Z"))[0].id, "vop-cup-online-stage-2026");
+  assert.deepEqual(getUpcomingMainEvents(new Date("2027-01-01T00:00:00Z")), []);
+});
 
 test("public schedule occurrences cannot also appear in the live event lists", () => {
   for (const [title, date] of [

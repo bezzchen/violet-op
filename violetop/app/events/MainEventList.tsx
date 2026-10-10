@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { eventArtwork } from "../data/eventArtwork";
 import { mainEvents } from "../data/mainEvents";
 import styles from "./MainEventList.module.css";
@@ -25,7 +26,7 @@ export default function MainEventList() {
                 <time dateTime={event.startsOn}>{event.dateLabel}</time>
                 {event.tentative ? <span className={styles.tentative}>Tentative</span> : null}
               </div>
-              <h3>{event.title}</h3>
+              <h3><Link className={styles.eventLink} href={`/events/${event.id}`}>{event.title}<span className={styles.linkArrow} aria-hidden="true"> ↗</span></Link></h3>
               {event.time || event.location ? (
                 <dl className={styles.logistics}>
                   {event.time ? <div><dt>Time</dt><dd>{event.startsAt ? <time dateTime={event.startsAt}>{event.time}</time> : event.time}</dd></div> : null}

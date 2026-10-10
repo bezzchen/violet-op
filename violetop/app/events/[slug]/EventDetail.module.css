@@ -1,0 +1,32 @@
+.page { width: min(1120px, calc(100% - 48px)); margin: 0 auto; padding: 112px 0 64px; color: var(--site-text); }
+.page a:focus-visible { outline: 3px solid #e8cfff; outline-offset: 5px; }
+.back { display: inline-block; margin-bottom: 24px; color: #e2c8fa; font-size: 15px; font-weight: 700; text-decoration: none; }
+.back:hover { text-decoration: underline; text-underline-offset: 5px; }
+.event { overflow: hidden; border: 1px solid var(--site-border); background: rgb(13 10 20 / 94%); }
+.artwork { position: relative; aspect-ratio: 21 / 9; background: #13101b; }
+.artwork img { object-fit: cover; }
+.content { padding: clamp(24px, 5vw, 64px); }
+.eyebrow { margin: 0 0 18px; color: #e2c8fa; font-size: 12px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+.content h1 { max-width: 900px; margin: 0 0 32px; font-size: clamp(32px, 5vw, 64px); line-height: 1.06; font-weight: 850; letter-spacing: -.04em; overflow-wrap: break-word; }
+.logistics { display: flex; flex-wrap: wrap; gap: 24px 48px; margin: 0 0 36px; padding: 24px 0; border-block: 1px solid var(--site-border); }
+.logistics dt { margin-bottom: 8px; color: var(--site-text-muted); font-size: 13px; }
+.logistics dd { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; font-size: 16px; line-height: 1.5; }
+.badge { padding: 2px 7px; border: 1px solid #766186; color: #e2c8fa; font-size: 12px; }
+.description { max-width: 760px; }
+.description h2, .related h2 { margin: 0 0 16px; font-size: 24px; font-weight: 750; letter-spacing: -.025em; }
+.description p { margin: 0 0 16px; color: var(--site-text-muted); font-size: 18px; line-height: 1.7; }
+.description .notice { color: #e2c8fa; font-weight: 700; }
+.scheduleNote { margin: 28px 0 20px; color: var(--site-text-muted); font-size: 13px; line-height: 1.6; }
+.discord { display: inline-flex; align-items: center; gap: 20px; min-height: 48px; padding: 12px 18px; border: 1px solid #766186; color: #e2c8fa; font-size: 14px; font-weight: 700; text-decoration: none; }
+.discord:hover { background: #30263f; }
+.related { margin-top: 40px; padding: 28px; border: 1px solid var(--site-border); background: rgb(13 10 20 / 94%); }
+.related a { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border-top: 1px solid var(--site-border); color: var(--site-text); text-decoration: none; }
+.related a:hover { color: #e2c8fa; }
+.related small { display: block; margin-top: 6px; color: var(--site-text-muted); line-height: 1.5; }
+@media (max-width: 760px) {
+  .page { width: calc(100% - 32px); padding-top: 92px; }
+  .artwork { aspect-ratio: 16 / 9; }
+  .logistics { flex-direction: column; gap: 20px; }
+  .description p { font-size: 16px; }
+  .related { padding: 24px; }
+}

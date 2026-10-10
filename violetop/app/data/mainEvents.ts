@@ -109,6 +109,15 @@ const localDate = new Intl.DateTimeFormat("en-CA", {
   timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit",
 });
 
+/** Include ongoing multi-day events through their final New York calendar day. */
+export function getUpcomingMainEvents(now: Date): MainEvent[] {
+  const parts = localDate.formatToParts(now);
+  const part = (type: string) => parts.find((item) => item.type === type)?.value;
+  const today = `${part("year")}-${part("month")}-${part("day")}`;
+  return mainEvents.filter((event) => (event.endsOn ?? event.startsOn) >= today)
+    .sort((a, b) => a.startsOn.localeCompare(b.startsOn));
+}
+
 /** Hide only matching occurrences already represented by the curated schedule.
  * Practices, unrelated matches, and events outside these dates stay in the feed. */
 export function isScheduledMainEvent(event: CalendarEvent): boolean {

@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import HomeGameCard from "./components/HomeGameCard";
 import { HomeGameArtwork, HomeGameLogo } from "./components/HomeGameArtwork";
 import {
-  calendarFeeds,
   eventsContent,
   highlightsContent,
   homeContent,
@@ -14,21 +13,23 @@ import {
   leagueTeams,
   valorantTeams,
 } from "./data/siteContent";
-import { getEventArtwork } from "./data/eventArtwork";
-import { getCalendarEvents, type CalendarEvent } from "./lib/ical";
+import { eventArtwork } from "./data/eventArtwork";
+import { getUpcomingMainEvents, type MainEvent } from "./data/mainEvents";
 import styles from "./Home.module.css";
 
 const discordUrl = "https://discord.gg/MAmXcrkADb";
+export const revalidate = 900;
 
 function Arrow({ external = false }: { external?: boolean }) {
   return <span aria-hidden="true">{external ? "↗" : "→"}</span>;
 }
 
-function EventPreview({ event, featured = false }: { event: CalendarEvent; featured?: boolean }) {
-  const artwork = getEventArtwork(event);
+function EventPreview({ event, featured = false }: { event: MainEvent; featured?: boolean }) {
+  const artwork = eventArtwork[event.artwork];
+  const date = new Date(`${event.startsOn}T12:00:00Z`);
 
   return (
-    <article className={featured ? styles.featuredEvent : styles.supportEvent}>
+    <Link href={`/events/${event.id}`} aria-label={`View ${event.title}`} className={featured ? styles.featuredEvent : styles.supportEvent}>
       <div className={styles.eventVisual}>
         <Image
           alt={artwork.alt}
@@ -41,23 +42,24 @@ function EventPreview({ event, featured = false }: { event: CalendarEvent; featu
       </div>
       <div className={styles.eventDetails}>
         <div className={styles.eventDate}>
-          <span>{event.month}</span>
-          <strong>{event.day}</strong>
+          <span>{date.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" })}</span>
+          <strong>{date.getUTCDate()}</strong>
         </div>
         <div className={styles.eventText}>
-          <span className={styles.kicker}>{event.weekday} · Violet OP event</span>
+          <span className={styles.kicker}>Main event{event.tentative ? " · Tentative" : ""}</span>
           <h3>{event.title}</h3>
-          <time dateTime={event.startsAt}>{event.time}</time>
+          <time dateTime={event.startsOn}>{event.dateLabel}</time>
+          {event.time ? <p>{event.time}{event.startsAt ? " · New York time" : ""}</p> : null}
           {event.location ? <p>{event.location}</p> : null}
+          <span className={styles.eventAction}>View event <Arrow /></span>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
-export default async function Home() {
-  const { events, error } = await getCalendarEvents(calendarFeeds.events, 3);
-  const [featuredEvent, ...supportEvents] = events;
+export default function Home() {
+  const [featuredEvent, ...supportEvents] = getUpcomingMainEvents(new Date()).slice(0, 3);
   const openPlayerPaths = joinContent.paths.filter((path) => path.applicationsOpen);
   const openStaffExamples = joinContent.staffRoles.filter(
     (role) => !role.filled && /events|creative/i.test(role.name),
@@ -105,8 +107,8 @@ export default async function Home() {
             <div className={styles.emptyEvents}>
               <div>
                 <span className={styles.emptyMark} aria-hidden="true">↗</span>
-                <h3>{error ? "Calendar Temporarily Unavailable" : "Nothing Scheduled Just Yet"}</h3>
-                <p>{error ? "We couldn't load the calendar right now. Find current updates on the Events page or in Discord." : eventsContent.emptyMessage}</p>
+                <h3>No Upcoming Main Events</h3>
+                <p>{eventsContent.emptyMessage}</p>
               </div>
               <div className={styles.emptyActions}>
                 <Link className={styles.secondaryAction} href="/events">Check events <Arrow /></Link>
