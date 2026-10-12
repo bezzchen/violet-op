@@ -40,7 +40,6 @@ export default function Footer({ pinned = false }: FooterProps) {
       </div>
       <div className={styles.base}>
         <span>© {new Date().getFullYear()} Violet OP</span>
-        <span>Made for the players, organizers, and community behind the game.</span>
       </div>
     </footer>
   );

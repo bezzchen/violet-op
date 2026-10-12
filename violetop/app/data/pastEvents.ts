@@ -22,9 +22,9 @@ export const pastEvents: PastEvent[] = [
     category: "Conversation",
     description: "Violet OP welcomed Gen.G CEO Arnold Hur for a conversation about esports, careers, and community, followed by questions from the audience.",
     location: "Palladium Multipurpose Room · NYU",
-    cover: "/images/media/geng-fireside-chat-2026/1PwxDq-_iFr_ZWALUG-JuKcXjj61qrmbD.webp",
+    cover: "/images/events/photos/geng-fireside-chat-cover.webp",
     coverAlt: "Arnold Hur and the moderator on stage at the Gen.G fireside chat",
-    coverPosition: "50% 50%",
+    coverPosition: "50% 62%",
     albumUrl: "https://drive.google.com/drive/folders/1kcrBwLDgHmYb5rPW3QxRJxDk7lhP11PF",
   },
   {

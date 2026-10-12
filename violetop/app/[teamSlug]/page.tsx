@@ -86,7 +86,6 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
         <div className={styles.content}>
           <section aria-labelledby="roster-heading" className={styles.rosterSection}>
             <div className={styles.sectionTitle}>
-              <p className={styles.eyebrow}>The Lineup</p>
               <h2 id="roster-heading">Roster</h2>
               <span>{team.roster.length} listed members</span>
             </div>
@@ -127,13 +126,11 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
 
           <aside className={styles.details}>
             <section aria-labelledby="about-heading" className={styles.detailBlock}>
-              <p className={styles.eyebrow}>Team Profile</p>
               <h2 id="about-heading">About {team.name}</h2>
               {team.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               {support ? <p>{support}</p> : null}
             </section>
             <section aria-labelledby="requirements-heading" className={styles.detailBlock}>
-              <p className={styles.eyebrow}>At a Glance</p>
               <h2 id="requirements-heading">Requirements & Commitment</h2>
               <dl>
                 {team.requirements.map((requirement) => {
@@ -143,7 +140,6 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
               </dl>
             </section>
             <section aria-labelledby="joining-heading" className={styles.detailBlock}>
-              <p className={styles.eyebrow}>Joining Status</p>
               <h2 id="joining-heading">{recruitment?.applicationsOpen ? "Interested in Joining?" : "Applications Currently Closed"}</h2>
               <p>{recruitment?.applicationsOpen
                 ? "Check the current application and full joining details before applying."

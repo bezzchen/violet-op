@@ -15,9 +15,8 @@ export default function MediaPage() {
       <div className={styles.page}>
         <Link className={styles.back} href="/events">← Events</Link>
         <header className={styles.heading}>
-          <span className={styles.eyebrow}>Violet OP media</span>
-          <h1>Past events.</h1>
-          <p>Photos, videos, and the people who made it happen.</p>
+          <h1>Past Events</h1>
+          <p>Event photos, videos, and reels.</p>
         </header>
         <EventArchive />
       </div>

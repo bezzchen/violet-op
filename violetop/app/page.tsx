@@ -47,7 +47,7 @@ function EventPreview({ event, featured = false }: { event: MainEvent; featured?
           <strong>{date.getUTCDate()}</strong>
         </div>
         <div className={styles.eventText}>
-          <span className={styles.kicker}>Main event{event.tentative ? " · Tentative" : ""}</span>
+          {event.tentative ? <span className={styles.kicker}>Tentative</span> : null}
           <h3>{event.title}</h3>
           <time dateTime={event.startsOn}>{event.dateLabel}</time>
           {event.time ? <p>{event.time}{event.startsAt ? " · New York time" : ""}</p> : null}
@@ -80,14 +80,12 @@ export default function Home() {
               <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">Join Discord <Arrow external /></a>
               <Link className={styles.secondaryAction} href="#teams">Explore Teams <Arrow /></Link>
             </div>
-            <p className={styles.heroNote}>Competition, community, and the people who make both happen.</p>
           </div>
           <HomeHeroVideo />
         </section>
         <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.eyebrow}>On the calendar</p>
               <h2 id="events-title">What’s Happening</h2>
             </div>
             <Link className={styles.textLink} href="/events">View all events <Arrow /></Link>
@@ -119,8 +117,7 @@ export default function Home() {
         <section aria-labelledby="teams-title" className={`${styles.section} ${styles.solidCard}`} id="teams">
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.eyebrow}>Meet the rosters</p>
-              <h2 id="teams-title">Two Games. One Community.</h2>
+              <h2 id="teams-title">Teams</h2>
             </div>
           </div>
           <div className={styles.gameGrid}>
@@ -169,10 +166,9 @@ export default function Home() {
 
         <section aria-labelledby="community-title" className={`${styles.section} ${styles.solidCard} ${styles.communitySection}`}>
           <div className={styles.communityIntro}>
-            <p className={styles.eyebrow}>The community in motion</p>
-            <h2 id="community-title">The Players Make the Moments.</h2>
-            <p>Violet OP brings competition, creative work, and friendship into the same space. Meet the people behind the teams and watch their plays.</p>
-            <Link className={styles.textLink} href="/about-us">Get to know Violet OP <Arrow /></Link>
+            <h2 id="community-title">Highlights</h2>
+            <p>Watch match recordings and highlights from our teams.</p>
+            <Link className={styles.textLink} href="/highlights">All highlights <Arrow /></Link>
           </div>
           <div className={styles.highlightFeature}>
             <a
@@ -193,9 +189,7 @@ export default function Home() {
               <span className={styles.playSymbol} aria-hidden="true">▶</span>
             </a>
             <div className={styles.highlightCopy}>
-              <span className={styles.kicker}>From the video archive</span>
               <h3>{featuredClip.title}</h3>
-              <p>Start with this Violet OP VALORANT video, or browse the rest of the archive.</p>
               <div className={styles.highlightActions}>
                 <a className={styles.textLink} href={featuredClip.url} rel="noopener noreferrer" target="_blank">Watch Video <Arrow external /></a>
                 <Link className={styles.textLink} href="/highlights">All Highlights <Arrow /></Link>
@@ -207,13 +201,11 @@ export default function Home() {
         <section aria-labelledby="paths-title" className={`${styles.section} ${styles.violetCard}`} id="get-involved">
           <div className={styles.sectionHeading}>
             <div>
-              <p className={styles.eyebrow}>Find your place</p>
-              <h2 id="paths-title">Get Involved.</h2>
+              <h2 id="paths-title">Get Involved</h2>
             </div>
           </div>
           <div className={styles.pathList}>
             <article className={styles.pathRow}>
-              <span className={styles.pathNumber}>01</span>
               <div><h3>Competitive Teams</h3><p>Explore our VALORANT and League of Legends rosters. Each listing shows its requirements and current recruitment status.</p></div>
               <div className={styles.pathAction}>
                 <span>{openPlayerPaths.length ? `Listed as open: ${openPlayerPaths.map((path) => path.name.replace("VOP ", "")).join(", ")}` : "All team applications are currently closed"}</span>
@@ -221,7 +213,6 @@ export default function Home() {
               </div>
             </article>
             <article className={styles.pathRow}>
-              <span className={styles.pathNumber}>02</span>
               <div><h3>Community Play</h3><p>Meet other players, follow events, and find people to queue with without starting in a formal tryout.</p></div>
               <div className={styles.pathAction}>
                 <span>Start with the Violet OP Discord.</span>
@@ -229,7 +220,6 @@ export default function Home() {
               </div>
             </article>
             <article className={styles.pathRow}>
-              <span className={styles.pathNumber}>03</span>
               <div><h3>Staff & Creative</h3><p>Support the teams through coaching, events, design, content, and the work behind the scenes.</p></div>
               <div className={styles.pathAction}>
                 <span>{openStaffExamples.length ? `Open examples: ${openStaffExamples.map((role) => role.name).join(", ")}` : "See current staff listings"}</span>
@@ -241,7 +231,7 @@ export default function Home() {
 
         <section aria-labelledby="faq-title" className={`${styles.section} ${styles.glassCard}`}>
           <div className={styles.sectionHeading}>
-            <div><p className={styles.eyebrow}>Good to know</p><h2 id="faq-title">Frequently Asked Questions.</h2></div>
+            <h2 id="faq-title">Frequently Asked Questions</h2>
           </div>
           <div className={styles.faqList}>
             {homeFaqs.map((faq) => (

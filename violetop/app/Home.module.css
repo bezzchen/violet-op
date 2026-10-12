@@ -26,7 +26,6 @@
 .hero h1 em { color: var(--accent); font-style: normal; }
 .heroIntro { max-width: 610px; margin: 0; color: #e4e0e8; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; }
 .heroActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.heroNote { max-width: 570px; margin: 28px 0 0; color: #bcb6c5; font-size: 12px; line-height: 1.6; }
 .heroMedia { position: relative; min-width: 0; min-height: 520px; overflow: hidden; isolation: isolate; background: #100c15; }
 .heroPoster, .heroVideo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .heroVideo { opacity: 0; transition: opacity .35s ease; }
@@ -87,7 +86,7 @@
 .violetCard { background: rgb(37 21 56 / 76%); }
 .sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 34px; }
 .sectionHeading h2, .communityIntro h2 {
-  max-width: 800px; margin: 9px 0 0;
+  max-width: 800px; margin: 0;
   font-size: clamp(2.45rem, 4.5vw, 4.75rem);
   font-weight: 900; letter-spacing: -.067em; line-height: 1.04;
 }
@@ -169,8 +168,7 @@
 .teamLinks img { width: 30px; height: 28px; padding: 2px; border-radius: var(--radius-sm); background: #62606b; object-fit: contain; }
 
 .pathList { border-top: 1px solid var(--site-border); }
-.pathRow { display: grid; grid-template-columns: 75px minmax(0, 1fr) minmax(220px, .65fr); gap: 28px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--site-border); }
-.pathNumber { padding-top: 6px; color: #bc9bdc; font-size: 14px; font-weight: 900; letter-spacing: .12em; }
+.pathRow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, .65fr); gap: 28px; align-items: start; padding: 32px 0; border-bottom: 1px solid var(--site-border); }
 .pathRow h3 { margin: 0 0 9px; font-size: clamp(23px, 2.35vw, 32px); font-weight: 850; letter-spacing: -.045em; }
 .pathRow p { max-width: 620px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
 .pathAction { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-top: 5px; }
@@ -178,7 +176,7 @@
 
 .communitySection { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(45px, 8vw, 130px); align-items: center; }
 .communityIntro h2 { margin-bottom: 21px; }
-.communityIntro > p:not(.eyebrow) { max-width: 570px; margin: 0 0 28px; color: var(--muted); font-size: 17px; line-height: 1.6; }
+.communityIntro > p { max-width: 570px; margin: 0 0 28px; color: var(--muted); font-size: 17px; line-height: 1.6; }
 .highlightFeature { overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-lg); background: var(--site-surface-raised); }
 .highlightMedia { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #17121f; color: white; }
 .highlightMedia:focus-visible { outline: 3px solid #e8cfff; outline-offset: -5px; }
@@ -187,7 +185,7 @@
 .playSymbol { position: absolute; top: 50%; left: 50%; display: flex; width: 63px; height: 63px; align-items: center; justify-content: center; border: 1px solid #f0ddff; border-radius: 0; background: #100d18c9; color: #f4e8ff; font-size: 20px; transform: translate(-50%, -50%); transition: background .18s ease, transform .18s ease; }
 .highlightMedia:hover .playSymbol { background: #2f2041e6; transform: translate(-50%, -50%) scale(1.05); }
 .highlightCopy { padding: 27px 30px 30px; }
-.highlightFeature h3 { margin: 18px 0 8px; font-size: clamp(26px, 2.6vw, 35px); font-weight: 850; letter-spacing: -.05em; }
+.highlightFeature h3 { margin: 0 0 8px; font-size: clamp(26px, 2.6vw, 35px); font-weight: 850; letter-spacing: -.05em; }
 .highlightFeature p { margin: 0; color: #c9c1d0; font-size: 15px; line-height: 1.5; }
 .highlightActions { display: flex; flex-wrap: wrap; gap: 18px 26px; margin-top: 24px; }
 
@@ -240,8 +238,8 @@
   .gameTitle svg { height: 74px; }
   .gamePanelContent p { max-width: 520px; }
   .teamLinks { padding: 20px 26px 26px; }
-  .pathRow { grid-template-columns: 42px minmax(0, 1fr); gap: 12px; padding: 27px 0; }
-  .pathAction { grid-column: 2; padding-top: 0; }
+  .pathRow { grid-template-columns: 1fr; gap: 12px; padding: 27px 0; }
+  .pathAction { grid-column: 1; padding-top: 0; }
   .communitySection { grid-template-columns: 1fr; gap: 32px; }
   .highlightCopy { padding: 24px; }
   .faqList { grid-template-columns: 1fr; }

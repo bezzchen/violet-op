@@ -45,7 +45,6 @@ export default function AboutUsClient() {
       <div className={styles.wrap}>
         <header className={styles.intro}>
           <div className={styles.introCopy}>
-            <p className={styles.eyebrow}>The People Behind Violet OP</p>
             <h1>{aboutContent.title}</h1>
             <p>{aboutContent.paragraphs[0]}</p>
           </div>
@@ -56,7 +55,6 @@ export default function AboutUsClient() {
 
         <section aria-labelledby="directory-heading" className={styles.directory}>
           <div className={styles.sectionHeading}>
-            <p className={styles.eyebrow}>One Team, Many Roles</p>
             <h2 id="directory-heading">People Directory</h2>
             <p>Meet the people who lead, organize, create, and compete with Violet OP. Leadership is listed first; the remaining order does not imply rank.</p>
           </div>

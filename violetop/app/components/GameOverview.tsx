@@ -41,7 +41,6 @@ export default function GameOverview({ game }: { game: Game }) {
           <section aria-labelledby="rosters-title" className={styles.rosters}>
             <div className={styles.sectionHeading}>
               <div>
-                <p className={styles.eyebrow}>Choose a Team</p>
                 <h2 id="rosters-title">{isValorant ? "VALORANT Rosters" : "League of Legends Rosters"}</h2>
               </div>
               <Link className={styles.secondaryLink} href="/join-us#player-paths">Recruitment Details ↗</Link>

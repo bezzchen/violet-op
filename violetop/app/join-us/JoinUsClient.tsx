@@ -33,21 +33,16 @@ const delay = (index: number) =>
   ({ "--reveal-delay": `${index * 90}ms` }) as CSSProperties;
 
 function SectionHeading({
-  eyebrow,
   title,
   blurb,
 }: {
-  eyebrow: string;
   title: string;
   blurb?: string;
 }) {
   return (
     <div className="reveal-up flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
       <div>
-        <span className="font-label-caps text-label-caps uppercase text-tertiary">
-          {eyebrow}
-        </span>
-        <h2 className="mt-3 font-display-xl text-3xl font-extrabold text-white md:text-[2.75rem]">
+        <h2 className="font-display-xl text-3xl font-extrabold text-white md:text-[2.75rem]">
           {title}
         </h2>
       </div>
@@ -101,7 +96,7 @@ export default function JoinUsClient() {
                 onClick={scrollToPaths}
                 type="button"
               >
-                Choose Your Path
+                Team Applications
               </button>
               <Link
                 className="op-clip rounded-md border border-white/25 px-7 py-4 font-label-caps text-label-caps uppercase text-white transition-colors hover:border-primary hover:text-primary"
@@ -115,9 +110,8 @@ export default function JoinUsClient() {
 
         <section className="grid scroll-mt-24 gap-8" id="player-paths" ref={pathsRef}>
           <SectionHeading
-            blurb="Six rosters across VALORANT and League of Legends — from stage-ready elite to open-rank community play."
-            eyebrow="Find Your Roster"
-            title="Choose Your Path"
+            blurb="Six rosters across VALORANT and League of Legends. Check requirements and application status below."
+            title="Team Applications"
           />
 
           <div className="grid gap-12">
@@ -299,7 +293,7 @@ export default function JoinUsClient() {
         </section>
 
         <section className="grid gap-8">
-          <SectionHeading eyebrow="Good to Know" title="FAQ" />
+          <SectionHeading title="FAQ" />
 
           <div className="grid gap-4 md:grid-cols-3">
             {joinContent.faqs.map((faq, index) => (

@@ -1,6 +1,6 @@
 export const eventPhotos = [
   {
-    src: "/images/media/geng-fireside-chat-2026/1PwxDq-_iFr_ZWALUG-JuKcXjj61qrmbD.webp",
+    src: "/images/events/photos/geng-fireside-chat-cover.webp",
     alt: "Arnold Hur and the moderator on stage during the Gen.G fireside chat",
     caption: "Gen.G Fireside Chat · October 9",
     href: "/media/geng-fireside-chat-2026",

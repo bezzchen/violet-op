@@ -40,7 +40,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
   return (
     <section className={styles.gallery} aria-labelledby="gallery-title">
       <div className={styles.galleryHeading}>
-        <div><span className={styles.eyebrow}>From the event</span><h2 id="gallery-title">The gallery</h2></div>
+        <h2 id="gallery-title">Photos &amp; Videos</h2>
         <div className={styles.filters} role="group" aria-label="Media type">
           <button type="button" aria-pressed={filter === "photo"} onClick={() => selectFilter("photo")}>Photos <span>{photos}</span></button>
           {videos ? <button type="button" aria-pressed={filter === "video"} onClick={() => selectFilter("video")}>Videos & reels <span>{videos}</span></button> : null}
