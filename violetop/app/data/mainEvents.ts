@@ -38,12 +38,11 @@ export const mainEvents: MainEvent[] = [
   {
     id: "geng-fireside-chat-2026",
     series: "fireside-chat",
-    title: "Fireside Chat with Gen.G’s President",
+    title: "Fireside Chat with Gen.G CEO Arnold Hur",
     startsOn: "2026-10-09",
     dateLabel: "October 9, 2026",
-    time: "TBA",
-    location: "TBA",
-    description: "Join Violet OP for a fireside chat with Gen.G’s president.",
+    location: "Palladium Multipurpose Room · NYU",
+    description: "Violet OP welcomed Gen.G CEO Arnold Hur for a conversation about esports, careers, and community.",
     artwork: "valorantCommunity",
   },
   {

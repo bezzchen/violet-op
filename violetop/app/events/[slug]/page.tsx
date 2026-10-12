@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import PageShell from "../../components/PageShell";
 import { eventArtwork } from "../../data/eventArtwork";
 import { mainEvents } from "../../data/mainEvents";
+import { pastEvents } from "../../data/pastEvents";
 import styles from "./EventDetail.module.css";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function EventPage({ params }: Props) {
   const { slug } = await params;
+  if (pastEvents.some((event) => event.slug === slug)) redirect(`/media/${slug}`);
   const event = mainEvents.find((entry) => entry.id === slug);
   if (!event) notFound();
   const artwork = eventArtwork[event.artwork];

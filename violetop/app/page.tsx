@@ -3,6 +3,7 @@ import Link from "next/link";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HomeGameCard from "./components/HomeGameCard";
+import HomeHeroVideo from "./components/HomeHeroVideo";
 import { HomeGameArtwork, HomeGameLogo } from "./components/HomeGameArtwork";
 import {
   eventsContent,
@@ -81,10 +82,7 @@ export default function Home() {
             </div>
             <p className={styles.heroNote}>Competition, community, and the people who make both happen.</p>
           </div>
-          <div className={styles.heroMedia}>
-            <Image alt="Violet OP members gathered for a community group photo" className={styles.heroPhoto} fill preload quality={85} sizes="(max-width: 900px) 100vw, 50vw" src="/images/groupphoto.avif" />
-            <div className={styles.photoCaption}><span>New York University</span></div>
-          </div>
+          <HomeHeroVideo />
         </section>
         <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">
           <div className={styles.sectionHeading}>

@@ -19,7 +19,7 @@
 .page :is(a, button):focus-visible { outline: 3px solid #e8cfff; outline-offset: 4px; }
 .page a { text-decoration: none; }
 .page :is(section, article)[id] { scroll-margin-top: 84px; }
-/* Original community photograph and editorial introduction, recovered from 00b96b6. */
+/* Keep the introduction and film in separate halves of the hero. */
 .hero { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr); margin-bottom: var(--card-gap); border-bottom: 1px solid var(--panel-border); }
 .heroContent { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; min-width: 0; padding: clamp(42px, 5vw, 84px) clamp(28px, 4.2vw, 80px); }
 .hero h1 { margin: 24px 0; font-size: clamp(2.8rem, 5.3vw, 6.4rem); font-weight: 900; letter-spacing: -.075em; line-height: .99; }
@@ -27,11 +27,21 @@
 .heroIntro { max-width: 610px; margin: 0; color: #e4e0e8; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; }
 .heroActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 .heroNote { max-width: 570px; margin: 28px 0 0; color: #bcb6c5; font-size: 12px; line-height: 1.6; }
-.heroMedia { position: relative; min-width: 0; overflow: hidden; background: linear-gradient(110deg, #777b76, #a9afa5 62%, #edf2e8); }
-/* Extend the photograph's empty wall above it without stretching or trimming faces. */
-.heroPhoto { top: auto !important; height: auto !important; object-fit: contain; object-position: center bottom; filter: saturate(.88) contrast(1.03); mask-image: linear-gradient(180deg, transparent, #000 16%); }
-.heroMedia::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, #17171b22, transparent 25%), linear-gradient(0deg, #15131770, transparent 20%); pointer-events: none; }
-.photoCaption { position: absolute; z-index: 2; right: 24px; bottom: 20px; left: 24px; display: flex; justify-content: flex-end; color: white; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; text-shadow: 0 1px 8px #000; }
+.heroMedia { position: relative; min-width: 0; min-height: 520px; overflow: hidden; isolation: isolate; background: #100c15; }
+.heroPoster, .heroVideo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.heroVideo { opacity: 0; transition: opacity .35s ease; }
+.heroVideo[data-ready="true"] { opacity: 1; }
+.heroMedia::after { position: absolute; z-index: 1; inset: 0; content: ""; background: linear-gradient(180deg, #09071035 0%, transparent 25%, #09071008 40%, #090710b3 78%, #090710ed 100%); pointer-events: none; }
+.videoCaption { position: absolute; z-index: 2; right: clamp(24px, 3vw, 48px); bottom: clamp(28px, 3vw, 48px); left: clamp(24px, 3vw, 48px); color: white; }
+.videoCaption p { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 10px; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.videoCaption p span { color: #d5ccde; font-weight: 500; }
+.videoCaption h2 { margin: 0 0 24px; font-size: clamp(30px, 3vw, 48px); font-weight: 850; letter-spacing: -.045em; line-height: 1.05; }
+.watchNow { display: inline-flex; align-items: center; min-height: 60px; gap: 16px; padding: 10px 22px 10px 12px; border: 1px solid #f1deff45; background: #d0aef6; color: #18101e; font-size: 18px; font-weight: 800; transition: background .18s ease; }
+.watchNow:hover { background: #e4cfff; }
+.watchIcon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #18101e; color: #e4cfff; font-size: 12px; padding-left: 2px; }
+.watchArrow { margin-left: 12px; font-size: 20px; }
+.previewToggle { position: absolute; z-index: 3; top: 22px; right: 22px; display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 14px; border: 1px solid #ffffff50; background: #0c0814b8; color: white; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; backdrop-filter: blur(10px); }
+.previewToggle:hover { background: #20172dde; }
 .eyebrow, .kicker {
   margin: 0;
   color: var(--accent);
@@ -203,9 +213,9 @@
   .hero { grid-template-columns: 1fr; }
   .heroContent { padding: 44px 24px; }
   .hero h1 { max-width: 680px; font-size: clamp(2.7rem, 8vw, 4.5rem); }
-  .heroMedia { aspect-ratio: 4 / 3; }
-  .heroPhoto { top: 0 !important; height: 100% !important; object-fit: cover; mask-image: none; }
-  .photoCaption { right: 18px; bottom: 16px; left: 18px; font-size: 9px; }
+  .heroMedia { min-height: 400px; aspect-ratio: 16 / 10; }
+  .videoCaption { right: 24px; bottom: 28px; left: 24px; }
+  .previewToggle { top: 18px; right: 18px; }
 }
 @media (max-width: 760px) {
   .page { padding-top: 64px; }
@@ -241,12 +251,12 @@
 @media (max-width: 420px) {
   .heroActions { width: 100%; }
   .heroActions > a { flex: 1 1 100%; }
-  .photoCaption span:last-child { display: none; }
   .gamePanel { min-height: 550px; }
   .teamLinks a { font-size: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .heroVideo, .watchNow { transition: none; }
   .gamePanel { transition: border-color 250ms ease, box-shadow 250ms ease; }
   .gamePanel[data-hovered="true"], .gamePanel:focus-within { transform: none; }
   .gameArt > svg { transition: none; }

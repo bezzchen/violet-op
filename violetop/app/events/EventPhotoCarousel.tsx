@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { eventPhotos } from "../data/eventPhotos";
 import styles from "./Events.module.css";
@@ -43,7 +44,7 @@ export default function EventPhotoCarousel() {
           ))}
         </div>
         <figcaption className={styles.captionBar}>
-          <div aria-atomic="true" aria-live="polite"><span className={styles.eyebrow}>From the community</span><p>{photo.caption}</p></div>
+          <div aria-atomic="true" aria-live="polite"><span className={styles.eyebrow}>From the community</span><p><Link className={styles.captionLink} href={photo.href}>{photo.caption} <span aria-hidden="true">↗</span></Link></p></div>
           <div className={styles.controls}>
             <button aria-label="Previous event photo" onClick={() => move(-1)} type="button"><span aria-hidden="true">←</span></button>
             <span className={styles.count} aria-hidden="true">{index + 1} / {eventPhotos.length}</span>

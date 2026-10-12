@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { eventArtwork } from "../data/eventArtwork";
-import { mainEvents } from "../data/mainEvents";
+import type { MainEvent } from "../data/mainEvents";
 import styles from "./MainEventList.module.css";
 
-export default function MainEventList() {
+export default function MainEventList({ events }: { events: MainEvent[] }) {
   return (
     <div className={styles.list}>
-      {mainEvents.map((event) => {
+      {events.map((event) => {
         const artwork = eventArtwork[event.artwork];
         return (
           <article className={`glass-panel event-row-panel ${styles.card}`} key={event.id}>
@@ -40,6 +40,7 @@ export default function MainEventList() {
           </article>
         );
       })}
+      {!events.length ? <p>More events are on the way. Check back for the next announcement.</p> : null}
     </div>
   );
 }

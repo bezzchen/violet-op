@@ -1,17 +1,20 @@
 "use client";
 
 import EventList from "../components/EventList";
+import Link from "next/link";
 import PageShell from "../components/PageShell";
 import { calendarFeeds, eventsContent } from "../data/siteContent";
 import { groupEvents } from "../data/eventGroups";
-import { isScheduledMainEvent } from "../data/mainEvents";
+import { isScheduledMainEvent, type MainEvent } from "../data/mainEvents";
+import EventArchive from "../media/EventArchive";
+import mediaStyles from "../media/Media.module.css";
 import type { CalendarEvent } from "../lib/ical";
 import EventPhotoCarousel from "./EventPhotoCarousel";
 import PlayerMatchList from "./PlayerMatchList";
 import MainEventList from "./MainEventList";
 import styles from "./Events.module.css";
 
-export default function EventsClient({ events, error }: { events: CalendarEvent[]; error: string | null }) {
+export default function EventsClient({ events, error, upcomingMainEvents }: { events: CalendarEvent[]; error: string | null; upcomingMainEvents: MainEvent[] }) {
   const groups = groupEvents(events.filter((event) => !isScheduledMainEvent(event)));
   return (
     <PageShell>
@@ -21,6 +24,13 @@ export default function EventsClient({ events, error }: { events: CalendarEvent[
           <a className={styles.calendarLink} href={calendarFeeds.events}>Subscribe to calendar <span aria-hidden="true">↗</span></a>
         </div>
         <EventPhotoCarousel />
+        <section className={mediaStyles.pastSection} aria-labelledby="past-events-title">
+          <div className={mediaStyles.sectionHeading}>
+            <div><h2 id="past-events-title">Past events &amp; media</h2><p>Revisit the events through photos, videos, and reels.</p></div>
+            <Link className={mediaStyles.allMedia} href="/media">All event media <span aria-hidden="true">↗</span></Link>
+          </div>
+          <EventArchive compact />
+        </section>
         <div className={styles.columns}>
           <section aria-labelledby="matches-title" className={styles.column}>
             <h2 id="matches-title">Player Matches</h2>
@@ -30,7 +40,7 @@ export default function EventsClient({ events, error }: { events: CalendarEvent[
           <section aria-labelledby="main-events-title" className={styles.column}>
             <h2 id="main-events-title">Main Events</h2>
             <p className={styles.columnIntro}>Draft schedule · 2026. Tentative dates are marked; details may change. All times are New York local time.</p>
-            <MainEventList />
+            <MainEventList events={upcomingMainEvents} />
           </section>
         </div>
         {groups.unclassified.length ? (

@@ -20,6 +20,7 @@ export default function Footer({ pinned = false }: FooterProps) {
             <span>Explore</span>
             <Link href="/#teams">Teams</Link>
             <Link href="/events">Events</Link>
+            <Link href="/media">Event Media</Link>
             <Link href="/about-us">About</Link>
             <Link href="/highlights">Highlights</Link>
           </div>

@@ -235,6 +235,7 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
               ))}
             </div>
             <Link aria-current={pathname === "/events" ? "page" : undefined} href="/events" onClick={closeMenus}>Events</Link>
+            <Link aria-current={pathname.startsWith("/media") ? "page" : undefined} href="/media" onClick={closeMenus}>Media</Link>
             <Link aria-current={pathname === "/about-us" ? "page" : undefined} href="/about-us" onClick={closeMenus}>About</Link>
           </nav>
 
@@ -301,6 +302,7 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
             ))}
           </div>
           <Link aria-current={pathname === "/events" ? "page" : undefined} className={styles.mobilePageLink} href="/events" onClick={closeMenus}>Events</Link>
+          <Link aria-current={pathname.startsWith("/media") ? "page" : undefined} className={styles.mobilePageLink} href="/media" onClick={closeMenus}>Media</Link>
           <Link aria-current={pathname === "/about-us" ? "page" : undefined} className={styles.mobilePageLink} href="/about-us" onClick={closeMenus}>About</Link>
           <Link
             aria-label="Join Violet OP"
