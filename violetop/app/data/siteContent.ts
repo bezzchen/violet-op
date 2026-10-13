@@ -454,7 +454,7 @@ export const teamPages = [
       "Entry into VOP White is strictly through a formal tryout process. If you have the rank, the experience, and the drive to represent the White jersey:",
     staff: [
       {
-        role: "Joe",
+        role: "Joe Lee",
         username: "zyng",
         detail: "Head Coach",
       },
@@ -468,9 +468,9 @@ export const teamPages = [
       { name: "Brandon Wu", username: "Brandon", role: "player" },
       { name: "Lucas Li", username: "fqll3n", role: "player" },
       { name: "Sajal Kaushik", username: "alpha9_", role: "player" },
-      { name: "Ricky Zou", username: "solongyixia", role: "player" },
+      { name: "Damian Engenheiro", username: "mist", role: "player" },
       { name: "Tyler Huynh", username: "tylorui", role: "super sub" },
-      { name: "Damian Engenheiro", username: "mist", role: "sub" },
+      { name: "Ricky Zou", username: "solongyixia", role: "sub" },
     ],
   },
   {
@@ -592,6 +592,7 @@ export const teamPages = [
       { name: "Anna Zhang", username: "fufubawls", role: "player" },
       { name: "Emily Chen", username: "strawberrycow", role: "player" },
       { name: "Ella Kaplan", username: "HockeySportsGuy", role: "sub" },
+      { name: "Sabrina Pitt", username: "jellybelly", role: "sub" },
     ],
   },
   {
