@@ -11,10 +11,7 @@ export default function SocialBanner() {
   return (
     <section className={styles.banner} aria-labelledby="social-heading">
       <header className={styles.intro}>
-        <div>
-          <span className={styles.eyebrow}>Beyond the game</span>
-          <h2 id="social-heading">Find us on your feed.</h2>
-        </div>
+        <h1 id="social-heading">Find us on your feed.</h1>
         <p>Clips, community, and everything VOP.</p>
       </header>
       <div className={styles.platforms}>
