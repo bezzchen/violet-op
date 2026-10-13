@@ -20,6 +20,16 @@ test("team practices and scrims belong with player matches", () => {
   assert.equal(classifyEvent(event("Community Practice Watch Party")), "main");
 });
 
+test("Aurora Series roster games appear in Player Matches with their schedule intact", () => {
+  const rubyGame = { ...event("Aurora Series VOP Ruby Game"), time: "8:30 PM – 11:30 PM" };
+  const groups = groupEvents([rubyGame]);
+  assert.deepEqual(groups.matches, [rubyGame]);
+  assert.deepEqual(groups.unclassified, []);
+  assert.deepEqual(groups.main, []);
+  assert.equal(classifyEvent(event("Aurora Series VOP Ruby Game Watch Party")), "main");
+  assert.equal(classifyEvent(event("TBD Aurora Series VOP Ruby Game")), "unclassified");
+});
+
 test("tentative dates and unfamiliar entries require confirmation", () => {
   for (const title of ["Potential Picture Day", "Spring Break", "TBD Match", "TBD Practice", "VOP Tryouts"]) assert.equal(classifyEvent(event(title)), "unclassified");
 });

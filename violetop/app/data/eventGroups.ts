@@ -20,6 +20,7 @@ export function classifyEvent(event: CalendarEvent): EventGroup {
   if (community) return "main";
   if (/\b(tryouts?|auditions?)\b/i.test(title)) return "unclassified";
   if (/\b(match(?:es)?|necc|pcl|premier|playoffs?)\b/i.test(title) || /\bvs\.?\b/i.test(title)) return "matches";
+  if (/\bvop\s+(white|purple|black|ruby|elder|baron)\s+games?\b/i.test(title)) return "matches";
   if (/\bvop\s+(valorant|league)\s+event\b|\blevel up\b/i.test(title)) return "main";
   return "unclassified";
 }
