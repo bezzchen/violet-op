@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PageShell from "../components/PageShell";
 import EventArchive from "./EventArchive";
+import SocialBanner from "./SocialBanner";
 import styles from "./Media.module.css";
 
 export const metadata: Metadata = {
-  title: "Event Media | Violet OP",
-  description: "Photos, videos, and reels from past Violet OP events at NYU, including the Gen.G fireside chat, LEVEL UP, and VCT watch party.",
+  title: "Media | Violet OP",
+  description: "Instagram posts, YouTube videos, and photos from Violet OP events at NYU.",
 };
 
 export default function MediaPage() {
@@ -15,9 +16,13 @@ export default function MediaPage() {
       <div className={styles.page}>
         <Link className={styles.back} href="/events">← Events</Link>
         <header className={styles.heading}>
-          <h1>Past Events</h1>
+          <h1>Media</h1>
           <p>Event photos, videos, and reels.</p>
         </header>
+        <SocialBanner />
+        <div className={styles.sectionHeading}>
+          <h2>Past Events</h2>
+        </div>
         <EventArchive />
       </div>
     </PageShell>
