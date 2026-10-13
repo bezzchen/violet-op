@@ -4,10 +4,10 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HomeGameCard from "./components/HomeGameCard";
 import HomeHeroVideo from "./components/HomeHeroVideo";
+import HomeHighlights from "./components/HomeHighlights";
 import { HomeGameArtwork, HomeGameLogo } from "./components/HomeGameArtwork";
 import {
   eventsContent,
-  highlightsContent,
   homeContent,
   homeFaqs,
   joinContent,
@@ -65,7 +65,6 @@ export default function Home() {
   const openStaffExamples = joinContent.staffRoles.filter(
     (role) => !role.filled && /events|creative/i.test(role.name),
   );
-  const featuredClip = highlightsContent.clips[0];
 
   return (
     <>
@@ -164,38 +163,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section aria-labelledby="community-title" className={`${styles.section} ${styles.solidCard} ${styles.communitySection}`}>
-          <div className={styles.communityIntro}>
-            <h2 id="community-title">Highlights</h2>
-            <p>Watch match recordings and highlights from our teams.</p>
-            <Link className={styles.textLink} href="/highlights">All highlights <Arrow /></Link>
-          </div>
-          <div className={styles.highlightFeature}>
-            <a
-              aria-label={`Watch ${featuredClip.title} on YouTube`}
-              className={styles.highlightMedia}
-              href={featuredClip.url}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <Image
-                alt={`Thumbnail for ${featuredClip.title}`}
-                fill
-                quality={84}
-                sizes="(max-width: 760px) calc(100vw - 40px), 48vw"
-                src="/images/highlights/we-deserve-lan-thumbnail.webp"
-              />
-              <span className={styles.highlightShade} aria-hidden="true" />
-              <span className={styles.playSymbol} aria-hidden="true">▶</span>
-            </a>
-            <div className={styles.highlightCopy}>
-              <h3>{featuredClip.title}</h3>
-              <div className={styles.highlightActions}>
-                <a className={styles.textLink} href={featuredClip.url} rel="noopener noreferrer" target="_blank">Watch Video <Arrow external /></a>
-                <Link className={styles.textLink} href="/highlights">All Highlights <Arrow /></Link>
-              </div>
-            </div>
-          </div>
+        <section aria-labelledby="community-title" className={`${styles.section} ${styles.solidCard} ${styles.highlightsSection}`}>
+          <HomeHighlights />
         </section>
 
         <section aria-labelledby="paths-title" className={`${styles.section} ${styles.violetCard}`} id="get-involved">

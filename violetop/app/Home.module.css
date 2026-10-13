@@ -85,7 +85,7 @@
 .glassCard { background: rgb(11 8 18 / 80%); }
 .violetCard { background: rgb(37 21 56 / 76%); }
 .sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 34px; }
-.sectionHeading h2, .communityIntro h2 {
+.sectionHeading h2 {
   max-width: 800px; margin: 0;
   font-size: clamp(2.45rem, 4.5vw, 4.75rem);
   font-weight: 900; letter-spacing: -.067em; line-height: 1.04;
@@ -174,20 +174,6 @@
 .pathAction { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-top: 5px; }
 .pathAction > span { color: #bdb7c5; font-size: 13px; line-height: 1.45; }
 
-.communitySection { display: grid; grid-template-columns: .95fr 1.05fr; gap: clamp(45px, 8vw, 130px); align-items: center; }
-.communityIntro h2 { margin-bottom: 21px; }
-.communityIntro > p { max-width: 570px; margin: 0 0 28px; color: var(--muted); font-size: 17px; line-height: 1.6; }
-.highlightFeature { overflow: hidden; border: 1px solid var(--site-border); border-radius: var(--radius-lg); background: var(--site-surface-raised); }
-.highlightMedia { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #17121f; color: white; }
-.highlightMedia:focus-visible { outline: 3px solid #e8cfff; outline-offset: -5px; }
-.highlightMedia img { object-fit: cover; }
-.highlightShade { position: absolute; inset: 0; background: linear-gradient(0deg, #0a080fcc 0%, transparent 48%); pointer-events: none; }
-.playSymbol { position: absolute; top: 50%; left: 50%; display: flex; width: 63px; height: 63px; align-items: center; justify-content: center; border: 1px solid #f0ddff; border-radius: 0; background: #100d18c9; color: #f4e8ff; font-size: 20px; transform: translate(-50%, -50%); transition: background .18s ease, transform .18s ease; }
-.highlightMedia:hover .playSymbol { background: #2f2041e6; transform: translate(-50%, -50%) scale(1.05); }
-.highlightCopy { padding: 27px 30px 30px; }
-.highlightFeature h3 { margin: 0 0 8px; font-size: clamp(26px, 2.6vw, 35px); font-weight: 850; letter-spacing: -.05em; }
-.highlightFeature p { margin: 0; color: #c9c1d0; font-size: 15px; line-height: 1.5; }
-.highlightActions { display: flex; flex-wrap: wrap; gap: 18px 26px; margin-top: 24px; }
 
 .faqList { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 50px; }
 .faqItem { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 24px; padding: 27px 0; border-top: 1px solid var(--site-border); }
@@ -240,8 +226,6 @@
   .teamLinks { padding: 20px 26px 26px; }
   .pathRow { grid-template-columns: 1fr; gap: 12px; padding: 27px 0; }
   .pathAction { grid-column: 1; padding-top: 0; }
-  .communitySection { grid-template-columns: 1fr; gap: 32px; }
-  .highlightCopy { padding: 24px; }
   .faqList { grid-template-columns: 1fr; }
   .faqItem { grid-template-columns: 1fr; gap: 8px; padding: 22px 0; }
 }
@@ -259,7 +243,9 @@
   .gamePanel[data-hovered="true"], .gamePanel:focus-within { transform: none; }
   .gameArt > svg { transition: none; }
   .gamePanel[data-hovered="true"] .gameArt > svg, .gamePanel:focus-within .gameArt > svg { transform: none; }
-  .primaryAction, .secondaryAction, .playSymbol { transition: none; }
+  .primaryAction, .secondaryAction { transition: none; }
   .featuredEvent, .supportEvent { transition: border-color .22s ease, box-shadow .22s ease; }
   .featuredEvent:hover, .supportEvent:hover { transform: none; }
 }
+
+.section.highlightsSection { padding: clamp(24px, 3vw, 36px); }
