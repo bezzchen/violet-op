@@ -111,9 +111,7 @@ const memberImages = {
   augus: { src: "/images/augus.avif", focalPoint: "50% 8%" },
   jessica: { src: "/images/jessica.avif", focalPoint: "50% 7%" },
   emily: { src: "/images/emily.avif", focalPoint: "50% 8%" },
-  kuan: { src: "/images/kuan.avif", focalPoint: "50% 6%" },
   artus: { src: "/images/artus.avif", focalPoint: "50% 7%" },
-  alston: { src: "/images/alston.avif", focalPoint: "50% 5%" },
   ella: { src: "/images/ella.avif", focalPoint: "50% 8%" },
 } satisfies Record<string, MemberImage>;
 
@@ -143,7 +141,7 @@ export const aboutContent = {
       people: [
         {
           name: "Jessica Wang",
-          role: "VALORANT Esports Leader / Gamechangers Team Manager",
+          role: "VALORANT Esports Leader / Team Manager - Ruby",
           image: memberImages.jessica,
         },
         {
@@ -158,7 +156,7 @@ export const aboutContent = {
         },
         {
           name: "Emily Chen",
-          role: "League of Legends Esports Leader",
+          role: "League of Legends Esports Leader / Team Manager - Elder, Baron",
           image: memberImages.emily,
         },
       ],
@@ -168,7 +166,6 @@ export const aboutContent = {
       heading: "Events Department",
       people: [
         { name: "Charice Huang", role: "Head of Event Coordination" },
-        { name: "Kuan Lin", role: "Event Designer/Helper", image: memberImages.kuan },
         {
           name: "Katelyn Nguyen",
           role: "Tournament Operations Lead",
@@ -182,7 +179,6 @@ export const aboutContent = {
       eyebrow: "VOP E-Board",
       heading: "Creative Department",
       people: [
-        { name: "Emily Chen", role: "Website Leader", image: memberImages.emily },
         { name: "Barry Chen", role: "Website Leader" },
         {
           name: "Artus Yeh",
@@ -202,8 +198,7 @@ export const aboutContent = {
         },
         { name: "Logan Tsai", role: "Social Media Manager", image: memberImages.logan },
         { name: "Eric Qi", role: "Social Media Manager", image: memberImages.eric },
-        { name: "Nahian Sowalehin", role: "Head of Communications, Operations & Outreach" },
-        { name: "Alston Li", role: "Campus Outreach Team/Partnership", image: memberImages.alston },
+        { name: "Chris He", role: "Head of Outreach" },
       ],
     },
     {
@@ -542,14 +537,13 @@ export const teamPages = [
     ],
     proof:
       "Entry into VOP Black is strictly through a formal tryout process. If you want to have fun, join a community, and represent the Black jersey:",
-    staff: [{ role: "Brandon Wu", username: "Brandon", detail: "Coach" }],
+    staff: [{ role: "Ian Kwong", username: "Ink310", detail: "Coach" }],
     roster: [
       { name: "Ella Kaplan", username: "HockeySportsGuy", role: "IGL" },
       { name: "Ryan Lin", username: "Ethereal", role: "player" },
       { name: "Cho Man Bian", username: "Kira", role: "player" },
       { name: "Malik Umar", username: "toji", role: "player" },
       { name: "Magnus Wong", username: "sapphire", role: "player" },
-      { name: "George Zhou", username: "SEN tence", role: "sub" },
       { name: "Dan Huang", username: "2t1cks", role: "sub" },
       { name: "Tony Lam", username: "yl9341", role: "sub" },
       { name: "Anna Zhang", username: "fufubawls", role: "sub" },
