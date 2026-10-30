@@ -1,19 +1,21 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import type { CalendarEvent } from "../lib/ical";
-import { getUpcomingMainEvents, isScheduledMainEvent } from "./mainEvents.ts";
+import { cupEventId, getUpcomingMainEvents, isScheduledMainEvent, mainEventRedirects, mainEvents } from "./mainEvents.ts";
 
 function event(title: string, startsAt: string): CalendarEvent {
   return { id: title, title, startsAt, month: "OCT", day: "9", weekday: "FRI", time: "TBA", location: null };
 }
 
 test("homepage keeps ongoing main events and drops past events on New York dates", () => {
-  const events = getUpcomingMainEvents(new Date("2026-10-10T12:00:00Z"));
+  const events = getUpcomingMainEvents(new Date("2026-10-29T12:00:00Z"));
   assert.deepEqual(events.slice(0, 3).map((event) => event.id), [
-    "vop-cup-registration-2026", "vop-cup-online-stage-2026", "halloween-event-2026",
+    "halloween-event-2026", cupEventId, "worlds-watch-party-2026",
   ]);
-  assert.equal(getUpcomingMainEvents(new Date("2026-10-17T03:59:00Z"))[0].id, "vop-cup-registration-2026");
-  assert.equal(getUpcomingMainEvents(new Date("2026-10-17T04:00:00Z"))[0].id, "vop-cup-online-stage-2026");
+  assert.equal(getUpcomingMainEvents(new Date("2026-11-01T03:59:00Z"))[0].id, "halloween-event-2026");
+  assert.equal(getUpcomingMainEvents(new Date("2026-11-01T04:00:00Z"))[0].id, cupEventId);
+  assert.equal(getUpcomingMainEvents(new Date("2026-11-09T04:59:00Z"))[0].id, cupEventId);
+  assert.equal(getUpcomingMainEvents(new Date("2026-11-09T05:00:00Z"))[0].id, "worlds-watch-party-2026");
   assert.deepEqual(getUpcomingMainEvents(new Date("2027-01-01T00:00:00Z")), []);
 });
 
@@ -22,8 +24,9 @@ test("public schedule occurrences cannot also appear in the live event lists", (
     ["VOP Cup Registration", "2026-10-05T16:00:00Z"],
     ["Fireside Chat with Gen.G's President", "2026-10-09T16:00:00Z"],
     ["VOP Cup Qualifiers", "2026-10-25T16:00:00Z"],
-    ["Halloween Event", "2026-10-31T21:00:00Z"],
-    ["VOP Cup — Semifinals", "2026-11-07T18:00:00Z"],
+    ["Halloween Fest & Worlds Watch Party", "2026-10-31T17:30:00Z"],
+    ["VOP Cup — Quarterfinals", "2026-11-06T18:00:00Z"],
+    ["Road to Worlds NYU: VOP Cup", "2026-11-07T18:00:00Z"],
     ["Worlds Watch Party", "2026-11-14T18:00:00Z"],
   ]) assert.equal(isScheduledMainEvent(event(title, date)), true, title);
 });
@@ -34,7 +37,16 @@ test("deduplication uses New York dates and preserves unrelated matches and prac
   for (const title of ["NECC VOP WHITE MATCH", "VOP Practice", "League Scrims", "Online Stage Practice", "VOP Cup Practice", "VOP Cup Player Match", "VOP Cup — NYU vs UMICH"]) {
     assert.equal(isScheduledMainEvent(event(title, "2026-10-19T16:00:00Z")), false, title);
   }
-  assert.equal(isScheduledMainEvent(event("VOP Cup Registration", "2026-10-17T16:00:00Z")), false);
+  assert.equal(isScheduledMainEvent(event("VOP Cup Registration", "2026-10-17T16:00:00Z")), true);
+  assert.equal(isScheduledMainEvent(event("VOP Cup", "2026-11-09T16:00:00Z")), false);
   assert.equal(isScheduledMainEvent(event("Halloween Event", "2027-10-31T16:00:00Z")), false);
   assert.equal(isScheduledMainEvent(event("VOP Cup", "invalid")), false);
+});
+
+test("old cup links point to one current event rather than a stale schedule", () => {
+  for (const oldId of ["vop-cup-registration-2026", "vop-cup-online-stage-2026"]) {
+    assert.equal(mainEventRedirects[oldId], cupEventId);
+    assert.equal(mainEvents.some((entry) => entry.id === oldId), false);
+    assert.equal(mainEvents.some((entry) => entry.id === mainEventRedirects[oldId]), true);
+  }
 });

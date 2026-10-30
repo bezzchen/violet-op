@@ -23,10 +23,31 @@
 .related a { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border-top: 1px solid var(--site-border); color: var(--site-text); text-decoration: none; }
 .related a:hover { color: #e2c8fa; }
 .related small { display: block; margin-top: 6px; color: var(--site-text-muted); line-height: 1.5; }
+.posterArtwork { aspect-ratio: auto; height: min(680px, 75vw); min-height: 360px; background: radial-gradient(ellipse at center, #4c2a68 0%, #221832 55%, #151020 100%); }
+.halloweenEvent { border-color: #80539d; background: linear-gradient(145deg, #21112e, #100d18 65%); }
+.halloweenEvent .eyebrow { color: #fac58f; }
+.status { display: inline-block; margin: -12px 0 28px; padding: 7px 11px; border: 1px solid #a98bc15c; border-radius: 4px; background: #392147; color: #ecd3ff; font-size: 13px; font-weight: 750; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 36px; }
+.primaryAction { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 48px; padding: 12px 18px; background: #d0aef6; color: #18101e; font-size: 14px; font-weight: 800; text-decoration: none; }
+.primaryAction:hover { background: #e3c7ff; }
+.halloweenEvent .primaryAction { background: #fac58f; color: #27152e; }
+.halloweenEvent .primaryAction:hover { background: #ffdbb5; }
+.detailSections { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+.detailSection { min-width: 0; padding: 28px; border: 1px solid #caa5ef29; border-radius: 6px; background: #251b323f; }
+.detailSection h2 { margin: 0 0 16px; color: #f1e3fb; font-size: 21px; line-height: 1.25; letter-spacing: -.02em; }
+.detailSection p, .detailSection li { color: #cfc3d7; font-size: 15px; line-height: 1.7; }
+.detailSection p { margin: 0 0 14px; }
+.detailSection p:last-child { margin-bottom: 0; }
+.detailSection ul { display: flex; flex-direction: column; gap: 9px; margin: 0; padding-left: 19px; }
+.detailSection li::marker { color: #bd95dc; }
 @media (max-width: 760px) {
   .page { width: calc(100% - 32px); padding-top: 92px; }
   .artwork { aspect-ratio: 16 / 9; }
   .logistics { flex-direction: column; gap: 20px; }
   .description p { font-size: 16px; }
   .related { padding: 24px; }
+  .posterArtwork { aspect-ratio: auto; height: 500px; max-height: 125vw; min-height: 0; }
+  .detailSections { grid-template-columns: 1fr; }
+  .detailSection { padding: 22px; }
+  .actions { flex-direction: column; align-items: stretch; }
 }

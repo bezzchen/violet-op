@@ -17,24 +17,26 @@ export type MainEvent = {
   description: string;
   details?: string;
   registrationNotice?: string;
+  status?: string;
+  hosts?: string;
+  updatedOn?: string;
+  scheduleNote?: string;
+  actions?: { label: string; href: string; primary?: boolean }[];
+  sections?: { title: string; body?: string; items?: string[] }[];
   artwork: keyof typeof eventArtwork;
 };
 
-/** Public draft schedule supplied by VOP. Separate from the live match feed;
- * unknown times are labels, never fabricated calendar timestamps or links. */
+export const halloweenEventId = "halloween-event-2026";
+export const cupEventId = "vop-cup-bracket-weekend-2026";
+
+/** Preserve older shared links while sending visitors to the current cup details. */
+export const mainEventRedirects: Record<string, string> = {
+  "vop-cup-registration-2026": cupEventId,
+  "vop-cup-online-stage-2026": cupEventId,
+};
+
+/** Public announcements, verified October 29. Unknown times stay unconfirmed. */
 export const mainEvents: MainEvent[] = [
-  {
-    id: "vop-cup-registration-2026",
-    series: "vop-cup",
-    title: "VOP Cup Registration",
-    startsOn: "2026-10-05",
-    endsOn: "2026-10-16",
-    dateLabel: "October 5–16, 2026",
-    tentative: true,
-    description: "Register your team for the VOP Cup. An NYU email and Riot ID are required.",
-    registrationNotice: "Registration Details Coming Soon",
-    artwork: "valorantGeneral",
-  },
   {
     id: "geng-fireside-chat-2026",
     series: "fireside-chat",
@@ -46,42 +48,79 @@ export const mainEvents: MainEvent[] = [
     artwork: "valorantCommunity",
   },
   {
-    id: "vop-cup-online-stage-2026",
-    series: "vop-cup",
-    title: "VOP Cup — Online Stage",
-    startsOn: "2026-10-19",
-    endsOn: "2026-10-25",
-    dateLabel: "October 19–25, 2026",
-    time: "TBA",
-    location: "Online",
-    description: "The VOP Cup begins online, with qualifiers if more than eight teams register.",
-    artwork: "valorantPractice",
-  },
-  {
-    id: "halloween-event-2026",
+    id: halloweenEventId,
     series: "halloween",
-    title: "Halloween Event",
+    title: "Halloween Fest & Worlds Watch Party",
     startsOn: "2026-10-31",
-    dateLabel: "October 31, 2026",
-    time: "5–10 PM",
-    startsAt: "2026-10-31T17:00:00-04:00",
-    location: "TBA",
-    description: "Celebrate Halloween with League open play, artist and anime club activities, and community hangouts.",
-    artwork: "leagueCommunity",
+    dateLabel: "Saturday, October 31, 2026",
+    time: "1:30–5 PM EDT",
+    startsAt: "2026-10-31T13:30:00-04:00",
+    location: "GCASL Grand Hall · 5th floor",
+    hosts: "Violet OP × Club Anime × NYU Gaming",
+    status: "RSVP on Luma",
+    updatedOn: "October 29, 2026",
+    description: "Spend Halloween with the NYU gaming and anime community: watch Worlds, join the costume contest, try the activities, and hang out between games.",
+    details: "238 Thompson Street, New York, NY 10012. Costumes from every fandom are welcome.",
+    scheduleNote: "All times are New York local time. Follow the Luma event and Discord for organizer updates.",
+    actions: [
+      { label: "RSVP on Luma", href: "https://luma.com/l5ny5fhb", primary: true },
+      { label: "VOP Cup details", href: `/events/${cupEventId}` },
+    ],
+    sections: [
+      {
+        title: "An afternoon of games, anime & costumes",
+        items: ["League of Legends Worlds viewing and Riot merch giveaways.", "Blind Ranking Challenge, tier-list and anime activities.", "Artist activities and 5-minute doodles, trivia, and a prize wheel.", "VOP Cup information desk for tournament questions."],
+      },
+      {
+        title: "Costume contest",
+        body: "Register in person from 1:30–2:30 PM. The costume walk and judging begin at 2:30 PM.",
+        items: ["Best Overall · HyperX Origins 2 65 gaming keyboard", "Best Anime · Pandemonium mousepad", "Best Handmade · Pandemonium mousepad", "Best Riot Games · Pandemonium mousepad", "Winners also receive Club Anime goodies."],
+      },
+      {
+        title: "Plan your visit",
+        body: "RSVP through Luma; attendance requires host approval. Non-NYU guests should RSVP early so organizers can arrange guest registration. Bring government-issued ID and follow the organizer’s check-in instructions.",
+      },
+    ],
+    artwork: "halloweenFest",
   },
   {
-    id: "vop-cup-bracket-weekend-2026",
+    id: cupEventId,
     series: "vop-cup",
-    title: "VOP Cup — Bracket Weekend",
-    startsOn: "2026-11-06",
+    title: "Road to Worlds NYU: VOP Cup",
+    startsOn: "2026-11-07",
     endsOn: "2026-11-08",
-    dateLabel: "November 6–8, 2026",
-    tentative: true,
-    time: "TBA",
-    location: "TBA",
-    description: "Eight teams compete in a best-of-three bracket across three days.",
-    details: "Quarterfinals November 6 · Semifinals November 7 · Final November 8",
-    artwork: "valorantCompetitive",
+    dateLabel: "November 7–8, 2026",
+    time: "Match times to be announced",
+    location: "Online · Violet OP Discord",
+    status: "Main registration closed",
+    updatedOn: "October 29, 2026",
+    description: "Compete in NYU’s League of Legends intramural tournament for Road to Worlds. The winning five-player team receives five Worlds 2026 tickets—one per player.",
+    details: "November 7: single-elimination knockout, best of one. November 8: final, best of three.",
+    registrationNotice: "Main registration is closed. Substitute interest is still open; a waitlist place does not guarantee a spot.",
+    scheduleNote: "Match times and the confirmed bracket will be shared by the organizers. Follow Discord for the latest tournament updates.",
+    actions: [
+      { label: "Join the substitute waitlist", href: "https://docs.google.com/forms/d/e/1FAIpQLSd3r4OWwrmXU4pHncy-8-67vYqmsSGwJlF4B-7FdBCf4Az5uA/viewform", primary: true },
+      { label: "Tournament Discord", href: "https://discord.gg/HaSTScWyB" },
+    ],
+    sections: [
+      {
+        title: "The tournament weekend",
+        items: ["Saturday, November 7 · Single-elimination knockout rounds, best of one.", "Sunday, November 8 · Final, best of three.", "All matches take place online through the Violet OP Discord."],
+      },
+      {
+        title: "Registration update",
+        body: "Main signups have closed after an overwhelming response. Teams and players are scheduled to be notified by November 1. Interested substitutes can still join the waitlist; organizers match openings by rank and role and will contact players on Discord if needed.",
+      },
+      {
+        title: "Player eligibility & fair play",
+        items: ["Open to current NYU students with a valid @nyu.edu email and NetID.", "Organizers verify enrollment, rank, and account history.", "Smurf accounts, alternate accounts, or misrepresented ranks can result in disqualification."],
+      },
+      {
+        title: "Questions before match day?",
+        body: "Visit the VOP Cup information desk at Halloween Fest on October 31, or check the tournament Discord for organizer announcements.",
+      },
+    ],
+    artwork: "roadToWorldsCup",
   },
   {
     id: "worlds-watch-party-2026",
@@ -89,11 +128,12 @@ export const mainEvents: MainEvent[] = [
     title: "Worlds Watch Party",
     startsOn: "2026-11-14",
     dateLabel: "November 14, 2026",
-    time: "1–6 PM",
-    startsAt: "2026-11-14T13:00:00-05:00",
-    location: "TBA",
+    time: "Time to be announced",
+    location: "Kimmel · Room to be announced",
     description: "Watch Worlds with the Violet OP community, with activities between games.",
-    artwork: "leagueCompetitive",
+    scheduleNote: "The room and start time will be confirmed by the organizers. Check Discord before making plans.",
+    updatedOn: "October 29, 2026",
+    artwork: "worldsWatchParty",
   },
 ];
 
@@ -128,6 +168,9 @@ export function isScheduledMainEvent(event: CalendarEvent): boolean {
   const part = (type: string) => parts.find((item) => item.type === type)?.value;
   const date = `${part("year")}-${part("month")}-${part("day")}`;
   const title = event.title.replace(/[^\p{L}\p{N}\s]/gu, " ");
+  // Retire the superseded registration/online-stage/November 6 schedule too.
+  // The team-match guard above continues to preserve individual matches.
+  if (seriesTitles["vop-cup"].test(title) && date >= "2026-10-05" && date <= "2026-11-08") return true;
   return mainEvents.some((entry) =>
     date >= entry.startsOn && date <= (entry.endsOn ?? entry.startsOn) && seriesTitles[entry.series].test(title),
   );

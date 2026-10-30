@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { eventArtwork } from "../data/eventArtwork";
+import { eventArtwork, type EventArtwork } from "../data/eventArtwork";
 import type { MainEvent } from "../data/mainEvents";
 import styles from "./MainEventList.module.css";
 
@@ -8,23 +8,24 @@ export default function MainEventList({ events }: { events: MainEvent[] }) {
   return (
     <div className={styles.list}>
       {events.map((event) => {
-        const artwork = eventArtwork[event.artwork];
+        const artwork: EventArtwork = eventArtwork[event.artwork];
         return (
           <article className={`glass-panel event-row-panel ${styles.card}`} key={event.id}>
-            <div className={styles.imageFrame}>
+            <div className={`${styles.imageFrame} ${artwork.objectFit === "contain" ? styles.posterFrame : ""}`}>
               <Image
                 alt={artwork.alt}
                 fill
                 quality={82}
                 sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1400px) calc((100vw - 72px) / 2), 664px"
                 src={artwork.src}
-                style={{ objectPosition: artwork.objectPosition }}
+                style={{ objectPosition: artwork.objectPosition, objectFit: artwork.objectFit ?? "cover" }}
               />
             </div>
             <div className={styles.content}>
               <div className={styles.date}>
                 <time dateTime={event.startsOn}>{event.dateLabel}</time>
                 {event.tentative ? <span className={styles.tentative}>Tentative</span> : null}
+                {event.status ? <span className={styles.tentative}>{event.status}</span> : null}
               </div>
               <h3><Link className={styles.eventLink} href={`/events/${event.id}`}>{event.title}<span className={styles.linkArrow} aria-hidden="true"> ↗</span></Link></h3>
               {event.time || event.location ? (

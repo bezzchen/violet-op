@@ -1,13 +1,10 @@
 "use client";
 
 import EventList from "../components/EventList";
-import Link from "next/link";
 import PageShell from "../components/PageShell";
 import { calendarFeeds, eventsContent } from "../data/siteContent";
 import { groupEvents } from "../data/eventGroups";
 import { isScheduledMainEvent, type MainEvent } from "../data/mainEvents";
-import EventArchive from "../media/EventArchive";
-import mediaStyles from "../media/Media.module.css";
 import type { CalendarEvent } from "../lib/ical";
 import EventPhotoCarousel from "./EventPhotoCarousel";
 import PlayerMatchList from "./PlayerMatchList";
@@ -24,13 +21,6 @@ export default function EventsClient({ events, error, upcomingMainEvents }: { ev
           <a className={styles.calendarLink} href={calendarFeeds.events}>Subscribe to calendar <span aria-hidden="true">↗</span></a>
         </div>
         <EventPhotoCarousel />
-        <section className={mediaStyles.pastSection} aria-labelledby="past-events-title">
-          <div className={mediaStyles.sectionHeading}>
-            <div><h2 id="past-events-title">Past events &amp; media</h2><p>Revisit the events through photos, videos, and reels.</p></div>
-            <Link className={mediaStyles.allMedia} href="/media">All event media <span aria-hidden="true">↗</span></Link>
-          </div>
-          <EventArchive compact />
-        </section>
         <div className={styles.columns}>
           <section aria-labelledby="matches-title" className={styles.column}>
             <h2 id="matches-title">Player Matches</h2>
@@ -39,7 +29,7 @@ export default function EventsClient({ events, error, upcomingMainEvents }: { ev
           </section>
           <section aria-labelledby="main-events-title" className={styles.column}>
             <h2 id="main-events-title">Main Events</h2>
-            <p className={styles.columnIntro}>Draft schedule · 2026. Tentative dates are marked; details may change. All times are New York local time.</p>
+            <p className={styles.columnIntro}>Halloween Fest, the VOP Cup, and what’s next. All times are New York local time; unconfirmed details are marked.</p>
             <MainEventList events={upcomingMainEvents} />
           </section>
         </div>

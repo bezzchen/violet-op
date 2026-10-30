@@ -4,6 +4,7 @@ export type EventArtwork = {
   src: string;
   alt: string;
   objectPosition: string;
+  objectFit?: "cover" | "contain";
 };
 
 type ActivityArtwork = EventArtwork & {
@@ -12,6 +13,28 @@ type ActivityArtwork = EventArtwork & {
 };
 
 export const eventArtwork = {
+  roadToWorldsCup: {
+    src: "/images/events/road-to-worlds-vop-cup-2026.png",
+    alt: "League of Legends characters in a school hallway, selected for the Road to Worlds VOP Cup",
+    objectPosition: "50% 50%",
+    game: "league",
+    activity: "competitive",
+  },
+  worldsWatchParty: {
+    src: "/images/events/worlds-watch-party-2026.png",
+    alt: "Blue-lit League of Legends Worlds arena with a match on the overhead screens and fans in the stands",
+    objectPosition: "50% 50%",
+    game: "league",
+    activity: "community",
+  },
+  halloweenFest: {
+    src: "/images/events/halloween-fest-2026.webp",
+    alt: "Violet OP Halloween Fest poster with a glowing purple cauldron and ghost, October 31, 1:30–5 PM at GCASL Grand Hall",
+    objectPosition: "50% 50%",
+    objectFit: "contain",
+    game: "league",
+    activity: "community",
+  },
   valorantGeneral: {
     src: "/images/events/valorant-episode-8-act-1.webp",
     alt: "VALORANT Episode 8 Act I artwork showing three agents overlooking a city",

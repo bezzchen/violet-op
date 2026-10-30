@@ -7,6 +7,7 @@
 .card { min-width: 0; overflow: hidden; border-radius: 0; }
 .imageFrame { position: relative; aspect-ratio: 8 / 1; overflow: hidden; background: #13101b; }
 .imageFrame img { object-fit: cover; }
+.imageFrame.posterFrame { height: 320px; max-height: 90vw; aspect-ratio: auto; background: radial-gradient(ellipse at center, #493065, #1b1429); }
 .content { padding: 20px 24px; }
 .date { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; color: #e2c8fa; font-size: 15px; font-weight: 750; line-height: 1.5; }
 .tentative { border: 1px solid #766186; padding: 3px 8px; color: var(--site-text); font-size: 12px; font-weight: 650; }

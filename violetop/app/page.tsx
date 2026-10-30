@@ -14,8 +14,8 @@ import {
   leagueTeams,
   valorantTeams,
 } from "./data/siteContent";
-import { eventArtwork } from "./data/eventArtwork";
-import { getUpcomingMainEvents, type MainEvent } from "./data/mainEvents";
+import { eventArtwork, type EventArtwork } from "./data/eventArtwork";
+import { getUpcomingMainEvents, halloweenEventId, type MainEvent } from "./data/mainEvents";
 import styles from "./Home.module.css";
 
 const discordUrl = "https://discord.gg/MAmXcrkADb";
@@ -26,7 +26,7 @@ function Arrow({ external = false }: { external?: boolean }) {
 }
 
 function EventPreview({ event, featured = false }: { event: MainEvent; featured?: boolean }) {
-  const artwork = eventArtwork[event.artwork];
+  const artwork: EventArtwork = eventArtwork[event.artwork];
   const date = new Date(`${event.startsOn}T12:00:00Z`);
 
   return (
@@ -38,7 +38,7 @@ function EventPreview({ event, featured = false }: { event: MainEvent; featured?
           quality={82}
           sizes={featured ? "(max-width: 760px) calc(100vw - 40px), 62vw" : "(max-width: 760px) calc(100vw - 40px), 24vw"}
           src={artwork.src}
-          style={{ objectPosition: artwork.objectPosition }}
+          style={{ objectPosition: artwork.objectPosition, objectFit: artwork.objectFit ?? "cover" }}
         />
       </div>
       <div className={styles.eventDetails}>
@@ -48,6 +48,7 @@ function EventPreview({ event, featured = false }: { event: MainEvent; featured?
         </div>
         <div className={styles.eventText}>
           {event.tentative ? <span className={styles.kicker}>Tentative</span> : null}
+          {event.status ? <span className={styles.kicker}>{event.status}</span> : null}
           <h3>{event.title}</h3>
           <time dateTime={event.startsOn}>{event.dateLabel}</time>
           {event.time ? <p>{event.time}{event.startsAt ? " · New York time" : ""}</p> : null}
@@ -60,7 +61,9 @@ function EventPreview({ event, featured = false }: { event: MainEvent; featured?
 }
 
 export default function Home() {
-  const [featuredEvent, ...supportEvents] = getUpcomingMainEvents(new Date()).slice(0, 3);
+  const upcomingEvents = getUpcomingMainEvents(new Date());
+  const halloween = upcomingEvents.find((event) => event.id === halloweenEventId);
+  const [featuredEvent, ...supportEvents] = upcomingEvents.filter((event) => event.id !== halloween?.id).slice(0, 3);
   const openPlayerPaths = joinContent.paths.filter((path) => path.applicationsOpen);
   const openStaffExamples = joinContent.staffRoles.filter(
     (role) => !role.filled && /events|creative/i.test(role.name),
@@ -70,6 +73,7 @@ export default function Home() {
     <>
       <Header />
       <main className={styles.page} id="main-content" tabIndex={-1}>
+        {halloween ? <Link href="#halloween" className={styles.seasonRibbon}><span>Halloween at NYU</span><span>Oct 31 · 1:30–5 PM · GCASL Grand Hall <Arrow /></span></Link> : null}
         <section aria-labelledby="hero-title" className={`${styles.hero} ${styles.glassCard}`} id="hero-section">
           <div className={styles.heroContent}>
             <p className={styles.eyebrow}>{homeContent.eyebrow}<span> / Collegiate esports</span></p>
@@ -82,6 +86,31 @@ export default function Home() {
           </div>
           <HomeHeroVideo />
         </section>
+        {halloween ? (
+          <section className={`${styles.section} ${styles.halloweenFeature}`} id="halloween" aria-labelledby="halloween-title">
+            <div className={styles.halloweenCopy}>
+              <p className={styles.halloweenEyebrow}>October 31 · Road to Worlds NYU</p>
+              <h2 id="halloween-title">Halloween Fest<br /><em>&amp; Worlds Watch Party</em></h2>
+              <p className={styles.halloweenHosts}>{halloween.hosts}</p>
+              <p className={styles.halloweenIntro}>Come for Worlds. Stay for the costumes, creative activities, and a whole afternoon with the community.</p>
+              <dl className={styles.halloweenLogistics}>
+                <div><dt>When</dt><dd><time dateTime={halloween.startsAt}>Saturday, October 31<br />1:30–5 PM EDT</time></dd></div>
+                <div><dt>Where</dt><dd>GCASL Grand Hall<br />5th floor · 238 Thompson Street</dd></div>
+              </dl>
+              <ul className={styles.halloweenHighlights}>
+                <li>Costume judging at 2:30 PM</li><li>Worlds viewing &amp; Riot merch giveaways</li><li>Anime, art &amp; the Blind Ranking Challenge</li>
+              </ul>
+              <div className={styles.heroActions}>
+                <a className={styles.halloweenRsvp} href="https://luma.com/l5ny5fhb" target="_blank" rel="noopener noreferrer">RSVP on Luma <Arrow external /></a>
+                <Link className={styles.secondaryAction} href={`/events/${halloween.id}`}>Full event details <Arrow /></Link>
+              </div>
+              <p className={styles.halloweenNote}>Host approval required. Non-NYU guests: RSVP early for guest registration.</p>
+            </div>
+            <Link className={styles.halloweenPoster} href={`/events/${halloween.id}`} aria-label="View Halloween Fest details">
+              <Image src="/images/events/halloween-fest-2026.webp" alt={eventArtwork.halloweenFest.alt} width={512} height={640} quality={85} sizes="(max-width: 760px) calc(100vw - 64px), 400px" />
+            </Link>
+          </section>
+        ) : null}
         <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">
           <div className={styles.sectionHeading}>
             <div>
