@@ -13,6 +13,7 @@ export type MainEvent = {
   tentative?: boolean;
   time?: string;
   startsAt?: string;
+  endsAt?: string;
   location?: string;
   description: string;
   details?: string;
@@ -35,7 +36,7 @@ export const mainEventRedirects: Record<string, string> = {
   "vop-cup-online-stage-2026": cupEventId,
 };
 
-/** Public announcements, verified October 29. Unknown times stay unconfirmed. */
+/** Tournament announcements verified October 29; Halloween recap added October 31. */
 export const mainEvents: MainEvent[] = [
   {
     id: "geng-fireside-chat-2026",
@@ -57,30 +58,11 @@ export const mainEvents: MainEvent[] = [
     startsAt: "2026-10-31T13:30:00-04:00",
     location: "GCASL Grand Hall · 5th floor",
     hosts: "Violet OP × Club Anime × NYU Gaming",
-    status: "RSVP on Luma",
-    updatedOn: "October 29, 2026",
-    description: "Spend Halloween with the NYU gaming and anime community: watch Worlds, join the costume contest, try the activities, and hang out between games.",
-    details: "238 Thompson Street, New York, NY 10012. Costumes from every fandom are welcome.",
-    scheduleNote: "All times are New York local time. Follow the Luma event and Discord for organizer updates.",
-    actions: [
-      { label: "RSVP on Luma", href: "https://luma.com/l5ny5fhb", primary: true },
-      { label: "VOP Cup details", href: `/events/${cupEventId}` },
-    ],
-    sections: [
-      {
-        title: "An afternoon of games, anime & costumes",
-        items: ["League of Legends Worlds viewing and Riot merch giveaways.", "Blind Ranking Challenge, tier-list and anime activities.", "Artist activities and 5-minute doodles, trivia, and a prize wheel.", "VOP Cup information desk for tournament questions."],
-      },
-      {
-        title: "Costume contest",
-        body: "Register in person from 1:30–2:30 PM. The costume walk and judging begin at 2:30 PM.",
-        items: ["Best Overall · HyperX Origins 2 65 gaming keyboard", "Best Anime · Pandemonium mousepad", "Best Handmade · Pandemonium mousepad", "Best Riot Games · Pandemonium mousepad", "Winners also receive Club Anime goodies."],
-      },
-      {
-        title: "Plan your visit",
-        body: "RSVP through Luma; attendance requires host approval. Non-NYU guests should RSVP early so organizers can arrange guest registration. Bring government-issued ID and follow the organizer’s check-in instructions.",
-      },
-    ],
+    endsAt: "2026-10-31T17:00:00-04:00",
+    status: "Event complete · Photos available",
+    updatedOn: "October 31, 2026",
+    description: "Worlds on the big screen, costumes on stage, and a hall full of the NYU gaming and anime community. Revisit Halloween Fest through photos by Artus Yeh, Katelyn, and msf.",
+    actions: [{ label: "View the recap & photos", href: `/media/${halloweenEventId}`, primary: true }],
     artwork: "halloweenFest",
   },
   {
@@ -117,7 +99,7 @@ export const mainEvents: MainEvent[] = [
       },
       {
         title: "Questions before match day?",
-        body: "Visit the VOP Cup information desk at Halloween Fest on October 31, or check the tournament Discord for organizer announcements.",
+        body: "Check the tournament Discord for organizer announcements, team updates, and match-day questions.",
       },
     ],
     artwork: "roadToWorldsCup",
@@ -148,12 +130,14 @@ const localDate = new Intl.DateTimeFormat("en-CA", {
   timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit",
 });
 
-/** Include ongoing multi-day events through their final New York calendar day. */
+/** Use a confirmed end time when known, otherwise the final New York calendar day. */
 export function getUpcomingMainEvents(now: Date): MainEvent[] {
   const parts = localDate.formatToParts(now);
   const part = (type: string) => parts.find((item) => item.type === type)?.value;
   const today = `${part("year")}-${part("month")}-${part("day")}`;
-  return mainEvents.filter((event) => (event.endsOn ?? event.startsOn) >= today)
+  return mainEvents.filter((event) => event.endsAt
+    ? new Date(event.endsAt).getTime() > now.getTime()
+    : (event.endsOn ?? event.startsOn) >= today)
     .sort((a, b) => a.startsOn.localeCompare(b.startsOn));
 }
 

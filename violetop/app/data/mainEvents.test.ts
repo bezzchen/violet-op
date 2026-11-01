@@ -12,7 +12,9 @@ test("homepage keeps ongoing main events and drops past events on New York dates
   assert.deepEqual(events.slice(0, 3).map((event) => event.id), [
     "halloween-event-2026", cupEventId, "worlds-watch-party-2026",
   ]);
-  assert.equal(getUpcomingMainEvents(new Date("2026-11-01T03:59:00Z"))[0].id, "halloween-event-2026");
+  assert.equal(getUpcomingMainEvents(new Date("2026-10-31T20:59:59Z"))[0].id, "halloween-event-2026");
+  assert.equal(getUpcomingMainEvents(new Date("2026-10-31T21:00:00Z"))[0].id, cupEventId);
+  assert.equal(getUpcomingMainEvents(new Date("2026-11-01T03:59:00Z"))[0].id, cupEventId);
   assert.equal(getUpcomingMainEvents(new Date("2026-11-01T04:00:00Z"))[0].id, cupEventId);
   assert.equal(getUpcomingMainEvents(new Date("2026-11-09T04:59:00Z"))[0].id, cupEventId);
   assert.equal(getUpcomingMainEvents(new Date("2026-11-09T05:00:00Z"))[0].id, "worlds-watch-party-2026");

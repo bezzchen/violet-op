@@ -77,3 +77,16 @@
 @media (max-width: 700px) { .page { width: calc(100% - 32px); padding-top: 92px; } .cardGrid:not(.compactGrid) { grid-template-columns: 1fr; } .cardBody { padding: 20px; } .heading { margin: 18px 0 28px; } .photoGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .sectionHeading { display: block; } .allMedia { margin-top: 10px; } .compactGrid { gap: 12px; } .compactGrid .cardBody { padding: 14px; } .compactGrid :is(h2, h3) { font-size: 18px; } .compactGrid .cardLink { font-size: 11px; gap: 6px; } .lightbox { width: calc(100vw - 16px); } .viewerFooter { gap: 10px; padding: 10px; } .viewerControls { gap: 8px; } .videoGrid { grid-template-columns: 1fr; } .videoCard { min-height: 88px; } }
 @media (max-width: 400px) { .compactGrid { grid-template-columns: 1fr; } .filters { gap: 6px; } .filters button { padding: 9px 10px; } }
 @media (prefers-reduced-motion: reduce) { .eventCard, .cardImage img, .photoButton img { transition: none; } .eventCard:hover .cardImage img, .photoButton:hover img { transform: none; } }
+
+.heroImage { margin: 0; }
+.eventIntro .hosts { color: #e2c8fa; font-size: 13px; font-weight: 750; }
+.eventIntro .credits { font-size: 12px; }
+.coverCredit { position: absolute; right: 10px; bottom: 10px; background: #100d18d9; color: #f6f1fa; padding: 5px 8px; font-size: 10px; }
+.recapHighlights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: -16px 0 52px; padding: 28px 0; border-top: 1px solid var(--site-border); }
+.recapHighlights h2 { margin: 0 0 12px; font-size: 21px; letter-spacing: -.03em; }
+.recapHighlights p { margin: 0; color: var(--site-text-muted); font-size: 14px; line-height: 1.75; }
+.categoryFilters { margin-bottom: 22px; }
+.photoButton { position: relative; }
+.photoCredit { position: absolute; right: 7px; bottom: 7px; color: white; background: #100d18d9; padding: 4px 7px; font-size: 10px; }
+.viewerCredit { display: block; margin-top: 5px; font-size: 11px; color: #d9b9f5; }
+@media (max-width: 700px) { .recapHighlights { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; } }

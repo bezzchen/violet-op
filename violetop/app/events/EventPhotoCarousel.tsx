@@ -40,7 +40,7 @@ export default function EventPhotoCarousel() {
           tabIndex={0}
         >
           {eventPhotos.map((slide, slideIndex) => (
-            <Image alt={slideIndex === index ? slide.alt : ""} aria-hidden={slideIndex !== index} className={styles.photo} draggable={false} fill key={slide.src} loading={slideIndex === 0 ? undefined : "eager"} preload={slideIndex === 0} quality={85} sizes={slide.fit === "contain" ? "(max-width: 760px) 43vw, 405px" : "(max-width: 760px) calc(100vw - 32px), (max-width: 1400px) calc(100vw - 48px), 1352px"} src={slide.src} style={{ objectFit: slide.fit, objectPosition: slide.focalPoint, opacity: slideIndex === index ? 1 : 0 }} />
+            <Image alt={slideIndex === index ? slide.alt : ""} aria-hidden={slideIndex !== index} className={styles.photo} draggable={false} fill key={slide.src} loading={slideIndex === 0 ? undefined : "eager"} preload={slideIndex === 0} quality={85} sizes="(max-width: 760px) calc(100vw - 32px), (max-width: 1400px) calc(100vw - 48px), 1352px" src={slide.src} style={{ objectFit: slide.fit, objectPosition: slide.focalPoint, opacity: slideIndex === index ? 1 : 0 }} />
           ))}
         </div>
         <figcaption className={styles.captionBar}>

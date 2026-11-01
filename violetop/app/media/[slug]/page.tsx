@@ -33,14 +33,18 @@ export default async function EventMediaPage({ params }: Props) {
           <div className={styles.eventIntro}>
             <span className={styles.eyebrow}>{event.category} · <time dateTime={event.date}>{event.dateLabel}</time></span>
             <h1>{event.title}</h1>
+            {event.hosts ? <p className={styles.hosts}>{event.hosts}</p> : null}
             <p>{event.description}</p>
+            {event.credits ? <p className={styles.credits}>Photography by {event.credits}.</p> : null}
             {event.location ? <p className={styles.location}>{event.location}</p> : null}
             <a className={styles.albumLink} href={event.albumUrl} target="_blank" rel="noopener noreferrer">Open original album <span aria-hidden="true">↗</span></a>
           </div>
-          <div className={styles.heroImage}>
+          <figure className={styles.heroImage} style={event.coverAspectRatio ? { aspectRatio: event.coverAspectRatio } : undefined}>
             <Image alt={event.coverAlt} fill preload quality={85} sizes="(max-width: 800px) calc(100vw - 32px), 700px" src={event.cover} style={{ objectPosition: event.coverPosition }} />
-          </div>
+            {event.coverCredit ? <figcaption className={styles.coverCredit}>Photo: {event.coverCredit}</figcaption> : null}
+          </figure>
         </header>
+        {event.highlights ? <section className={styles.recapHighlights} aria-label="Event highlights">{event.highlights.map((highlight) => <div key={highlight.title}><h2>{highlight.title}</h2><p>{highlight.body}</p></div>)}</section> : null}
         <MediaGallery key={slug} items={items} title={event.title} />
         <Link className={styles.nextEvent} href={`/media/${next.slug}`}><span>Another event<strong>{next.title}</strong></span><span aria-hidden="true">→</span></Link>
       </article>

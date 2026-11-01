@@ -1,5 +1,13 @@
 export const eventPhotos = [
   {
+    src: "/images/media/halloween-event-2026/dsc01132-artus-yeh.webp",
+    alt: "Costumed attendees posing on stage at Halloween Fest",
+    caption: "Halloween Fest · October 31 · Photos by Artus Yeh, Katelyn & msf",
+    href: "/media/halloween-event-2026",
+    focalPoint: "50% 60%",
+    fit: "contain",
+  },
+  {
     src: "/images/events/photos/geng-fireside-chat-cover.webp",
     alt: "Arnold Hur and the moderator on stage during the Gen.G fireside chat",
     caption: "Gen.G Fireside Chat · October 9",

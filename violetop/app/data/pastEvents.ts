@@ -9,11 +9,38 @@ export type PastEvent = {
   cover: string;
   coverAlt: string;
   coverPosition: string;
+  coverAspectRatio?: string;
   albumUrl: string;
+  hosts?: string;
+  credits?: string;
+  coverCredit?: string;
+  highlights?: { title: string; body: string }[];
 };
 
 /** Completed events confirmed against the school media archive and event recaps. */
 export const pastEvents: PastEvent[] = [
+  {
+    slug: "halloween-event-2026",
+    title: "Halloween Fest & Worlds Watch Party",
+    date: "2026-10-31",
+    dateLabel: "October 31, 2026",
+    category: "Event recap",
+    hosts: "Violet OP × Club Anime × NYU Gaming",
+    description: "Worlds on the big screen, costumes on stage, and a hall full of the NYU gaming and anime community. Thanks to everyone who joined us for Halloween Fest—from the costume contest to trivia, merch, and time with friends.",
+    location: "GCASL Grand Hall · NYU",
+    cover: "/images/media/halloween-event-2026/dsc01132-artus-yeh.webp",
+    coverAlt: "Costumed attendees posing together on stage beneath the Halloween Fest screen",
+    coverPosition: "50% 60%",
+    coverAspectRatio: "3 / 2",
+    coverCredit: "Artus Yeh",
+    credits: "Artus Yeh, Katelyn, and msf",
+    albumUrl: "https://drive.google.com/drive/folders/1TR23UKDhHUjpLYolAL6Q6zgrob5uzf0N",
+    highlights: [
+      { title: "Costumes took the stage", body: "The costume contest brought the community up front for prizes, poses, and one big group photo." },
+      { title: "Worlds, together", body: "Between activities, attendees settled in to watch League of Legends on the Grand Hall’s big screen." },
+      { title: "Around the hall", body: "Trivia, Riot merch, the Red Bull table, and NYU Gaming gave everyone plenty to stop by between games." },
+    ],
+  },
   {
     slug: "geng-fireside-chat-2026",
     title: "A fireside chat with Gen.G",
@@ -72,6 +99,8 @@ export type EventMediaItem = {
   sourceUrl: string;
   src?: string;
   thumbnail?: string;
+  photographer?: string;
+  category?: string;
   alt?: string;
   width?: number;
   height?: number;

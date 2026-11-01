@@ -29,7 +29,7 @@ export default function EventsClient({ events, error, upcomingMainEvents }: { ev
           </section>
           <section aria-labelledby="main-events-title" className={styles.column}>
             <h2 id="main-events-title">Main Events</h2>
-            <p className={styles.columnIntro}>Halloween Fest, the VOP Cup, and what’s next. All times are New York local time; unconfirmed details are marked.</p>
+            <p className={styles.columnIntro}>The VOP Cup, Worlds Watch Party, and what’s next. All times are New York local time; unconfirmed details are marked.</p>
             <MainEventList events={upcomingMainEvents} />
           </section>
         </div>
