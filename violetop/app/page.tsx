@@ -97,13 +97,12 @@ export default function Home() {
               <Link className={styles.recapAction} href={`/media/${halloween.slug}`}>Explore the photos <Arrow /></Link>
               <Link className={styles.secondaryAction} href="#latest">What’s next <Arrow /></Link>
             </div>
-            <p className={styles.halloweenNote}>Photography by {halloween.credits}.</p>
           </div>
           <figure className={styles.recapPhoto}>
             <Link href={`/media/${halloween.slug}`} aria-label="See Halloween Fest photos">
               <Image src={halloween.cover} alt={halloween.coverAlt} width={1920} height={1280} quality={85} sizes="(max-width: 760px) calc(100vw - 64px), 55vw" />
             </Link>
-            <figcaption>One last group photo. <span>Photo: {halloween.coverCredit}</span></figcaption>
+            <figcaption>One last group photo.</figcaption>
           </figure>
         </section>
         <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">

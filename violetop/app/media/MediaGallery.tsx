@@ -53,9 +53,8 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
       {filter === "photo" && categories.length ? <div className={`${styles.filters} ${styles.categoryFilters}`} role="group" aria-label="Photo activity">{["All moments", ...categories].map((value) => <button key={value} type="button" aria-pressed={category === value} onClick={() => { setCategory(value); setVisible(24); }}>{value}</button>)}</div> : null}
       <div className={filter === "video" ? styles.videoGrid : styles.photoGrid}>
         {filtered.slice(0, visible).map((item, index) => (
-          <button className={filter === "video" ? styles.videoCard : styles.photoButton} type="button" key={item.id} onClick={(event) => { opener.current = event.currentTarget; setSelected(item); }} aria-label={filter === "video" ? `Watch ${item.label}` : `Open ${item.label}${item.photographer ? ` — Photo by ${item.photographer}` : ""}`}>
+          <button className={filter === "video" ? styles.videoCard : styles.photoButton} type="button" key={item.id} onClick={(event) => { opener.current = event.currentTarget; setSelected(item); }} aria-label={filter === "video" ? `Watch ${item.label}` : `Open ${item.label}`}>
             {item.thumbnail ? <Image alt={item.alt ?? title} src={item.thumbnail} width={item.width ?? 640} height={item.height ?? 480} unoptimized /> : <><span className={styles.playIcon} aria-hidden="true">▶</span><span className={styles.videoTitle}><strong>{item.kind === "reel" ? "Event reel" : `Video ${String(index + 1).padStart(2, "0")}`}</strong><small>{item.label}</small></span><span className={styles.videoArrow} aria-hidden="true">↗</span></>}
-            {item.photographer ? <span className={styles.photoCredit}>{item.photographer}</span> : null}
           </button>
         ))}
       </div>
@@ -67,7 +66,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
         if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowLeft" ? -1 : 1); }
       }}>
         {selected ? <div className={styles.viewer}>
-          <div className={styles.viewerBar}><span>{selected.label}{selected.photographer ? <small className={styles.viewerCredit}>Photo by {selected.photographer}</small> : null}</span><button className={styles.close} aria-label="Close media viewer" autoFocus type="button" onClick={close}>×</button></div>
+          <div className={styles.viewerBar}><span>{selected.label}</span><button className={styles.close} aria-label="Close media viewer" autoFocus type="button" onClick={close}>×</button></div>
           <div className={styles.viewerStage}>
             {selected.src ? <Image alt={selected.alt ?? title} src={selected.src} width={selected.width ?? 1920} height={selected.height ?? 1280} unoptimized /> : <iframe key={selected.id} title={selected.label} src={`https://drive.google.com/file/d/${selected.id}/preview`} allow="autoplay; fullscreen" allowFullScreen referrerPolicy="no-referrer" />}
           </div>

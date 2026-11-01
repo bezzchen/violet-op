@@ -61,7 +61,7 @@ export const mainEvents: MainEvent[] = [
     endsAt: "2026-10-31T17:00:00-04:00",
     status: "Event complete · Photos available",
     updatedOn: "October 31, 2026",
-    description: "Worlds on the big screen, costumes on stage, and a hall full of the NYU gaming and anime community. Revisit Halloween Fest through photos by Artus Yeh, Katelyn, and msf.",
+    description: "Worlds on the big screen, costumes on stage, and a hall full of the NYU gaming and anime community. Revisit the moments from Halloween Fest in the photo gallery.",
     actions: [{ label: "View the recap & photos", href: `/media/${halloweenEventId}`, primary: true }],
     artwork: "halloweenFest",
   },

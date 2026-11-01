@@ -80,13 +80,8 @@
 
 .heroImage { margin: 0; }
 .eventIntro .hosts { color: #e2c8fa; font-size: 13px; font-weight: 750; }
-.eventIntro .credits { font-size: 12px; }
-.coverCredit { position: absolute; right: 10px; bottom: 10px; background: #100d18d9; color: #f6f1fa; padding: 5px 8px; font-size: 10px; }
 .recapHighlights { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin: -16px 0 52px; padding: 28px 0; border-top: 1px solid var(--site-border); }
 .recapHighlights h2 { margin: 0 0 12px; font-size: 21px; letter-spacing: -.03em; }
 .recapHighlights p { margin: 0; color: var(--site-text-muted); font-size: 14px; line-height: 1.75; }
 .categoryFilters { margin-bottom: 22px; }
-.photoButton { position: relative; }
-.photoCredit { position: absolute; right: 7px; bottom: 7px; color: white; background: #100d18d9; padding: 4px 7px; font-size: 10px; }
-.viewerCredit { display: block; margin-top: 5px; font-size: 11px; color: #d9b9f5; }
 @media (max-width: 700px) { .recapHighlights { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; } }

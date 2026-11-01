@@ -35,13 +35,11 @@ export default async function EventMediaPage({ params }: Props) {
             <h1>{event.title}</h1>
             {event.hosts ? <p className={styles.hosts}>{event.hosts}</p> : null}
             <p>{event.description}</p>
-            {event.credits ? <p className={styles.credits}>Photography by {event.credits}.</p> : null}
             {event.location ? <p className={styles.location}>{event.location}</p> : null}
             <a className={styles.albumLink} href={event.albumUrl} target="_blank" rel="noopener noreferrer">Open original album <span aria-hidden="true">↗</span></a>
           </div>
           <figure className={styles.heroImage} style={event.coverAspectRatio ? { aspectRatio: event.coverAspectRatio } : undefined}>
             <Image alt={event.coverAlt} fill preload quality={85} sizes="(max-width: 800px) calc(100vw - 32px), 700px" src={event.cover} style={{ objectPosition: event.coverPosition }} />
-            {event.coverCredit ? <figcaption className={styles.coverCredit}>Photo: {event.coverCredit}</figcaption> : null}
           </figure>
         </header>
         {event.highlights ? <section className={styles.recapHighlights} aria-label="Event highlights">{event.highlights.map((highlight) => <div key={highlight.title}><h2>{highlight.title}</h2><p>{highlight.body}</p></div>)}</section> : null}
