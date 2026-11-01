@@ -172,7 +172,7 @@ export const aboutContent = {
           image: memberImages.katelyn,
         },
         { name: "Logan Tsai", role: "Tournament Operations Lead", image: memberImages.logan },
-        { name: "Chris He", role: "Webmaster / Events Coordinator" },
+        { name: "Chris He", role: "Webmaster" },
       ],
     },
     {
@@ -198,7 +198,7 @@ export const aboutContent = {
         },
         { name: "Logan Tsai", role: "Social Media Manager", image: memberImages.logan },
         { name: "Eric Qi", role: "Social Media Manager", image: memberImages.eric },
-        { name: "Chris He", role: "Head of Outreach" },
+        { name: "Chris He", role: "Operations and Outreach Head" },
       ],
     },
     {
