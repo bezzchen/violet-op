@@ -39,8 +39,8 @@
 .watchNow:hover { background: #e4cfff; }
 .watchIcon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: #18101e; color: #e4cfff; font-size: 12px; padding-left: 2px; }
 .watchArrow { margin-left: 12px; font-size: 20px; }
-.previewToggle { position: absolute; z-index: 3; top: 22px; right: 22px; display: flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 14px; border: 1px solid #ffffff50; background: #0c0814b8; color: white; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; backdrop-filter: blur(10px); }
-.previewToggle:hover { background: #20172dde; }
+.previewToggle { position: absolute; z-index: 3; top: 22px; right: 22px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent; color: #fff; cursor: pointer; }
+.previewToggle svg { display: block; }
 .eyebrow, .kicker {
   margin: 0;
   color: var(--accent);

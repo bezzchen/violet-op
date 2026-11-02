@@ -67,8 +67,13 @@ export default function HomeHeroVideo() {
       />
       {!failed ? (
         <button type="button" className={styles.previewToggle} onClick={togglePlayback} aria-label={isPlaying ? "Pause video preview" : "Play video preview"}>
-          <span aria-hidden="true">{isPlaying ? "Ⅱ" : "▶"}</span>
-          <span>{isPlaying ? "Pause" : "Play preview"}</span>
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false">
+            {isPlaying ? (
+              <><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></>
+            ) : (
+              <path d="M7 4v16l13-8Z" />
+            )}
+          </svg>
         </button>
       ) : null}
       <div className={styles.videoCaption}>
