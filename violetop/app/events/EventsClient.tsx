@@ -2,7 +2,7 @@
 
 import EventList from "../components/EventList";
 import PageShell from "../components/PageShell";
-import { calendarFeeds, eventsContent } from "../data/siteContent";
+import { calendarFeeds } from "../data/siteContent";
 import { groupEvents } from "../data/eventGroups";
 import { isScheduledMainEvent, type MainEvent } from "../data/mainEvents";
 import type { CalendarEvent } from "../lib/ical";
@@ -16,7 +16,7 @@ export default function EventsClient({ events, error, upcomingMainEvents }: { ev
     <PageShell>
       <div className={styles.page}>
         <div className={styles.heading}>
-          <div><span className={styles.eyebrow}>Violet OP events</span><h1>{eventsContent.title}</h1></div>
+          <h1 className="sr-only">Events</h1>
           <a className={styles.calendarLink} href={calendarFeeds.events}>Subscribe to calendar </a>
         </div>
         <div className={styles.columns}>
