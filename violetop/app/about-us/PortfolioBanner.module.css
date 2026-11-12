@@ -1,0 +1,41 @@
+.banner { position: relative; padding: 18px 0 8px; overflow: hidden; isolation: isolate; }
+.topline, .toolbar, .bottomline { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-inline: clamp(8px, 3vw, 44px); }
+.topline { padding-bottom: 24px; color: #b8a6d1; font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+.topline a { display: inline-flex; align-items: center; min-height: 44px; color: #e7dff2; text-decoration: none; letter-spacing: 0; font-size: 12px; }
+.stage { position: relative; height: min(48vw, 660px); min-height: 260px; perspective: 1600px; touch-action: pan-y pinch-zoom; }
+.stage::before { content: ""; position: absolute; inset: 10% 12%; background: radial-gradient(ellipse, #52278c55, transparent 68%); filter: blur(40px); pointer-events: none; z-index: -1; }
+.slide { position: absolute; top: 50%; left: 50%; width: min(82%, 1040px); aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0c0911; box-shadow: 0 24px 70px #0009; backface-visibility: hidden; pointer-events: none; transform: translate(-50%, -50%) translateX(calc(var(--offset) * 82%)) translateZ(calc(var(--distance) * -220px)) rotateY(var(--tilt)); transition: transform 850ms cubic-bezier(.22, 1, .36, 1), opacity 650ms ease; }
+.slide img { object-fit: contain; user-select: none; }
+.toolbar { padding-top: 18px; }
+.caption { display: flex; gap: 20px; align-items: center; min-width: 0; }
+.count { font-variant-numeric: tabular-nums; color: #b8a6d1; white-space: nowrap; font-size: 11px; }
+.caption strong { font-size: clamp(15px, 1.5vw, 21px); font-weight: 650; }
+.controls { display: flex; gap: 8px; flex-shrink: 0; }
+.controls button { min-height: 44px; padding: 10px 16px; color: #eee7f5; background: var(--glass-control); border: 0; border-radius: 24px; font: inherit; font-size: 12px; cursor: pointer; }
+.controls button:hover { background: var(--glass-hover); }
+.controls button:disabled { opacity: .45; cursor: default; }
+.bottomline { padding-top: 14px; }
+.pagination { display: flex; flex-wrap: wrap; gap: 2px; }
+.pagination button { display: grid; place-items: center; width: 32px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.pagination span { width: 18px; height: 3px; border-radius: 4px; background: #ffffff26; transition: background 250ms, transform 250ms; }
+.pagination button[aria-current="true"] span { background: #c5a1f0; transform: scaleX(1.3); }
+.hint { color: #b3a8c1; font-size: 11px; }
+.banner :is(button, a, [tabindex]):focus-visible { outline: 2px solid #dac0fa; outline-offset: 4px; }
+@media (max-width: 760px) {
+  .banner { padding-top: 0; }
+  .topline, .toolbar, .bottomline { padding-inline: 0; }
+  .topline { gap: 12px; padding-bottom: 12px; font-size: 8px; letter-spacing: .07em; }
+  .topline a { font-size: 11px; white-space: nowrap; }
+  .stage { height: 60vw; min-height: 210px; perspective: 1000px; }
+  .slide { width: 94%; border-radius: 8px; }
+  .toolbar { flex-wrap: wrap; gap: 16px; padding-top: 12px; }
+  .caption { gap: 12px; }
+  .controls { margin-left: auto; }
+  .controls button { padding-inline: 14px; }
+  .bottomline { flex-direction: column; align-items: flex-start; gap: 0; }
+  .pagination { width: 100%; }
+  .pagination button { flex: 1; min-width: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide, .pagination span { transition: none; }
+}

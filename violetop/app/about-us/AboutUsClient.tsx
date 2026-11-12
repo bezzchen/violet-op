@@ -1,4 +1,4 @@
-import Image from "next/image";
+import PortfolioBanner from "./PortfolioBanner";
 import MemberPortrait from "../components/MemberPortrait";
 import PageShell from "../components/PageShell";
 import { aboutContent, type MemberImage } from "../data/siteContent";
@@ -43,20 +43,11 @@ export default function AboutUsClient() {
   return (
     <PageShell>
       <div className={styles.wrap}>
-        <header className={styles.intro}>
-          <div className={styles.introCopy}>
-            <h1>{aboutContent.title}</h1>
-            <p>{aboutContent.paragraphs[0]}</p>
-          </div>
-          <div className={styles.introPhoto}>
-            <Image alt="Violet OP members together at a team gathering" fill priority quality={75} sizes="(max-width: 760px) 100vw, 42vw" src={aboutContent.image} />
-          </div>
-        </header>
+        <PortfolioBanner />
 
         <section aria-labelledby="directory-heading" className={styles.directory}>
           <div className={styles.sectionHeading}>
-            <h2 id="directory-heading">People Directory</h2>
-            <p>Meet the people who lead, organize, create, and compete with Violet OP. Leadership is listed first; the remaining order does not imply rank.</p>
+            <h2 id="directory-heading">Staff</h2>
           </div>
           <div className={styles.peopleGrid}>
             {people.map((person, index) => (
