@@ -35,7 +35,7 @@ export default function PlayerMatchList({ events, error }: Props) {
             </div>
             <div className={styles.trailing}>
               <span className={styles.weekday}>{event.weekday}</span>
-              {hasDetails ? <a href={event.url} rel="noopener noreferrer" target="_blank">Event details <span aria-hidden="true">↗</span><span className="sr-only">: {event.title}</span></a> : null}
+              {hasDetails ? <a href={event.url} rel="noopener noreferrer" target="_blank">Event details <span className="sr-only">: {event.title}</span></a> : null}
             </div>
           </article>
         );

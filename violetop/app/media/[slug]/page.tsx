@@ -36,7 +36,7 @@ export default async function EventMediaPage({ params }: Props) {
             {event.hosts ? <p className={styles.hosts}>{event.hosts}</p> : null}
             <p>{event.description}</p>
             {event.location ? <p className={styles.location}>{event.location}</p> : null}
-            <a className={styles.albumLink} href={event.albumUrl} target="_blank" rel="noopener noreferrer">Open original album <span aria-hidden="true">↗</span></a>
+            <a className={styles.albumLink} href={event.albumUrl} target="_blank" rel="noopener noreferrer">Open original album </a>
           </div>
           <figure className={styles.heroImage} style={event.coverAspectRatio ? { aspectRatio: event.coverAspectRatio } : undefined}>
             <Image alt={event.coverAlt} fill preload quality={85} sizes="(max-width: 800px) calc(100vw - 32px), 700px" src={event.cover} style={{ objectPosition: event.coverPosition }} />

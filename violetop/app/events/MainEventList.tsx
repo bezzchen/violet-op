@@ -27,7 +27,7 @@ export default function MainEventList({ events }: { events: MainEvent[] }) {
                 {event.tentative ? <span className={styles.tentative}>Tentative</span> : null}
                 {event.status ? <span className={styles.tentative}>{event.status}</span> : null}
               </div>
-              <h3><Link className={styles.eventLink} href={`/events/${event.id}`}>{event.title}<span className={styles.linkArrow} aria-hidden="true"> ↗</span></Link></h3>
+              <h3><Link className={styles.eventLink} href={`/events/${event.id}`}>{event.title}</Link></h3>
               {event.time || event.location ? (
                 <dl className={styles.logistics}>
                   {event.time ? <div><dt>Time</dt><dd>{event.startsAt ? <time dateTime={event.startsAt}>{event.time}</time> : event.time}</dd></div> : null}

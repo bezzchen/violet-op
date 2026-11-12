@@ -55,10 +55,10 @@ export default async function EventPage({ params }: Props) {
               {event.details ? <p>{event.details}</p> : null}
               {event.registrationNotice ? <p className={styles.notice}>{event.registrationNotice}</p> : null}
             </div>
-            {event.actions?.length ? <div className={styles.actions}>{event.actions.map((action) => <a key={action.href} href={action.href} className={action.primary ? styles.primaryAction : styles.discord} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label}<span aria-hidden="true">{action.href.startsWith("https:") ? "↗" : "→"}</span></a>)}</div> : null}
+            {event.actions?.length ? <div className={styles.actions}>{event.actions.map((action) => <a key={action.href} href={action.href} className={action.primary ? styles.primaryAction : styles.discord} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label}{action.href.startsWith("https:") ? null : <span aria-hidden="true">→</span>}</a>)}</div> : null}
             {event.sections?.length ? <div className={styles.detailSections}>{event.sections.map((section) => <section key={section.title} className={styles.detailSection}><h2>{section.title}</h2>{section.body ? <p>{section.body}</p> : null}{section.items?.length ? <ul>{section.items.map((item) => <li key={item}>{item}</li>)}</ul> : null}</section>)}</div> : null}
             <p className={styles.scheduleNote}>{event.scheduleNote ?? "Event details may change. Check Discord for organizer updates."}{event.updatedOn ? <><br />Updated {event.updatedOn}.</> : null}</p>
-            <a className={styles.discord} href="https://discord.gg/MAmXcrkADb" target="_blank" rel="noopener noreferrer">Event updates on Discord <span aria-hidden="true">↗</span></a>
+            <a className={styles.discord} href="https://discord.gg/MAmXcrkADb" target="_blank" rel="noopener noreferrer">Event updates on Discord </a>
           </div>
         </article>
         {related.length ? (

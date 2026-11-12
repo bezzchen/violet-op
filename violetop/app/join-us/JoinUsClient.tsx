@@ -212,7 +212,7 @@ export default function JoinUsClient() {
                                   rel="noreferrer"
                                   target="_blank"
                                 >
-                                  Apply ↗
+                                  Apply
                                 </Link>
                               )}
                               {team ? (
@@ -273,7 +273,7 @@ export default function JoinUsClient() {
                       {role.name}
                     </span>
                     <span className="shrink-0 font-label-caps text-[10px] uppercase text-tertiary">
-                      {role.filled ? "Filled" : "Apply ↗"}
+                      {role.filled ? "Filled" : "Apply"}
                     </span>
                   </div>
                 </article>

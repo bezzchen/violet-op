@@ -90,7 +90,7 @@ export default function EventList({
                       {event.location}
                     </p>
                   ) : null}
-                  {event.url && /^https?:\/\//i.test(event.url) ? <a className="mt-3 inline-block text-primary underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4" href={event.url} rel="noopener noreferrer" target="_blank">Event details ↗</a> : null}
+                  {event.url && /^https?:\/\//i.test(event.url) ? <a className="mt-3 inline-block text-primary underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4" href={event.url} rel="noopener noreferrer" target="_blank">Event details</a> : null}
                 </div>
 
                 <span className={`inline-flex self-start rounded-none bg-primary-fixed px-4 py-1.5 font-headline-md text-base font-bold text-on-primary-fixed ${compact ? "xl:self-center" : "sm:self-center"}`}>

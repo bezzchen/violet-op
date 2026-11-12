@@ -18,7 +18,7 @@ export default function EventsClient({ events, error, upcomingMainEvents }: { ev
       <div className={styles.page}>
         <div className={styles.heading}>
           <div><span className={styles.eyebrow}>Violet OP events</span><h1>{eventsContent.title}</h1></div>
-          <a className={styles.calendarLink} href={calendarFeeds.events}>Subscribe to calendar <span aria-hidden="true">↗</span></a>
+          <a className={styles.calendarLink} href={calendarFeeds.events}>Subscribe to calendar </a>
         </div>
         <EventPhotoCarousel />
         <div className={styles.columns}>

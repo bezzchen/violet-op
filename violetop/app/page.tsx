@@ -22,7 +22,7 @@ const discordUrl = "https://discord.gg/MAmXcrkADb";
 export const revalidate = 900;
 
 function Arrow({ external = false }: { external?: boolean }) {
-  return <span aria-hidden="true">{external ? "↗" : "→"}</span>;
+  return external ? null : <span aria-hidden="true">→</span>;
 }
 
 function EventPreview({ event, featured = false }: { event: MainEvent; featured?: boolean }) {
@@ -121,7 +121,7 @@ export default function Home() {
           ) : (
             <div className={styles.emptyEvents}>
               <div>
-                <span className={styles.emptyMark} aria-hidden="true">↗</span>
+                
                 <h3>No Upcoming Main Events</h3>
                 <p>{eventsContent.emptyMessage}</p>
               </div>

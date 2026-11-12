@@ -43,7 +43,7 @@ export default function GameOverview({ game }: { game: Game }) {
               <div>
                 <h2 id="rosters-title">{isValorant ? "VALORANT Rosters" : "League of Legends Rosters"}</h2>
               </div>
-              <Link className={styles.secondaryLink} href="/join-us#player-paths">Recruitment Details ↗</Link>
+              <Link className={styles.secondaryLink} href="/join-us#player-paths">Recruitment Details</Link>
             </div>
             <div className={styles.teamGrid}>
               {teams.map((team) => {

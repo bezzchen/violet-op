@@ -12,22 +12,21 @@ export default function SocialBanner() {
     <section className={styles.banner} aria-labelledby="social-heading">
       <header className={styles.intro}>
         <h1 id="social-heading">Find us on your feed.</h1>
-        <p>Clips, community, and everything VOP.</p>
       </header>
       <div className={styles.platforms}>
         <section className={styles.instagram} aria-labelledby="instagram-heading">
           <div className={styles.platformHeading}>
             <h3 id="instagram-heading"><span className={styles.instagramIcon} aria-hidden="true">◎</span> Instagram</h3>
-            <a href={socialMedia.instagramUrl} target="_blank" rel="noopener noreferrer">@nyuvioletop <span aria-hidden="true">↗</span></a>
+            <a href={socialMedia.instagramUrl} target="_blank" rel="noopener noreferrer">@nyuvioletop </a>
           </div>
           <div className={styles.posts}>
             {socialMedia.instagram.map((post) => (
               <a className={styles.post} href={post.url} key={post.url} target="_blank" rel="noopener noreferrer" aria-label={`View Violet OP's ${post.label} ${post.type.toLowerCase()} on Instagram`}>
                 <div className={styles.postImage}>
-                  <Image src={post.image} alt={post.alt} fill sizes="(max-width: 700px) 210px, (max-width: 1000px) 30vw, 240px" />
+                  <Image src={post.image} alt={post.alt} fill sizes="(max-width: 700px) 82vw, (max-width: 1400px) 32vw, 440px" />
                   <span className={styles.postType}>{post.type === "Reel" ? "▶ Reel" : "Post"}</span>
                 </div>
-                <div className={styles.postCaption}><time dateTime={post.date}>{post.label}</time><span aria-hidden="true">↗</span></div>
+                <div className={styles.postCaption}><time dateTime={post.date}>{post.label}</time></div>
               </a>
             ))}
           </div>
@@ -35,17 +34,17 @@ export default function SocialBanner() {
         <section className={styles.youtube} aria-labelledby="youtube-heading">
           <div className={styles.platformHeading}>
             <h3 id="youtube-heading"><span className={styles.youtubeIcon} aria-hidden="true">▶</span> YouTube</h3>
-            <a href={socialMedia.youtubeUrl} target="_blank" rel="noopener noreferrer">View channel <span aria-hidden="true">↗</span></a>
+            <a href={socialMedia.youtubeUrl} target="_blank" rel="noopener noreferrer">View channel </a>
           </div>
           <div className={styles.videos}>
             {socialMedia.youtube.map((video) => (
-              <article className={`${styles.video} ${playing === video.id ? styles.videoActive : ""}`} key={video.id}>
+              <article className={styles.video} key={video.id}>
                 <div className={styles.videoPreview}>
                   {playing === video.id ? (
                     <iframe src={`https://www.youtube-nocookie.com/embed/${video.id}?autoplay=1&rel=0&playsinline=1`} title={video.title} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen referrerPolicy="strict-origin-when-cross-origin" />
                   ) : (
                     <button className={styles.play} onClick={() => setPlaying(video.id)} aria-label={`Play ${video.title}`}>
-                      <Image src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" fill sizes="(max-width: 700px) calc(100vw - 72px), (max-width: 1000px) 42vw, 230px" />
+                      <Image src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" fill sizes="(max-width: 700px) calc(100vw - 32px), (max-width: 1400px) 48vw, 664px" />
                       <span className={styles.playIcon} aria-hidden="true">▶</span>
                       <span className={styles.duration}>{video.duration}</span>
                     </button>
@@ -54,7 +53,7 @@ export default function SocialBanner() {
                 <div className={styles.videoInfo}>
                   <h4>{video.title}</h4>
                   <p>{video.description}</p>
-                  <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${video.title} on YouTube`}>Watch on YouTube ↗</a>
+                  <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${video.title} on YouTube`}>Watch on YouTube</a>
                 </div>
               </article>
             ))}

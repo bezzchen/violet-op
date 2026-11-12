@@ -16,7 +16,7 @@ export default function EventArchive({ compact = false }: { compact?: boolean })
             <time dateTime={event.date}>{event.dateLabel}</time>
             <Heading>{event.title}</Heading>
             {!compact ? <p>{event.description}</p> : null}
-            <span className={styles.cardLink}>View event media <span aria-hidden="true">↗</span></span>
+            <span className={styles.cardLink}>View event media </span>
           </div>
         </Link>
       ))}

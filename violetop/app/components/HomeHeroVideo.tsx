@@ -82,7 +82,7 @@ export default function HomeHeroVideo() {
         <a className={styles.watchNow} href={fullVideoUrl} target="_blank" rel="noopener noreferrer" aria-label="Watch now: Know My Name — full dance film on YouTube">
           <span className={styles.watchIcon} aria-hidden="true">▶</span>
           Watch now
-          <span className={styles.watchArrow} aria-hidden="true">↗</span>
+          
         </a>
       </div>
     </div>

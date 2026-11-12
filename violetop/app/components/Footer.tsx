@@ -27,14 +27,14 @@ export default function Footer({ pinned = false }: FooterProps) {
           <div>
             <span>Get involved</span>
             <Link href="/join-us">Join Us</Link>
-            <a href="https://discord.gg/MAmXcrkADb" rel="noopener noreferrer" target="_blank">Discord ↗</a>
-            <a href="https://www.instagram.com/nyuvioletop/" rel="noopener noreferrer" target="_blank">Instagram ↗</a>
-            <a href="https://www.youtube.com/@NYUVioletOP" rel="noopener noreferrer" target="_blank">YouTube ↗</a>
+            <a href="https://discord.gg/MAmXcrkADb" rel="noopener noreferrer" target="_blank">Discord</a>
+            <a href="https://www.instagram.com/nyuvioletop/" rel="noopener noreferrer" target="_blank">Instagram</a>
+            <a href="https://www.youtube.com/@NYUVioletOP" rel="noopener noreferrer" target="_blank">YouTube</a>
           </div>
           <div>
             <span>Organization</span>
             <Link href="/eboard">E-Board</Link>
-            <a href="https://docs.google.com/document/d/1dpVfc-GSqrE4rZi5tDV2NwRhCl0gWfAB0cEIPOFGKIk/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Constitution ↗</a>
+            <a href="https://docs.google.com/document/d/1dpVfc-GSqrE4rZi5tDV2NwRhCl0gWfAB0cEIPOFGKIk/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Constitution</a>
           </div>
         </nav>
       </div>

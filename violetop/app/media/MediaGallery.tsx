@@ -54,7 +54,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
       <div className={filter === "video" ? styles.videoGrid : styles.photoGrid}>
         {filtered.slice(0, visible).map((item, index) => (
           <button className={filter === "video" ? styles.videoCard : styles.photoButton} type="button" key={item.id} onClick={(event) => { opener.current = event.currentTarget; setSelected(item); }} aria-label={filter === "video" ? `Watch ${item.label}` : `Open ${item.label}`}>
-            {item.thumbnail ? <Image alt={item.alt ?? title} src={item.thumbnail} width={item.width ?? 640} height={item.height ?? 480} unoptimized /> : <><span className={styles.playIcon} aria-hidden="true">▶</span><span className={styles.videoTitle}><strong>{item.kind === "reel" ? "Event reel" : `Video ${String(index + 1).padStart(2, "0")}`}</strong><small>{item.label}</small></span><span className={styles.videoArrow} aria-hidden="true">↗</span></>}
+            {item.thumbnail ? <Image alt={item.alt ?? title} src={item.thumbnail} width={item.width ?? 640} height={item.height ?? 480} unoptimized /> : <><span className={styles.playIcon} aria-hidden="true">▶</span><span className={styles.videoTitle}><strong>{item.kind === "reel" ? "Event reel" : `Video ${String(index + 1).padStart(2, "0")}`}</strong><small>{item.label}</small></span></>}
           </button>
         ))}
       </div>
@@ -72,7 +72,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
           </div>
           <div className={styles.viewerFooter}>
             <div className={styles.viewerControls}><button type="button" aria-label="Previous media" onClick={() => move(-1)}>←</button><span aria-live="polite">{selectedIndex + 1} / {filtered.length}</span><button type="button" aria-label="Next media" onClick={() => move(1)}>→</button></div>
-            <a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.src ? "Open original" : "Open in Google Drive"} ↗</a>
+            <a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.src ? "Open original" : "Open in Google Drive"}</a>
           </div>
         </div> : null}
       </dialog>

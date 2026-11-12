@@ -65,7 +65,7 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
             <p className={styles.tagline}>{team.feature.summary}</p>
             <div className={styles.heroActions}>
               <span className={styles.status}>{recruitment?.applicationsOpen ? "Applications Listed Open" : "Applications Closed"}</span>
-              <Link href="/join-us#player-paths">View Recruitment Status <span aria-hidden="true">↗</span></Link>
+              <Link href="/join-us#player-paths">View Recruitment Status </Link>
             </div>
           </div>
           <div className={styles.art}>

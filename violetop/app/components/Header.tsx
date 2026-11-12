@@ -227,7 +227,7 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
                       <Link className={styles.teamLink} href={team.href} key={team.href} onClick={closeMenus}>
                         <Image alt="" className={team.name === "VOP Black" ? styles.darkCrest : undefined} height={30} quality={75} src={team.image} width={30} />
                         <span>{team.name}</span>
-                        <span aria-hidden="true" className={styles.teamArrow}>↗</span>
+                        
                       </Link>
                     ))}
                   </div>
