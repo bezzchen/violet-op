@@ -56,7 +56,7 @@
 .primaryAction, .secondaryAction { border: 0; background: var(--glass-control); color: var(--site-text); }
 .primaryAction { background: #b8a6d1; color: #18101e; }
 .primaryAction:hover { background: #d1c5df; }
-.secondaryAction { border: 0; background: transparent; color: white; }
+.secondaryAction { border: 0; background: var(--glass-control); color: white; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
 .secondaryAction:hover { background: var(--glass-hover); color: white; }
 /* Sections sit directly on the shared page background. */
 .section {
