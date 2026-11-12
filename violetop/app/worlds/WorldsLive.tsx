@@ -15,7 +15,6 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
   const [notice, setNotice] = useState("");
   const [answer, setAnswer] = useState("");
   const [busy, setBusy] = useState(false);
-  const [showResults, setShowResults] = useState(false);
   const [openingHost, setOpeningHost] = useState(mode === "host");
   const hostLoginStarted = useRef(false);
   const [title, setTitle] = useState("");
@@ -28,7 +27,7 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
     if (lastRoom.current && next.revision < lastRoom.current.revision) return;
     if (next.active?.id !== activeId.current) {
       activeId.current = next.active?.id || null;
-      setAnswer(next.active?.mine || ""); setNotice(""); setShowResults(false);
+      setAnswer(next.active?.mine || ""); setNotice("");
     }
     lastRoom.current = next; setRoom(next); setConnected(true); setFailed(false);
   }, []);
@@ -86,9 +85,7 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
   async function submitVote(e: FormEvent) {
     e.preventDefault(); if (!room?.active) return;
     const id = room.active.id;
-    if (await act({ action: "vote", pollId: id, answer })) {
-      if (activeId.current === id) setNotice(room.active.kind === "text" ? "Answer received. The host will review it before it appears on screen." : "You’re locked in. You can change your pick while voting is open.");
-    }
+    await act({ action: "vote", pollId: id, answer });
   }
   async function create(e: FormEvent) {
     e.preventDefault();
@@ -96,7 +93,7 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
   }
   const poll = room?.active;
   const isScreen = mode === "screen";
-  const status = failed ? "RECONNECTING" : !room ? "CONNECTING" : !connected ? "RECONNECTING" : !room.configured ? "LOBBY" : poll?.open ? "VOTING OPEN" : "STAND BY";
+  const status = failed ? "RECONNECTING" : !room ? "CONNECTING" : !connected ? "RECONNECTING" : !room.configured ? "LOBBY" : poll?.revealed ? "RESULTS LIVE" : mode === "fan" && poll?.mine !== null && poll?.mine !== undefined ? "ANSWER LOCKED" : poll?.open ? "VOTING OPEN" : "STAND BY";
   return <>
     {!isScreen && <Header />}
     <main id="main-content" className={`${styles.worlds} ${isScreen ? styles.screen : ""}`}>
@@ -117,13 +114,12 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
             <p className={styles.eyebrow}>THE ROOM DECIDES</p>
             <h1>{poll?.title || "The room is warming up."}</h1>
             {!poll && <p className={styles.waiting}>{!room ? "Connecting you to the watch party…" : !connected ? "The connection dropped. Keep this page open—we’re reconnecting." : "Keep this page open. The next question will appear here automatically."}</p>}
-            {poll && ((isScreen || showResults) ? <Results poll={poll} /> : <form onSubmit={submitVote}>
+            {poll && ((isScreen || poll.revealed) ? <Results poll={poll} /> : poll.mine !== null ? <WaitingRoom poll={poll} /> : <form onSubmit={submitVote}>
               {poll.kind === "text" ? <div className={styles.textAnswer}><label htmlFor="answer">Make your call</label><textarea id="answer" placeholder="Who’s your pick?" maxLength={120} value={answer} onChange={e=>setAnswer(e.target.value)} disabled={!poll.open || busy} rows={3}/><small>{answer.length}/120 · Answers are reviewed before display</small></div> : <div className={`${styles.choices} ${poll.kind==="duel"?styles.duel:""}`} role="group" aria-label="Choose your answer">{poll.options.map((option)=><button key={option} type="button" className={styles.choice} aria-pressed={answer===option} data-selected={answer===option} onClick={()=>{setAnswer(option);setNotice("");}} disabled={!poll.open || busy}><span>{option}</span><small>{answer===option?"SELECTED":"PICK YOUR SIDE"}</small></button>)}</div>}
-              <button className={styles.primary} disabled={!poll.open || !answer.trim() || busy || !connected}>{busy?"LOCKING IN…":!poll.open?"VOTING IS CLOSED":poll.kind==="text"?"SEND MY ANSWER":"LOCK IN MY PICK"}</button>
-              {poll.mine && !notice && <p className={styles.receipt}>Your saved answer: <strong>{poll.mine}</strong></p>}
+              <button className={styles.primary} disabled={!poll.open || !answer.trim() || busy || !connected}>{busy?"LOCKING IN…":!poll.open?"VOTING IS CLOSED":"LOCK IN MY ANSWER"}</button>
             </form>)}
             <p role="status" className={styles.receipt}>{notice}</p>
-            {!isScreen && <><p className={styles.tagline}>Your vote. The whole room.</p>{poll && <button className={styles.textButton} onClick={()=>setShowResults(v=>!v)}>{showResults?"Back to my pick":"View live results"}</button>}<p className={styles.fine}>No account needed. One answer per browser, per question.</p></>}
+            {!isScreen && <><p className={styles.tagline}>Your vote. The whole room.</p><p className={styles.fine}>No account needed. One locked answer per browser, per question.</p></>}
           </section>
           <aside className={styles.sidePanel}><p className={styles.sideTitle}>PICK A SIDE.<br/>MAKE SOME NOISE.</p><p>Your team. Your take.<br/>Violet through and through.</p><JoinCard />{isScreen && <button className={styles.textButton} onClick={()=>void document.documentElement.requestFullscreen().catch(()=>setError("Use your browser’s fullscreen control."))}>Enter fullscreen</button>}</aside>
         </div>}
@@ -134,9 +130,21 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
     </main>
   </>;
 }
+function WaitingRoom({poll}:{poll:ViewPoll}) {
+  return <div className={styles.waitingRoom} role="status">
+    <div className={styles.lockMark} aria-hidden="true">✓</div>
+    <p className={styles.eyebrow}>ANSWER RECEIVED</p>
+    <h2>You’re locked in.</h2>
+    <p className={styles.savedPick}>Your answer: <strong>{poll.mine}</strong></p>
+    <div className={styles.waitingDots} aria-hidden="true"><span/><span/><span/></div>
+    <p>Hang tight. Results will appear here automatically when the host reveals them.</p>
+    {poll.kind === "text" && <small>Written answers are reviewed before appearing publicly.</small>}
+    <p className={styles.fine}>{poll.total} {poll.total === 1 ? "answer" : "answers"} locked in · Stay on this page</p>
+  </div>;
+}
 function Results({poll}:{poll:ViewPoll}) {
   const approvedAnswers = poll.responses.filter(response => response.approved);
-  if (!poll.revealed) return <div className={styles.message}><h2>{poll.open ? "The room is making its call." : "Picks are locked."}</h2><p>The host will reveal the results on the big screen.</p><strong>{poll.total} responses received</strong></div>;
+  if (!poll.revealed) return <div className={styles.message}><h2>{poll.open ? "The room is making its call." : "Picks are locked."}</h2><p>Results will appear automatically when the host reveals them.</p><strong>{poll.total} responses received</strong></div>;
   return <div className={styles.results}><p className={styles.resultCount}>{poll.total} {poll.total===1?"response":"responses"} · {poll.open?"Updating live":"Final results"}</p>{poll.kind === "text" ? <div className={styles.answers}>{approvedAnswers.length ? approvedAnswers.map((r,i)=><p key={`${r.answer}-${i}`}>{r.answer}</p>) : <p>Approved answers will appear here.</p>}</div> : poll.options.map((option,i)=>{const count=poll.counts?.[i]||0;const percent=poll.total?Math.round(count/poll.total*100):0;return <div className={styles.result} key={option}><div><strong>{option}</strong><span>{percent}% <small>({count})</small></span></div><progress max={100} value={percent} aria-label={`${option}: ${count} votes, ${percent} percent`} /></div>;})}</div>;
 }
 function JoinCard() {return <div className={styles.joinCard}><img src="/images/worlds-join-qr.svg" alt="QR code: open violet-op.com/worlds to vote" width={160} height={160}/><div><strong>SCAN. PICK. REPEAT.</strong><a href={joinUrl}>violet-op.com/worlds</a><a href="/images/worlds-join-qr.svg" download="VOP-Worlds-QR.svg">Download QR</a></div></div>;}

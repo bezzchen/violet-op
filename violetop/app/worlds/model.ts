@@ -25,11 +25,17 @@ function clean(value: unknown, max: number) {
 }
 export function vote(room: Room, voter: string, pollId: unknown, answer: unknown) {
   const poll = room.polls.find(p => p.id === pollId);
-  if (!poll || room.activeId !== poll.id || !poll.open) throw new PollError("That poll has closed. Please wait for the next one.", 409);
+  if (!poll || room.activeId !== poll.id) throw new PollError("That poll has closed. Please wait for the next one.", 409);
   const text = clean(answer, 120);
+  if (poll.votes[voter]) {
+    // Retrying the same confirmed answer is safe, including after voting closes.
+    if (poll.votes[voter].answer === text) return;
+    throw new PollError("Your answer is locked in. Wait for the next question.", 409);
+  }
+  if (!poll.open || poll.revealed) throw new PollError("That poll has closed. Please wait for the next one.", 409);
   if (poll.kind !== "text" && !poll.options.includes(text)) throw new PollError("Choose one of the available options.");
   if (!poll.votes[voter] && Object.keys(poll.votes).length >= 2000) throw new PollError("This poll has reached its response limit.", 409);
-  // One ballot per anonymous browser. Changing a pick replaces it, never adds another vote.
+  // Confirmed ballots stay locked for this question.
   poll.votes[voter] = { answer: text, approved: poll.kind !== "text", at: Date.now() };
 }
 export function hostAction(room: Room, body: Record<string, unknown>) {
@@ -48,7 +54,7 @@ export function hostAction(room: Room, body: Record<string, unknown>) {
   switch (body.action) {
     case "activate": room.polls.forEach(p => { p.open = false; }); room.activeId = poll.id; poll.open = true; poll.revealed = false; break;
     case "close": poll.open = false; break;
-    case "reveal": poll.revealed = !poll.revealed; break;
+    case "reveal": poll.revealed = !poll.revealed; if (poll.revealed) poll.open = false; break;
     case "moderate": {
       const ballot = poll.votes[String(body.voter)];
       if (!ballot || poll.kind !== "text") throw new PollError("Response not found.", 404);
