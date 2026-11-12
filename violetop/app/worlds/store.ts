@@ -6,7 +6,7 @@ const key = "vop:worlds:2026:room";
 const restUrl = () => process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
 const restToken = () => process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
 export const localMode = () => process.env.NODE_ENV !== "production" && process.env.WORLDS_LOCAL_DEV === "1";
-export const configured = () => Boolean(process.env.WORLDS_HOST_KEY && (localMode() || (restUrl() && restToken())));
+export const configured = () => Boolean(localMode() || (restUrl() && restToken()));
 export async function redis(command: (string | number)[]) {
   if (!restUrl() || !restToken()) throw new PollError("Live voting is not configured yet.", 503);
   const response = await fetch(restUrl()!, { method: "POST", headers: { Authorization: `Bearer ${restToken()}`, "Content-Type": "application/json" }, body: JSON.stringify(command), cache: "no-store", signal: AbortSignal.timeout(6000) });

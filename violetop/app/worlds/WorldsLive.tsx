@@ -16,7 +16,8 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
   const [answer, setAnswer] = useState("");
   const [busy, setBusy] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [hostKey, setHostKey] = useState("");
+  const [openingHost, setOpeningHost] = useState(mode === "host");
+  const hostLoginStarted = useRef(false);
   const [title, setTitle] = useState("");
   const [kind, setKind] = useState<PollKind>("duel");
   const [options, setOptions] = useState("BLG\nGen.G");
@@ -48,6 +49,28 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
     document.addEventListener("visibilitychange", visible);
     return () => { stopped = true; clearTimeout(timer); document.removeEventListener("visibilitychange", visible); };
   }, [refresh]);
+  useEffect(() => {
+    if (mode !== "host" || hostLoginStarted.current) return;
+    hostLoginStarted.current = true;
+    const link = window.location.hash.slice(1);
+    if (!link) { setOpeningHost(false); return; }
+    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    generation.current++;
+    void (async () => {
+      try {
+        const response = await fetch("/api/worlds", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "login", link }), signal: AbortSignal.timeout(12000),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Could not open the host desk.");
+        generation.current++; lastRoom.current = null;
+        await refresh();
+      } catch (error) {
+        setError(error instanceof Error ? error.message : "Open your private link again to retry.");
+      } finally { setOpeningHost(false); }
+    })();
+  }, [mode, refresh]);
   async function act(body: Record<string, unknown>) {
     if (busy) return false;
     setBusy(true); setError(""); generation.current++;
@@ -84,10 +107,10 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
         {room?.local && <p className={styles.devnote}>Local rehearsal — votes on this server only</p>}
         {mode === "host" ? <>
           <div className={styles.hostHeading}><div><p className={styles.eyebrow}>YOU RUN THE ROOM</p><h1>Host desk.</h1></div><div className={styles.row}><Link href="/worlds">Fan view</Link><Link href="/worlds/screen" target="_blank">Open big screen</Link>{room?.host && <button onClick={() => void act({ action: "logout" })}>Sign out</button>}</div></div>
-          {!room?.configured && room && <div className={styles.message}><h2>Live setup is still needed</h2><p>Connect the shared Redis store and set WORLDS_HOST_KEY in the hosting project. The fan page stays in the lobby until setup is complete.</p></div>}
-          {!room?.host ? <form className={styles.login} onSubmit={async e => {e.preventDefault(); if (await act({action:"login",key:hostKey})) setHostKey("");}}><label htmlFor="host-key">Host key</label><input id="host-key" type="password" autoComplete="current-password" value={hostKey} onChange={e=>setHostKey(e.target.value)} required /><button className={styles.primary} disabled={busy || !room?.configured}>Open host desk</button><p>Only event staff need a key. Fans join without an account.</p></form> : <div className={styles.hostGrid}>
+          {!room?.configured && room && <div className={styles.message}><h2>Live setup is still needed</h2><p>Connect shared voting storage in the hosting project to start creating questions and collecting votes. Your private host link is ready.</p></div>}
+          {!room?.host ? <div className={styles.login}><h2>{openingHost ? "Opening your host desk…" : "Private host access"}</h2><p>{openingHost ? "Signing you in automatically." : "Open the complete private link shared with you. No password is needed."}</p></div> : <div className={styles.hostGrid}>
             <section><h2>Question queue <span>{room.polls.length}/50</span></h2><div className={styles.queue}>{room.polls.map(p=><article className={styles.queueItem} key={p.id} data-active={p.id===poll?.id}><div><small>{p.kind === "duel" ? "HEAD TO HEAD" : p.kind === "text" ? "OPEN ANSWER" : "MULTIPLE CHOICE"} · {p.total} responses</small><h3>{p.title}</h3></div><div className={styles.row}><button disabled={busy || (p.id===poll?.id && p.open)} onClick={()=>void act({action:"activate",pollId:p.id})}>{p.id===poll?.id&&p.open ? "Live now" : "Go live"}</button><button disabled={busy || !p.open} onClick={()=>void act({action:"close",pollId:p.id})}>Close voting</button><button disabled={busy} onClick={()=>void act({action:"reveal",pollId:p.id})}>{p.revealed ? "Hide results" : "Show results"}</button></div>{p.kind==="text" && p.responses.length>0 && <details><summary>Review {p.responses.length} answers</summary>{p.responses.map(r=><div className={styles.review} key={r.id}><p>{r.answer}</p><button disabled={busy} onClick={()=>void act({action:"moderate",pollId:p.id,voter:r.id,approved:!r.approved})}>{r.approved?"Hide from screen":"Approve for screen"}</button></div>)}</details>}</article>)}</div></section>
-            <section className={styles.composer}><h2>Next question</h2><label htmlFor="preset">Start with a prompt</label><select id="preset" defaultValue="" onChange={e=>{const p=presets[Number(e.target.value)]; if(p){setTitle(p.title);setKind(p.kind);setOptions(p.options.join("\n"));}}}><option value="" disabled>Choose a preset…</option>{presets.map((p,i)=><option value={i} key={p.title}>{p.title}</option>)}</select><form onSubmit={create}><label htmlFor="question">Question</label><textarea id="question" value={title} onChange={e=>setTitle(e.target.value)} maxLength={180} required placeholder="What does the room think?"/><label htmlFor="kind">Answer format</label><select id="kind" value={kind} onChange={e=>setKind(e.target.value as PollKind)}><option value="duel">Left or right · 2 choices</option><option value="choice">Multiple choice · 2–8 choices</option><option value="text">Open-ended answer</option></select>{kind!=="text"&&<><label htmlFor="choices">Choices, one per line</label><textarea id="choices" value={options} onChange={e=>setOptions(e.target.value)} required rows={4}/></>}<button className={styles.primary} disabled={busy}>Add to queue</button></form><p>New questions stay off-screen until you select Go live. Typed answers need approval before the crowd sees them.</p><JoinCard /></section>
+            <section className={styles.composer}><h2>Next question</h2><label htmlFor="preset">Start with a prompt</label><select id="preset" defaultValue="" onChange={e=>{const p=presets[Number(e.target.value)]; if(p){setTitle(p.title);setKind(p.kind);setOptions(p.options.join("\n"));}}}><option value="" disabled>Choose a preset…</option>{presets.map((p,i)=><option value={i} key={p.title}>{p.title}</option>)}</select><form onSubmit={create}><label htmlFor="question">Question</label><textarea id="question" value={title} onChange={e=>setTitle(e.target.value)} maxLength={180} required placeholder="What does the room think?"/><label htmlFor="kind">Answer format</label><select id="kind" value={kind} onChange={e=>setKind(e.target.value as PollKind)}><option value="duel">Left or right · 2 choices</option><option value="choice">Multiple choice · 2–8 choices</option><option value="text">Open-ended answer</option></select>{kind!=="text"&&<><label htmlFor="choices">Choices, one per line</label><textarea id="choices" value={options} onChange={e=>setOptions(e.target.value)} required rows={4}/></>}<button className={styles.primary} disabled={busy || !room?.configured}>Add to queue</button></form><p>New questions stay off-screen until you select Go live. Typed answers need approval before the crowd sees them.</p><JoinCard /></section>
           </div>}
         </> : <div className={styles.experience}>
           <section className={styles.votePanel}>
@@ -106,7 +129,7 @@ export default function WorldsLive({ mode }: { mode: "fan" | "host" | "screen" }
         </div>}
         {error && <p role="alert" className={styles.error}>{error}</p>}
         {!connected && room && <p role="status" className={styles.error}>Reconnecting… Showing the last received update. Voting is paused until we reconnect.</p>}
-        <footer className={styles.footer}><span>NYU VIOLET OP · WORLDS WATCH PARTY</span><div><Link href="/worlds">Vote</Link><Link href="/worlds/screen">Big screen</Link><Link href="/worlds/host">Host controls</Link></div></footer>
+        <footer className={styles.footer}><span>NYU VIOLET OP · WORLDS WATCH PARTY</span><div><Link href="/worlds">Vote</Link><Link href="/worlds/screen">Big screen</Link></div></footer>
       </div>
     </main>
   </>;
