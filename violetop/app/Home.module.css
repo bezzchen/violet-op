@@ -56,7 +56,7 @@
 .primaryAction, .secondaryAction { border: 0; background: var(--glass-control); color: var(--site-text); }
 .primaryAction { background: #b8a6d1; color: #18101e; }
 .primaryAction:hover { background: #d1c5df; }
-.secondaryAction { border: 0; background: transparent; color: white; }
+.secondaryAction { border: 0; background: var(--glass-control); color: white; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
 .secondaryAction:hover { background: var(--glass-hover); color: white; }
 /* Sections sit directly on the shared page background. */
 .section {
@@ -70,7 +70,7 @@
 /* Glass blurs the swirl so a ribbon reads as colour behind the text, not as an edge. */
 .glassCard, .violetCard { background: transparent; }
 .glassCard { background: transparent; }
-.violetCard { background: rgb(37 21 56 / 76%); }
+.violetCard { background: transparent; }
 .sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 34px; }
 .sectionHeading h2 {
   max-width: 800px; margin: 0;
@@ -276,4 +276,21 @@
   .eventDetails { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .eventDate { flex-direction: row; align-items: baseline; gap: 8px; }
   .featuredEvent .eventDate strong { font-size: 32px; letter-spacing: -.04em; }
+}
+
+/* Shared action sizing stays explicit for both glass button variants. */
+.primaryAction, .secondaryAction {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  line-height: 1.3;
+  text-transform: uppercase;
 }

@@ -20,18 +20,23 @@
   background: transparent;
   box-shadow: none;
 }
-.overlayHeader::before,
+.overlayHeader::before {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  width: 100%;
+  content: "";
+  opacity: var(--home-surface-opacity);
+  pointer-events: none;
+  transition: opacity 90ms linear;
+}
 .overlayHeader::after { content: none; }
 .overlayHeader::before {
   top: 0;
   height: var(--header-bar-height);
   background: rgb(27 25 32 / 90%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
-.overlayHeader::after {
-  top: calc(var(--header-bar-height) - 1px);
-  height: 1px;
-  background: var(--site-border);
-}
+
 .overlayHeader :is(.brand, .desktopNav > a, .teamsTrigger) {
   text-shadow: 0 1px 8px #000, 0 0 18px #000b;
 }
