@@ -64,7 +64,7 @@ export default function JoinUsClient() {
   return (
     <PageShell>
       <div className="wide-page-shell relative mx-auto flex w-full max-w-7xl flex-col gap-16 px-4 pb-16 pt-24 md:gap-24 md:px-grid-margin md:pb-24 md:pt-28">
-        <header className="reveal-up join-hero relative flex items-end overflow-hidden rounded-2xl border border-white/10">
+        <header className="reveal-up join-hero relative flex items-end overflow-hidden rounded-2xl  ">
           <div className="join-hero-media absolute inset-0">
             <div className="join-hero-sharp absolute">
               <Image
@@ -92,14 +92,14 @@ export default function JoinUsClient() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <button
-                className="op-clip cursor-pointer rounded-md bg-primary px-7 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+                className="op-clip cursor-pointer rounded-md bg-primary px-7 py-4 font-label-caps text-label-caps text-on-primary   transition-all hover:neon-glow-purple"
                 onClick={scrollToPaths}
                 type="button"
               >
                 Team Applications
               </button>
               <Link
-                className="op-clip rounded-md border border-white/25 px-7 py-4 font-label-caps text-label-caps uppercase text-white transition-colors hover:border-primary hover:text-primary"
+                className="op-clip rounded-md   px-7 py-4 font-label-caps text-label-caps uppercase text-white transition-colors  hover:text-primary"
                 href="/highlights"
               >
                 Watch Highlights
@@ -151,8 +151,8 @@ export default function JoinUsClient() {
                           style={delay(sectionIndex * 4 + index + 1)}
                         >
                           <article
-                            className={`join-path-card clip-card glass-panel flex h-full flex-col gap-6 rounded-lg border p-6 md:p-7 ${
-                              !path.applicationsOpen ? "join-card-filled" : "border-white/10"
+                            className={`join-path-card clip-card glass-panel flex h-full flex-col gap-6 rounded-lg  p-6 md:p-7 ${
+                              !path.applicationsOpen ? "join-card-filled" : ""
                             }`}
                           >
                             <div className="flex items-start justify-between gap-4">
@@ -180,7 +180,7 @@ export default function JoinUsClient() {
                                   </h4>
                                 </div>
                               </div>
-                              <span className="shrink-0 rounded-none border border-white/15 px-3 py-1 font-label-caps text-[10px] uppercase text-on-surface-variant">
+                              <span className="shrink-0 rounded-md   px-3 py-1 font-label-caps text-[10px] uppercase text-on-surface-variant">
                                 {path.applicationsOpen ? "Open" : "Closed"}
                               </span>
                             </div>
@@ -202,12 +202,12 @@ export default function JoinUsClient() {
 
                             <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
                               {!path.applicationsOpen ? (
-                                <span className="op-clip rounded-md border border-white/20 bg-white/5 px-5 py-3 font-label-caps text-label-caps uppercase text-on-surface-variant">
+                                <span className="op-clip rounded-md   bg-white/5 px-5 py-3 font-label-caps text-label-caps uppercase text-on-surface-variant">
                                   Applications closed
                                 </span>
                               ) : (
                                 <Link
-                                  className="op-clip rounded-md bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary shadow-lg shadow-primary/20 transition-all hover:neon-glow-purple"
+                                  className="op-clip rounded-md bg-primary px-5 py-3 font-label-caps text-label-caps uppercase text-on-primary   transition-all hover:neon-glow-purple"
                                   href={path.joinHref}
                                   rel="noreferrer"
                                   target="_blank"
@@ -252,8 +252,8 @@ export default function JoinUsClient() {
               const team = teamForRole(role.name);
               const card = (
                 <article
-                  className={`join-role-card clip-card glass-panel flex h-full items-center gap-4 rounded-lg border p-5 ${
-                    role.filled ? "join-card-filled" : "border-white/10"
+                  className={`join-role-card clip-card glass-panel flex h-full items-center gap-4 rounded-lg  p-5 ${
+                    role.filled ? "join-card-filled" : ""
                   }`}
                 >
                   {team ? (
@@ -298,7 +298,7 @@ export default function JoinUsClient() {
           <div className="grid gap-4 md:grid-cols-3">
             {joinContent.faqs.map((faq, index) => (
               <div className="reveal-up" key={faq.question} style={delay(index)}>
-                <article className="clip-card glass-panel flex h-full flex-col gap-4 rounded-lg border border-white/10 p-6">
+                <article className="clip-card glass-panel flex h-full flex-col gap-4 rounded-lg   p-6">
                   <h3 className="font-headline-md text-lg font-bold text-primary">
                     {faq.question}
                   </h3>
@@ -311,7 +311,7 @@ export default function JoinUsClient() {
           </div>
         </section>
 
-        <section className="reveal-up join-cta relative overflow-hidden rounded-2xl border border-primary/25 p-8 text-center md:p-stack-xl">
+        <section className="reveal-up join-cta relative overflow-hidden rounded-2xl   p-8 text-center md:p-stack-xl">
           <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center gap-6">
             <span className="font-label-caps text-label-caps uppercase text-primary">
               Your Journey Starts Here
@@ -325,13 +325,13 @@ export default function JoinUsClient() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                className="op-clip rounded-md bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary shadow-xl shadow-primary/20 transition-all hover:neon-glow-purple"
+                className="op-clip rounded-md bg-primary px-8 py-4 font-label-caps text-label-caps text-on-primary   transition-all hover:neon-glow-purple"
                 href="/events"
               >
                 Community Events
               </Link>
               <Link
-                className="op-clip rounded-md border border-white/25 px-8 py-4 font-label-caps text-label-caps uppercase text-white transition-colors hover:border-primary hover:text-primary"
+                className="op-clip rounded-md   px-8 py-4 font-label-caps text-label-caps uppercase text-white transition-colors  hover:text-primary"
                 href="/about-us"
               >
                 Meet the Team

@@ -21,8 +21,8 @@ export const eventArtwork = {
     activity: "competitive",
   },
   worldsWatchParty: {
-    src: "/images/events/worlds-watch-party-2026-luma.avif",
-    alt: "Official Road to Worlds watch party artwork from NYU Violet OP’s Luma listing, featuring the Worlds trophy",
+    src: "/images/events/worlds-finals-watch-party-2026.webp",
+    alt: "Violet OP Worlds Finals Watch Party flyer, November 14, 1:30–6 PM",
     objectPosition: "50% 50%",
     objectFit: "contain",
     game: "league",

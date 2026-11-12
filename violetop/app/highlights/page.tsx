@@ -58,11 +58,6 @@ export default function HighlightsPage() {
             </p>
           </div>
 
-          <span
-            aria-hidden="true"
-            className="h-px w-full bg-gradient-to-r from-primary/70 via-primary/15 to-transparent"
-          />
-
           <div className="grid gap-5 lg:grid-cols-2">
             {supportClips.map((clip, index) => (
               <HighlightCard

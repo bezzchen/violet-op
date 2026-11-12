@@ -6,40 +6,40 @@
   --color-error: #ffb4ab;
   --color-tertiary-fixed: #ffe2ff;
   --color-inverse-on-surface: #321044;
-  --color-surface-variant: #2a2237;
+  --color-surface-variant: #302c39;
   --color-surface-container-lowest: #0d0b12;
-  --color-outline-variant: #3d324e;
+  --color-outline-variant: transparent;
   --color-inverse-primary: #67467e;
-  --color-surface: #1b1626;
+  --color-surface: #24212c;
   --color-on-secondary-fixed-variant: #8b00ef;
   --color-tertiary-container: #68517d;
   --color-on-background: #f5f2fa;
   --color-on-error: #690005;
   --color-outline: #bca8c9;
   --color-on-error-container: #ffdad6;
-  --color-surface-container-highest: #2a2237;
-  --color-surface-container-high: #211a2e;
+  --color-surface-container-highest: #302c39;
+  --color-surface-container-high: #2b2735;
   --color-on-primary-fixed: #35004d;
   --color-on-tertiary: #3d0055;
   --color-on-primary: #1b1420;
-  --color-background: #09080d;
+  --color-background: #151419;
   --color-secondary-fixed: #f8d6ff;
   --color-on-surface-variant: #c2b8ce;
   --color-primary-container: #5e4370;
   --color-secondary-fixed-dim: #ebadff;
   --color-primary-fixed: #f9dcff;
   --color-on-primary-fixed-variant: #8300d4;
-  --color-primary: #d0aef6;
+  --color-primary: #b8a6d1;
   --color-surface-tint: #b994d8;
   --color-on-secondary: #211a28;
   --color-tertiary: #c4a4e8;
-  --color-surface-dim: #09080d;
+  --color-surface-dim: #151419;
   --color-secondary-container: #5b3c70;
   --color-error-container: #93000a;
-  --color-surface-container: #1b1626;
+  --color-surface-container: #24212c;
   --color-secondary: #bd9bd8;
   --color-tertiary-fixed-dim: #f0a5ff;
-  --color-surface-container-low: #100d18;
+  --color-surface-container-low: #1b1920;
   --color-surface-bright: #30263f;
   --color-on-tertiary-fixed-variant: #8500c4;
   --color-primary-fixed-dim: #eda5ff;
@@ -83,23 +83,23 @@
 /* Corner radius scale shared by Tailwind's rounded-* utilities and the CSS modules.
    `static` makes Tailwind always emit these as :root variables. */
 @theme static {
-  --radius-xs: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-2xl: 0px;
-  --radius-3xl: 0px;
-  --radius-4xl: 0px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-2xl: 28px;
+  --radius-3xl: 32px;
+  --radius-4xl: 36px;
 }
 
 :root {
   --app-height: 100dvh;
-  --site-bg: #09080d;
-  --site-bg-alt: #100d18;
-  --site-surface: #1b1626;
-  --site-surface-raised: #211a2e;
-  --site-border: #3d324e;
+  --site-bg: #151419;
+  --site-bg-alt: #1b1920;
+  --site-surface: rgb(180 165 205 / 6%);
+  --site-surface-raised: rgb(180 165 205 / 10%);
+  --site-border: transparent;
   --site-text: #f5f2fa;
   --site-text-muted: #c2b8ce;
   background: var(--site-bg);
@@ -124,15 +124,7 @@ body {
   letter-spacing: 0;
 }
 
-body::before {
-  position: fixed;
-  z-index: 0;
-  inset: 0;
-  content: "";
-  background: url("/images/flow-pattern.svg") center / cover no-repeat;
-  opacity: .16;
-  pointer-events: none;
-}
+body::before { content: none; }
 
 /* Archivo Black is already a heavy display face; avoid synthetic bold. */
 h1, h2 {
@@ -166,7 +158,7 @@ a {
 
 .glass-panel {
   background: var(--site-surface);
-  border: 1px solid var(--site-border);
+  border: 0;
 }
 
 .section-text-panel {
@@ -175,7 +167,7 @@ a {
 
 .event-row-panel {
   background: var(--site-surface);
-  border-color: var(--site-border);
+  
 }
 
 /* Legacy reveal classes remain visible without scroll-driven animation. */
@@ -198,7 +190,7 @@ a {
   background:
     radial-gradient(ellipse at 78% 50%, rgb(48 115 193 / 18%) 0%, transparent 30%),
     radial-gradient(ellipse at 58% 58%, rgb(111 56 168 / 17%) 0%, transparent 43%),
-    linear-gradient(125deg, #100d18 0%, #0b0a11 54%, #08070c 100%);
+    linear-gradient(125deg, #1b1920 0%, #0b0a11 54%, #08070c 100%);
 }
 
 .join-hero-sharp {
@@ -220,8 +212,8 @@ a {
 
 .join-hero-veil {
   background:
-    linear-gradient(96deg, #100d18 2%, #100d18fa 25%, #100d18e6 42%, #100d1899 55%, #100d1838 68%, transparent 80%),
-    linear-gradient(0deg, #100d18d9 0%, #100d1838 30%, transparent 55%);
+    linear-gradient(96deg, #1b1920 2%, #1b1920fa 25%, #1b1920e6 42%, #1b192099 55%, #1b192038 68%, transparent 80%),
+    linear-gradient(0deg, #1b1920d9 0%, #1b192038 30%, transparent 55%);
 }
 
 .join-cta {
@@ -235,11 +227,11 @@ a {
 
 .join-card-filled {
   background: #15121d;
-  border-color: var(--site-border);
+  
 }
 
 .join-card-filled:hover {
-  border-color: #66527e;
+  
 }
 
 @media (min-width: 768px) {
@@ -267,8 +259,8 @@ a {
 
   .join-hero-veil {
     background:
-      linear-gradient(180deg, transparent 0%, #100d180f 24%, #100d18c7 42%, #100d18 58%, #100d18 100%),
-      linear-gradient(90deg, #100d1857, transparent 35%, transparent 70%, #100d1845);
+      linear-gradient(180deg, transparent 0%, #1b19200f 24%, #1b1920c7 42%, #1b1920 58%, #1b1920 100%),
+      linear-gradient(90deg, #1b192057, transparent 35%, transparent 70%, #1b192045);
   }
 
   .join-hero-copy {
@@ -302,13 +294,13 @@ a {
 
 .team-hero-section {
   background:
-    radial-gradient(circle at 78% 16%, rgba(209, 76, 255, 0.28), transparent 32rem),
+    radial-gradient(circle at 78% 16%, rgba(148, 131, 170, 0.28), transparent 32rem),
     linear-gradient(115deg, rgba(10, 0, 18, 0.84), rgba(75, 0, 108, 0.28) 55%, rgba(10, 0, 18, 0.74));
   clip-path: none;
 }
 
 .team-hero-game-backdrop {
-  filter: saturate(1.2) drop-shadow(0 0 58px rgba(209, 76, 255, 0.3));
+  filter: saturate(1.2) drop-shadow(0 0 58px rgba(148, 131, 170, 0.3));
   object-position: center;
   opacity: 0.1;
   transform: scale(1.12);
@@ -316,7 +308,7 @@ a {
 
 .team-hero-copy {
   background:
-    radial-gradient(circle at 18% 8%, rgba(209, 76, 255, 0.26), transparent 13rem),
+    radial-gradient(circle at 18% 8%, rgba(148, 131, 170, 0.26), transparent 13rem),
     rgba(16, 0, 23, 0.5);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -329,7 +321,7 @@ a {
 .team-hero-title {
   line-height: 0.78;
   overflow-wrap: anywhere;
-  text-shadow: 0 0 34px rgba(209, 76, 255, 0.36);
+  text-shadow: 0 0 34px rgba(148, 131, 170, 0.36);
 }
 
 .team-hero-title-vop,
@@ -338,13 +330,13 @@ a {
 }
 
 .team-hero-title-vop {
-  color: #d14cff;
+  color: #b8a6d1;
   font-size: 5.6rem;
   font-style: italic;
   line-height: 0.74;
   text-shadow:
-    0 0 22px rgba(209, 76, 255, 0.72),
-    0 0 62px rgba(209, 76, 255, 0.42);
+    0 0 22px rgba(148, 131, 170, 0.72),
+    0 0 62px rgba(148, 131, 170, 0.42);
   transform: skewX(-7deg) translateX(-0.04em);
 }
 
@@ -373,7 +365,7 @@ a {
 
 .team-overview-copy {
   background:
-    radial-gradient(circle at 88% 0%, rgba(209, 76, 255, 0.18), transparent 16rem),
+    radial-gradient(circle at 88% 0%, rgba(148, 131, 170, 0.18), transparent 16rem),
     rgba(10, 0, 18, 0.76);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -396,7 +388,7 @@ a {
 }
 
 .team-hero-feature {
-  filter: drop-shadow(0 0 46px rgba(209, 76, 255, 0.38));
+  filter: drop-shadow(0 0 46px rgba(148, 131, 170, 0.38));
   object-position: center top;
   padding: 0;
   translate: -5% 0;
@@ -416,24 +408,12 @@ a {
   transition: border-color 0.25s ease, transform 0.25s ease;
 }
 
-.team-info-card::before,
-.team-roster-card::before,
-.clip-card::before {
-  background: linear-gradient(90deg, rgba(240, 184, 255, 0.7), transparent);
-  content: "";
-  height: 1px;
-  left: 0;
-  opacity: 0.7;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
+.team-info-card::before, .team-roster-card::before, .clip-card::before { content: none; }
 
 .team-info-card:hover,
 .team-roster-card:hover,
 .clip-card:hover {
-  border-color: rgba(216, 190, 240, 0.48);
+  
 }
 
 .highlight-feature-glow {
@@ -536,12 +516,12 @@ a {
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: #b300ff;
+  background: #9483aa;
   border-radius: 0;
 }
 
 .page-scroll-container::-webkit-scrollbar-thumb {
-  background: #b300ff;
+  background: #9483aa;
   border-radius: 0;
 }
 
@@ -1022,3 +1002,43 @@ a {
     padding-bottom: 1.5rem;
   }
 }
+
+/* Shared tactile feedback: soft glass, no moving border or specular hairline. */
+:root {
+  --site-accent: #b8a6d1;
+  --glass-control: rgb(197 183 218 / 10%);
+  --glass-hover: rgb(197 183 218 / 17%);
+  --motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+.site-content :is(a, button) {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 280ms var(--motion-ease), translate 280ms var(--motion-ease),
+    scale 280ms var(--motion-ease), background-color 240ms ease,
+    color 180ms ease, box-shadow 280ms ease, opacity 180ms ease;
+}
+.site-content button:not(:disabled) { cursor: pointer; }
+.site-content :is(button, a):focus-visible { outline: 2px solid #cbbddd; outline-offset: 4px; }
+.site-content :is(button, a):active:not(:disabled) { scale: .98; }
+.site-content a:has(img):active { scale: .995; }
+.glass-panel, .section-text-panel, .event-row-panel,
+.team-info-card, .team-roster-card, .clip-card, .join-card-filled,
+.join-path-card, .join-role-card {
+  border: 0;
+  background: var(--site-surface);
+  border-radius: var(--radius-lg);
+}
+.join-cta, .team-overview-copy, .team-hero-copy { background: transparent; border: 0; }
+.team-hero-title, .team-hero-title-vop { text-shadow: none; }
+@media (hover: hover) and (pointer: fine) {
+  .site-content button:not(:disabled):hover { translate: 0 -1px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-content :is(a, button) { transition: none; }
+  .site-content :is(a, button):is(:hover, :active) { translate: none; scale: none; }
+}
+
+.site-content .op-clip {
+  border: 0; background: var(--glass-control); color: var(--site-text);
+  box-shadow: none; backdrop-filter: blur(16px);
+}
+.site-content .op-clip:hover { background: var(--glass-hover); }

@@ -3,9 +3,9 @@ export const socialMedia = {
   instagramUrl: "https://www.instagram.com/nyuvioletop/",
   youtubeUrl: "https://www.youtube.com/@NYUVioletOP",
   instagram: [
-    { url: "https://www.instagram.com/nyuvioletop/reel/DeUycujOofo/", image: "/images/social/instagram-fireside-reel.jpg", alt: "Arnold Hur at Violet OP's Gen.G fireside chat", date: "2026-10-10", label: "October 10", type: "Reel" },
-    { url: "https://www.instagram.com/nyuvioletop/reel/DeQTMo6x9s5/", image: "/images/social/instagram-oct-08.jpg", alt: "Violet OP x League of Legends: Know My Name in NYC teaser", date: "2026-10-08", label: "October 8", type: "Reel" },
-    { url: "https://www.instagram.com/nyuvioletop/p/DeDL5XBRoym/", image: "/images/social/instagram-oct-03.jpg", alt: "Inside Esports: fireside chat with Gen.G CEO Arnold Hur event poster", date: "2026-10-03", label: "October 3", type: "Post" },
+    { url: "https://www.instagram.com/nyuvioletop/p/DfggmwOuItK/", image: "/images/social/instagram-nov-08.jpg", alt: "VOP White celebrates the New York regional championship and its first-seed NECC finish", date: "2026-11-08", label: "November 8", type: "Post" },
+    { url: "https://www.instagram.com/nyuvioletop/p/DfYtDXwx9dK/", image: "/images/events/worlds-finals-watch-party-2026.webp", alt: "Violet OP Worlds Finals Watch Party flyer", date: "2026-11-05", label: "November 5", type: "Post" },
+    { url: "https://www.instagram.com/nyuvioletop/p/DfU8XNyFgAX/", image: "/images/social/instagram-nov-04.jpg", alt: "Violet OP community group photo from Halloween Fest", date: "2026-11-04", label: "November 4", type: "Post" },
   ],
   youtube: [
     { id: "5A9xqus4ypo", title: "Know My Name", description: "NYU VOP x LOL · Dance film", duration: "2:16" },

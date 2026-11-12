@@ -7,7 +7,7 @@
   --header-bar-height: 72px;
   --home-surface-opacity: 0;
   position: fixed; inset: 0 0 auto; z-index: 100;
-  border-bottom: 1px solid var(--site-border); background: #100d18f5; color: var(--site-text);
+  border-bottom: 0; background: rgb(27 25 32 / 90%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); color: var(--site-text);
 }
 .inner {
   position: relative; z-index: 2;
@@ -16,26 +16,16 @@
 }
 /* Transparent over #hero-section until the hero scrolls away (Header's `overlay`). */
 .overlayHeader {
-  border-bottom-color: transparent;
+  
   background: transparent;
   box-shadow: none;
 }
 .overlayHeader::before,
-.overlayHeader::after {
-  position: absolute;
-  z-index: 0;
-  left: 0;
-  width: 100%;
-  content: "";
-  opacity: var(--home-surface-opacity);
-  pointer-events: none;
-  transition: opacity 90ms linear;
-  will-change: opacity;
-}
+.overlayHeader::after { content: none; }
 .overlayHeader::before {
   top: 0;
   height: var(--header-bar-height);
-  background: #100d18f5;
+  background: rgb(27 25 32 / 90%); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
 .overlayHeader::after {
   top: calc(var(--header-bar-height) - 1px);
@@ -59,8 +49,8 @@
   opacity: calc(1 - var(--home-surface-opacity));
   transition: opacity 90ms linear;
 }
-.accentHeader .join { position: relative; background: #c9a8f5; }
-.accentHeader .mobileJoin { background: #c9a8f5; }
+.accentHeader .join { position: relative; background: #b8a6d1; }
+.accentHeader .mobileJoin { background: #b8a6d1; }
 .accentLayer {
   position: absolute;
   z-index: 0;
@@ -117,7 +107,7 @@
   display: block;
   box-sizing: border-box;
   white-space: nowrap;
-  background: linear-gradient(145deg, var(--wordmark-start, #f0c7ff) 4%, var(--wordmark-mid, #d878ff) 52%, var(--wordmark-end, #bb43ff) 96%);
+  background: linear-gradient(145deg, var(--wordmark-start, #d1c5df) 4%, var(--wordmark-mid, #b8a6d1) 52%, var(--wordmark-end, #9483aa) 96%);
   background-clip: text;
   color: transparent;
   -webkit-background-clip: text;
@@ -134,7 +124,7 @@
 }
 .teamsTrigger { padding: 0; border: 0; background: none; cursor: pointer; }
 .desktopNav > a:hover, .teamsTrigger:hover, .teamsTrigger[aria-expanded="true"] { color: #d6b7fb; }
-.desktopNav > a[aria-current="page"] { color: #e0c9ff; box-shadow: inset 0 -2px #c9a8f5; }
+.desktopNav > a[aria-current="page"] { color: #d1c5df; box-shadow: none; }
 .chevron {
   display: inline-block; width: 0; height: 0; margin-left: 2px;
   border-right: 4px solid transparent; border-left: 4px solid transparent;
@@ -148,7 +138,7 @@
   isolation: isolate;
   overflow: hidden;
   display: inline-flex; min-height: 44px; align-items: center; justify-content: center;
-  padding: 0 22px; border-radius: var(--radius-md); background: #c9a8f5; color: #15101a;
+  padding: 0 22px; border-radius: var(--radius-md); background: #b8a6d1; color: #15101a;
   text-decoration: none; font-size: 12px; font-weight: 900;
   letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
 }
@@ -161,17 +151,17 @@
   justify-content: center;
   gap: 14px;
 }
-.join:hover, .mobileJoin:hover { background: #e0c9ff; }
-.menuButton { display: none; width: 44px; height: 44px; border: 1px solid #66527e; border-radius: var(--radius-md); background: transparent; color: white; font-size: 23px; cursor: pointer; }
+.join:hover, .mobileJoin:hover { background: #d1c5df; }
+.menuButton { display: none; width: 44px; height: 44px; border: 0; border-radius: var(--radius-md); background: transparent; color: white; font-size: 23px; cursor: pointer; }
 .megaMenu {
   position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px;
   width: min(100% - 48px, 1160px); max-height: calc(100dvh - 72px); overflow-y: auto;
-  padding: 18px; border: 1px solid var(--site-border); border-radius: var(--radius-lg); background: var(--site-bg-alt);
+  padding: 18px; border: 0; border-radius: var(--radius-lg); background: var(--site-bg-alt);
   box-shadow: 0 24px 50px #0009;
 }
 .megaMenu[hidden], .mobileNav[hidden], .mobileTeams[hidden] { display: none; }
-.megaGroup { min-width: 0; padding: 21px; border: 1px solid var(--site-border); border-radius: var(--radius-md); background: var(--site-surface); }
+.megaGroup { min-width: 0; padding: 21px; border: 0; border-radius: var(--radius-md); background: var(--site-surface); }
 .gameHeading { display: flex; align-items: center; gap: 14px; min-height: 62px; margin-bottom: 16px; }
 .gameHeading > img { width: 42px; height: 42px; flex: none; object-fit: contain; }
 .gameHeading h2 { margin: 0 0 5px; color: white; font-size: 18px; font-weight: 850; letter-spacing: -.035em; }
@@ -180,10 +170,10 @@
 .teamGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .teamLink {
   display: flex; min-width: 0; min-height: 52px; align-items: center; gap: 10px;
-  padding: 8px 10px; border: 1px solid var(--site-border); border-radius: var(--radius-sm); background: var(--site-bg-alt);
+  padding: 8px 10px; border: 0; border-radius: var(--radius-sm); background: var(--site-bg-alt);
   color: #eee9f1; font-size: 13px; font-weight: 750; text-decoration: none;
 }
-.teamLink:hover { border-color: #c7a4ed; background: var(--site-surface-raised); }
+.teamLink:hover {  background: var(--site-surface-raised); }
 .teamLink img { width: 30px; height: 30px; flex: none; object-fit: contain; }
 .teamLink img.darkCrest, .mobileTeamGrid img.darkCrest { padding: 3px; border-radius: var(--radius-sm); background: #d4cddd; }
 .teamArrow { margin-left: auto; color: #c5a7e2; }
@@ -199,21 +189,21 @@
   .mobileNav {
     display: grid; width: 100%; max-height: calc(100dvh - 64px); overflow-y: auto;
     padding: 8px max(16px, calc((100vw - 680px) / 2)) 24px;
-    border-top: 1px solid var(--site-border); background: var(--site-bg-alt); box-shadow: 0 20px 35px #0008;
+    border-top: 0; background: var(--site-bg-alt); box-shadow: 0 20px 35px #0008;
   }
   .mobileTeamsTrigger, .mobilePageLink {
     display: flex; min-height: 50px; align-items: center; justify-content: space-between;
-    border: 0; border-bottom: 1px solid var(--site-border); background: transparent;
+    border: 0; border-bottom: 0; background: transparent;
     color: #f3eff6; text-decoration: none; font-size: 12px; font-weight: 850;
     letter-spacing: .12em; text-transform: uppercase;
   }
   .mobileTeamsTrigger { width: 100%; padding: 0; cursor: pointer; }
-  .mobilePageLink[aria-current="page"] { border-bottom-color: #c9a8f5; color: #e0c9ff; }
+  .mobilePageLink[aria-current="page"] {  color: #d1c5df; }
   .mobileTeams { display: grid; gap: 12px; padding: 16px 0 20px; }
-  .mobileGame { padding: 12px; border: 1px solid var(--site-border); border-radius: var(--radius-md); background: var(--site-surface); }
+  .mobileGame { padding: 12px; border: 0; border-radius: var(--radius-md); background: var(--site-surface); }
   .mobileOverview { display: flex; justify-content: space-between; color: #d9bdf5; font-size: 14px; font-weight: 850; text-decoration: none; }
   .mobileTeamGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
-  .mobileTeamGrid a { display: flex; min-width: 0; min-height: 44px; align-items: center; gap: 7px; padding: 6px; border: 1px solid var(--site-border); border-radius: var(--radius-sm); background: var(--site-bg-alt); color: #f0ebf3; font-size: 13px; text-decoration: none; }
+  .mobileTeamGrid a { display: flex; min-width: 0; min-height: 44px; align-items: center; gap: 7px; padding: 6px; border: 0; border-radius: var(--radius-sm); background: var(--site-bg-alt); color: #f0ebf3; font-size: 13px; text-decoration: none; }
   .mobileTeamGrid img { width: 26px; height: 26px; flex: none; object-fit: contain; }
   .mobileJoin { margin-top: 20px; }
 }
@@ -229,3 +219,9 @@
   .accentWiping .accentCurrent { -webkit-mask-image: none; mask-image: none; }
   .accentIncoming { display: none; }
 }
+
+.join, .mobileJoin { background: var(--glass-control); color: var(--site-text); backdrop-filter: blur(18px); }
+.join:hover, .mobileJoin:hover { background: var(--glass-hover); }
+.menuButton, .teamLink, .mobileTeamGrid a { background: var(--glass-control); }
+.megaMenu, .mobileNav { background: rgb(29 27 35 / 97%); backdrop-filter: blur(24px); }
+.desktopNav > a[aria-current="page"], .mobilePageLink[aria-current="page"] { color: var(--site-accent); }

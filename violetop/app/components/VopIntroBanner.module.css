@@ -22,7 +22,7 @@
   height: var(--reveal-canvas-height);
   overflow: hidden;
   isolation: isolate;
-  border-bottom: 1px solid var(--site-border);
+  border-bottom: 0;
   background: #08090b;
   color: #f7f5f8;
 }

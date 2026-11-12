@@ -2,38 +2,38 @@
 .page a:focus-visible { outline: 3px solid #e8cfff; outline-offset: 5px; }
 .back { display: inline-block; margin-bottom: 24px; color: #e2c8fa; font-size: 15px; font-weight: 700; text-decoration: none; }
 .back:hover { text-decoration: underline; text-underline-offset: 5px; }
-.event { overflow: hidden; border: 1px solid var(--site-border); background: rgb(13 10 20 / 94%); }
+.event { overflow: hidden; border: 0; background: transparent; }
 .artwork { position: relative; aspect-ratio: 21 / 9; background: #13101b; }
 .artwork img { object-fit: cover; }
 .content { padding: clamp(24px, 5vw, 64px); }
 .eyebrow { margin: 0 0 18px; color: #e2c8fa; font-size: 12px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
 .content h1 { max-width: 900px; margin: 0 0 32px; font-size: clamp(32px, 5vw, 64px); line-height: 1.06; font-weight: 850; letter-spacing: -.04em; overflow-wrap: break-word; }
-.logistics { display: flex; flex-wrap: wrap; gap: 24px 48px; margin: 0 0 36px; padding: 24px 0; border-block: 1px solid var(--site-border); }
+.logistics { display: flex; flex-wrap: wrap; gap: 24px 48px; margin: 0 0 36px; padding: 24px 0; border-block: 0; }
 .logistics dt { margin-bottom: 8px; color: var(--site-text-muted); font-size: 13px; }
 .logistics dd { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; font-size: 16px; line-height: 1.5; }
-.badge { padding: 2px 7px; border: 1px solid #766186; color: #e2c8fa; font-size: 12px; }
+.badge { padding: 2px 7px; border: 0; color: #e2c8fa; font-size: 12px; }
 .description { max-width: 760px; }
 .description h2, .related h2 { margin: 0 0 16px; font-size: 24px; font-weight: 750; letter-spacing: -.025em; }
 .description p { margin: 0 0 16px; color: var(--site-text-muted); font-size: 18px; line-height: 1.7; }
 .description .notice { color: #e2c8fa; font-weight: 700; }
 .scheduleNote { margin: 28px 0 20px; color: var(--site-text-muted); font-size: 13px; line-height: 1.6; }
-.discord { display: inline-flex; align-items: center; gap: 20px; min-height: 48px; padding: 12px 18px; border: 1px solid #766186; color: #e2c8fa; font-size: 14px; font-weight: 700; text-decoration: none; }
+.discord { display: inline-flex; align-items: center; gap: 20px; min-height: 48px; padding: 12px 18px; border: 0; color: #e2c8fa; font-size: 14px; font-weight: 700; text-decoration: none; }
 .discord:hover { background: #30263f; }
-.related { margin-top: 40px; padding: 28px; border: 1px solid var(--site-border); background: rgb(13 10 20 / 94%); }
-.related a { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border-top: 1px solid var(--site-border); color: var(--site-text); text-decoration: none; }
+.related { margin-top: 40px; padding: 28px; border: 0; background: transparent; }
+.related a { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; border-top: 0; color: var(--site-text); text-decoration: none; }
 .related a:hover { color: #e2c8fa; }
 .related small { display: block; margin-top: 6px; color: var(--site-text-muted); line-height: 1.5; }
-.posterArtwork { aspect-ratio: auto; height: min(680px, 75vw); min-height: 360px; background: radial-gradient(ellipse at center, #4c2a68 0%, #221832 55%, #151020 100%); }
-.halloweenEvent { border-color: #80539d; background: linear-gradient(145deg, #21112e, #100d18 65%); }
+.posterArtwork { aspect-ratio: auto; height: min(680px, 75vw); min-height: 360px; background: transparent; }
+.halloweenEvent {  background: linear-gradient(145deg, #21112e, #1b1920 65%); }
 .halloweenEvent .eyebrow { color: #fac58f; }
-.status { display: inline-block; margin: -12px 0 28px; padding: 7px 11px; border: 1px solid #a98bc15c; border-radius: 4px; background: #392147; color: #ecd3ff; font-size: 13px; font-weight: 750; }
+.status { display: inline-block; margin: -12px 0 28px; padding: 7px 11px; border: 0; border-radius: 4px; background: #392147; color: #ecd3ff; font-size: 13px; font-weight: 750; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 36px; }
-.primaryAction { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 48px; padding: 12px 18px; background: #d0aef6; color: #18101e; font-size: 14px; font-weight: 800; text-decoration: none; }
+.primaryAction { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 48px; padding: 12px 18px; background: #b8a6d1; color: #18101e; font-size: 14px; font-weight: 800; text-decoration: none; }
 .primaryAction:hover { background: #e3c7ff; }
 .halloweenEvent .primaryAction { background: #fac58f; color: #27152e; }
 .halloweenEvent .primaryAction:hover { background: #ffdbb5; }
 .detailSections { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
-.detailSection { min-width: 0; padding: 28px; border: 1px solid #caa5ef29; border-radius: 6px; background: #251b323f; }
+.detailSection { min-width: 0; padding: 28px; border: 0; border-radius: 6px; background: #251b323f; }
 .detailSection h2 { margin: 0 0 16px; color: #f1e3fb; font-size: 21px; line-height: 1.25; letter-spacing: -.02em; }
 .detailSection p, .detailSection li { color: #cfc3d7; font-size: 15px; line-height: 1.7; }
 .detailSection p { margin: 0 0 14px; }
@@ -51,3 +51,7 @@
   .detailSection { padding: 22px; }
   .actions { flex-direction: column; align-items: stretch; }
 }
+
+.primaryAction, .discord { border-radius: var(--radius-md); }
+.discord { background: var(--glass-control); }
+.detailSection { background: var(--site-surface); border-radius: var(--radius-lg); }
