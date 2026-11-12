@@ -12,7 +12,7 @@
 
 /* Without WebGL: the same still ribbon with the shader's muted violet palette. */
 .canvas[data-fallback] {
-  background: linear-gradient(126deg, #151419 0%, #151419 34%, #211d29 46%, #2e263a 52%, #211d29 58%, #151419 72%, #151419 100%);
+  background: linear-gradient(126deg, #151419 0%, #151419 34%, #1c1824 46%, #241c30 52%, #1c1824 58%, #151419 72%, #151419 100%);
 }
 
 /* Other pages dim the swirl so it stays a backdrop; the homepage shows it at full strength. */
