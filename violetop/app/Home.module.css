@@ -252,21 +252,15 @@
 .section.highlightsSection { padding: clamp(24px, 3vw, 36px); }
 
 .seasonRibbon { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px 22px; min-height: 48px; padding: 12px 24px; border-bottom: 1px solid #d7b0fc45; background: #2b1839; color: #f5e7ff; font-size: 13px; line-height: 1.5; }
-.seasonRibbon > span:first-child { color: #ffc995; font-weight: 850; text-transform: uppercase; letter-spacing: .09em; font-size: 11px; }
+.seasonRibbon > span:first-child { color: #d9b5fa; font-weight: 850; text-transform: uppercase; letter-spacing: .09em; font-size: 11px; }
 .seasonRibbon > span:last-child { display: inline-flex; align-items: center; gap: 18px; }
 .seasonRibbon:hover { background: #382047; }
-.section.halloweenFeature { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 4vw, 64px); align-items: center; padding: clamp(24px, 4vw, 56px); border-color: #a779c353; background: radial-gradient(ellipse at 90% 5%, #6c346747, transparent 60%), linear-gradient(130deg, #1d102a, #171127 70%); }
-.halloweenCopy { min-width: 0; }
-.halloweenEyebrow { margin: 0 0 20px; color: #ffc995; font-size: 11px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
-.halloweenFeature h2 { margin: 0; font-size: clamp(32px, 4.2vw, 58px); letter-spacing: -.055em; font-weight: 900; line-height: 1.05; }
-.halloweenFeature h2 em { font-style: normal; color: #d9b5fa; }
-.halloweenHosts { margin: 20px 0; color: #dbc9e8; font-size: 13px; font-weight: 750; line-height: 1.6; }
-.halloweenIntro { max-width: 530px; margin: 0; color: #d4c9dc; font-size: 17px; line-height: 1.65; }
-.recapAction { display: inline-flex; justify-content: center; align-items: center; gap: 20px; min-height: 50px; padding: 14px 22px; border-radius: var(--radius-md); background: #fac58f; color: #27152e; font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
-.recapAction:hover { background: #ffdbb5; }
-.recapPhoto { min-width: 0; margin: 0; }
-.recapPhoto a { display: block; overflow: hidden; border: 1px solid #d6a8ff45; border-radius: var(--radius-md); }
-.recapPhoto img { display: block; width: 100%; height: auto; }
-.recapPhoto figcaption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-top: 12px; color: #bcaac7; font-size: 11px; }
-@media (max-width: 760px) { .seasonRibbon { padding-inline: 16px; gap: 3px; text-align: center; font-size: 11px; } .seasonRibbon > span { width: 100%; justify-content: center; } .section.halloweenFeature { grid-template-columns: 1fr; gap: 28px; padding: 32px 20px; } .halloweenFeature h2 { font-size: clamp(34px, 9vw, 54px); } .halloweenIntro { font-size: 16px; } }
-@media (max-width: 420px) { .halloweenFeature .heroActions { flex-direction: column; } }
+@media (max-width: 760px) {
+  .seasonRibbon { padding-inline: 16px; gap: 3px; text-align: center; font-size: 11px; }
+  .seasonRibbon > span { width: 100%; justify-content: center; }
+}
+.eventLayoutSingle .featuredEvent { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+.eventLayoutSingle .eventVisual { aspect-ratio: 1; height: 100%; }
+@media (max-width: 760px) {
+  .eventLayoutSingle .featuredEvent { display: flex; }
+}
