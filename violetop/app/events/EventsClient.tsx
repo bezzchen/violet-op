@@ -6,7 +6,6 @@ import { calendarFeeds, eventsContent } from "../data/siteContent";
 import { groupEvents } from "../data/eventGroups";
 import { isScheduledMainEvent, type MainEvent } from "../data/mainEvents";
 import type { CalendarEvent } from "../lib/ical";
-import EventPhotoCarousel from "./EventPhotoCarousel";
 import PlayerMatchList from "./PlayerMatchList";
 import MainEventList from "./MainEventList";
 import styles from "./Events.module.css";
@@ -20,7 +19,6 @@ export default function EventsClient({ events, error, upcomingMainEvents }: { ev
           <div><span className={styles.eyebrow}>Violet OP events</span><h1>{eventsContent.title}</h1></div>
           <a className={styles.calendarLink} href={calendarFeeds.events}>Subscribe to calendar </a>
         </div>
-        <EventPhotoCarousel />
         <div className={styles.columns}>
           <section aria-labelledby="matches-title" className={styles.column}>
             <h2 id="matches-title">Player Matches</h2>
