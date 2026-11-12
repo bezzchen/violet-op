@@ -70,7 +70,7 @@
 /* Glass blurs the swirl so a ribbon reads as colour behind the text, not as an edge. */
 .glassCard, .violetCard { background: transparent; }
 .glassCard { background: transparent; }
-.violetCard { background: rgb(37 21 56 / 76%); }
+.violetCard { background: transparent; }
 .sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-bottom: 34px; }
 .sectionHeading h2 {
   max-width: 800px; margin: 0;
