@@ -16,7 +16,6 @@ import {
 } from "./data/siteContent";
 import { eventArtwork, type EventArtwork } from "./data/eventArtwork";
 import { getUpcomingMainEvents, type MainEvent } from "./data/mainEvents";
-import { pastEvents } from "./data/pastEvents";
 import styles from "./Home.module.css";
 
 const discordUrl = "https://discord.gg/MAmXcrkADb";
@@ -54,6 +53,7 @@ function EventPreview({ event, featured = false }: { event: MainEvent; featured?
           <time dateTime={event.startsOn}>{event.dateLabel}</time>
           {event.time ? <p>{event.time}{event.startsAt ? " · New York time" : ""}</p> : null}
           {event.location ? <p>{event.location}</p> : null}
+          {featured ? <p>{event.description}</p> : null}
           <span className={styles.eventAction}>View event <Arrow /></span>
         </div>
       </div>
@@ -63,7 +63,8 @@ function EventPreview({ event, featured = false }: { event: MainEvent; featured?
 
 export default function Home() {
   const upcomingEvents = getUpcomingMainEvents(new Date());
-  const halloween = pastEvents.find((event) => event.slug === "halloween-event-2026")!;
+  const watchParty = upcomingEvents.find((event) => event.series === "worlds-watch-party");
+  const watchPartyRsvp = watchParty?.actions?.find((action) => action.primary);
   const [featuredEvent, ...supportEvents] = upcomingEvents.slice(0, 3);
   const openPlayerPaths = joinContent.paths.filter((path) => path.applicationsOpen);
   const openStaffExamples = joinContent.staffRoles.filter(
@@ -74,7 +75,12 @@ export default function Home() {
     <>
       <Header />
       <main className={styles.page} id="main-content" tabIndex={-1}>
-        <Link href={`/media/${halloween.slug}`} className={styles.seasonRibbon}><span>Halloween Fest recap</span><span>The photos are here. Find your favorite moments <Arrow /></span></Link>
+        {watchParty && watchPartyRsvp ? (
+          <a href={watchPartyRsvp.href} className={styles.seasonRibbon} target="_blank" rel="noopener noreferrer">
+            <span>Worlds 2026 Watch Party</span>
+            <span>November 14 · {watchParty.time} · RSVP on Luma <Arrow external /></span>
+          </a>
+        ) : null}
         <section aria-labelledby="hero-title" className={`${styles.hero} ${styles.glassCard}`} id="hero-section">
           <div className={styles.heroContent}>
             <p className={styles.eyebrow}>{homeContent.eyebrow}<span> / Collegiate esports</span></p>
@@ -87,24 +93,6 @@ export default function Home() {
           </div>
           <HomeHeroVideo />
         </section>
-        <section className={`${styles.section} ${styles.halloweenFeature}`} id="halloween" aria-labelledby="halloween-title">
-          <div className={styles.halloweenCopy}>
-            <p className={styles.halloweenEyebrow}>October 31, 2026 · The recap</p>
-            <h2 id="halloween-title">That’s a wrap,<br /><em>Halloween Fest.</em></h2>
-            <p className={styles.halloweenHosts}>{halloween.hosts}</p>
-            <p className={styles.halloweenIntro}>Costumes, Worlds, trivia, and a whole afternoon together. Thanks for making the Grand Hall feel like our corner of NYU.</p>
-            <div className={styles.heroActions}>
-              <Link className={styles.recapAction} href={`/media/${halloween.slug}`}>Explore the photos <Arrow /></Link>
-              <Link className={styles.secondaryAction} href="#latest">What’s next <Arrow /></Link>
-            </div>
-          </div>
-          <figure className={styles.recapPhoto}>
-            <Link href={`/media/${halloween.slug}`} aria-label="See Halloween Fest photos">
-              <Image src={halloween.cover} alt={halloween.coverAlt} width={1920} height={1280} quality={85} sizes="(max-width: 760px) calc(100vw - 64px), 55vw" />
-            </Link>
-            <figcaption>One last group photo.</figcaption>
-          </figure>
-        </section>
         <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">
           <div className={styles.sectionHeading}>
             <div>
@@ -114,7 +102,16 @@ export default function Home() {
           </div>
           {featuredEvent ? (
             <div className={supportEvents.length ? styles.eventLayout : styles.eventLayoutSingle}>
-              <EventPreview event={featuredEvent} featured />
+              <div>
+                <EventPreview event={featuredEvent} featured />
+                {featuredEvent.actions?.some((action) => action.primary) ? (
+                  <div className={styles.heroActions}>
+                    {featuredEvent.actions.filter((action) => action.primary).map((action) => (
+                      <a key={action.href} className={styles.primaryAction} href={action.href} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label} <Arrow external={action.href.startsWith("https:")} /></a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
               {supportEvents.length ? (
                 <div className={styles.supportEvents}>
                   {supportEvents.map((event) => <EventPreview event={event} key={event.id} />)}

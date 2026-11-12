@@ -21,9 +21,10 @@ export const eventArtwork = {
     activity: "competitive",
   },
   worldsWatchParty: {
-    src: "/images/events/worlds-watch-party-2026.png",
-    alt: "Blue-lit League of Legends Worlds arena with a match on the overhead screens and fans in the stands",
+    src: "/images/events/worlds-watch-party-2026-luma.avif",
+    alt: "Official Road to Worlds watch party artwork from NYU Violet OP’s Luma listing, featuring the Worlds trophy",
     objectPosition: "50% 50%",
+    objectFit: "contain",
     game: "league",
     activity: "community",
   },

@@ -36,7 +36,7 @@ export const mainEventRedirects: Record<string, string> = {
   "vop-cup-online-stage-2026": cupEventId,
 };
 
-/** Tournament announcements verified October 29; Halloween recap added October 31. */
+/** Tournament announcements verified October 29; watch party synced with Luma November 11. */
 export const mainEvents: MainEvent[] = [
   {
     id: "geng-fireside-chat-2026",
@@ -107,14 +107,38 @@ export const mainEvents: MainEvent[] = [
   {
     id: "worlds-watch-party-2026",
     series: "worlds-watch-party",
-    title: "Worlds Watch Party",
+    title: "NYU VOP: League of Legends Worlds 2026 Watch Party",
     startsOn: "2026-11-14",
-    dateLabel: "November 14, 2026",
-    time: "Time to be announced",
-    location: "Kimmel · Room to be announced",
-    description: "Watch Worlds with the Violet OP community, with activities between games.",
-    scheduleNote: "The room and start time will be confirmed by the organizers. Check Discord before making plans.",
-    updatedOn: "October 29, 2026",
+    dateLabel: "Saturday, November 14, 2026",
+    time: "1:30–6:00 PM EST",
+    startsAt: "2026-11-14T13:30:00-05:00",
+    endsAt: "2026-11-14T18:00:00-05:00",
+    location: "Kimmel Center for University Life · Room C95 · 60 Washington Square S, New York, NY 10012",
+    hosts: "NYU Violet OP",
+    status: "Free admission · RSVP on Luma",
+    description: "The Road to Worlds ends here. Watch League of Legends Worlds 2026 live with the NYU League community, meet fellow fans, and join games and activities between matches.",
+    details: "Come cheer together and play for a chance to win official Worlds 2026 League of Legends merchandise.",
+    registrationNotice: "Free to attend. Open to NYU students and registered external guests. Bring your friends and register on Luma.",
+    actions: [
+      { label: "RSVP on Luma", href: "https://luma.com/j12t8r90", primary: true },
+      { label: "Get directions", href: "https://www.google.com/maps/search/?api=1&query=40.729936599999995%2C-73.9978275&query_place_id=ChIJn2TxqpFZwokRuM-MF7zWH44" },
+    ],
+    sections: [
+      {
+        title: "What to expect",
+        items: ["Watch Worlds 2026 live with fellow League fans.", "Join games and activities during the breaks.", "Play for a chance to win official Worlds 2026 League of Legends merchandise."],
+      },
+      {
+        title: "Final lineup",
+        body: "To be announced. The organizers will post the lineup on Luma once it is confirmed.",
+      },
+      {
+        title: "Getting in",
+        body: "Meet us in Room C95 at the Kimmel Center for University Life, 60 Washington Square S. External guests must register on Luma; follow the organizers’ guest-access and check-in instructions.",
+      },
+    ],
+    scheduleNote: "See the Luma listing for the latest event details, final lineup, and registration.",
+    updatedOn: "November 11, 2026",
     artwork: "worldsWatchParty",
   },
 ];
