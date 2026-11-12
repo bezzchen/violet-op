@@ -43,6 +43,61 @@ export default function PortfolioBanner() {
       let lastActive = -1;
       let trigger: ReturnType<typeof ScrollTrigger.create>;
       const context = gsap.context(() => {
+        // Render clearance from the scrubbed position, so reverse scrolling
+        // and fast wheel input follow the same continuous path.
+        const travel = { position: 0 };
+        const images = cards.map((card) => card.querySelector<HTMLElement>("." + styles.image)!);
+        let width = stage.clientWidth;
+        let height = stage.clientHeight;
+        let cardWidth = cards[0].offsetWidth;
+        const spacing = () => width * (width < 760 ? .98 : .5);
+        const smoothstep = (value: number) => {
+          const t = Math.max(0, Math.min(1, value));
+          return t * t * (3 - 2 * t);
+        };
+        const renderCards = () => {
+          const position = travel.position;
+          const nearest = Math.round(position);
+          const distance = Math.abs(position - nearest);
+          // Hold a clear reading area near the center, then release it
+          // smoothly before the next slide takes focus.
+          const focus = 1 - smoothstep((distance - .18) / .32);
+          const mobile = width < 760;
+          const readScale = (index: number) => Math.min(
+            mobile ? .96 : placement[index][2],
+            (width - 48) / cardWidth,
+            (height - (mobile ? 190 : 160)) / (cardWidth * 9 / 16)
+          );
+          const focalWidth = cardWidth * readScale(nearest);
+          cards.forEach((card, index) => {
+            const [top, depth, scale, tilt] = placement[index];
+            const isNearest = index === nearest;
+            const emphasis = isNearest ? focus : 0;
+            const baseScale = mobile ? .96 : scale;
+            const baseX = (index - position) * spacing();
+            const halfWidth = cardWidth * baseScale * 1.08 / 2;
+            const separation = Math.abs(baseX);
+            const clearance = Math.max(0, focalWidth / 2 + halfWidth + 40 - separation);
+            const side = Math.sign(index - nearest);
+            const centerShift = width * (mobile ? 0 : .06);
+            const x = isNearest
+              ? baseX * (1 - emphasis) + centerShift * emphasis
+              : baseX + (centerShift + side * clearance) * focus;
+            gsap.set(card, {
+              x,
+              y: (height * (.5 - top / 100) - 15) * emphasis,
+              rotationY: (-5 + position) * (1 - emphasis),
+              zIndex: isNearest && focus > 0 ? 2 : 1,
+            });
+            gsap.set(images[index], {
+              xPercent: -50, yPercent: -50, x: 0, y: 0,
+              z: (mobile ? 0 : depth) * (1 - emphasis),
+              scale: baseScale + (readScale(index) - baseScale) * emphasis,
+              rotation: tilt * (1 - emphasis),
+            });
+          });
+          if (nearest !== lastActive) { lastActive = nearest; setActive(nearest); }
+        };
         const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: root,
@@ -50,18 +105,16 @@ export default function PortfolioBanner() {
             end: () => "+=" + (root.offsetHeight - stage.offsetHeight),
             scrub: .65,
             invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              const next = Math.round(self.progress * (COUNT - 1));
-              if (next !== lastActive) { lastActive = next; setActive(next); }
+            onRefresh: () => {
+              width = stage.clientWidth;
+              height = stage.clientHeight;
+              cardWidth = cards[0].offsetWidth;
+              renderCards();
             },
           },
         });
-        const spacing = () => stage.clientWidth * (stage.clientWidth < 760 ? .98 : .5);
-        cards.forEach((card, index) => {
-          timeline.fromTo(card,
-            { x: () => index * spacing(), rotationY: -5 },
-            { x: () => (index - COUNT + 1) * spacing(), rotationY: 5, duration: 1, ease: "none" }, 0);
-        });
+        timeline.to(travel, { position: COUNT - 1, duration: 1, ease: "none", onUpdate: renderCards }, 0);
+        renderCards();
         echoes.forEach((echo, index) => {
           timeline.fromTo(echo,
             { x: () => (index - .5) * spacing() * 1.2 },
