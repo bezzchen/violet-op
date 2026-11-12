@@ -3,7 +3,7 @@
 .gameNav { display: flex; gap: 28px; padding: 29px 0; border-bottom: 0; }
 .gameNav a { color: #c5b5d0; font-size: 12px; font-weight: 800; letter-spacing: .07em; text-decoration: none; }
 .gameNav a[aria-current="page"] { color: #f6f3f7; border-bottom: 0; padding-bottom: 7px; }
-.hero { display: grid; grid-template-columns: 1.05fr .95fr; min-height: 380px; margin-top: 28px; overflow: hidden; border-radius: var(--radius-xl); background: var(--site-surface-raised); border: 0; }
+.hero { display: grid; grid-template-columns: 1.05fr .95fr; min-height: 380px; margin-top: 28px; overflow: hidden; border-radius: var(--radius-xl); background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border: 0; }
 .heroCopy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(32px, 5vw, 72px); }
 .eyebrow, .tier { margin: 0; color: #caa9ed; font-size: 11px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
 .hero h1 { margin: 16px 0 20px; font-size: clamp(3.2rem, 6vw, 6rem); font-weight: 900; letter-spacing: -.07em; line-height: 1; }
@@ -13,15 +13,15 @@
 .secondaryLink { color: #dcc2f7; font-size: 12px; font-weight: 900; letter-spacing: .07em; text-decoration: none; text-transform: uppercase; }
 .heroCopy .secondaryLink { margin-top: 30px; }
 .secondaryLink:hover { color: white; text-decoration: underline; text-underline-offset: 5px; }
-.heroArt { position: relative; overflow: hidden; background: var(--site-surface-raised); pointer-events: none; }
+.heroArt { position: relative; overflow: hidden; background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); pointer-events: none; }
 .heroArt > svg { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: hidden; }
 .heroArt::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, var(--site-surface-raised), transparent 28%), linear-gradient(0deg, #1b192040, transparent 48%); }
 .rosters { margin-top: 82px; }
 .sectionHeading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
 .sectionHeading h2 { margin: 9px 0 0; font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 900; letter-spacing: -.06em; }
 .teamGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.teamCard { display: flex; flex-direction: column; align-items: flex-start; min-height: 282px; padding: 28px; border: 0; border-radius: var(--radius-lg); background: var(--site-surface); color: var(--site-text); text-decoration: none; transition: border-color .18s ease, background .18s ease; }
-.teamCard:hover, .teamCard:focus-visible {  background: var(--site-surface-raised); }
+.teamCard { display: flex; flex-direction: column; align-items: flex-start; min-height: 282px; padding: 28px; border: 0; border-radius: var(--radius-lg); background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); color: var(--site-text); text-decoration: none; transition: border-color .18s ease, background .18s ease; }
+.teamCard:hover, .teamCard:focus-visible {  background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .teamCardTop { display: flex; align-items: start; justify-content: space-between; gap: 18px; width: 100%; margin-bottom: 22px; }
 .crest { position: relative; display: block; width: 70px; height: 68px; border: 0; background: transparent; box-shadow: none; }
 .crest img { object-fit: contain; padding: 7px; }

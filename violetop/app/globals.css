@@ -157,16 +157,16 @@ a {
 }
 
 .glass-panel {
-  background: var(--site-surface);
+  background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
   border: 0;
 }
 
 .section-text-panel {
-  background: var(--site-surface-raised);
+  background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
 }
 
 .event-row-panel {
-  background: var(--site-surface);
+  background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
   
 }
 
@@ -183,7 +183,7 @@ a {
 
 .join-hero {
   min-height: 22rem;
-  background: var(--site-surface);
+  background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
 }
 
 .join-hero-media {
@@ -217,7 +217,7 @@ a {
 }
 
 .join-cta {
-  background: var(--site-surface-raised);
+  background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
 }
 
 .join-path-card,
@@ -402,7 +402,7 @@ a {
 .team-info-card,
 .team-roster-card,
 .clip-card {
-  background: var(--site-surface);
+  background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
   overflow: hidden;
   position: relative;
   transition: border-color 0.25s ease, transform 0.25s ease;
@@ -1010,21 +1010,21 @@ a {
   --glass-hover: rgb(197 183 218 / 17%);
   --motion-ease: cubic-bezier(.22, 1, .36, 1);
 }
-.site-content :is(a, button) {
+.site-content :is(a[href], button) {
   -webkit-tap-highlight-color: transparent;
   transition: transform 280ms var(--motion-ease), translate 280ms var(--motion-ease),
     scale 280ms var(--motion-ease), background-color 240ms ease,
     color 180ms ease, box-shadow 280ms ease, opacity 180ms ease;
 }
 .site-content button:not(:disabled) { cursor: pointer; }
-.site-content :is(button, a):focus-visible { outline: 2px solid #cbbddd; outline-offset: 4px; }
-.site-content :is(button, a):active:not(:disabled) { scale: .98; }
+.site-content :is(button, a[href]):focus-visible { outline: 2px solid #cbbddd; outline-offset: 4px; }
+.site-content :is(button, a[href]):active:not(:disabled) { scale: .98; }
 .site-content a:has(img):active { scale: .995; }
 .glass-panel, .section-text-panel, .event-row-panel,
 .team-info-card, .team-roster-card, .clip-card, .join-card-filled,
 .join-path-card, .join-role-card {
   border: 0;
-  background: var(--site-surface);
+  background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
   border-radius: var(--radius-lg);
 }
 .join-cta, .team-overview-copy, .team-hero-copy { background: transparent; border: 0; }
@@ -1033,8 +1033,8 @@ a {
   .site-content button:not(:disabled):hover { translate: 0 -1px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-content :is(a, button) { transition: none; }
-  .site-content :is(a, button):is(:hover, :active) { translate: none; scale: none; }
+  .site-content :is(a[href], button) { transition: none; }
+  .site-content :is(a[href], button):is(:hover, :active) { translate: none; scale: none; }
 }
 
 .site-content .op-clip {

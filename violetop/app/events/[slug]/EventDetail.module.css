@@ -54,4 +54,4 @@
 
 .primaryAction, .discord { border-radius: var(--radius-md); }
 .discord { background: var(--glass-control); }
-.detailSection { background: var(--site-surface); border-radius: var(--radius-lg); }
+.detailSection { background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border-radius: var(--radius-lg); }

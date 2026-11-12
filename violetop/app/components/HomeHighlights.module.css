@@ -10,7 +10,7 @@
 .controls button:disabled { opacity: .35; cursor: default; }
 .track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3); column-gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #715484 #16101e; padding: 5px 5px 12px; margin: -5px; }
 .track:focus-visible { outline: 2px solid #e8cfff; outline-offset: 3px; }
-.card { min-width: 0; scroll-snap-align: start; scroll-margin-left: 5px; border: 0; background: var(--site-surface-raised); }
+.card { min-width: 0; scroll-snap-align: start; scroll-margin-left: 5px; border: 0; background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .card > a { display: flex; flex-direction: column; height: 100%; color: var(--site-text); }
 .card > a:focus-visible { outline-offset: -3px; }
 .card:hover {  }

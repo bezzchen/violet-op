@@ -12,7 +12,7 @@
 .instagramIcon { color: #eba9e1; font-size: 25px; line-height: 1; }
 .youtubeIcon { display: grid; place-items: center; width: 23px; height: 17px; background: #e34454; color: white; font-size: 10px; }
 .posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.post { border-radius: var(--radius-md); overflow: hidden; min-width: 0; text-decoration: none; color: #f3eaf9; background: var(--site-surface); border: 0; transition: border-color .2s; }
+.post { border-radius: var(--radius-md); overflow: hidden; min-width: 0; text-decoration: none; color: #f3eaf9; background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border: 0; transition: border-color .2s; }
 .post:hover {  }
 .postImage { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: #08060c; }
 .postImage img { object-fit: cover; transition: transform .25s; }
@@ -38,3 +38,7 @@
 @media (max-width: 1000px) { .platforms { grid-template-columns: 1fr; } .youtube { border-left: 0; border-top: 0; padding: 20px 0 0; } .postImage { aspect-ratio: 1; } }
 @media (max-width: 700px) { .banner { padding: 20px; margin-bottom: 40px; } .intro { display: block; } .intro p { margin-top: 12px; } .posts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding: 6px 6px 14px; margin: -6px; } .post { flex: 0 0 190px; scroll-snap-align: start; } .postImage { aspect-ratio: 3 / 4; } .videos { grid-template-columns: 1fr; gap: 22px; } .video { grid-template-columns: 1fr; } .videoInfo h4 { font-size: 18px; } .videoInfo p, .videoInfo a { font-size: 12px; } .platformHeading a { min-height: 44px; } }
 @media (prefers-reduced-motion: reduce) { .post, .postImage img, .playIcon { transition: none; } .post:hover img { transform: none; } }
+
+/* Preserve the whole post artwork, including announcement typography. */
+.postImage { aspect-ratio: 1; background: transparent; }
+.postImage img { object-fit: contain; }

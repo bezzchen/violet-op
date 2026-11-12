@@ -15,7 +15,7 @@
 .captionLink:hover { text-decoration: underline; text-underline-offset: 4px; }
 .controls { display: flex; flex-shrink: 0; align-items: center; gap: 10px; }
 .controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 0; background: transparent; color: white; font-size: 22px; cursor: pointer; }
-.controls button:hover { background: var(--site-surface-raised);  }
+.controls button:hover { background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);  }
 .count { width: 38px; text-align: center; color: var(--site-text-muted); font-size: 11px; }
 .columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 24px; margin-top: 40px; }
 .column { min-width: 0; }
@@ -23,7 +23,7 @@
 .columnIntro { margin: 0 0 24px; color: var(--site-text-muted); font-size: 15px; line-height: 1.6; }
 .unclassified { margin-top: 40px; border-top: 0; padding-top: 28px; }
 .unclassified > p { max-width: 740px; color: var(--site-text-muted); line-height: 1.6; margin-bottom: 24px; }
-.status { padding: 20px; border: 0; background: var(--site-surface); }
+.status { padding: 20px; border: 0; background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 @media (max-width: 760px) {
   .page { width: calc(100% - 32px); padding-top: 92px; }
   .heading { display: block; }
@@ -36,5 +36,5 @@
   .columns { grid-template-columns: 1fr; gap: 36px; margin-top: 30px; }
 }
 
-.carousel { background: var(--site-surface); border-radius: var(--radius-lg); overflow: hidden; }
+.carousel { background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border-radius: var(--radius-lg); overflow: hidden; }
 .controls button { background: var(--glass-control); border-radius: var(--radius-md); }
