@@ -277,3 +277,20 @@
   .eventDate { flex-direction: row; align-items: baseline; gap: 8px; }
   .featuredEvent .eventDate strong { font-size: 32px; letter-spacing: -.04em; }
 }
+
+/* Shared action sizing stays explicit for both glass button variants. */
+.primaryAction, .secondaryAction {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
