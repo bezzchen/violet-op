@@ -14,7 +14,7 @@ export default function MediaPage() {
   return (
     <PageShell>
       <div className={styles.page}>
-        <Link className={styles.back} href="/events">← Events</Link>
+        <Link className={styles.back} href="/events">Events</Link>
         <SocialBanner />
         <div className={styles.sectionHeading}>
           <h2>Past Events</h2>

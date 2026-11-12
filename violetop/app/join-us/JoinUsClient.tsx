@@ -81,10 +81,7 @@ export default function JoinUsClient() {
           </div>
 
           <div className="join-hero-copy relative z-10 max-w-2xl p-6 py-9 md:p-stack-xl md:py-12">
-            <span className="font-label-caps text-label-caps uppercase text-primary">
-              Join Us
-            </span>
-            <h1 className="mt-4 font-display-xl text-4xl font-extrabold text-white md:text-display-xl">
+            <h1 className="font-display-xl text-4xl font-extrabold text-white md:text-display-xl">
               {joinContent.title}
             </h1>
             <p className="mt-6 max-w-xl font-body-lg text-body-lg text-on-surface-variant">
@@ -189,7 +186,6 @@ export default function JoinUsClient() {
                               <ul className="grid gap-2 font-body-md text-sm text-on-surface-variant">
                                 {path.details.map((detail) => (
                                   <li className="flex gap-2" key={detail}>
-                                    <span className="text-primary">›</span>
                                     <span>{detail}</span>
                                   </li>
                                 ))}
@@ -220,7 +216,7 @@ export default function JoinUsClient() {
                                   className="font-label-caps text-label-caps uppercase text-tertiary transition-colors hover:text-white"
                                   href={team.href}
                                 >
-                                  View Team →
+                                  View Team
                                 </Link>
                               ) : null}
                             </div>

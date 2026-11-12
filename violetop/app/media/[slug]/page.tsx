@@ -28,7 +28,7 @@ export default async function EventMediaPage({ params }: Props) {
   return (
     <PageShell>
       <article className={styles.page}>
-        <Link className={styles.back} href="/media">← All past events</Link>
+        <Link className={styles.back} href="/media">All past events</Link>
         <header className={styles.eventHero}>
           <div className={styles.eventIntro}>
             <span className={styles.eyebrow}>{event.category} · <time dateTime={event.date}>{event.dateLabel}</time></span>
@@ -44,7 +44,7 @@ export default async function EventMediaPage({ params }: Props) {
         </header>
         {event.highlights ? <section className={styles.recapHighlights} aria-label="Event highlights">{event.highlights.map((highlight) => <div key={highlight.title}><h2>{highlight.title}</h2><p>{highlight.body}</p></div>)}</section> : null}
         <MediaGallery key={slug} items={items} title={event.title} />
-        <Link className={styles.nextEvent} href={`/media/${next.slug}`}><span>Another event<strong>{next.title}</strong></span><span aria-hidden="true">→</span></Link>
+        <Link className={styles.nextEvent} href={`/media/${next.slug}`}><span>Another event<strong>{next.title}</strong></span></Link>
       </article>
     </PageShell>
   );

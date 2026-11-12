@@ -71,7 +71,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
             {selected.src ? <Image alt={selected.alt ?? title} src={selected.src} width={selected.width ?? 1920} height={selected.height ?? 1280} unoptimized /> : <iframe key={selected.id} title={selected.label} src={`https://drive.google.com/file/d/${selected.id}/preview`} allow="autoplay; fullscreen" allowFullScreen referrerPolicy="no-referrer" />}
           </div>
           <div className={styles.viewerFooter}>
-            <div className={styles.viewerControls}><button type="button" aria-label="Previous media" onClick={() => move(-1)}>←</button><span aria-live="polite">{selectedIndex + 1} / {filtered.length}</span><button type="button" aria-label="Next media" onClick={() => move(1)}>→</button></div>
+            <div className={styles.viewerControls}><button type="button" aria-label="Previous media" onClick={() => move(-1)}>Previous</button><span aria-live="polite">{selectedIndex + 1} / {filtered.length}</span><button type="button" aria-label="Next media" onClick={() => move(1)}>Next</button></div>
             <a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.src ? "Open original" : "Open in Google Drive"}</a>
           </div>
         </div> : null}

@@ -20,7 +20,7 @@
 .bottomline { position: absolute; z-index: 5; inset: auto 3.5% 0; padding: 16px 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 18px; background: linear-gradient(transparent,#000 50%); }
 .status { display: flex; gap: 24px; align-items: center; font-size: 12px; color: #cbb8df; }
 .status > span:first-child { color: #f2e7ff; font-variant-numeric: tabular-nums; }
-.navigation { display: flex; gap: 24px; }
+.navigation { display: flex; gap: 24px; margin-left: auto; }
 .navigation button, .viewer button { border: 0; border-bottom: 1px solid #7d5c9c; background: transparent; color: #f3eaff; font: inherit; font-size: 12px; padding: 10px 0; min-width: 44px; min-height: 44px; cursor: pointer; }
 .navigation button:disabled { opacity: .35; cursor: default; }
 .progress { position: absolute; bottom: 8px; left: 0; right: 0; height: 1px; background: #503762; }

@@ -216,7 +216,7 @@ export const aboutContent = {
 };
 
 export const joinContent = {
-  title: "Join the Vibe",
+  title: "Join a Team",
   intro:
     "At Violet OP, we believe there is a place for every player. Whether you are an elite competitor looking for the big stage or a casual player looking for a squad, your journey starts here.",
   paths: [

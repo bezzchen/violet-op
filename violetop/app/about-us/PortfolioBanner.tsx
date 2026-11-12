@@ -254,7 +254,6 @@ export default function PortfolioBanner() {
             })}
           </div>
           {!still && <div className={styles.bottomline}>
-            <div className={styles.status}><span>{String(active + 1).padStart(2, "0")} / {COUNT}</span><span>Scroll to explore. Pause to preview; click to read.</span></div>
             <div className={styles.navigation}>
               <button type="button" onClick={() => navigateRef.current?.(active - 1)} disabled={active === 0}>Previous</button>
               <button type="button" onClick={() => openSlide(active)}>View slide</button>

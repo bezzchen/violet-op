@@ -219,7 +219,7 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
                     <Image alt="" height={42} quality={75} src={group.image} width={42} />
                     <div>
                       <h2>{group.name}</h2>
-                      <Link className={styles.overviewLink} href={group.href} onClick={closeMenus}>Explore All Teams <span aria-hidden="true">→</span></Link>
+                      <Link className={styles.overviewLink} href={group.href} onClick={closeMenus}>Explore All Teams</Link>
                     </div>
                   </div>
                   <div className={styles.teamGrid}>
@@ -258,7 +258,7 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
                   </span>
                 </>
               ) : null}
-              <span className={styles.joinLabel}>Join Us <span aria-hidden="true">→</span></span>
+              <span className={styles.joinLabel}>Join Us</span>
             </Link>
             <button
               aria-controls="mobile-navigation"
@@ -289,7 +289,7 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
             {gameGroups.map((group) => (
               <section className={styles.mobileGame} key={group.href}>
                 <Link className={styles.mobileOverview} href={group.href} onClick={closeMenus}>
-                  {group.name} <span aria-hidden="true">→</span>
+                  {group.name}
                 </Link>
                 <div className={styles.mobileTeamGrid}>
                   {group.teams.map((team) => (
@@ -323,7 +323,7 @@ export default function Header({ overlay = false, homeAnimation }: HeaderProps =
                 </span>
               </>
             ) : null}
-            <span className={styles.joinLabel}>Join Us <span aria-hidden="true">→</span></span>
+            <span className={styles.joinLabel}>Join Us</span>
           </Link>
         </nav>
       </header>

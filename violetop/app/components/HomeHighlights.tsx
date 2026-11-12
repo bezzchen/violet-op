@@ -49,8 +49,8 @@ export default function HomeHighlights() {
         <div className={styles.actions}>
           <Link href="/highlights">All highlights </Link>
           <div className={styles.controls} aria-label="Highlight carousel controls">
-            <button type="button" aria-label="Previous highlights" aria-controls="home-highlights-track" disabled={bounds.start} onClick={() => move(-1)}>←</button>
-            <button type="button" aria-label="Next highlights" aria-controls="home-highlights-track" disabled={bounds.end} onClick={() => move(1)}>→</button>
+            <button type="button" aria-label="Previous highlights" aria-controls="home-highlights-track" disabled={bounds.start} onClick={() => move(-1)}>Previous</button>
+            <button type="button" aria-label="Next highlights" aria-controls="home-highlights-track" disabled={bounds.end} onClick={() => move(1)}>Next</button>
           </div>
         </div>
       </div>

@@ -35,7 +35,7 @@ export default async function EventPage({ params }: Props) {
   return (
     <PageShell>
       <div className={styles.page}>
-        <Link className={styles.back} href="/events">← All events</Link>
+        <Link className={styles.back} href="/events">All events</Link>
         <article className={`${styles.event} ${event.series === "halloween" ? styles.halloweenEvent : ""}`}>
           <div className={`${styles.artwork} ${artwork.objectFit === "contain" ? styles.posterArtwork : ""}`}>
             <Image alt={artwork.alt} fill preload quality={85} sizes="(max-width: 760px) calc(100vw - 32px), 1120px" src={artwork.src} style={{ objectPosition: artwork.objectPosition, objectFit: artwork.objectFit ?? "cover" }} />
@@ -55,7 +55,7 @@ export default async function EventPage({ params }: Props) {
               {event.details ? <p>{event.details}</p> : null}
               {event.registrationNotice ? <p className={styles.notice}>{event.registrationNotice}</p> : null}
             </div>
-            {event.actions?.length ? <div className={styles.actions}>{event.actions.map((action) => <a key={action.href} href={action.href} className={action.primary ? styles.primaryAction : styles.discord} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label}{action.href.startsWith("https:") ? null : <span aria-hidden="true">→</span>}</a>)}</div> : null}
+            {event.actions?.length ? <div className={styles.actions}>{event.actions.map((action) => <a key={action.href} href={action.href} className={action.primary ? styles.primaryAction : styles.discord} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label}</a>)}</div> : null}
             {event.sections?.length ? <div className={styles.detailSections}>{event.sections.map((section) => <section key={section.title} className={styles.detailSection}><h2>{section.title}</h2>{section.body ? <p>{section.body}</p> : null}{section.items?.length ? <ul>{section.items.map((item) => <li key={item}>{item}</li>)}</ul> : null}</section>)}</div> : null}
             <p className={styles.scheduleNote}>{event.scheduleNote ?? "Event details may change. Check Discord for organizer updates."}{event.updatedOn ? <><br />Updated {event.updatedOn}.</> : null}</p>
             <a className={styles.discord} href="https://discord.gg/MAmXcrkADb" target="_blank" rel="noopener noreferrer">Event updates on Discord </a>
@@ -64,7 +64,7 @@ export default async function EventPage({ params }: Props) {
         {related.length ? (
           <section className={styles.related} aria-labelledby="related-title">
             <h2 id="related-title">More from the VOP Cup</h2>
-            {related.map((entry) => <Link key={entry.id} href={`/events/${entry.id}`}><span>{entry.title}<small>{entry.dateLabel}{entry.tentative ? " · Tentative" : ""}</small></span><span aria-hidden="true">→</span></Link>)}
+            {related.map((entry) => <Link key={entry.id} href={`/events/${entry.id}`}><span>{entry.title}<small>{entry.dateLabel}{entry.tentative ? " · Tentative" : ""}</small></span></Link>)}
           </section>
         ) : null}
       </div>

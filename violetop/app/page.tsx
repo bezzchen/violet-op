@@ -21,10 +21,6 @@ import styles from "./Home.module.css";
 const discordUrl = "https://discord.gg/MAmXcrkADb";
 export const revalidate = 900;
 
-function Arrow({ external = false }: { external?: boolean }) {
-  return external ? null : <span aria-hidden="true">→</span>;
-}
-
 function EventPreview({ event, featured = false }: { event: MainEvent; featured?: boolean }) {
   const artwork: EventArtwork = eventArtwork[event.artwork];
   const date = new Date(`${event.startsOn}T12:00:00Z`);
@@ -54,7 +50,7 @@ function EventPreview({ event, featured = false }: { event: MainEvent; featured?
           {event.time ? <p>{event.time}{event.startsAt ? " · New York time" : ""}</p> : null}
           {event.location ? <p>{event.location}</p> : null}
           {featured ? <p>{event.description}</p> : null}
-          <span className={styles.eventAction}>View event <Arrow /></span>
+          <span className={styles.eventAction}>View event</span>
         </div>
       </div>
     </Link>
@@ -78,7 +74,7 @@ export default function Home() {
         {watchParty && watchPartyRsvp ? (
           <a href={watchPartyRsvp.href} className={styles.seasonRibbon} target="_blank" rel="noopener noreferrer">
             <span>Worlds 2026 Watch Party</span>
-            <span>November 14 · {watchParty.time} · RSVP on Luma <Arrow external /></span>
+            <span>November 14 · {watchParty.time} · RSVP on Luma</span>
           </a>
         ) : null}
         <section aria-labelledby="hero-title" className={`${styles.hero} ${styles.glassCard}`} id="hero-section">
@@ -87,8 +83,8 @@ export default function Home() {
             <h1 id="hero-title">Play together.<br /><em>Compete together.</em></h1>
             <p className={styles.heroIntro}>{homeContent.body}</p>
             <div className={styles.heroActions}>
-              <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">Join Discord <Arrow external /></a>
-              <Link className={styles.secondaryAction} href="#teams">Explore Teams <Arrow /></Link>
+              <a className={styles.primaryAction} href={discordUrl} rel="noopener noreferrer" target="_blank">Join Discord</a>
+              <Link className={styles.secondaryAction} href="#teams">Explore Teams</Link>
             </div>
           </div>
           <HomeHeroVideo />
@@ -98,7 +94,7 @@ export default function Home() {
             <div>
               <h2 id="events-title">What’s Happening</h2>
             </div>
-            <Link className={styles.textLink} href="/events">View all events <Arrow /></Link>
+            <Link className={styles.textLink} href="/events">View all events</Link>
           </div>
           {featuredEvent ? (
             <div className={supportEvents.length ? styles.eventLayout : styles.eventLayoutSingle}>
@@ -107,7 +103,7 @@ export default function Home() {
                 {featuredEvent.actions?.some((action) => action.primary) ? (
                   <div className={styles.heroActions}>
                     {featuredEvent.actions.filter((action) => action.primary).map((action) => (
-                      <a key={action.href} className={styles.primaryAction} href={action.href} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label} <Arrow external={action.href.startsWith("https:")} /></a>
+                      <a key={action.href} className={styles.primaryAction} href={action.href} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label}</a>
                     ))}
                   </div>
                 ) : null}
@@ -126,8 +122,8 @@ export default function Home() {
                 <p>{eventsContent.emptyMessage}</p>
               </div>
               <div className={styles.emptyActions}>
-                <Link className={styles.secondaryAction} href="/events">Check events <Arrow /></Link>
-                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Ask in Discord <Arrow external /></a>
+                <Link className={styles.secondaryAction} href="/events">Check events</Link>
+                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Ask in Discord</a>
               </div>
             </div>
           )}
@@ -148,7 +144,7 @@ export default function Home() {
                 <div className={styles.gamePanelContent}>
                   <h3 className={styles.gameTitle}><span className="sr-only">VALORANT</span><HomeGameLogo game="valorant" /></h3>
                   <p>Four rosters across competitive and open-rank pathways, including Gamechangers.</p>
-                  <span className={styles.panelAction}>Explore VALORANT Teams <Arrow /></span>
+                  <span className={styles.panelAction}>Explore VALORANT Teams</span>
                 </div>
               </Link>
               <div aria-label="VALORANT teams" className={styles.teamLinks}>
@@ -168,7 +164,7 @@ export default function Home() {
                 <div className={styles.gamePanelContent}>
                   <h3 className={styles.gameTitle}><span className="sr-only">League of Legends</span><HomeGameLogo game="league" /></h3>
                   <p>Two League of Legends rosters for competitive and community play.</p>
-                  <span className={styles.panelAction}>Explore League Teams <Arrow /></span>
+                  <span className={styles.panelAction}>Explore League Teams</span>
                 </div>
               </Link>
               <div aria-label="League of Legends teams" className={styles.teamLinks}>
@@ -198,21 +194,21 @@ export default function Home() {
               <div><h3>Competitive Teams</h3><p>Explore our VALORANT and League of Legends rosters. Each listing shows its requirements and current recruitment status.</p></div>
               <div className={styles.pathAction}>
                 <span>{openPlayerPaths.length ? `Listed as open: ${openPlayerPaths.map((path) => path.name.replace("VOP ", "")).join(", ")}` : "All team applications are currently closed"}</span>
-                <Link className={styles.textLink} href="/join-us#player-paths">View recruitment status <Arrow /></Link>
+                <Link className={styles.textLink} href="/join-us#player-paths">View recruitment status</Link>
               </div>
             </article>
             <article className={styles.pathRow}>
               <div><h3>Community Play</h3><p>Meet other players, follow events, and find people to queue with without starting in a formal tryout.</p></div>
               <div className={styles.pathAction}>
                 <span>Start with the Violet OP Discord.</span>
-                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Join the community <Arrow external /></a>
+                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Join the community</a>
               </div>
             </article>
             <article className={styles.pathRow}>
               <div><h3>Staff & Creative</h3><p>Support the teams through coaching, events, design, content, and the work behind the scenes.</p></div>
               <div className={styles.pathAction}>
                 <span>{openStaffExamples.length ? `Open examples: ${openStaffExamples.map((role) => role.name).join(", ")}` : "See current staff listings"}</span>
-                <Link className={styles.textLink} href="/join-us#staff-roles">See staff opportunities <Arrow /></Link>
+                <Link className={styles.textLink} href="/join-us#staff-roles">See staff opportunities</Link>
               </div>
             </article>
           </div>

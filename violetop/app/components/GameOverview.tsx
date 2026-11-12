@@ -31,7 +31,7 @@ export default function GameOverview({ game }: { game: Game }) {
               <p className={styles.eyebrow}>Violet OP / Teams</p>
               <h1 className={styles.gameTitle} id="game-title"><span className="sr-only">{title}</span><HomeGameLogo game={game} /></h1>
               <p>{description}</p>
-              <Link className={styles.secondaryLink} href="/#teams">← All Teams</Link>
+              <Link className={styles.secondaryLink} href="/#teams">All Teams</Link>
             </div>
             <div className={styles.heroArt}>
               <HomeGameArtwork alignment={isValorant ? "xMidYMid" : "xMaxYMid"} game={game} />
@@ -57,7 +57,7 @@ export default function GameOverview({ game }: { game: Game }) {
                     <span className={styles.tier}>{team.tier}</span>
                     <h3>{team.name}</h3>
                     <p>{team.summary}</p>
-                    <span className={styles.cardAction}>View Team Profile <span aria-hidden="true">→</span></span>
+                    <span className={styles.cardAction}>View Team Profile</span>
                   </Link>
                 );
               })}

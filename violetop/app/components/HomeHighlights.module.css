@@ -5,7 +5,7 @@
 .actions > a { display: inline-flex; min-height: 44px; align-items: center; gap: 12px; color: #e3cafa; font-size: 12px; font-weight: 750; }
 .actions > a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .controls { display: flex; gap: 8px; }
-.controls button { display: grid; place-items: center; width: 44px; height: 44px; border: 0; background: #21162d; color: #f0ddff; cursor: pointer; font-size: 22px; transition: background .2s; }
+.controls button { display: grid; place-items: center; min-width: 44px; padding: 0 14px; height: 44px; border: 0; background: #21162d; color: #f0ddff; cursor: pointer; font-size: 12px; transition: background .2s; }
 .controls button:hover:not(:disabled) { background: #422858; }
 .controls button:disabled { opacity: .35; cursor: default; }
 .track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3); column-gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #715484 #16101e; padding: 5px 5px 12px; margin: -5px; }

@@ -50,7 +50,7 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
     <PageShell>
       <div className={styles.wrap} data-team={team.slug}>
         <nav aria-label="Team navigation" className={styles.breadcrumb}>
-          <Link href={overviewHref}>← {team.gameLabel} Teams</Link>
+          <Link href={overviewHref}>{team.gameLabel} Teams</Link>
           <span aria-hidden="true">/</span>
           <span>{team.name}</span>
         </nav>
@@ -144,7 +144,7 @@ export default async function TeamPage({ params }: { params: Promise<TeamRoutePa
               <p>{recruitment?.applicationsOpen
                 ? "Check the current application and full joining details before applying."
                 : "Applications for this roster are currently closed. You can still connect with the Violet OP community."}</p>
-              <Link className={styles.detailAction} href="/join-us#player-paths">{recruitment?.applicationsOpen ? "View Application Details" : "View Recruitment Status"} <span aria-hidden="true">→</span></Link>
+              <Link className={styles.detailAction} href="/join-us#player-paths">{recruitment?.applicationsOpen ? "View Application Details" : "View Recruitment Status"}</Link>
             </section>
           </aside>
         </div>
