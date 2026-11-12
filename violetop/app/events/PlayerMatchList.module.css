@@ -1,5 +1,5 @@
 .list { display: grid; gap: 10px; }
-.row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; min-height: 136px; align-items: center; gap: 14px; padding: 14px; border: 0; background: var(--site-surface-raised); }
+.row { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; min-height: 136px; align-items: center; gap: 14px; padding: 14px; border: 0; background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .thumbnail { position: relative; width: 96px; height: 96px; overflow: hidden; background: #13101b; }
 .thumbnail img { object-fit: cover; }
 .information { min-width: 0; }

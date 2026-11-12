@@ -161,7 +161,7 @@
   box-shadow: 0 24px 50px #0009;
 }
 .megaMenu[hidden], .mobileNav[hidden], .mobileTeams[hidden] { display: none; }
-.megaGroup { min-width: 0; padding: 21px; border: 0; border-radius: var(--radius-md); background: var(--site-surface); }
+.megaGroup { min-width: 0; padding: 21px; border: 0; border-radius: var(--radius-md); background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .gameHeading { display: flex; align-items: center; gap: 14px; min-height: 62px; margin-bottom: 16px; }
 .gameHeading > img { width: 42px; height: 42px; flex: none; object-fit: contain; }
 .gameHeading h2 { margin: 0 0 5px; color: white; font-size: 18px; font-weight: 850; letter-spacing: -.035em; }
@@ -173,7 +173,7 @@
   padding: 8px 10px; border: 0; border-radius: var(--radius-sm); background: var(--site-bg-alt);
   color: #eee9f1; font-size: 13px; font-weight: 750; text-decoration: none;
 }
-.teamLink:hover {  background: var(--site-surface-raised); }
+.teamLink:hover {  background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .teamLink img { width: 30px; height: 30px; flex: none; object-fit: contain; }
 .teamLink img.darkCrest, .mobileTeamGrid img.darkCrest { padding: 3px; border-radius: var(--radius-sm); background: #d4cddd; }
 .teamArrow { margin-left: auto; color: #c5a7e2; }
@@ -200,7 +200,7 @@
   .mobileTeamsTrigger { width: 100%; padding: 0; cursor: pointer; }
   .mobilePageLink[aria-current="page"] {  color: #d1c5df; }
   .mobileTeams { display: grid; gap: 12px; padding: 16px 0 20px; }
-  .mobileGame { padding: 12px; border: 0; border-radius: var(--radius-md); background: var(--site-surface); }
+  .mobileGame { padding: 12px; border: 0; border-radius: var(--radius-md); background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
   .mobileOverview { display: flex; justify-content: space-between; color: #d9bdf5; font-size: 14px; font-weight: 850; text-decoration: none; }
   .mobileTeamGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
   .mobileTeamGrid a { display: flex; min-width: 0; min-height: 44px; align-items: center; gap: 7px; padding: 6px; border: 0; border-radius: var(--radius-sm); background: var(--site-bg-alt); color: #f0ebf3; font-size: 13px; text-decoration: none; }

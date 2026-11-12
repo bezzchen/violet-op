@@ -93,7 +93,7 @@
   overflow: hidden;
   border: 0;
   border-radius: var(--radius-lg);
-  background: var(--site-surface-raised);
+  background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
   transition: transform .22s cubic-bezier(.2, .7, .3, 1), box-shadow .22s ease, border-color .22s ease;
 }
 /* The artwork absorbs any extra height so both columns end on the same line. */
@@ -109,7 +109,7 @@
 .eventText time { color: #eee5f4; font-size: 16px; line-height: 1.45; }
 .eventText p { margin: 7px 0 0; color: #bfb4c8; font-size: 14px; line-height: 1.5; }
 .supportEvents { display: grid; grid-auto-rows: 1fr; gap: 16px; }
-.supportEvent { background: var(--site-surface); }
+.supportEvent { background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .supportEvent .eventDetails { grid-template-columns: 62px minmax(0, 1fr); gap: 14px; padding: 18px 19px 20px; }
 .supportEvent .eventDate strong { font-size: 44px; }
 .supportEvent .eventText h3 { margin: 6px 0 8px; font-size: 21px; }
@@ -122,7 +122,7 @@
     transform: translateY(-2px);
   }
 }
-.emptyEvents { display: flex; align-items: end; justify-content: space-between; gap: 40px; min-height: 310px; padding: clamp(30px, 5vw, 62px); border: 0; border-radius: var(--radius-lg); background: var(--site-surface); }
+.emptyEvents { display: flex; align-items: end; justify-content: space-between; gap: 40px; min-height: 310px; padding: clamp(30px, 5vw, 62px); border: 0; border-radius: var(--radius-lg); background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .emptyMark { display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; border: 0; border-radius: var(--radius-sm); color: #d9bbf8; font-size: 23px; }
 .emptyEvents h3 { margin: 25px 0 12px; font-size: clamp(28px, 3vw, 40px); letter-spacing: -.055em; }
 .emptyEvents p { max-width: 500px; margin: 0; color: #c8c3cf; font-size: 16px; line-height: 1.55; }
@@ -252,7 +252,7 @@
 }
 
 /* Keep the flyer uncropped and the event copy on the same seamless surface. */
-.featuredEvent, .supportEvent { background: var(--site-surface); }
+.featuredEvent, .supportEvent { background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .eventVisual { background: transparent; }
 .eventDetails { align-content: center; }
 .eventText h3 { font-size: clamp(1.7rem, 2.5vw, 2.7rem); }
@@ -271,3 +271,9 @@
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
 }
 .primaryAction:hover, .watchNow:hover { background: rgb(184 166 209 / 25%); }
+
+@media (max-width: 760px) {
+  .eventDetails { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .eventDate { flex-direction: row; align-items: baseline; gap: 8px; }
+  .featuredEvent .eventDate strong { font-size: 32px; letter-spacing: -.04em; }
+}
