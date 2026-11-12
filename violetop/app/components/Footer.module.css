@@ -1,7 +1,7 @@
-.footer { position: relative; z-index: 2; width: 100%; padding: 72px 24px 20px; border-top: 0; background: transparent; color: var(--site-text); }
+.footer { position: relative; z-index: 2; width: 100%; padding: 64px clamp(24px,4.5vw,64px) 24px; border-top: 1px solid #242029; background: #000; color: var(--site-text); }
 .pinned { margin-top: auto; }
-.inner, .base { width: min(100%, 1380px); margin: 0 auto; }
-.inner { display: grid; grid-template-columns: minmax(220px, 1fr) 1.6fr; gap: 70px; padding-bottom: 64px; }
+.inner, .base { width: min(100%, 1312px); margin: 0 auto; }
+.inner { display: grid; grid-template-columns: minmax(220px, 1fr) 1.6fr; gap: 64px; align-items: start; padding-bottom: 40px; }
 .brand { display: inline-flex; align-items: center; gap: 12px; color: white; font-size: 22px; font-weight: 900; letter-spacing: -.05em; text-decoration: none; }
 .brand img { width: 42px; height: 42px; object-fit: contain; }
 .brand strong {
@@ -20,11 +20,15 @@
 .links span { margin-bottom: 8px; color: #c7a8ee; font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
 .links a { color: #e9e5ed; font-size: 14px; text-decoration: none; }
 .links a:hover { color: #d4b5fc; text-decoration: underline; text-underline-offset: 4px; }
-.base { display: flex; justify-content: space-between; gap: 24px; padding-top: 20px; border-top: 0; color: #aaa1b3; font-size: 12px; }
+.base { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; border-top: 1px solid #242029; color: #aaa1b3; font-size: 12px; }
+.socials { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.socials a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; color: #c9c5cf; transition: color .18s, background .18s; }
+.socials a:hover { color: #e5caff; background: #1b1423; }
+.socials svg { display: block; }
 .footer a:focus-visible { outline: 3px solid #e6c8ff; outline-offset: 4px; }
 @media (max-width: 760px) {
   .footer { padding: 54px 18px 24px; }
   .inner { display: block; padding-bottom: 46px; }
-  .links { margin-top: 40px; grid-template-columns: repeat(2, 1fr); gap: 36px 20px; }
-  .base { flex-direction: column; gap: 8px; }
+  .links { margin-top: 32px; grid-template-columns: repeat(2, 1fr); gap: 36px 20px; }
+  .base { flex-wrap: wrap; gap: 12px; }
 }

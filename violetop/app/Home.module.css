@@ -154,12 +154,14 @@
 .teamLinks a:hover {  background: #30263f; }
 .teamLinks img { width: 30px; height: 28px; padding: 2px; border-radius: var(--radius-sm); background: #62606b; object-fit: contain; }
 
-.pathList { border-top: 0; }
-.pathRow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, .65fr); gap: 28px; align-items: start; padding: 32px 0; border-bottom: 0; }
+.pathsSection { background: #000; }
+.pathList { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 36px; }
+.pathRow { display: flex; flex-direction: column; min-width: 0; gap: 24px; align-items: flex-start; padding: 28px 0 0; border-top: 1px solid #302537; }
 .pathRow h3 { margin: 0 0 9px; font-size: clamp(23px, 2.35vw, 32px); font-weight: 850; letter-spacing: -.045em; }
 .pathRow p { max-width: 620px; margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
-.pathAction { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-top: 5px; }
-.pathAction > span { color: #bdb7c5; font-size: 13px; line-height: 1.45; }
+.pathAction { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: auto; }
+.pathAction > span { min-height: 2.9em; color: #bdb7c5; font-size: 13px; line-height: 1.45; }
+.pathAction .textLink { min-height: 44px; justify-content: flex-start; align-items: center; }
 
 
 .faqList { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 50px; }
@@ -211,7 +213,9 @@
   .gameTitle svg { height: 74px; }
   .gamePanelContent p { max-width: 520px; }
   .teamLinks { padding: 20px 26px 26px; }
-  .pathRow { grid-template-columns: 1fr; gap: 12px; padding: 27px 0; }
+  .pathList { grid-template-columns: 1fr; gap: 32px; }
+  .pathRow { gap: 20px; padding: 24px 0 0; }
+  .pathAction > span { min-height: 0; }
   .pathAction { grid-column: 1; padding-top: 0; }
   .faqList { grid-template-columns: 1fr; }
   .faqItem { grid-template-columns: 1fr; gap: 8px; padding: 22px 0; }

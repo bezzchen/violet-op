@@ -183,7 +183,7 @@ export default function Home() {
           <HomeHighlights />
         </section>
 
-        <section aria-labelledby="paths-title" className={`${styles.section} ${styles.violetCard}`} id="get-involved">
+        <section aria-labelledby="paths-title" className={`${styles.section} ${styles.pathsSection}`} id="get-involved">
           <div className={styles.sectionHeading}>
             <div>
               <h2 id="paths-title">Get Involved</h2>
