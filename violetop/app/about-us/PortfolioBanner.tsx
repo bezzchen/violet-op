@@ -42,27 +42,21 @@ export default function PortfolioBanner() {
       const progressBar = stage.querySelector<HTMLElement>("[data-portfolio-progress]");
       let lastActive = -1;
       let trigger: ReturnType<typeof ScrollTrigger.create>;
+      let removeHoverListeners = () => {};
       const context = gsap.context(() => {
-        // Render clearance from the scrubbed position, so reverse scrolling
-        // and fast wheel input follow the same continuous path.
         const travel = { position: 0 };
+        const reading = { index: 0, amount: 0 };
         const echoLayer = stage.querySelector<HTMLElement>("." + styles.echoes);
         const images = cards.map((card) => card.querySelector<HTMLElement>("." + styles.image)!);
         let width = stage.clientWidth;
         let height = stage.clientHeight;
         let cardWidth = cards[0].offsetWidth;
         const spacing = () => width * (width < 760 ? .98 : .5);
-        const smoothstep = (value: number) => {
-          const t = Math.max(0, Math.min(1, value));
-          return t * t * (3 - 2 * t);
-        };
         const renderCards = () => {
           const position = travel.position;
           const nearest = Math.round(position);
-          const distance = Math.abs(position - nearest);
-          // Hold a clear reading area near the center, then release it
-          // smoothly before the next slide takes focus.
-          const focus = 1 - smoothstep((distance - .18) / .32);
+          const focused = reading.index;
+          const focus = reading.amount;
           if (echoLayer) gsap.set(echoLayer, { opacity: 1 - focus });
           const mobile = width < 760;
           const readScale = (index: number) => Math.min(
@@ -70,17 +64,17 @@ export default function PortfolioBanner() {
             (width - 48) / cardWidth,
             (height - (mobile ? 190 : 160)) / (cardWidth * 9 / 16)
           );
-          const focalWidth = cardWidth * readScale(nearest);
+          const focalWidth = cardWidth * readScale(focused);
           cards.forEach((card, index) => {
             const [top, depth, scale, tilt] = placement[index];
-            const isNearest = index === nearest;
+            const isNearest = index === focused;
             const emphasis = isNearest ? focus : 0;
             const baseScale = mobile ? .96 : scale;
             const baseX = (index - position) * spacing();
             const halfWidth = cardWidth * baseScale * 1.08 / 2;
             const separation = Math.abs(baseX);
             const clearance = Math.max(0, focalWidth / 2 + halfWidth + 40 - separation);
-            const side = Math.sign(index - nearest);
+            const side = Math.sign(index - focused);
             const centerShift = width * (mobile ? 0 : .06);
             const x = isNearest
               ? baseX * (1 - emphasis) + centerShift * emphasis
@@ -98,7 +92,8 @@ export default function PortfolioBanner() {
               rotation: tilt * (1 - emphasis),
             });
           });
-          if (nearest !== lastActive) { lastActive = nearest; setActive(nearest); }
+          const current = focus > .5 ? focused : nearest;
+          if (current !== lastActive) { lastActive = current; setActive(current); }
         };
         const timeline = gsap.timeline({
           scrollTrigger: {
@@ -125,6 +120,70 @@ export default function PortfolioBanner() {
         if (title) timeline.fromTo(title, { xPercent: 0 }, { xPercent: -35, duration: 1, ease: "none" }, 0);
         if (progressBar) timeline.fromTo(progressBar, { scaleX: 0 }, { scaleX: 1, duration: 1, ease: "none" }, 0);
         trigger = timeline.scrollTrigger!;
+        let dwell: ReturnType<typeof setTimeout> | undefined;
+        let hovered = -1;
+        let hoverTween: ReturnType<typeof gsap.to> | undefined;
+        const cancelHover = () => {
+          if (hovered === -1) return;
+          clearTimeout(dwell);
+          dwell = undefined;
+          hovered = -1;
+          hoverTween?.kill();
+          hoverTween = gsap.to(reading, {
+            amount: 0, duration: .35, ease: "power2.out", onUpdate: renderCards,
+          });
+        };
+        const armHover = (index: number) => {
+          if (index === hovered) return;
+          cancelHover();
+          if (index < 0) return;
+          hovered = index;
+          dwell = setTimeout(() => {
+            if (cancelled || hovered !== index) return;
+            reading.index = index;
+            hoverTween?.kill();
+            hoverTween = gsap.to(reading, {
+              amount: 1, duration: .45, ease: "power2.out", onUpdate: renderCards,
+            });
+          }, 1500);
+        };
+        const cardIndex = (target: EventTarget | null) => {
+          const card = target instanceof Element ? target.closest<HTMLElement>("[data-portfolio-card]") : null;
+          return card ? cards.indexOf(card) : -1;
+        };
+        // Pointer movement, rather than enter/leave on moving cards, avoids
+        // toggling the pop-out when its own animation moves beneath the cursor.
+        const onPointerMove = (event: PointerEvent) => {
+          if (event.pointerType !== "touch") armHover(cardIndex(event.target));
+        };
+        const onFocus = (event: FocusEvent) => {
+          if (event.target instanceof Element && event.target.matches(":focus-visible")) {
+            armHover(cardIndex(event.target));
+          }
+        };
+        const onEscape = (event: KeyboardEvent) => {
+          if (event.key === "Escape") cancelHover();
+        };
+        stage.addEventListener("pointermove", onPointerMove);
+        stage.addEventListener("pointerleave", cancelHover);
+        stage.addEventListener("focusin", onFocus);
+        stage.addEventListener("focusout", cancelHover);
+        stage.addEventListener("click", cancelHover);
+        stage.addEventListener("keydown", onEscape);
+        stage.addEventListener("wheel", cancelHover, { passive: true });
+        window.addEventListener("scroll", cancelHover, { passive: true });
+        removeHoverListeners = () => {
+          clearTimeout(dwell);
+          hoverTween?.kill();
+          stage.removeEventListener("pointermove", onPointerMove);
+          stage.removeEventListener("pointerleave", cancelHover);
+          stage.removeEventListener("focusin", onFocus);
+          stage.removeEventListener("focusout", cancelHover);
+          stage.removeEventListener("click", cancelHover);
+          stage.removeEventListener("keydown", onEscape);
+          stage.removeEventListener("wheel", cancelHover);
+          window.removeEventListener("scroll", cancelHover);
+        };
       }, root);
       navigateRef.current = (index) => {
         const next = Math.max(0, Math.min(COUNT - 1, index));
@@ -135,6 +194,7 @@ export default function PortfolioBanner() {
       ScrollTrigger.refresh();
       cleanup = () => {
         navigateRef.current = null;
+        removeHoverListeners();
         resizeObserver.disconnect();
         context.revert();
       };
@@ -201,7 +261,7 @@ export default function PortfolioBanner() {
             })}
           </div>
           {!still && <div className={styles.bottomline}>
-            <div className={styles.status}><span>{String(active + 1).padStart(2, "0")} / {COUNT}</span><span>Scroll to explore. Click a slide to read.</span></div>
+            <div className={styles.status}><span>{String(active + 1).padStart(2, "0")} / {COUNT}</span><span>Scroll to explore. Hover to preview; click to read.</span></div>
             <div className={styles.navigation}>
               <button type="button" onClick={() => navigateRef.current?.(active - 1)} disabled={active === 0}>Previous</button>
               <button type="button" onClick={() => openSlide(active)}>View slide</button>
