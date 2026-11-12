@@ -46,6 +46,7 @@ export default function PortfolioBanner() {
         // Render clearance from the scrubbed position, so reverse scrolling
         // and fast wheel input follow the same continuous path.
         const travel = { position: 0 };
+        const echoLayer = stage.querySelector<HTMLElement>("." + styles.echoes);
         const images = cards.map((card) => card.querySelector<HTMLElement>("." + styles.image)!);
         let width = stage.clientWidth;
         let height = stage.clientHeight;
@@ -62,6 +63,7 @@ export default function PortfolioBanner() {
           // Hold a clear reading area near the center, then release it
           // smoothly before the next slide takes focus.
           const focus = 1 - smoothstep((distance - .18) / .32);
+          if (echoLayer) gsap.set(echoLayer, { opacity: 1 - focus });
           const mobile = width < 760;
           const readScale = (index: number) => Math.min(
             mobile ? .96 : placement[index][2],
