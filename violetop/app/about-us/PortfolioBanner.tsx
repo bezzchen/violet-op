@@ -1,158 +1,175 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 import { portfolioSlides } from "../data/portfolioSlides";
 import styles from "./PortfolioBanner.module.css";
 
 const COUNT = portfolioSlides.length;
-const INTERVAL_MS = 6500;
+const placement = [
+  [43, 0, 1, -2], [64, -140, .82, 3], [29, -70, .9, -2],
+  [58, -180, .86, 2], [35, 0, 1.04, -1], [65, -110, .92, 2],
+  [31, 0, 1, -3], [58, -160, .87, 2], [32, -70, .94, -1],
+  [62, -130, .9, 2], [44, 0, 1.05, -2],
+];
 
 export default function PortfolioBanner() {
+  const rootRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
-  const indexRef = useRef(0);
-  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const navigateRef = useRef<((index: number) => void) | null>(null);
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [tabVisible, setTabVisible] = useState(true);
+  const [expanded, setExpanded] = useState<number | null>(null);
+  const [listView, setListView] = useState(false);
+  const [failed, setFailed] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
-  const playing = !paused && !hovered && visible && tabVisible && !reducedMotion;
-
-  const goTo = useCallback((index: number, manual = true) => {
-    const next = (index + COUNT) % COUNT;
-    indexRef.current = next;
-    setActive(next);
-    if (manual) setPaused(true);
-  }, []);
+  const still = listView || reducedMotion || failed;
 
   useEffect(() => {
+    if (still) return;
+    const root = rootRef.current;
     const stage = stageRef.current;
-    if (!stage) return;
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting && entry.intersectionRatio >= 0.4), { threshold: 0.4 });
-    observer.observe(stage);
-    const onVisibility = () => setTabVisible(!document.hidden);
-    onVisibility();
-    document.addEventListener("visibilitychange", onVisibility);
-    return () => {
-      observer.disconnect();
-      document.removeEventListener("visibilitychange", onVisibility);
-    };
-  }, []);
+    if (!root || !stage) return;
+    let cancelled = false;
+    let cleanup = () => {};
+    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(([{ gsap }, { ScrollTrigger }]) => {
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+      const cards = Array.from(stage.querySelectorAll<HTMLElement>("[data-portfolio-card]"));
+      const echoes = Array.from(stage.querySelectorAll<HTMLElement>("[data-portfolio-echo]"));
+      const title = stage.querySelector<HTMLElement>("[data-portfolio-title]");
+      const progressBar = stage.querySelector<HTMLElement>("[data-portfolio-progress]");
+      let lastActive = -1;
+      let trigger: ReturnType<typeof ScrollTrigger.create>;
+      const context = gsap.context(() => {
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: root,
+            start: "top 72px",
+            end: () => "+=" + (root.offsetHeight - stage.offsetHeight),
+            scrub: .65,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              const next = Math.round(self.progress * (COUNT - 1));
+              if (next !== lastActive) { lastActive = next; setActive(next); }
+            },
+          },
+        });
+        const spacing = () => stage.clientWidth * (stage.clientWidth < 760 ? .98 : .72);
+        cards.forEach((card, index) => {
+          timeline.fromTo(card,
+            { x: () => index * spacing(), rotationY: -5 },
+            { x: () => (index - COUNT + 1) * spacing(), rotationY: 5, duration: 1, ease: "none" }, 0);
+        });
+        echoes.forEach((echo, index) => {
+          timeline.fromTo(echo,
+            { x: () => (index - .5) * spacing() * 1.2 },
+            { x: () => ((index - .5) * 1.2 - (COUNT - 1) * .7) * spacing(), duration: 1, ease: "none" }, 0);
+        });
+        if (title) timeline.fromTo(title, { xPercent: 0 }, { xPercent: -35, duration: 1, ease: "none" }, 0);
+        if (progressBar) timeline.fromTo(progressBar, { scaleX: 0 }, { scaleX: 1, duration: 1, ease: "none" }, 0);
+        trigger = timeline.scrollTrigger!;
+      }, root);
+      navigateRef.current = (index) => {
+        const next = Math.max(0, Math.min(COUNT - 1, index));
+        window.scrollTo({ top: trigger.start + (trigger.end - trigger.start) * next / (COUNT - 1), behavior: "smooth" });
+      };
+      const resizeObserver = new ResizeObserver(() => ScrollTrigger.refresh());
+      resizeObserver.observe(stage);
+      ScrollTrigger.refresh();
+      cleanup = () => {
+        navigateRef.current = null;
+        resizeObserver.disconnect();
+        context.revert();
+      };
+    }).catch(() => { if (!cancelled) setFailed(true); });
+    return () => { cancelled = true; cleanup(); };
+  }, [still]);
 
   useEffect(() => {
-    if (!playing) return;
-    const timer = window.setTimeout(() => goTo(indexRef.current + 1, false), INTERVAL_MS);
-    return () => window.clearTimeout(timer);
-  }, [active, goTo, playing]);
+    if (expanded === null) return;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = overflow; };
+  }, [expanded]);
 
-  useEffect(() => {
-    const stage = stageRef.current;
-    if (!stage) return;
-    let accumulated = 0;
-    let previousEvent = 0;
-    let lastStep = 0;
-    const onWheel = (event: WheelEvent) => {
-      if (event.ctrlKey || event.metaKey) return;
-      const raw = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-      const delta = raw * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? stage.clientHeight : 1);
-      if (!delta) return;
-      const direction = Math.sign(delta);
-      // Release scrolling at either end so the gallery never traps the page.
-      if ((indexRef.current === 0 && direction < 0) || (indexRef.current === COUNT - 1 && direction > 0)) return;
-      event.preventDefault();
-      const now = performance.now();
-      if (now - previousEvent > 180 || Math.sign(accumulated) !== direction) accumulated = 0;
-      previousEvent = now;
-      if (now - lastStep < 700) return;
-      accumulated += delta;
-      if (Math.abs(accumulated) < 40) return;
-      accumulated = 0;
-      lastStep = now;
-      goTo(indexRef.current + direction);
-    };
-    stage.addEventListener("wheel", onWheel, { passive: false });
-    return () => stage.removeEventListener("wheel", onWheel);
-  }, [goTo]);
+  const openSlide = (index: number) => {
+    setExpanded(index);
+    dialogRef.current?.showModal();
+  };
 
   return (
-    <section className={styles.banner} aria-label="Violet OP portfolio" aria-roledescription="carousel"
-      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <h1 className="sr-only">Violet OP portfolio</h1>
-      <div className={styles.topline}>
-        <span>COMPETITIVE / COMMUNITY / CREATIVE</span>
-        <a href="#directory-heading" onClick={() => setPaused(true)}>Meet our staff</a>
-      </div>
-      <div ref={stageRef} className={styles.stage} tabIndex={0} data-lenis-prevent-wheel
-        aria-label="Portfolio slides. Scroll or use left and right arrow keys to browse."
-        onFocus={() => setPaused(true)}
-        onKeyDown={(event) => {
-          if (event.target !== event.currentTarget) return;
-          if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-            event.preventDefault();
-            goTo(indexRef.current + (event.key === "ArrowRight" ? 1 : -1));
-          } else if (event.key === "Home" || event.key === "End") {
-            event.preventDefault();
-            goTo(event.key === "Home" ? 0 : COUNT - 1);
-          }
-        }}
-        onTouchStart={(event) => {
-          if (event.touches.length !== 1) { touchStart.current = null; return; }
-          touchStart.current = { x: event.touches[0].clientX, y: event.touches[0].clientY };
-          setPaused(true);
-        }}
-        onTouchCancel={() => { touchStart.current = null; }}
-        onTouchEnd={(event) => {
-          const start = touchStart.current;
-          touchStart.current = null;
-          if (!start || !event.changedTouches[0]) return;
-          const dx = event.changedTouches[0].clientX - start.x;
-          const dy = event.changedTouches[0].clientY - start.y;
-          if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) goTo(indexRef.current + (dx < 0 ? 1 : -1));
-        }}>
-        {portfolioSlides.map((slide, index) => {
-          let offset = index - active;
-          if (offset > COUNT / 2) offset -= COUNT;
-          if (offset < -COUNT / 2) offset += COUNT;
-          const distance = Math.abs(offset);
-          const cardStyle = {
-            "--offset": offset, "--distance": distance, "--tilt": `${Math.sign(offset) * -23}deg`,
-            zIndex: COUNT - distance, opacity: distance > 2 ? 0 : distance === 0 ? 1 : 0.4,
-          } as CSSProperties;
-          return (
-            <div className={styles.slide} style={cardStyle} key={slide.src} aria-hidden={index !== active}
-              role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${COUNT}: ${slide.title}`}>
-              <Image src={slide.src} alt={slide.alt} fill unoptimized sizes="(max-width: 760px) 92vw, 1040px"
-                loading={index < 2 ? "eager" : "lazy"} draggable={false} />
+    <>
+      <section ref={rootRef} className={styles.journey} data-still={still ? "true" : "false"} aria-label="Violet OP portfolio">
+        <div ref={stageRef} className={styles.stage}>
+          <div className={styles.topline}>
+            <span>COMPETITIVE / COMMUNITY / CREATIVE</span>
+            <div>
+              <button type="button" onClick={() => setListView(!listView)} aria-pressed={listView}>{still ? (reducedMotion || failed ? "Portfolio" : "Explore") : "All slides"}</button>
+              <a href="#directory-heading">Meet our staff</a>
             </div>
-          );
-        })}
-      </div>
-      <div className={styles.toolbar}>
-        <div className={styles.caption} aria-live={playing ? "off" : "polite"} aria-atomic="true">
-          <span className={styles.count}>{String(active + 1).padStart(2, "0")} / {String(COUNT).padStart(2, "0")}</span>
-          <strong>{portfolioSlides[active].title}</strong>
+          </div>
+          <h1 className={styles.wordmark} data-portfolio-title aria-label="Violet OP portfolio">VIOLET OP</h1>
+          <div className={styles.field} aria-label={still ? "Portfolio slides" : "Scroll to explore the portfolio"}
+            tabIndex={still ? -1 : 0}
+            onKeyDown={(event) => {
+              if (event.target !== event.currentTarget || still) return;
+              if (["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) {
+                event.preventDefault();
+                navigateRef.current?.(event.key === "Home" ? 0 : event.key === "End" ? COUNT - 1 : active + (event.key === "ArrowRight" ? 1 : -1));
+              }
+            }}>
+            {!still && <div className={styles.echoes} aria-hidden="true">
+              {portfolioSlides.map((slide, index) => (
+                <div key={slide.src} data-portfolio-echo className={styles.echo}
+                  style={{ top: index % 2 ? "77%" : "16%", left: "50%", width: index % 3 ? "260px" : "190px" }}>
+                  <Image src={slide.src} alt="" fill unoptimized sizes="260px" />
+                </div>
+              ))}
+            </div>}
+            {portfolioSlides.map((slide, index) => {
+              const [top, depth, scale, tilt] = placement[index];
+              return (
+                <button key={slide.src} type="button" data-portfolio-card className={styles.slide}
+                  style={{ "--card-top": top + "%", "--depth": depth + "px", "--size": scale, "--tilt": tilt + "deg",
+                    "--initial-x": index * 72 + "vw" } as CSSProperties}
+                  tabIndex={still || active === index ? 0 : -1} onClick={() => openSlide(index)}
+                  aria-label={"Open slide " + (index + 1) + ": " + slide.title}>
+                  <span className={styles.image}>
+                    <Image src={slide.src} alt={slide.alt} fill unoptimized sizes="(max-width: 760px) 84vw, 640px"
+                      loading={index < 3 ? "eager" : "lazy"} draggable={false} />
+                  </span>
+                  <span className={styles.slideLabel}><span>{String(index + 1).padStart(2, "0")}</span>{slide.title}<span>View</span></span>
+                </button>
+              );
+            })}
+          </div>
+          {!still && <div className={styles.bottomline}>
+            <div className={styles.status}><span>{String(active + 1).padStart(2, "0")} / {COUNT}</span><span>Scroll to explore. Click a slide to read.</span></div>
+            <div className={styles.navigation}>
+              <button type="button" onClick={() => navigateRef.current?.(active - 1)} disabled={active === 0}>Previous</button>
+              <button type="button" onClick={() => openSlide(active)}>View slide</button>
+              <button type="button" onClick={() => navigateRef.current?.(active + 1)} disabled={active === COUNT - 1}>Next</button>
+            </div>
+            <div className={styles.progress}><span data-portfolio-progress /></div>
+          </div>}
         </div>
-        <div className={styles.controls}>
-          <button type="button" onClick={() => goTo(active - 1)} aria-label="Previous portfolio slide">Previous</button>
-          <button type="button" onClick={() => setPaused((value) => !value)} disabled={reducedMotion}
-            aria-label={paused || reducedMotion ? "Play portfolio slideshow" : "Pause portfolio slideshow"}>
-            {paused || reducedMotion ? "Play" : "Pause"}
-          </button>
-          <button type="button" onClick={() => goTo(active + 1)} aria-label="Next portfolio slide">Next</button>
-        </div>
-      </div>
-      <div className={styles.bottomline}>
-        <div className={styles.pagination} aria-label="Choose portfolio slide">
-          {portfolioSlides.map((slide, index) => (
-            <button type="button" key={slide.src} aria-label={`Show ${slide.title}`} aria-current={index === active ? "true" : undefined}
-              onClick={() => goTo(index)}><span /></button>
-          ))}
-        </div>
-        <span className={styles.hint}>Scroll to explore · Swipe on mobile</span>
-      </div>
-    </section>
+      </section>
+      <dialog ref={dialogRef} className={styles.viewer} aria-label="Portfolio slide viewer" data-lenis-prevent
+        onClose={() => setExpanded(null)} onWheel={(event) => event.stopPropagation()}
+        onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
+        {expanded !== null && <div className={styles.viewerInner}>
+          <div className={styles.viewerHeading}><span>{portfolioSlides[expanded].title}</span>
+            <button type="button" onClick={() => dialogRef.current?.close()} autoFocus>Close</button></div>
+          <div className={styles.viewerImage}><Image src={portfolioSlides[expanded].src} alt={portfolioSlides[expanded].alt} fill unoptimized sizes="96vw" /></div>
+          <div className={styles.viewerFooter}>
+            <button type="button" onClick={() => setExpanded((expanded + COUNT - 1) % COUNT)}>Previous</button>
+            <span>{expanded + 1} / {COUNT}</span>
+            <button type="button" onClick={() => setExpanded((expanded + 1) % COUNT)}>Next</button>
+          </div>
+        </div>}
+      </dialog>
+    </>
   );
 }
