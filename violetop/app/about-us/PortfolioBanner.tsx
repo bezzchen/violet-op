@@ -42,10 +42,11 @@ export default function PortfolioBanner() {
       const progressBar = stage.querySelector<HTMLElement>("[data-portfolio-progress]");
       let lastActive = -1;
       let trigger: ReturnType<typeof ScrollTrigger.create>;
-      let removeHoverListeners = () => {};
+      let removeIdleListeners = () => {};
       const context = gsap.context(() => {
         const travel = { position: 0 };
         const reading = { index: 0, amount: 0 };
+        let noteMotion = () => {};
         const echoLayer = stage.querySelector<HTMLElement>("." + styles.echoes);
         const images = cards.map((card) => card.querySelector<HTMLElement>("." + styles.image)!);
         let width = stage.clientWidth;
@@ -110,7 +111,7 @@ export default function PortfolioBanner() {
             },
           },
         });
-        timeline.to(travel, { position: COUNT - 1, duration: 1, ease: "none", onUpdate: renderCards }, 0);
+        timeline.to(travel, { position: COUNT - 1, duration: 1, ease: "none", onUpdate: () => { noteMotion(); renderCards(); } }, 0);
         renderCards();
         echoes.forEach((echo, index) => {
           timeline.fromTo(echo,
@@ -120,69 +121,61 @@ export default function PortfolioBanner() {
         if (title) timeline.fromTo(title, { xPercent: 0 }, { xPercent: -35, duration: 1, ease: "none" }, 0);
         if (progressBar) timeline.fromTo(progressBar, { scaleX: 0 }, { scaleX: 1, duration: 1, ease: "none" }, 0);
         trigger = timeline.scrollTrigger!;
-        let dwell: ReturnType<typeof setTimeout> | undefined;
-        let hovered = -1;
-        let hoverTween: ReturnType<typeof gsap.to> | undefined;
-        const cancelHover = () => {
-          if (hovered === -1) return;
-          clearTimeout(dwell);
-          dwell = undefined;
-          hovered = -1;
-          hoverTween?.kill();
-          hoverTween = gsap.to(reading, {
-            amount: 0, duration: .35, ease: "power2.out", onUpdate: renderCards,
-          });
-        };
-        const armHover = (index: number) => {
-          if (index === hovered) return;
-          cancelHover();
-          if (index < 0) return;
-          hovered = index;
-          dwell = setTimeout(() => {
-            if (cancelled || hovered !== index) return;
-            reading.index = index;
-            hoverTween?.kill();
-            hoverTween = gsap.to(reading, {
+        let idleTimer: ReturnType<typeof setTimeout> | undefined;
+        let previewOpen = false;
+        let previewTween: ReturnType<typeof gsap.to> | undefined;
+        const schedulePreview = () => {
+          clearTimeout(idleTimer);
+          idleTimer = setTimeout(() => {
+            if (cancelled || dialogRef.current?.open || document.hidden) return;
+            const stageBounds = stage.getBoundingClientRect();
+            if (stageBounds.top > window.innerHeight * .45 ||
+                stageBounds.bottom < window.innerHeight * .55) return;
+            // Measure the settled images so the visually centered slide wins,
+            // including its perspective and the gallery's offset from center.
+            const center = window.innerWidth / 2;
+            let closest = 0;
+            let distance = Infinity;
+            images.forEach((image, index) => {
+              const bounds = image.getBoundingClientRect();
+              const nextDistance = Math.abs(bounds.left + bounds.width / 2 - center);
+              if (nextDistance < distance) { closest = index; distance = nextDistance; }
+            });
+            reading.index = closest;
+            previewOpen = true;
+            previewTween?.kill();
+            previewTween = gsap.to(reading, {
               amount: 1, duration: .45, ease: "power2.out", onUpdate: renderCards,
             });
-          }, 1500);
+          }, 1000);
         };
-        const cardIndex = (target: EventTarget | null) => {
-          const card = target instanceof Element ? target.closest<HTMLElement>("[data-portfolio-card]") : null;
-          return card ? cards.indexOf(card) : -1;
-        };
-        // Pointer movement, rather than enter/leave on moving cards, avoids
-        // toggling the pop-out when its own animation moves beneath the cursor.
-        const onPointerMove = (event: PointerEvent) => {
-          if (event.pointerType !== "touch") armHover(cardIndex(event.target));
-        };
-        const onFocus = (event: FocusEvent) => {
-          if (event.target instanceof Element && event.target.matches(":focus-visible")) {
-            armHover(cardIndex(event.target));
+        noteMotion = () => {
+          // Only start the return once; repeated scroll frames must not
+          // restart its easing and leave the preview lingering in motion.
+          if (previewOpen) {
+            previewOpen = false;
+            previewTween?.kill();
+            previewTween = gsap.to(reading, {
+              amount: 0, duration: .25, ease: "power2.out", onUpdate: renderCards,
+            });
           }
+          schedulePreview();
         };
-        const onEscape = (event: KeyboardEvent) => {
-          if (event.key === "Escape") cancelHover();
-        };
-        stage.addEventListener("pointermove", onPointerMove);
-        stage.addEventListener("pointerleave", cancelHover);
-        stage.addEventListener("focusin", onFocus);
-        stage.addEventListener("focusout", cancelHover);
-        stage.addEventListener("click", cancelHover);
-        stage.addEventListener("keydown", onEscape);
-        stage.addEventListener("wheel", cancelHover, { passive: true });
-        window.addEventListener("scroll", cancelHover, { passive: true });
-        removeHoverListeners = () => {
-          clearTimeout(dwell);
-          hoverTween?.kill();
-          stage.removeEventListener("pointermove", onPointerMove);
-          stage.removeEventListener("pointerleave", cancelHover);
-          stage.removeEventListener("focusin", onFocus);
-          stage.removeEventListener("focusout", cancelHover);
-          stage.removeEventListener("click", cancelHover);
-          stage.removeEventListener("keydown", onEscape);
-          stage.removeEventListener("wheel", cancelHover);
-          window.removeEventListener("scroll", cancelHover);
+        // Both physical scrolling and the trailing scrub animation reset the
+        // timer, so the one-second pause begins when the slides actually stop.
+        stage.addEventListener("wheel", noteMotion, { passive: true });
+        stage.addEventListener("touchmove", noteMotion, { passive: true });
+        window.addEventListener("scroll", noteMotion, { passive: true });
+        const reader = dialogRef.current;
+        reader?.addEventListener("close", schedulePreview);
+        schedulePreview();
+        removeIdleListeners = () => {
+          clearTimeout(idleTimer);
+          previewTween?.kill();
+          stage.removeEventListener("wheel", noteMotion);
+          stage.removeEventListener("touchmove", noteMotion);
+          window.removeEventListener("scroll", noteMotion);
+          reader?.removeEventListener("close", schedulePreview);
         };
       }, root);
       navigateRef.current = (index) => {
@@ -194,7 +187,7 @@ export default function PortfolioBanner() {
       ScrollTrigger.refresh();
       cleanup = () => {
         navigateRef.current = null;
-        removeHoverListeners();
+        removeIdleListeners();
         resizeObserver.disconnect();
         context.revert();
       };
@@ -261,7 +254,7 @@ export default function PortfolioBanner() {
             })}
           </div>
           {!still && <div className={styles.bottomline}>
-            <div className={styles.status}><span>{String(active + 1).padStart(2, "0")} / {COUNT}</span><span>Scroll to explore. Hover to preview; click to read.</span></div>
+            <div className={styles.status}><span>{String(active + 1).padStart(2, "0")} / {COUNT}</span><span>Scroll to explore. Pause to preview; click to read.</span></div>
             <div className={styles.navigation}>
               <button type="button" onClick={() => navigateRef.current?.(active - 1)} disabled={active === 0}>Previous</button>
               <button type="button" onClick={() => openSlide(active)}>View slide</button>
