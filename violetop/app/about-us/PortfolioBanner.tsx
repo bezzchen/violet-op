@@ -136,11 +136,6 @@ export default function PortfolioBanner() {
             })}
           </div>
           {!still && <div className={styles.bottomline}>
-            <div className={styles.navigation}>
-              <button type="button" onClick={() => navigateRef.current?.(active - 1)} disabled={active === 0}>Previous</button>
-              <button type="button" onClick={() => openSlide(active)}>View slide</button>
-              <button type="button" onClick={() => navigateRef.current?.(active + 1)} disabled={active === COUNT - 1}>Next</button>
-            </div>
             <div className={styles.progress}><span data-portfolio-progress /></div>
           </div>}
         </div>
