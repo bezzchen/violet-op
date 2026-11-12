@@ -21,10 +21,8 @@ export default function HomeGameCard({ children, className, id }: Props) {
     <div
       className={styles.gameCardInteraction}
       onPointerCancel={() => setHovered(false)}
-      onPointerDown={followPointer}
       onPointerEnter={followPointer}
       onPointerLeave={() => setHovered(false)}
-      onPointerMove={followPointer}
     >
       <article className={className} data-hovered={hovered ? "true" : undefined} id={id}>
         {children}
