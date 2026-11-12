@@ -85,8 +85,8 @@ void main() {
 // Keep the near-black ground and blend toward restrained, dark violet ribbons.
 const PALETTE = {
   deep: [21 / 255, 20 / 255, 25 / 255],
-  mid: [33 / 255, 29 / 255, 41 / 255], // #211D29
-  bright: [46 / 255, 38 / 255, 58 / 255], // #2E263A
+  mid: [28 / 255, 24 / 255, 36 / 255], // #1C1824
+  bright: [36 / 255, 28 / 255, 48 / 255], // #241C30
 } as const;
 
 export type SwirlGradient = {
