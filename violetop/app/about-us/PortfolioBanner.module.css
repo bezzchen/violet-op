@@ -7,7 +7,7 @@
 .topline :is(a,button) { font: inherit; font-size: 12px; color: #ece2f8; border: 0; background: transparent; padding: 12px 0; min-height: 44px; text-decoration: none; cursor: pointer; }
 .wordmark { position: absolute; left: 3%; bottom: 8%; margin: 0; z-index: -1; white-space: nowrap; font-size: clamp(120px,25vw,440px); line-height: .8; font-weight: 900; letter-spacing: -.085em; color: #32134d; pointer-events: none; }
 .field { position: absolute; inset: 0; perspective: 1500px; perspective-origin: 50% 50%; transform-style: preserve-3d; }
-.slide { transform-style: preserve-3d; position: absolute; top: var(--card-top); left: 44%; width: min(46vw,690px); border: 0; padding: 0; background: transparent; color: #f5ecff; text-align: left; cursor: zoom-in; transform: translateX(var(--initial-x)); will-change: transform; }
+.slide { transform-style: preserve-3d; position: absolute; top: var(--card-top); left: 44%; width: min(69vw,1035px); border: 0; padding: 0; background: transparent; color: #f5ecff; text-align: left; cursor: zoom-in; transform: translateX(var(--initial-x)); will-change: transform; }
 .image { position: relative; display: block; aspect-ratio: 16/9; transform: translate(-50%,-50%) translateZ(var(--depth)) scale(var(--size)) rotate(var(--tilt)); box-shadow: 0 15px 50px #0007; }
 .image img { object-fit: contain; user-select: none; }
 .slideLabel { display: flex; gap: 12px; align-items: center; position: absolute; width: 100%; bottom: 0; transform: translate(-50%,calc(-50% + 26px)); padding-top: 9px; font-size: 11px; color: #ddd0eb; opacity: 0; transition: opacity 180ms; }
@@ -48,7 +48,7 @@
  .topline > div { gap: 16px; }
  .topline :is(a,button) { font-size: 11px; }
  .wordmark { font-size: 43vw; bottom: 16%; left: 3%; }
- .slide { width: 84vw; left: 50%; }
+ .slide { width: 126vw; left: 50%; }
  .image { transform: translate(-50%,-50%) scale(.96) rotate(var(--tilt)); }
  .echo { opacity: .1; }
  .bottomline { inset-inline: 5%; padding-bottom: 22px; flex-wrap: wrap; gap: 6px; }
