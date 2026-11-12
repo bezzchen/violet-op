@@ -15,7 +15,7 @@
 .slideLabel > span:last-child { margin-left: auto; }
 .slide:is(:hover,:focus-visible) .slideLabel { opacity: 1; }
 .echoes { position: absolute; inset: 0; pointer-events: none; transform-style: preserve-3d; }
-.echo { position: absolute; aspect-ratio: 16/9; opacity: .16; transform: translateZ(-650px); will-change: transform; }
+.echo { position: absolute; aspect-ratio: 16/9; opacity: .23; transform: translateZ(-650px); will-change: transform; }
 .echo img { object-fit: contain; }
 .bottomline { position: absolute; z-index: 5; inset: auto 3.5% 0; padding: 16px 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 18px; background: linear-gradient(transparent,#000 50%); }
 .status { display: flex; gap: 24px; align-items: center; font-size: 12px; color: #cbb8df; }
@@ -33,7 +33,7 @@
 .journey[data-still="true"] .slide { position: relative; top: auto; left: auto; width: 100%; transform: none; will-change: auto; }
 .journey[data-still="true"] .image { transform: none; box-shadow: none; }
 .journey[data-still="true"] .slideLabel { position: static; transform: none; opacity: 1; font-size: 12px; }
-.viewer { width: min(96vw,1500px); max-width: none; padding: 20px; border: 1px solid #594168; background: #08050c; color: #f3eaff; overflow: auto; max-height: 95svh; }
+.viewer { margin: auto; width: min(96vw,1500px); max-width: none; padding: 20px; border: 1px solid #594168; background: #08050c; color: #f3eaff; overflow: auto; max-height: 95svh; }
 .viewer::backdrop { background: #000e; backdrop-filter: blur(12px); }
 .viewerInner { width: 100%; }
 .viewerHeading,.viewerFooter { display: flex; justify-content: space-between; gap: 18px; align-items: center; font-size: 14px; }

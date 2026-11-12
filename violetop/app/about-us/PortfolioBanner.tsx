@@ -46,7 +46,7 @@ export default function PortfolioBanner() {
         const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: root,
-            start: "top 72px",
+            start: () => "top " + (stage.clientWidth < 760 ? "62px" : "72px"),
             end: () => "+=" + (root.offsetHeight - stage.offsetHeight),
             scrub: .65,
             invalidateOnRefresh: true,
@@ -56,7 +56,7 @@ export default function PortfolioBanner() {
             },
           },
         });
-        const spacing = () => stage.clientWidth * (stage.clientWidth < 760 ? .98 : .72);
+        const spacing = () => stage.clientWidth * (stage.clientWidth < 760 ? .98 : .5);
         cards.forEach((card, index) => {
           timeline.fromTo(card,
             { x: () => index * spacing(), rotationY: -5 },
@@ -133,7 +133,7 @@ export default function PortfolioBanner() {
               return (
                 <button key={slide.src} type="button" data-portfolio-card className={styles.slide}
                   style={{ "--card-top": top + "%", "--depth": depth + "px", "--size": scale, "--tilt": tilt + "deg",
-                    "--initial-x": index * 72 + "vw" } as CSSProperties}
+                    "--initial-x": index * 50 + "vw" } as CSSProperties}
                   tabIndex={still || active === index ? 0 : -1} onClick={() => openSlide(index)}
                   aria-label={"Open slide " + (index + 1) + ": " + slide.title}>
                   <span className={styles.image}>
