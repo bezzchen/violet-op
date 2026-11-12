@@ -95,7 +95,7 @@
 
 :root {
   --app-height: 100dvh;
-  --site-bg: #151419;
+  --site-bg: #000000;
   --site-bg-alt: #1b1920;
   --site-surface: rgb(180 165 205 / 6%);
   --site-surface-raised: rgb(180 165 205 / 10%);

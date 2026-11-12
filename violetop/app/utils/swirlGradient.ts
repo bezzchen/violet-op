@@ -82,11 +82,11 @@ void main() {
 }
 `;
 
-// Keep the near-black ground and blend toward restrained, dark violet ribbons.
+// Pure black ground with deep purple ribbons.
 const PALETTE = {
-  deep: [21 / 255, 20 / 255, 25 / 255],
-  mid: [28 / 255, 24 / 255, 36 / 255], // #1C1824
-  bright: [36 / 255, 28 / 255, 48 / 255], // #241C30
+  deep: [0, 0, 0], // #000000
+  mid: [24 / 255, 8 / 255, 40 / 255], // #180828
+  bright: [32 / 255, 12 / 255, 46 / 255], // #200C2E
 } as const;
 
 export type SwirlGradient = {

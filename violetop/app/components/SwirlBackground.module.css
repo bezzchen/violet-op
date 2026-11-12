@@ -1,4 +1,4 @@
-/* Fixed behind every page. Plain near-black until the first frame, so nothing flashes. */
+/* Fixed behind every page. Pure black until the first frame, so nothing flashes. */
 .canvas {
   position: fixed;
   z-index: 0;
@@ -6,13 +6,13 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: #151419;
+  background: #000000;
   pointer-events: none;
 }
 
 /* Without WebGL: the same still ribbon with the shader's muted violet palette. */
 .canvas[data-fallback] {
-  background: linear-gradient(126deg, #151419 0%, #151419 34%, #1c1824 46%, #241c30 52%, #1c1824 58%, #151419 72%, #151419 100%);
+  background: linear-gradient(126deg, #000000 0%, #000000 34%, #180828 46%, #200c2e 52%, #180828 58%, #000000 72%, #000000 100%);
 }
 
 /* Other pages dim the swirl so it stays a backdrop; the homepage shows it at full strength. */
@@ -20,7 +20,7 @@
   position: fixed;
   z-index: 0;
   inset: 0;
-  background: rgb(21 20 25 / 55%);
+  background: rgb(0 0 0 / 55%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 400ms ease;
