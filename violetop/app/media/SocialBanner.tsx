@@ -16,8 +16,17 @@ export default function SocialBanner() {
       <div className={styles.platforms}>
         <section className={styles.instagram} aria-labelledby="instagram-heading">
           <div className={styles.platformHeading}>
-            <h3 id="instagram-heading"><span className={styles.instagramIcon} aria-hidden="true">◎</span> Instagram</h3>
-            <a href={socialMedia.instagramUrl} target="_blank" rel="noopener noreferrer">@nyuvioletop </a>
+            <h3 id="instagram-heading">
+              <a className={styles.platformLink} href={socialMedia.instagramUrl} target="_blank" rel="noopener noreferrer">
+                <svg className={styles.instagramIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" focusable="false">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+                <span>Instagram</span>
+                <span className={styles.handle}>@nyuvioletop</span>
+              </a>
+            </h3>
           </div>
           <div className={styles.posts}>
             {socialMedia.instagram.map((post) => (
@@ -33,8 +42,16 @@ export default function SocialBanner() {
         </section>
         <section className={styles.youtube} aria-labelledby="youtube-heading">
           <div className={styles.platformHeading}>
-            <h3 id="youtube-heading"><span className={styles.youtubeIcon} aria-hidden="true">▶</span> YouTube</h3>
-            <a href={socialMedia.youtubeUrl} target="_blank" rel="noopener noreferrer">View channel </a>
+            <h3 id="youtube-heading">
+              <a className={styles.platformLink} href={socialMedia.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                <svg className={styles.youtubeIcon} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12a31.3 31.3 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 24 12a31.3 31.3 0 0 0-.5-5.8Z" />
+                  <path fill="white" d="m9.6 15.6 6.3-3.6-6.3-3.6Z" />
+                </svg>
+                <span>YouTube</span>
+                <span className={styles.handle}>@NYUVioletOP</span>
+              </a>
+            </h3>
           </div>
           <div className={styles.videos}>
             {socialMedia.youtube.map((video) => (
@@ -53,7 +70,6 @@ export default function SocialBanner() {
                 <div className={styles.videoInfo}>
                   <h4>{video.title}</h4>
                   <p>{video.description}</p>
-                  <a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${video.title} on YouTube`}>Watch on YouTube</a>
                 </div>
               </article>
             ))}
