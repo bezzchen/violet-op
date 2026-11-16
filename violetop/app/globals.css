@@ -1005,7 +1005,8 @@ a {
 
 /* Shared tactile feedback: soft glass, no moving border or specular hairline. */
 :root {
-  --site-accent: #9143B5;
+  --brand-accent: #9143B5;
+  --site-accent: #CA56FF;
   --glass-control: rgb(145 67 181 / 10%);
   --glass-hover: rgb(145 67 181 / 17%);
   --motion-ease: cubic-bezier(.22, 1, .36, 1);

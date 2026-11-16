@@ -112,7 +112,7 @@
   display: block;
   box-sizing: border-box;
   white-space: nowrap;
-  background: var(--site-accent);
+  background: var(--brand-accent);
   background-clip: text;
   color: transparent;
   -webkit-background-clip: text;
