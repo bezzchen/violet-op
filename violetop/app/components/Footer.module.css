@@ -8,7 +8,7 @@
   display: inline-block;
   padding-inline-end: .14em;
   margin-inline-end: -.14em;
-  background: var(--site-accent);
+  background: var(--brand-accent);
   background-clip: text;
   color: transparent;
   -webkit-background-clip: text;
