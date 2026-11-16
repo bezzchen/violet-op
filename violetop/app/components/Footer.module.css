@@ -8,7 +8,7 @@
   display: inline-block;
   padding-inline-end: .14em;
   margin-inline-end: -.14em;
-  background: var(--site-accent);
+  background: var(--brand-accent);
   background-clip: text;
   color: transparent;
   -webkit-background-clip: text;
@@ -22,7 +22,7 @@
 .links a:hover { color: var(--site-accent); text-decoration: underline; text-underline-offset: 4px; }
 .base { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; border-top: 1px solid #242029; color: #aaa1b3; font-size: 12px; }
 .socials { display: flex; align-items: center; gap: 8px; margin-left: auto; }
-.socials a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; color: #c9c5cf; transition: color .18s, background .18s; }
+.socials a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; color: var(--site-accent); transition: color .18s, background .18s; }
 .socials a:hover { color: var(--site-accent); background: #1b1423; }
 .socials svg { display: block; }
 .footer a:focus-visible { outline: 3px solid var(--site-accent); outline-offset: 4px; }
