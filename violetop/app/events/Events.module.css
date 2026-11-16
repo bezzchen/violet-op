@@ -1,9 +1,9 @@
 .page { width: min(100% - 48px, 1352px); margin: auto; padding: 110px 0 64px; }
-.page :is(a, button, [tabindex]):focus-visible { outline: 3px solid #e8cfff; outline-offset: 4px; }
+.page :is(a, button, [tabindex]):focus-visible { outline: 3px solid var(--site-accent); outline-offset: 4px; }
 .heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
 .heading h1 { margin: 8px 0 0; font-size: clamp(40px, 5vw, 72px); font-weight: 900; letter-spacing: -.06em; line-height: 1.05; }
-.eyebrow { color: #b8a6d1; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
-.calendarLink { display: inline-flex; min-height: 44px; align-items: center; gap: 14px; color: #e2c8fa; font-size: 13px; font-weight: 800; text-decoration: none; }
+.eyebrow { color: var(--site-accent); font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.calendarLink { display: inline-flex; min-height: 44px; align-items: center; gap: 14px; color: var(--site-accent); font-size: 13px; font-weight: 800; text-decoration: none; }
 .calendarLink:hover { text-decoration: underline; text-underline-offset: 4px; }
 .carousel { border: 0; background: var(--site-bg-alt); }
 .figure { margin: 0; }

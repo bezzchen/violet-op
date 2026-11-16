@@ -4,7 +4,7 @@
   --color-on-primary-container: #f4d4ff;
   --color-on-tertiary-container: #ffd6ff;
   --color-error: #ffb4ab;
-  --color-tertiary-fixed: #ffe2ff;
+  --color-tertiary-fixed: var(--site-accent);
   --color-inverse-on-surface: #321044;
   --color-surface-variant: #302c39;
   --color-surface-container-lowest: #0d0b12;
@@ -15,34 +15,34 @@
   --color-tertiary-container: #68517d;
   --color-on-background: #f5f2fa;
   --color-on-error: #690005;
-  --color-outline: #bca8c9;
+  --color-outline: var(--site-accent);
   --color-on-error-container: #ffdad6;
   --color-surface-container-highest: #302c39;
   --color-surface-container-high: #2b2735;
-  --color-on-primary-fixed: #35004d;
+  --color-on-primary-fixed: var(--site-text);
   --color-on-tertiary: #3d0055;
-  --color-on-primary: #1b1420;
+  --color-on-primary: var(--site-text);
   --color-background: #151419;
-  --color-secondary-fixed: #f8d6ff;
+  --color-secondary-fixed: var(--site-accent);
   --color-on-surface-variant: #c2b8ce;
   --color-primary-container: #5e4370;
-  --color-secondary-fixed-dim: #ebadff;
-  --color-primary-fixed: #f9dcff;
+  --color-secondary-fixed-dim: var(--site-accent);
+  --color-primary-fixed: var(--site-accent);
   --color-on-primary-fixed-variant: #8300d4;
-  --color-primary: #b8a6d1;
-  --color-surface-tint: #b994d8;
+  --color-primary: var(--site-accent);
+  --color-surface-tint: var(--site-accent);
   --color-on-secondary: #211a28;
-  --color-tertiary: #c4a4e8;
+  --color-tertiary: var(--site-accent);
   --color-surface-dim: #151419;
   --color-secondary-container: #5b3c70;
   --color-error-container: #93000a;
   --color-surface-container: #24212c;
-  --color-secondary: #bd9bd8;
-  --color-tertiary-fixed-dim: #f0a5ff;
+  --color-secondary: var(--site-accent);
+  --color-tertiary-fixed-dim: var(--site-accent);
   --color-surface-container-low: #1b1920;
   --color-surface-bright: #30263f;
   --color-on-tertiary-fixed-variant: #8500c4;
-  --color-primary-fixed-dim: #eda5ff;
+  --color-primary-fixed-dim: var(--site-accent);
   --color-on-secondary-fixed: #29003f;
   --color-on-surface: #f5f2fa;
   --color-on-secondary-container: #ffe2ff;
@@ -97,8 +97,8 @@
   --app-height: 100dvh;
   --site-bg: #000000;
   --site-bg-alt: #1b1920;
-  --site-surface: rgb(180 165 205 / 6%);
-  --site-surface-raised: rgb(180 165 205 / 10%);
+  --site-surface: rgb(145 67 181 / 6%);
+  --site-surface-raised: rgb(145 67 181 / 10%);
   --site-border: transparent;
   --site-text: #f5f2fa;
   --site-text-muted: #c2b8ce;
@@ -294,13 +294,13 @@ a {
 
 .team-hero-section {
   background:
-    radial-gradient(circle at 78% 16%, rgba(148, 131, 170, 0.28), transparent 32rem),
+    radial-gradient(circle at 78% 16%, rgba(145, 67, 181, 0.28), transparent 32rem),
     linear-gradient(115deg, rgba(10, 0, 18, 0.84), rgba(75, 0, 108, 0.28) 55%, rgba(10, 0, 18, 0.74));
   clip-path: none;
 }
 
 .team-hero-game-backdrop {
-  filter: saturate(1.2) drop-shadow(0 0 58px rgba(148, 131, 170, 0.3));
+  filter: saturate(1.2) drop-shadow(0 0 58px rgba(145, 67, 181, 0.3));
   object-position: center;
   opacity: 0.1;
   transform: scale(1.12);
@@ -308,7 +308,7 @@ a {
 
 .team-hero-copy {
   background:
-    radial-gradient(circle at 18% 8%, rgba(148, 131, 170, 0.26), transparent 13rem),
+    radial-gradient(circle at 18% 8%, rgba(145, 67, 181, 0.26), transparent 13rem),
     rgba(16, 0, 23, 0.5);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -321,7 +321,7 @@ a {
 .team-hero-title {
   line-height: 0.78;
   overflow-wrap: anywhere;
-  text-shadow: 0 0 34px rgba(148, 131, 170, 0.36);
+  text-shadow: 0 0 34px rgba(145, 67, 181, 0.36);
 }
 
 .team-hero-title-vop,
@@ -330,13 +330,13 @@ a {
 }
 
 .team-hero-title-vop {
-  color: #b8a6d1;
+  color: var(--site-accent);
   font-size: 5.6rem;
   font-style: italic;
   line-height: 0.74;
   text-shadow:
-    0 0 22px rgba(148, 131, 170, 0.72),
-    0 0 62px rgba(148, 131, 170, 0.42);
+    0 0 22px rgba(145, 67, 181, 0.72),
+    0 0 62px rgba(145, 67, 181, 0.42);
   transform: skewX(-7deg) translateX(-0.04em);
 }
 
@@ -365,7 +365,7 @@ a {
 
 .team-overview-copy {
   background:
-    radial-gradient(circle at 88% 0%, rgba(148, 131, 170, 0.18), transparent 16rem),
+    radial-gradient(circle at 88% 0%, rgba(145, 67, 181, 0.18), transparent 16rem),
     rgba(10, 0, 18, 0.76);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -388,7 +388,7 @@ a {
 }
 
 .team-hero-feature {
-  filter: drop-shadow(0 0 46px rgba(148, 131, 170, 0.38));
+  filter: drop-shadow(0 0 46px rgba(145, 67, 181, 0.38));
   object-position: center top;
   padding: 0;
   translate: -5% 0;
@@ -421,7 +421,7 @@ a {
 }
 
 .highlight-feature-glow::before {
-  background: radial-gradient(circle at 72% 22%, rgba(147, 111, 171, 0.15), transparent 62%);
+  background: radial-gradient(circle at 72% 22%, rgba(145, 67, 181, 0.15), transparent 62%);
   content: "";
   filter: blur(38px);
   /* Vertical halo stays generous; horizontal reach is kept under the page's
@@ -516,12 +516,12 @@ a {
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: #9483aa;
+  background: var(--site-accent);
   border-radius: 0;
 }
 
 .page-scroll-container::-webkit-scrollbar-thumb {
-  background: #9483aa;
+  background: var(--site-accent);
   border-radius: 0;
 }
 
@@ -1005,9 +1005,9 @@ a {
 
 /* Shared tactile feedback: soft glass, no moving border or specular hairline. */
 :root {
-  --site-accent: #b8a6d1;
-  --glass-control: rgb(197 183 218 / 10%);
-  --glass-hover: rgb(197 183 218 / 17%);
+  --site-accent: #9143B5;
+  --glass-control: rgb(145 67 181 / 10%);
+  --glass-hover: rgb(145 67 181 / 17%);
   --motion-ease: cubic-bezier(.22, 1, .36, 1);
 }
 .site-content :is(a[href], button) {
@@ -1017,7 +1017,7 @@ a {
     color 180ms ease, box-shadow 280ms ease, opacity 180ms ease;
 }
 .site-content button:not(:disabled) { cursor: pointer; }
-.site-content :is(button, a[href]):focus-visible { outline: 2px solid #cbbddd; outline-offset: 4px; }
+.site-content :is(button, a[href]):focus-visible { outline: 2px solid var(--site-accent); outline-offset: 4px; }
 .site-content :is(button, a[href]):active:not(:disabled) { scale: .98; }
 .site-content a:has(img):active { scale: .995; }
 .glass-panel, .section-text-panel, .event-row-panel,
