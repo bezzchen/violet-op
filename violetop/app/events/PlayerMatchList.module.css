@@ -5,13 +5,13 @@
 .information { min-width: 0; }
 .information h3 { margin: 0 0 7px; color: var(--site-text); font-size: 19px; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
 .information time { display: flex; flex-wrap: wrap; gap: 2px 10px; color: var(--site-text-muted); font-size: 14px; line-height: 1.5; }
-.date { color: #e2c8fa; font-weight: 750; }
+.date { color: var(--site-accent); font-weight: 750; }
 .information p { margin: 4px 0 0; color: var(--site-text-muted); font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
 .trailing { display: flex; max-width: 100px; flex-direction: column; align-items: center; gap: 6px; }
 .weekday { padding: 6px 9px; background: var(--color-primary-fixed); color: var(--color-on-primary-fixed); font-size: 12px; font-weight: 800; line-height: 1.2; }
-.trailing a { display: flex; min-height: 44px; align-items: center; gap: 6px; color: #e2c8fa; font-size: 12px; font-weight: 700; line-height: 1.4; text-decoration: underline; text-underline-offset: 4px; }
+.trailing a { display: flex; min-height: 44px; align-items: center; gap: 6px; color: var(--site-accent); font-size: 12px; font-weight: 700; line-height: 1.4; text-decoration: underline; text-underline-offset: 4px; }
 .trailing a:hover { color: white; }
-.trailing a:focus-visible { outline: 3px solid #e8cfff; outline-offset: 4px; }
+.trailing a:focus-visible { outline: 3px solid var(--site-accent); outline-offset: 4px; }
 @media (max-width: 1100px) and (min-width: 761px) {
   .row { grid-template-columns: 72px minmax(0, 1fr) auto; gap: 10px; padding: 12px; }
   .thumbnail { width: 72px; height: 86px; }

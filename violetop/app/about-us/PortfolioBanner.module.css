@@ -2,7 +2,7 @@
 .stage { position: sticky; top: 72px; height: calc(100svh - 72px); min-height: 500px; overflow: clip; isolation: isolate; background: #000; color: #f4eefb; }
 .stage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg,#000 0%,transparent 18%,transparent 87%,#000 100%); pointer-events: none; z-index: 3; }
 .topline { position: absolute; inset: 12px 3.5% auto; z-index: 5; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
-.topline > span { font-size: 10px; letter-spacing: .13em; color: #c5b1df; }
+.topline > span { font-size: 10px; letter-spacing: .13em; color: var(--site-accent); }
 .topline > div { display: flex; gap: 24px; align-items: center; }
 .topline :is(a,button) { font: inherit; font-size: 12px; color: #ece2f8; border: 0; background: transparent; padding: 12px 0; min-height: 44px; text-decoration: none; cursor: pointer; }
 .wordmark { position: absolute; left: 3%; bottom: 8%; margin: 0; z-index: -1; white-space: nowrap; font-size: clamp(120px,25vw,440px); line-height: .8; font-weight: 900; letter-spacing: -.085em; color: #32134d; pointer-events: none; }
@@ -10,8 +10,8 @@
 .slide { pointer-events: auto; position: absolute; top: 50%; left: 50%; width: var(--slide-width); border: 0; padding: 0; background: transparent; color: #f5ecff; text-align: left; cursor: zoom-in; transform: translateX(var(--initial-x)); will-change: transform; }
 .image { position: relative; display: block; aspect-ratio: 16/9; transform: translate(-50%,-50%); box-shadow: 0 15px 50px #0007; }
 .image img { object-fit: contain; user-select: none; }
-.slideLabel { display: flex; gap: 12px; align-items: center; position: absolute; width: 100%; bottom: 0; transform: translate(-50%,calc(-50% + 26px)); padding-top: 9px; font-size: 11px; color: #ddd0eb; opacity: 0; transition: opacity 180ms; }
-.slideLabel > span:first-child { color: #b798d0; font-variant-numeric: tabular-nums; }
+.slideLabel { display: flex; gap: 12px; align-items: center; position: absolute; width: 100%; bottom: 0; transform: translate(-50%,calc(-50% + 26px)); padding-top: 9px; font-size: 11px; color: var(--site-accent); opacity: 0; transition: opacity 180ms; }
+.slideLabel > span:first-child { color: var(--site-accent); font-variant-numeric: tabular-nums; }
 .slideLabel > span:last-child { margin-left: auto; }
 .slide:is(:hover,:focus-visible) .slideLabel { opacity: 1; }
 .bottomline { position: absolute; z-index: 5; inset: auto 3.5% 0; padding: 16px 0 24px; display: flex; justify-content: space-between; align-items: center; gap: 18px; background: linear-gradient(transparent,#000 50%); }
@@ -19,8 +19,8 @@
 .navigation button, .viewer button { border: 0; border-bottom: 1px solid #7d5c9c; background: transparent; color: #f3eaff; font: inherit; font-size: 12px; padding: 10px 0; min-width: 44px; min-height: 44px; cursor: pointer; }
 .navigation button:disabled { opacity: .35; cursor: default; }
 .progress { position: absolute; bottom: 8px; left: 0; right: 0; height: 1px; background: #503762; }
-.progress span { display: block; height: 100%; background: #d6b2f7; transform: scaleX(0); transform-origin: left; }
-.journey :is(button,a,[tabindex]):focus-visible,.viewer button:focus-visible { outline: 2px solid #debcff; outline-offset: 7px; }
+.progress span { display: block; height: 100%; background: var(--site-accent); transform: scaleX(0); transform-origin: left; }
+.journey :is(button,a,[tabindex]):focus-visible,.viewer button:focus-visible { outline: 2px solid var(--site-accent); outline-offset: 7px; }
 .journey[data-still="true"] { height: auto; width: 100%; margin: 0; }
 .journey[data-still="true"] .stage { position: relative; top: 0; height: auto; min-height: 0; overflow: visible; padding-top: 76px; }
 .journey[data-still="true"] .stage::after,.journey[data-still="true"] .wordmark { display: none; }

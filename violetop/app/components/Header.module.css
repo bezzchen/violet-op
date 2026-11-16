@@ -1,6 +1,6 @@
 .skipLink {
   position: fixed; left: 12px; top: -70px; z-index: 102;
-  padding: 12px 18px; border-radius: var(--radius-md); background: #e8d7ff; color: #151119; font-weight: 800;
+  padding: 12px 18px; border-radius: var(--radius-md); background: var(--site-accent); color: var(--site-text); font-weight: 800;
 }
 .skipLink:focus { top: 12px; }
 .header {
@@ -40,7 +40,7 @@
 .overlayHeader :is(.brand, .desktopNav > a, .teamsTrigger) {
   text-shadow: 0 1px 8px #000, 0 0 18px #000b;
 }
-/* A text shadow paints over gradient-clipped text, so "OP" keeps the same crisp gradient as every other page. */
+/* Keep the OP wordmark crisp over the homepage hero. */
 .overlayHeader .brandOp { text-shadow: none; }
 /* Colorway accents for the stashed VopIntroBanner replace the base logo until the hero scrolls away. */
 .accentHeader .brandBaseLogo,
@@ -54,8 +54,8 @@
   opacity: calc(1 - var(--home-surface-opacity));
   transition: opacity 90ms linear;
 }
-.accentHeader .join { position: relative; background: #b8a6d1; }
-.accentHeader .mobileJoin { background: #b8a6d1; }
+.accentHeader .join { position: relative; background: var(--site-accent); }
+.accentHeader .mobileJoin { background: var(--site-accent); }
 .accentLayer {
   position: absolute;
   z-index: 0;
@@ -112,7 +112,7 @@
   display: block;
   box-sizing: border-box;
   white-space: nowrap;
-  background: linear-gradient(145deg, var(--wordmark-start, #d1c5df) 4%, var(--wordmark-mid, #b8a6d1) 52%, var(--wordmark-end, #9483aa) 96%);
+  background: var(--site-accent);
   background-clip: text;
   color: transparent;
   -webkit-background-clip: text;
@@ -128,8 +128,8 @@
   letter-spacing: .13em; text-transform: uppercase;
 }
 .teamsTrigger { padding: 0; border: 0; background: none; cursor: pointer; }
-.desktopNav > a:hover, .teamsTrigger:hover, .teamsTrigger[aria-expanded="true"] { color: #d6b7fb; }
-.desktopNav > a[aria-current="page"] { color: #d1c5df; box-shadow: none; }
+.desktopNav > a:hover, .teamsTrigger:hover, .teamsTrigger[aria-expanded="true"] { color: var(--site-accent); }
+.desktopNav > a[aria-current="page"] { color: var(--site-accent); box-shadow: none; }
 .chevron {
   display: inline-block; width: 0; height: 0; margin-left: 2px;
   border-right: 4px solid transparent; border-left: 4px solid transparent;
@@ -143,7 +143,7 @@
   isolation: isolate;
   overflow: hidden;
   display: inline-flex; min-height: 44px; align-items: center; justify-content: center;
-  padding: 0 22px; border-radius: var(--radius-md); background: #b8a6d1; color: #15101a;
+  padding: 0 22px; border-radius: var(--radius-md); background: var(--site-accent); color: #15101a;
   text-decoration: none; font-size: 12px; font-weight: 900;
   letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
 }
@@ -156,7 +156,7 @@
   justify-content: center;
   gap: 14px;
 }
-.join:hover, .mobileJoin:hover { background: #d1c5df; }
+.join:hover, .mobileJoin:hover { background: var(--site-accent); }
 .menuButton { display: none; width: 44px; height: 44px; border: 0; border-radius: var(--radius-md); background: transparent; color: white; font-size: 23px; cursor: pointer; }
 .megaMenu {
   position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
@@ -170,7 +170,7 @@
 .gameHeading { display: flex; align-items: center; gap: 14px; min-height: 62px; margin-bottom: 16px; }
 .gameHeading > img { width: 42px; height: 42px; flex: none; object-fit: contain; }
 .gameHeading h2 { margin: 0 0 5px; color: white; font-size: 18px; font-weight: 850; letter-spacing: -.035em; }
-.overviewLink { color: #d9bbf7; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-decoration: none; text-transform: uppercase; }
+.overviewLink { color: var(--site-accent); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-decoration: none; text-transform: uppercase; }
 .overviewLink:hover { color: white; text-decoration: underline; text-underline-offset: 4px; }
 .teamGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .teamLink {
@@ -181,9 +181,9 @@
 .teamLink:hover {  background: var(--site-surface-raised); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
 .teamLink img { width: 30px; height: 30px; flex: none; object-fit: contain; }
 .teamLink img.darkCrest, .mobileTeamGrid img.darkCrest { padding: 3px; border-radius: var(--radius-sm); background: #d4cddd; }
-.teamArrow { margin-left: auto; color: #c5a7e2; }
+.teamArrow { margin-left: auto; color: var(--site-accent); }
 .mobileNav { position: relative; z-index: 2; display: none; }
-.header :is(a, button):focus-visible, .skipLink:focus-visible { outline: 3px solid #e6c8ff; outline-offset: 3px; }
+.header :is(a, button):focus-visible, .skipLink:focus-visible { outline: 3px solid var(--site-accent); outline-offset: 3px; }
 @media (max-width: 900px) {
   .header { --header-bar-height: 64px; }
   .inner { width: min(100% - 32px, 1440px); height: 64px; gap: 8px; }
@@ -203,10 +203,10 @@
     letter-spacing: .12em; text-transform: uppercase;
   }
   .mobileTeamsTrigger { width: 100%; padding: 0; cursor: pointer; }
-  .mobilePageLink[aria-current="page"] {  color: #d1c5df; }
+  .mobilePageLink[aria-current="page"] {  color: var(--site-accent); }
   .mobileTeams { display: grid; gap: 12px; padding: 16px 0 20px; }
   .mobileGame { padding: 12px; border: 0; border-radius: var(--radius-md); background: var(--site-surface); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
-  .mobileOverview { display: flex; justify-content: space-between; color: #d9bdf5; font-size: 14px; font-weight: 850; text-decoration: none; }
+  .mobileOverview { display: flex; justify-content: space-between; color: var(--site-accent); font-size: 14px; font-weight: 850; text-decoration: none; }
   .mobileTeamGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 12px; }
   .mobileTeamGrid a { display: flex; min-width: 0; min-height: 44px; align-items: center; gap: 7px; padding: 6px; border: 0; border-radius: var(--radius-sm); background: var(--site-bg-alt); color: #f0ebf3; font-size: 13px; text-decoration: none; }
   .mobileTeamGrid img { width: 26px; height: 26px; flex: none; object-fit: contain; }

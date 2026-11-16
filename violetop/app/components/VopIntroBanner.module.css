@@ -211,9 +211,9 @@
   filter: drop-shadow(0 1px 4px #000);
 }
 
-.motionButton:hover { color: #e8cfff; }
+.motionButton:hover { color: var(--site-accent); }
 .motionButton:disabled { color: #77727b; cursor: default; }
-.motionButton:focus-visible { outline: 3px solid #e8cfff; outline-offset: 0; }
+.motionButton:focus-visible { outline: 3px solid var(--site-accent); outline-offset: 0; }
 
 .screenReaderOnly {
   position: absolute;
