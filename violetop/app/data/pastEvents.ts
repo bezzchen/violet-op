@@ -10,13 +10,26 @@ export type PastEvent = {
   coverAlt: string;
   coverPosition: string;
   coverAspectRatio?: string;
-  albumUrl: string;
+  albumUrl?: string;
   hosts?: string;
   highlights?: { title: string; body: string }[];
 };
 
 /** Completed events confirmed against the school media archive and event recaps. */
 export const pastEvents: PastEvent[] = [
+  {
+    slug: "worlds-watch-party-2026",
+    title: "League of Legends Worlds Watch Party",
+    date: "2026-11-14",
+    dateLabel: "November 14, 2026",
+    category: "Watch party",
+    description: "The NYU League of Legends community watched Worlds together at Kimmel, played Guess the Rank between matches, and gathered on stage for a group photo.",
+    location: "Kimmel Center for University Life · NYU",
+    cover: "/images/media/worlds-watch-party-2026/1YJJ1ThzdWtmWT1qSyKvPsUvSSxfTIkk5.webp",
+    coverAlt: "Watch party attendees pose together on stage beneath the projected Worlds broadcast",
+    coverPosition: "50% 65%",
+    coverAspectRatio: "1920 / 1440",
+  },
   {
     slug: "halloween-event-2026",
     title: "Halloween Fest & Worlds Watch Party",
@@ -92,7 +105,7 @@ export type EventMediaItem = {
   id: string;
   kind: "photo" | "video" | "reel" | "poster";
   label: string;
-  sourceUrl: string;
+  sourceUrl?: string;
   src?: string;
   thumbnail?: string;
   category?: string;

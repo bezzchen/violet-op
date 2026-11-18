@@ -22,6 +22,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
   const photos = items.filter((item) => item.kind === "photo").length;
   const videos = items.filter((item) => matches(item, "video")).length;
   const posters = items.filter((item) => item.kind === "poster").length;
+  const hasPhotoOriginals = items.some((item) => item.kind === "photo" && item.sourceUrl);
   const isOpen = selected !== null;
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
           {posters ? <button type="button" aria-pressed={filter === "poster"} onClick={() => selectFilter("poster")}>Posters <span>{posters}</span></button> : null}
         </div>
       </div>
-      <p className={styles.galleryNote}>{filter === "video" ? "Event reels and individual clips. Select one to watch." : "Select a photo to view it in full. Originals are available from each image."}</p>
+      <p className={styles.galleryNote}>{filter === "video" ? "Event reels and individual clips. Select one to watch." : <>Select a photo to view it in full.{hasPhotoOriginals ? " Originals are available from each image." : null}</>}</p>
       {filter === "photo" && categories.length ? <div className={`${styles.filters} ${styles.categoryFilters}`} role="group" aria-label="Photo activity">{["All moments", ...categories].map((value) => <button key={value} type="button" aria-pressed={category === value} onClick={() => { setCategory(value); setVisible(24); }}>{value}</button>)}</div> : null}
       <div className={filter === "video" ? styles.videoGrid : styles.photoGrid}>
         {filtered.slice(0, visible).map((item, index) => (
@@ -72,7 +73,7 @@ export default function MediaGallery({ items, title }: { items: EventMediaItem[]
           </div>
           <div className={styles.viewerFooter}>
             <div className={styles.viewerControls}><button type="button" aria-label="Previous media" onClick={() => move(-1)}>Previous</button><span aria-live="polite">{selectedIndex + 1} / {filtered.length}</span><button type="button" aria-label="Next media" onClick={() => move(1)}>Next</button></div>
-            <a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.src ? "Open original" : "Open in Google Drive"}</a>
+            {selected.sourceUrl ? <a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.src ? "Open original" : "Open in Google Drive"}</a> : null}
           </div>
         </div> : null}
       </dialog>
