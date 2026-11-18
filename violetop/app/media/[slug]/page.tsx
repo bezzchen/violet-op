@@ -5,8 +5,14 @@ import { notFound } from "next/navigation";
 import PageShell from "../../components/PageShell";
 import { pastEvents, type EventMediaItem } from "../../data/pastEvents";
 import catalog from "../../data/eventMedia.json";
+import worldsWatchPartyMedia from "../../data/worldsWatchPartyMedia.json";
 import MediaGallery from "../MediaGallery";
 import styles from "../Media.module.css";
+
+const eventMedia = {
+  ...catalog,
+  "worlds-watch-party-2026": worldsWatchPartyMedia,
+} as Record<string, EventMediaItem[]>;
 
 type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
@@ -23,7 +29,7 @@ export default async function EventMediaPage({ params }: Props) {
   const { slug } = await params;
   const event = pastEvents.find((item) => item.slug === slug);
   if (!event) notFound();
-  const items = (catalog as Record<string, EventMediaItem[]>)[slug];
+  const items = eventMedia[slug];
   const next = pastEvents[(pastEvents.indexOf(event) + 1) % pastEvents.length];
   return (
     <PageShell>
@@ -36,7 +42,7 @@ export default async function EventMediaPage({ params }: Props) {
             {event.hosts ? <p className={styles.hosts}>{event.hosts}</p> : null}
             <p>{event.description}</p>
             {event.location ? <p className={styles.location}>{event.location}</p> : null}
-            <a className={styles.albumLink} href={event.albumUrl} target="_blank" rel="noopener noreferrer">Open original album </a>
+            {event.albumUrl ? <a className={styles.albumLink} href={event.albumUrl} target="_blank" rel="noopener noreferrer">Open original album </a> : null}
           </div>
           <figure className={styles.heroImage} style={event.coverAspectRatio ? { aspectRatio: event.coverAspectRatio } : undefined}>
             <Image alt={event.coverAlt} fill preload quality={85} sizes="(max-width: 800px) calc(100vw - 32px), 700px" src={event.cover} style={{ objectPosition: event.coverPosition }} />
