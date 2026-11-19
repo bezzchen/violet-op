@@ -7,7 +7,6 @@ import HomeHeroVideo from "./components/HomeHeroVideo";
 import HomeHighlights from "./components/HomeHighlights";
 import { HomeGameArtwork, HomeGameLogo } from "./components/HomeGameArtwork";
 import {
-  eventsContent,
   homeContent,
   homeFaqs,
   joinContent,
@@ -16,10 +15,44 @@ import {
 } from "./data/siteContent";
 import { eventArtwork, type EventArtwork } from "./data/eventArtwork";
 import { getUpcomingMainEvents, type MainEvent } from "./data/mainEvents";
+import { pastEvents } from "./data/pastEvents";
+import mediaStyles from "./media/Media.module.css";
 import styles from "./Home.module.css";
 
 const discordUrl = "https://discord.gg/MAmXcrkADb";
 export const revalidate = 900;
+
+function WorldsRecap() {
+  const galleries = pastEvents.filter((event) =>
+    ["worlds-watch-party-2026", "halloween-event-2026"].includes(event.slug),
+  );
+
+  return (
+    <>
+      <div className={styles.sectionHeading}>
+        <div>
+          <h2 id="events-title">Road to Worlds 2026</h2>
+          <p>Violet OP brought the League of Legends World Championship to NYU this fall. We teamed up with Club Anime and NYU Gaming for Halloween Fest, then gave students a chance to play their own way to Worlds. The prize for the VOP Cup, our intramural League tournament, was five Worlds tickets, one for each player on the winning team.</p>
+          <p>On November 14, we closed the series at Kimmel. Fans watched the finals together, played Guess the Rank between matches, and gathered on stage for a group photo.</p>
+        </div>
+      </div>
+      <div className={mediaStyles.cardGrid}>
+        {galleries.map((event) => (
+          <Link className={mediaStyles.eventCard} href={`/media/${event.slug}`} key={event.slug}>
+            <div className={mediaStyles.cardImage}>
+              <Image alt={event.coverAlt} fill sizes="(max-width: 700px) 100vw, 50vw" src={event.cover} style={{ objectPosition: event.coverPosition }} />
+            </div>
+            <div className={mediaStyles.cardBody}>
+              <time dateTime={event.date}>{event.dateLabel}</time>
+              <h3>{event.title}</h3>
+              <span className={mediaStyles.cardLink}>View photos</span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </>
+  );
+}
 
 function EventPreview({ event, featured = false }: { event: MainEvent; featured?: boolean }) {
   const artwork: EventArtwork = eventArtwork[event.artwork];
@@ -90,43 +123,33 @@ export default function Home() {
           <HomeHeroVideo />
         </section>
         <section aria-labelledby="events-title" className={`${styles.section} ${styles.glassCard}`} id="latest">
-          <div className={styles.sectionHeading}>
-            <div>
-              <h2 id="events-title">What’s Happening</h2>
-            </div>
-            <Link className={styles.textLink} href="/events">View all events</Link>
-          </div>
           {featuredEvent ? (
-            <div className={supportEvents.length ? styles.eventLayout : styles.eventLayoutSingle}>
-              <div>
-                <EventPreview event={featuredEvent} featured />
-                {featuredEvent.actions?.some((action) => action.primary) ? (
-                  <div className={styles.heroActions}>
-                    {featuredEvent.actions.filter((action) => action.primary).map((action) => (
-                      <a key={action.href} className={styles.primaryAction} href={action.href} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label}</a>
-                    ))}
+            <>
+              <div className={styles.sectionHeading}>
+                <div>
+                  <h2 id="events-title">What’s Happening</h2>
+                </div>
+                <Link className={styles.textLink} href="/events">View all events</Link>
+              </div>
+              <div className={supportEvents.length ? styles.eventLayout : styles.eventLayoutSingle}>
+                <div>
+                  <EventPreview event={featuredEvent} featured />
+                  {featuredEvent.actions?.some((action) => action.primary) ? (
+                    <div className={styles.heroActions}>
+                      {featuredEvent.actions.filter((action) => action.primary).map((action) => (
+                        <a key={action.href} className={styles.primaryAction} href={action.href} target={action.href.startsWith("https:") ? "_blank" : undefined} rel={action.href.startsWith("https:") ? "noopener noreferrer" : undefined}>{action.label}</a>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+                {supportEvents.length ? (
+                  <div className={styles.supportEvents}>
+                    {supportEvents.map((event) => <EventPreview event={event} key={event.id} />)}
                   </div>
                 ) : null}
               </div>
-              {supportEvents.length ? (
-                <div className={styles.supportEvents}>
-                  {supportEvents.map((event) => <EventPreview event={event} key={event.id} />)}
-                </div>
-              ) : null}
-            </div>
-          ) : (
-            <div className={styles.emptyEvents}>
-              <div>
-                
-                <h3>No Upcoming Main Events</h3>
-                <p>{eventsContent.emptyMessage}</p>
-              </div>
-              <div className={styles.emptyActions}>
-                <Link className={styles.secondaryAction} href="/events">Check events</Link>
-                <a className={styles.textLink} href={discordUrl} rel="noopener noreferrer" target="_blank">Ask in Discord</a>
-              </div>
-            </div>
-          )}
+            </>
+          ) : <WorldsRecap />}
         </section>
 
         <section aria-labelledby="teams-title" className={`${styles.section} ${styles.solidCard}`} id="teams">
